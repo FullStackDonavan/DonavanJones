@@ -2,7 +2,7 @@
   <PatternSection>
     <MagicImageSlider :items="carouselItems" />
     <TimelineHistory />
-
+    <InfiniteLogoCarousel />
     <OurPortfolioSection />
     <SalesGeneratingMachineSection />
   </PatternSection>
