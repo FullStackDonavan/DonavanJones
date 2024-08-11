@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p class="note">Tap/Click around to move</p>
-
     <div id="textbox-container" style="display: none">
       <div id="textbox">
         <p id="dialogue" class="ui-text"></p>
