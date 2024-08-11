@@ -1,7 +1,7 @@
 <template>
   <ColumnAnimated animationClass="fade-in">
     <section
-      class="dark:bg-gray-950 text-white py-8 border-t-2 border-b-2 border-gray-700"
+      class="dark:bg-gray-950 text-white py-8 border-t-2 border-b-2 border-gray-700 my-16"
     >
       <h2 class="text-center text-2xl mb-2 font-bold leading-8">
         Technologies I Use
