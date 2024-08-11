@@ -54,16 +54,7 @@ export default defineNuxtConfig({
     writeEarlyHints: false,
   },
   vite: {
-    resolve: {
-      alias: {
-        '@components': '/components', // Example alias
-      },
-    },
-    server: {
-      fs: {
-        strict: true, // Example server config
-      },
-    },
+    
     base: "./",
     build: {
       minify: "terser", // Vite minification using Terser
