@@ -30,8 +30,6 @@ onMounted(() => {
 
 <style scoped>
 #gamecontainer {
-  width: 500px;
-  height: 500px;
   /* Remove position and overflow styles if not needed */
 }
 
