@@ -61,4 +61,17 @@ export default {
 </script>
 
 <style scoped>
+.startInvisible {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(40px);
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out,
+    filter 0.7s ease-in-out;
+}
 </style>

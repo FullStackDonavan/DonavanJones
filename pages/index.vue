@@ -23,7 +23,7 @@ export default {
         author: "Donavan Jones",
         title: "View Projects",
         des: "Dive into a curated selection of my most recent and impactful projects. From innovative web applications to dynamic websites, each project showcases my skills and dedication to crafting exceptional digital experiences. Browse through to see how I bring concepts to life with clean, efficient code and modern design principles.",
-        linkUrl: "/projects",
+        linkUrl: "/portfolio/overview/",
         buttonText: "View Projects",
       },
       {

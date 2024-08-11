@@ -1,14 +1,6 @@
 <template>
   <PatternSection>
-    <AboutPageHeroSection />
-    <FadeSlider />
-    <YourContractorMarketingExperts />
-    <BeyondTheLaunch />
-    <IndustriesWeServeSection />
-    <CustomerReviewSection />
-    <RevolutionizingContractorMarketing />
-    <WeProvideThePlanCTA />
-    <CraftingValueDrivenMarketingPartnerships />
-    <Ribbon />
+    <Game />
+    <!-- Other sections -->
   </PatternSection>
 </template>

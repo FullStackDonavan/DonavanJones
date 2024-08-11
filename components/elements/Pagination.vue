@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const { data: allArticles } = await useAsyncData("allArticles", () =>
-  queryContent("/articles").count()
+  queryContent("/portfolio").count()
 );
 
 const totalPages = computed(() => Math.ceil(allArticles.value / props.limit));
@@ -23,7 +23,7 @@ const totalPages = computed(() => Math.ceil(allArticles.value / props.limit));
       <!-- Previous Page Button -->
       <NuxtLink
         v-if="currentPage > 1"
-        :to="`/articles/overview/?page=${currentPage - 1}`"
+        :to="`/portfolio/overview/?page=${currentPage - 1}`"
         class="flex items-center justify-center rounded-full p-2 md:p-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
       >
         <Icon
@@ -36,7 +36,7 @@ const totalPages = computed(() => Math.ceil(allArticles.value / props.limit));
       <NuxtLink
         v-for="i in totalPages"
         :key="i"
-        :to="`/articles/overview/?page=${i}`"
+        :to="`/portfolio/overview/?page=${i}`"
         class="text-sm md:text-2xl font-semibold px-2 md:px-4 py-1 md:py-2 rounded-md border border-yellow-400 transition duration-1000 ease-in-out transform hover:scale-105"
         :class="{ 'bg-yellow-500 text-white': currentPage === i }"
       >
@@ -46,7 +46,7 @@ const totalPages = computed(() => Math.ceil(allArticles.value / props.limit));
       <!-- Next Page Button -->
       <NuxtLink
         v-if="currentPage < totalPages"
-        :to="`/articles/overview/?page=${currentPage + 1}`"
+        :to="`/portfolio/overview/?page=${currentPage + 1}`"
         class="flex items-center justify-center rounded-full p-2 md:p-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
       >
         <Icon

@@ -1,18 +1,16 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
   components: {
-    "dirs": [
+    dirs: [
       {
-        "path": "~/components", 
-        "global": true,
+        path: '~/components',
+        global: true,
         pathPrefix: false,
         preload: true,
-      }
-      
-    ]
+      },
+    ],
   },
   modules: [
     '@nuxtjs/tailwindcss',
@@ -21,7 +19,6 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@nuxt/image',
   ],
-  
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config.js',
@@ -30,18 +27,16 @@ export default defineNuxtConfig({
     viewer: true,
   },
   colorMode: {
-    classSuffix: ''
+    classSuffix: '',
   },
   content: {
     highlight: {
       theme: 'github-dark',
-      preload: [
-        'vue',
-      ]
+      preload: ['vue'],
     },
     navigation: {
-      fields: ['author', 'subject', 'position']
-    }
+      fields: ['author', 'subject', 'position'],
+    },
   },
   runtimeConfig: {
     private: {
@@ -53,10 +48,29 @@ export default defineNuxtConfig({
       appDomain: process.env.APP_DOMAIN,
       gitHash: process.env.GITHUB_SHA,
       releaseVersion: process.env.RELEASE_VERSION,
-    }
+    },
   },
   experimental: {
     writeEarlyHints: false,
   },
-  
-})
+  vite: {
+    resolve: {
+      alias: {
+        '@components': '/components', // Example alias
+      },
+    },
+    server: {
+      fs: {
+        strict: true, // Example server config
+      },
+    },
+    base: "./",
+    build: {
+      minify: "terser", // Vite minification using Terser
+    },
+    // Additional Vite configurations can go here
+  },
+  plugins: [
+    '~/plugins/kaboom.js', 
+  ],
+});

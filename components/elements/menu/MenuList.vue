@@ -16,6 +16,13 @@
           About
         </span>
       </nuxt-link>
+      <nuxt-link to="/series/">
+        <span
+          class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
+        >
+          Portfolio
+        </span>
+      </nuxt-link>
       <nuxt-link to="/contact-me">
         <span
           class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"

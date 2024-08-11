@@ -1,3 +1,10 @@
+// types/ICategory.ts
+
+export interface ITag {
+  title: string;
+  link: string;
+}
+
 export interface ICategory {
   title: string;
   message?: string;
@@ -6,9 +13,3 @@ export interface ICategory {
   lessonQuantity?: number;
   tags?: ITag[];
 }
-
-export interface ITag {
-  title:     string;
-  link: string;
-}
-

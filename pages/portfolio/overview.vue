@@ -6,8 +6,8 @@ const route = useRoute();
 const currentPage = computed(() => parseInt(route.query.page) || 1);
 const limit = ref(9);
 
-const { data: articles, refresh } = await useAsyncData("articles", () =>
-  queryContent("/articles")
+const { data: articles, refresh } = await useAsyncData("portfolio", () =>
+  queryContent("/portfolio")
     .skip((currentPage.value - 1) * limit.value)
     .limit(limit.value)
     .find()

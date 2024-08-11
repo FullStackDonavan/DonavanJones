@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { defineProps, PropType } from "@vue/runtime-core";
-import { ICategory } from "~/types/ICategory";
+import type { ICategory } from "~/types/ICategory"; // Use type-only import
 
-defineProps({
-  category: Object as PropType<ICategory>,
-});
+const props = defineProps<{
+  category: ICategory;
+}>();
 </script>
 
 <template>
