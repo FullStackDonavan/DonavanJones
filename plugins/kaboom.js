@@ -14,25 +14,17 @@ export default defineNuxtPlugin(nuxtApp => {
     }
 
     // Initialize Kaboom with the container
-    const baseWidth = 1280;
-const baseHeight = 720;
+    const k = kaboom({
+      width: 640,
+      height: 640,
+      clearColor: [0, 0, 0, 1],
+      scale: 1,
+      debug: true,
+      global: true,
+      touchToMouse: true,
+      canvas: document.querySelector("#gamecontainer"),
+    });
 
-const scale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
-
-// Ensure the game fits within the available screen space
-const width = Math.max(baseWidth, window.innerWidth);
-const height = Math.max(baseHeight, window.innerHeight);
-
-const k = kaboom({
-  width: width,
-  height: height,
-  clearColor: [0, 0, 0, 1],
-  scale: scale,
-  debug: true,
-  global: true,
-  touchToMouse: true,
-  canvas: document.querySelector("#gamecontainer"),
-});
 
 
 k.loadSprite("spritesheet", "./spritesheet.png", {

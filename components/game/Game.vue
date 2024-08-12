@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="thegcon">
     <div id="textbox-container" style="display: none">
       <div id="textbox">
         <p id="dialogue" class="ui-text"></p>
