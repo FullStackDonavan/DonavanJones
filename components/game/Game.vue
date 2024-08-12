@@ -8,9 +8,9 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center items-center">
-      <canvas id="gamecontainer"></canvas>
-    </div>
+  </div>
+  <div class="flex justify-center items-center w-full h-full">
+    <canvas id="gamecontainer"></canvas>
   </div>
 </template>
 
