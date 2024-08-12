@@ -3,16 +3,10 @@
     <section
       class="dark:bg-gray-950 py-8 border-t-2 border-b-2 border-gray-700 my-16"
     >
-      <h2
-        class="text-center text-2xl mb-2 font-bold leading-8 text-gray-800 dark:text-gray-300"
-      >
-        Technologies I Use
-      </h2>
-      <p
-        class="text-center text-lg font-extralight leading-8 text-gray-700 dark:text-gray-400"
-      >
+      <HeadlineTwo class="text-center"> Technologies I Use </HeadlineTwo>
+      <ParagraphDescription class="text-center">
         Expert in Various Technologies
-      </p>
+      </ParagraphDescription>
 
       <div ref="logosContainer" class="logos relative overflow-hidden py-10">
         <!-- Fade effect on both sides -->

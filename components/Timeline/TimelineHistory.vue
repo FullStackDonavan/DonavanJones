@@ -1,6 +1,6 @@
 <template>
-  <HeadlineTwo class="text-center">Where I've Worked</HeadlineTwo>
   <section class="container mx-auto px-8 pb-8">
+    <HeadlineTwo class="text-center mt-8">Where I've Worked</HeadlineTwo>
     <div class="flex items-center justify-center">
       <div class="flex flex-col md:grid grid-cols-9 mx-auto p-2">
         <TimelineJob
