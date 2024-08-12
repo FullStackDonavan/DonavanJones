@@ -7,7 +7,7 @@
           flexDirection="reverse"
           companyName="Amerus Financial"
           jobDate="December 2021 to June 2023"
-          jobTitle="Web Developer"
+          jobTitle="Software Engineer"
           jobImage="/img/Amerus-Logo.png"
           jobDescription="Developed an intuitive insurance agent reporting app with seamless data management. Created visually appealing websites for clients' unique needs. Implemented Go High Level for effective marketing funnels, enhancing conversions. Prioritized performance and UX, consistently exceeding expectations. Stayed updated on web trends, integrating innovation for better outcomes. Collaborated across teams, communicating complex ideas effectively. Showcased strong problem-solving, swiftly resolving challenges. Contributed to a dynamic work environment with a passion for outstanding digital experiences."
         />
@@ -25,7 +25,7 @@
           flexDirection="reverse"
           companyName="Footbridge Media"
           jobDate="May 2013 to May 2018"
-          jobTitle="Web Developer"
+          jobTitle="Junior Web Developer"
           jobImage="/img/fbm.png"
           jobDescription="Work with senior designers to manage large, complex design projects for small businesses to large corporations. Joined development meetings to learn about the development of projects and scopes. Oversaw the in-house WordPress theme framework for client projects and coordinated with the Layout department to incorporate Front End Updates."
         />
