@@ -29,10 +29,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-#gamecontainer {
-  /* Remove position and overflow styles if not needed */
-}
-
 @font-face {
   font-family: monogram;
   src: url(monogram.ttf);
@@ -42,12 +38,6 @@ body {
   font-family: monogram, monospace;
   font-size: 2rem;
   overflow: hidden;
-}
-
-#app {
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 
 #textbox {

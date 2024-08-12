@@ -14,17 +14,21 @@ export default defineNuxtPlugin(nuxtApp => {
     }
 
     // Initialize Kaboom with the container
+    const baseWidth = 1920;
+    const baseHeight = 1080;
+    
+    const scale = Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight);
+    
     const k = kaboom({
-      width: 640,
-      height: 640,
+      width: baseWidth * scale,
+      height: baseHeight * scale,
       clearColor: [0, 0, 0, 1],
-      scale: 1,
+      scale: scale,
       debug: true,
       global: true,
       touchToMouse: true,
       canvas: document.querySelector("#gamecontainer"),
     });
-
 
 
 k.loadSprite("spritesheet", "./spritesheet.png", {
