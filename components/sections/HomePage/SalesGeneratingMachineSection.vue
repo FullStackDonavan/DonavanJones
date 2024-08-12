@@ -74,4 +74,22 @@ export default {
   transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out,
     filter 0.7s ease-in-out;
 }
+.header {
+  white-space: nowrap;
+  overflow: hidden;
+  border-bottom: 5px solid greenyellow;
+  animation: animate 2s linear forwards;
+}
+h1.header {
+  color: green;
+}
+@keyframes animate {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 100%;
+  }
+}
 </style>
+

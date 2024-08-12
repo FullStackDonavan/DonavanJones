@@ -1,12 +1,16 @@
 <template>
   <ColumnAnimated animationClass="fade-in">
     <section
-      class="dark:bg-gray-950 text-white py-8 border-t-2 border-b-2 border-gray-700 my-16"
+      class="dark:bg-gray-950 py-8 border-t-2 border-b-2 border-gray-700 my-16"
     >
-      <h2 class="text-center text-2xl mb-2 font-bold leading-8">
+      <h2
+        class="text-center text-2xl mb-2 font-bold leading-8 text-gray-800 dark:text-gray-300"
+      >
         Technologies I Use
       </h2>
-      <p class="text-center text-lg font-extralight leading-8">
+      <p
+        class="text-center text-lg font-extralight leading-8 text-gray-700 dark:text-gray-400"
+      >
         Expert in Various Technologies
       </p>
 
@@ -130,11 +134,23 @@ onUnmounted(() => {
   height: 100%;
   pointer-events: none;
   z-index: 10;
-  background: linear-gradient(to right, rgba(3, 7, 18, 0.8), transparent);
+}
+
+.fade-overlay.left {
+  left: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), transparent);
 }
 
 .fade-overlay.right {
   right: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.dark .fade-overlay.left {
+  background: linear-gradient(to right, rgba(3, 7, 18, 0.8), transparent);
+}
+
+.dark .fade-overlay.right {
   background: linear-gradient(to left, rgba(3, 7, 18, 0.8), transparent);
 }
 
