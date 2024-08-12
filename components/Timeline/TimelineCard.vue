@@ -60,7 +60,7 @@
           alt="Card Image"
           class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full"
         />
-        <p class="text-xl font-semibold">{{ cardTitle }}</p>
+        <p class="text-xl font-semibold text-center">{{ cardTitle }}</p>
         <p class="text-sm font-bold text-center dark:text-gray-100">
           {{ cardDate }}
         </p>
@@ -129,7 +129,7 @@
           alt="Card Image"
           class="w-16 h-16 mb-2 -mt-16 bg-center bg-cover rounded-full"
         />
-        <p class="text-xl font-semibold">{{ cardTitle }}</p>
+        <p class="text-xl font-semibold text-center">{{ cardTitle }}</p>
         <p class="text-sm font-bold text-center dark:text-gray-100">
           {{ cardDate }}
         </p>
