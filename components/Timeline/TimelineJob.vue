@@ -5,7 +5,9 @@
   >
     <TimelineCard
       columnStart="true"
-      :cardTitle="jobTitle"
+      :cardCompany="jobTitle"
+      :cardDate="jobDate"
+      :cardTitle="companyName"
       :cardDescription="jobDescription"
       :cardImage="jobImage"
     />
@@ -14,7 +16,9 @@
   <div class="flex md:contents" v-else-if="flexDirection === 'forward'">
     <TimelineIntersection />
     <TimelineCard
-      :cardTitle="jobTitle"
+      :cardCompany="jobTitle"
+      :cardDate="jobDate"
+      :cardTitle="companyName"
       :cardDescription="jobDescription"
       :cardImage="jobImage"
     />
@@ -25,7 +29,9 @@
 export default {
   props: {
     flexDirection: String,
+    companyName: String,
     jobTitle: String,
+    jobDate: String,
     jobImage: String,
     jobDescription: String,
   },
