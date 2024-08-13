@@ -50,10 +50,10 @@ watch(
             >Service Area Business</span
           >
         </NuxtLink>
-      </li>
+      </li> -->
       <li>
         <NuxtLink
-          to="/about-us"
+          to="/about-me"
           class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
         >
           <Icon
@@ -65,7 +65,7 @@ watch(
           <span class="flex-1 ml-3 whitespace-nowrap">About Us</span>
         </NuxtLink>
       </li>
-      <li>
+      <!-- <li>
         <NuxtLink
           to="/portfolio/overview"
           class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -92,7 +92,7 @@ watch(
           <span class="flex-1 ml-3 whitespace-nowrap">Dashboard</span>
         </NuxtLink>
       </li> -->
-      <li v-if="!isLoggedIn">
+      <!-- <li v-if="!isLoggedIn">
         <NuxtLink
           to="/login"
           class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -149,7 +149,7 @@ watch(
           />
           <span class="flex-1 ml-3 whitespace-nowrap">logout</span>
         </span>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>
