@@ -3,7 +3,7 @@
     <SlantedSection
       height="250px"
       backgroundColor="#CBD5E1"
-      :reverse="false"
+      :reverse="true"
       :isTop="true"
     />
     <SectionContainer>

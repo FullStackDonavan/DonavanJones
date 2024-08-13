@@ -23,7 +23,7 @@ export default {
         author: "Donavan Jones",
         title: "View Projects",
         des: "Dive into a curated selection of my most recent and impactful projects. From innovative web applications to dynamic websites, each project showcases my skills and dedication to crafting exceptional digital experiences. Browse through to see how I bring concepts to life with clean, efficient code and modern design principles.",
-        linkUrl: "/portfolio/overview/",
+        linkUrl: "/",
         buttonText: "View Projects",
       },
       {
@@ -39,7 +39,7 @@ export default {
         author: "Donavan Jones",
         title: "Contact Me",
         des: "I'm always excited to connect with new people and explore opportunities. Whether you have a project in mind, need advice, or just want to chat about tech, feel free to reach out. Let's discuss how we can collaborate to bring your ideas to life.",
-        linkUrl: "/contact-me",
+        linkUrl: "/",
         buttonText: "Contact Me",
       },
     ]);

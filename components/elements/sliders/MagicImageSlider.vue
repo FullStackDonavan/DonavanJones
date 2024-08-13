@@ -2,42 +2,54 @@
   <BasicSection class="mt-12">
     <div class="carousel">
       <!-- list items -->
-      <div class="list">
-        <div class="item" v-for="(item, index) in items" :key="index">
-          <NuxtImg :src="item.img" format="webp" />
-          <div class="content">
-            <div class="author">{{ item.author }}</div>
-            <div class="title">{{ item.title }}</div>
-            <div class="des">{{ item.des }}</div>
-            <div class="buttons">
-              <NuxtLink
-                :to="item.linkUrl || '/get-started'"
-                class="carouselButton center"
-              >
-                {{ item.buttonText || "Get Started!" }}
-              </NuxtLink>
+      <GridTwoColumns>
+        <div class="list">
+          <div class="item" v-for="(item, index) in items" :key="index">
+            <NuxtImg :src="item.img" format="webp" />
+            <div class="content">
+              <div class="author">{{ item.author }}</div>
+              <div class="title">{{ item.title }}</div>
+              <div class="des">{{ item.des }}</div>
+              <div class="buttons">
+                <NuxtLink
+                  :to="item.linkUrl || '/get-started'"
+                  class="carouselButton center"
+                >
+                  {{ item.buttonText || "Get Started!" }}
+                </NuxtLink>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- list thumbnail -->
-      <div class="thumbnail">
-        <div class="item" v-for="(item, index) in items" :key="index">
-          <NuxtImg :src="item.img" format="webp" />
-          <div class="content">
-            <div class="title">{{ item.title }}</div>
+        <!-- list thumbnail -->
+        <div>
+          <div class="thumbnail">
+            <div class="item" v-for="(item, index) in items" :key="index">
+              <NuxtImg :src="item.img" format="webp" />
+              <div class="content">
+                <div class="title">{{ item.title }}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- next prev -->
-      <div class="arrows">
-        <button id="prev" @click="showSlider('prev')" :disabled="disableArrows">
-          &lt;
-        </button>
-        <button id="next" @click="showSlider('next')" :disabled="disableArrows">
-          &gt;
-        </button>
-      </div>
+          <!-- next prev -->
+          <div class="arrows">
+            <button
+              id="prev"
+              @click="showSlider('prev')"
+              :disabled="disableArrows"
+            >
+              &lt;
+            </button>
+            <button
+              id="next"
+              @click="showSlider('next')"
+              :disabled="disableArrows"
+            >
+              &gt;
+            </button>
+          </div>
+        </div></GridTwoColumns
+      >
       <!-- time running -->
       <div class="time"></div>
     </div>
