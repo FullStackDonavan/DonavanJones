@@ -9,18 +9,18 @@ export default (name: string): ICategory[][] => {
     {
       title: 'PHP',
       message: 'PHP Projects that I have Worked On',
-      image: '/img/nuxt3.svg',
+      image: '/img/logos/php.svg',
       link: '/categories/php',
       lessonQuantity: 1,
-      tags: [{ title: 'Front End', link: '/frontend-courses' }]
+      tags: [{ title: 'WordPress', link: '/tags/wordpress' }]
     },
     {
       title: 'JavaScript',
       message: 'JavaScript Projects that I have Worked On',
-      image: '/img/laravel.svg',
-      link: '/categories/laravel',
+      image: '/img/logos/javascript.png',
+      link: '/categories/javascript',
       lessonQuantity: 2,
-      tags: [{ title: 'Back End', link: '/backend-courses' }]
+      tags: [{ title: 'Vue', link: '/tags/vue' },{ title: 'Nuxt', link: '/tags/nuxt' }]
     },
     // ... other categories
   ];

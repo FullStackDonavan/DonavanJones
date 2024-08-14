@@ -36,21 +36,7 @@ watch(
           <span class="ml-3">Home</span>
         </NuxtLink>
       </li>
-      <!-- <li>
-        <NuxtLink
-          to="/house-painting-marketing-program"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          <Icon
-            name="material-symbols:location-on-rounded"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="flex-1 ml-3 whitespace-nowrap"
-            >Service Area Business</span
-          >
-        </NuxtLink>
-      </li> -->
+
       <li>
         <NuxtLink
           to="/about-me"
@@ -63,6 +49,19 @@ watch(
           />
 
           <span class="flex-1 ml-3 whitespace-nowrap">About Us</span>
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink
+          to="/categories"
+          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <Icon
+            name="material-symbols:location-on-rounded"
+            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            size="50"
+          />
+          <span class="flex-1 ml-3 whitespace-nowrap">Portfolio</span>
         </NuxtLink>
       </li>
       <!-- <li>

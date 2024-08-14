@@ -7,14 +7,14 @@ const route = useRoute();
 const articles = ref([]);
 const pending = ref(true);
 
-// Fetch data based on the dynamic `name` parameter
+// Fetch data based on the dynamic `name` parameter, focusing on tags
 onMounted(async () => {
-  const categoryName = route.params.name; // Access the `name` parameter from the URL
+  const tagName = route.params.name; // Access the `name` parameter from the URL
 
   try {
     articles.value = await queryContent("portfolio")
-      .sort({ title: 1, category: -1 })
-      .where({ category: { $contains: categoryName } }) // Fetch articles based on the category name
+      .sort({ title: 1 })
+      .where({ tags: { $contains: tagName } }) // Fetch articles based on the tag name
       .find();
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -31,7 +31,7 @@ const setColorTheme = (newTheme: Theme) => {
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl font-bold mb-4">{{ route.params.name }} Projects</h1>
-    <!-- Dynamic title -->
+    <!-- Dynamic title based on the tag -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div v-if="pending" class="col-span-full text-center text-gray-500">
         Loading...

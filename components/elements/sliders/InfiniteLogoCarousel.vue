@@ -46,9 +46,10 @@ const logos = ref([
     alt: "CSS3",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+    src: "/img/logos/javascript.png",
     alt: "JavaScript",
   },
+  { src: "/img/logos/php.svg", alt: "PHP" },
   { src: "/img/logos/sass.png", alt: "SCSS" },
   { src: "/img/logos/tailwind.svg", alt: "Tailwind CSS" },
   { src: "https://vuejs.org/images/logo.png", alt: "Vue.js" },
