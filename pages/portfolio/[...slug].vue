@@ -97,15 +97,14 @@
               </a>
             </span>
 
-            <span v-if="doc.liveSite" class="ml-4">
-              Live Site:
+            <span v-if="doc.liveSite">
               <a
                 :href="doc.liveSite"
-                class="text-blue-500 hover:underline"
+                class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Visit Live Site
+                Live Site
               </a>
             </span>
           </div>
