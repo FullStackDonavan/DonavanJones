@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute } from "#app"; // Adjust the import if necessary
+import { useRoute } from "#app";
 
 // Capture the dynamic route parameter
 const route = useRoute();
@@ -14,7 +14,7 @@ onMounted(async () => {
   try {
     articles.value = await queryContent("portfolio")
       .sort({ title: 1, category: -1 })
-      .where({ category: { $contains: categoryName } }) // Fetch articles based on the category name
+      .where({ category: categoryName }) // Fetch articles based on the category name
       .find();
   } catch (error) {
     console.error("Error fetching content:", error);
@@ -23,15 +23,49 @@ onMounted(async () => {
   }
 });
 
-const setColorTheme = (newTheme: Theme) => {
-  useColorMode().preference = newTheme;
+// Truncate description function
+const truncateDescription = (text: string, length: number) => {
+  return text.length > length ? text.substring(0, length) + "..." : text;
 };
+
+// Get the previous route to handle back navigation
+const previousRoute = ref<string | null>(null);
+
+onMounted(() => {
+  const queryFrom = route.query.from as string;
+  if (queryFrom) {
+    previousRoute.value = queryFrom;
+  }
+});
 </script>
 
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-4">{{ route.params.name }} Projects</h1>
-    <!-- Dynamic title -->
+    <nuxt-link
+      v-if="previousRoute"
+      :to="previousRoute"
+      class="block cursor-pointer mb-4 text-blue-500 hover:underline"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="inline h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M11 17l-5-5m0 0l5-5m-5 5h12"
+        />
+      </svg>
+      Back
+    </nuxt-link>
+
+    <h1 class="text-2xl font-bold mb-4 uppercase">
+      {{ route.params.name }} Projects
+    </h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div v-if="pending" class="col-span-full text-center text-gray-500">
         Loading...
@@ -47,12 +81,18 @@ const setColorTheme = (newTheme: Theme) => {
         :key="index"
         class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
       >
+        <img
+          v-if="article.excerptImage"
+          :src="article.excerptImage"
+          :alt="article.title"
+          class="w-full h-48 object-cover rounded-t-lg mb-4"
+        />
         <h2 class="text-xl font-semibold mb-2">{{ article.title }}</h2>
-        <p class="text-gray-700 dark:text-gray-300">
-          {{ article.description }}
-        </p>
+        <!-- <p class="text-gray-700 dark:text-gray-300">
+          {{ truncateDescription(article.description, 100) }}
+        </p> -->
         <NuxtLink
-          :to="article._path"
+          :to="{ path: article._path, query: { from: route.fullPath } }"
           class="text-blue-500 hover:underline mt-2 inline-block"
         >
           Read more
