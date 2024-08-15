@@ -13,7 +13,6 @@ onMounted(async () => {
 
   try {
     articles.value = await queryContent("portfolio")
-      .sort({ title: 1, category: -1 })
       .where({ tags: { $contains: tagName } }) // Fetch articles based on the tag name
       .find();
   } catch (error) {
