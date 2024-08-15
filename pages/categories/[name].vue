@@ -80,9 +80,10 @@ onMounted(() => {
         :key="index"
         class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
       >
-        <img
+        <NuxtImg
           v-if="article.excerptImage"
           :src="article.excerptImage"
+          format="webp"
           :alt="article.title"
           class="w-full h-48 object-cover rounded-t-lg mb-4"
         />
