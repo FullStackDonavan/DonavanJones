@@ -1,26 +1,36 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "#app";
 
-// Capture the dynamic route parameter
 const route = useRoute();
 const articles = ref([]);
 const pending = ref(true);
+const limit = ref(9);
 
-// Fetch data based on the dynamic `name` parameter
-onMounted(async () => {
-  const categoryName = route.params.name; // Access the `name` parameter from the URL
+const currentPage = computed(() => parseInt(route.query.page as string) || 1);
+
+const fetchArticles = async () => {
+  const categoryName = route.params.name;
+
+  pending.value = true;
 
   try {
-    articles.value = await queryContent("portfolio")
-      .where({ category: categoryName }) // Fetch articles based on the category name
+    articles.value = await queryContent("/portfolio")
+      .where({ category: { $contains: categoryName } })
+      .skip((currentPage.value - 1) * limit.value)
+      .limit(limit.value)
       .find();
   } catch (error) {
     console.error("Error fetching content:", error);
   } finally {
     pending.value = false;
   }
-});
+};
+
+// Fetch articles on component mount and when the page or tag name changes
+onMounted(fetchArticles);
+
+watch([() => route.params.name, currentPage], fetchArticles);
 
 // Truncate description function
 const truncateDescription = (text: string, length: number) => {
@@ -36,8 +46,20 @@ onMounted(() => {
     previousRoute.value = queryFrom;
   }
 });
-</script>
 
+// Compute the total number of pages based on the total number of articles
+const { data: totalArticlesCount } = await useAsyncData(
+  "totalArticlesCount",
+  () =>
+    queryContent("/portfolio")
+      .where({ category: { $contains: route.params.name } })
+      .count()
+);
+
+const totalPages = computed(() =>
+  Math.ceil(totalArticlesCount.value / limit.value)
+);
+</script>
 <template>
   <div class="container mx-auto px-4 py-8">
     <nuxt-link
@@ -65,6 +87,7 @@ onMounted(() => {
     <h1 class="text-2xl font-bold mb-4 uppercase">
       {{ route.params.name }} Projects
     </h1>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <div v-if="pending" class="col-span-full text-center text-gray-500">
         Loading...
@@ -99,11 +122,13 @@ onMounted(() => {
         </NuxtLink>
       </div>
     </div>
+
+    <!-- Pagination -->
+    <Pagination
+      :currentPage="currentPage"
+      :limit="limit"
+      :totalPages="totalPages"
+      v-if="totalPages > 1"
+    />
   </div>
 </template>
-
-<style scoped>
-.container {
-  max-width: 1200px;
-}
-</style>

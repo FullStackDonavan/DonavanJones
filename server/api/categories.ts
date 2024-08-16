@@ -20,7 +20,7 @@ export default (name: string): ICategory[][] => {
       image: '/img/logos/javascript.png',
       link: '/categories/javascript',
       lessonQuantity: 2,
-      tags: [{ title: 'Vue', link: '/tags/vue' },{ title: 'Nuxt', link: '/tags/nuxt' }]
+      tags: [{ title: 'Nuxt', link: '/tags/nuxt' }]
     },
     // ... other categories
   ];

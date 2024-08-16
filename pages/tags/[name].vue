@@ -1,26 +1,36 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "#app";
 
-// Capture the dynamic route parameter
 const route = useRoute();
 const articles = ref([]);
 const pending = ref(true);
+const limit = ref(9);
 
-// Fetch data based on the dynamic `name` parameter
-onMounted(async () => {
-  const tagName = route.params.name; // Access the `name` parameter from the URL
+const currentPage = computed(() => parseInt(route.query.page as string) || 1);
+
+const fetchArticles = async () => {
+  const tagName = route.params.name;
+
+  pending.value = true;
 
   try {
     articles.value = await queryContent("portfolio")
-      .where({ tags: { $contains: tagName } }) // Fetch articles based on the tag name
+      .where({ tags: { $contains: tagName } })
+      .skip((currentPage.value - 1) * limit.value)
+      .limit(limit.value)
       .find();
   } catch (error) {
     console.error("Error fetching content:", error);
   } finally {
     pending.value = false;
   }
-});
+};
+
+// Fetch articles on component mount and when the page or tag name changes
+onMounted(fetchArticles);
+
+watch([() => route.params.name, currentPage], fetchArticles);
 
 // Truncate description function
 const truncateDescription = (text: string, length: number) => {
@@ -36,8 +46,20 @@ onMounted(() => {
     previousRoute.value = queryFrom;
   }
 });
-</script>
 
+// Compute the total number of pages based on the total number of articles
+const { data: totalArticlesCount } = await useAsyncData(
+  "totalArticlesCount",
+  () =>
+    queryContent("portfolio")
+      .where({ tags: { $contains: route.params.name } })
+      .count()
+);
+
+const totalPages = computed(() =>
+  Math.ceil(totalArticlesCount.value / limit.value)
+);
+</script>
 <template>
   <div class="container mx-auto px-4 py-8">
     <nuxt-link
@@ -99,11 +121,13 @@ onMounted(() => {
         </NuxtLink>
       </div>
     </div>
+
+    <!-- Pagination -->
+    <Pagination
+      :currentPage="currentPage"
+      :limit="limit"
+      :totalPages="totalPages"
+      v-if="totalPages > 1"
+    />
   </div>
 </template>
-
-<style scoped>
-.container {
-  max-width: 1200px;
-}
-</style>
