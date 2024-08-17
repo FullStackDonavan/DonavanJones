@@ -40,12 +40,9 @@ watch(
 
 <template>
   <div class="hidden md:flex justify-between space-x-10 align-bottom mt-14">
-    <NuxtLink
-      to="tel:+1863-339-9964"
-      class="hover:scale-110 transition-transform duration-500"
-    >
+    <NuxtLink to="tel:+1863-339-9964" class="">
       <svg
-        class="dark:text-gray-50 h-6 w-6 lg:block hover:dark:text-blue-400 hover:text-blue-400"
+        class="dark:text-gray-50 h-6 w-6 lg:block transition-colors duration-300 ease-in-out hover:dark:text-blue-400 hover:text-blue-400"
         fill="currentColor"
         viewBox="0 0 24 24"
         aria-hidden="true"
@@ -57,13 +54,13 @@ watch(
     </NuxtLink>
 
     <span
-      class="md:block hover:scale-110 transition-transform duration-500"
+      class="md:block"
       @click="setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
     >
       <svg
         v-if="$colorMode.value == 'dark'"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-gray-50 lg:block hover:dark:text-yellow-400 hover:text-yellow-400"
+        class="h-6 w-6 text-gray-50 lg:block hover:dark:text-yellow-400 hover:text-yellow-400 transition-colors duration-300 ease-in-out"
         viewBox="0 0 20 20"
         fill="currentColor"
       >
@@ -74,7 +71,7 @@ watch(
       <svg
         v-if="$colorMode.value == 'light'"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 lg:block hover:dark:text-yellow-400 hover:text-yellow-400"
+        class="h-6 w-6 lg:block hover:dark:text-yellow-400 hover:text-yellow-400 transition-colors duration-300 ease-in-out"
         viewBox="0 0 20 20"
         fill="currentColor "
       >

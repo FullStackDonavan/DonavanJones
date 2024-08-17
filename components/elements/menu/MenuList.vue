@@ -13,7 +13,7 @@
           Home
         </span>
         <span
-          class="absolute left-0 bottom-[40px] h-0.5 transition-all duration-300 group-hover:w-full"
+          class="absolute left-0 bottom-[0] h-0.5 transition-all duration-300 group-hover:w-full"
           :class="{
             'w-0 bg-blue-500 dark:bg-blue-300': !isActive('/'),
           }"
@@ -36,7 +36,7 @@
           About
         </span>
         <span
-          class="absolute left-0 bottom-[40px] h-0.5 transition-all duration-300 group-hover:w-full"
+          class="absolute left-0 bottom-[0] h-0.5 transition-all duration-300 group-hover:w-full"
           :class="{
             'w-0 bg-blue-500 dark:bg-blue-300': !isActive('/about-me'),
           }"
@@ -59,7 +59,7 @@
           Portfolio
         </span>
         <span
-          class="absolute left-0 bottom-[40px] h-0.5 transition-all duration-300 group-hover:w-full"
+          class="absolute left-0 bottom-[0] h-0.5 transition-all duration-300 group-hover:w-full"
           :class="{
             'w-0 bg-blue-500 dark:bg-blue-300': !isActive('/categories/'),
           }"

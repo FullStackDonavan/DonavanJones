@@ -17,7 +17,7 @@ await useUser();
   <NuxtLayout>
     <div class="dark:bg-gray-900 dark:text-slate-300">
       <!-- Overlay Component -->
-      <Overlay />
+      <!-- <Overlay /> -->
       <NuxtPage />
     </div>
   </NuxtLayout>
