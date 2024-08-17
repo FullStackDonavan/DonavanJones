@@ -151,6 +151,7 @@
 </template>
 
 <script>
+// Import statement in your Vue component script
 import SkeletonLoader from "~/components/SkeletonLoaders/TimelineCardSkeletonLoader.vue";
 
 export default {

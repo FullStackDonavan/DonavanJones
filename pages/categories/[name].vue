@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "#app";
-import SkeletonLoader from "~/components/SkeletonLoader.vue";
+import SkeletonLoader from "~/components/SkeletonLoaders/SkeletonLoader.vue";
 
 const route = useRoute();
 const articles = ref([]);
