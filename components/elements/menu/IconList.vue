@@ -40,7 +40,10 @@ watch(
 
 <template>
   <div class="hidden md:flex justify-between space-x-10 align-bottom mt-14">
-    <NuxtLink to="tel:+1863-339-9964">
+    <NuxtLink
+      to="tel:+1863-339-9964"
+      class="hover:scale-110 transition-transform duration-500"
+    >
       <svg
         class="dark:text-gray-50 h-6 w-6 lg:block hover:dark:text-blue-400 hover:text-blue-400"
         fill="currentColor"
@@ -54,7 +57,7 @@ watch(
     </NuxtLink>
 
     <span
-      class="md:block"
+      class="md:block hover:scale-110 transition-transform duration-500"
       @click="setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
     >
       <svg
