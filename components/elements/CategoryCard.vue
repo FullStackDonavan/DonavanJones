@@ -29,7 +29,7 @@ const props = defineProps<{
             <!--              {{category.lessonQuantity}}-->
           </p>
         </div>
-        <div role="img" aria-label="bookmark">
+        <!-- <div role="img" aria-label="bookmark">
           <svg
             class="focus:outline-none dark:text-white text-gray-800"
             width="28"
@@ -46,26 +46,26 @@ const props = defineProps<{
               stroke-linejoin="round"
             />
           </svg>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="px-2">
-      <p
-        tabindex="0"
-        class="focus:outline-none text-sm leading-5 py-4 dark:text-white"
-      >
-        {{ category.message }}
-      </p>
-      <div tabindex="0" class="focus:outline-none flex">
-        <nuxt-link
-          :to="tag.link"
-          v-for="(tag, index) in category.tags"
-          :key="index"
-          class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100"
-        >
-          #{{ tag.title }}
-        </nuxt-link>
-      </div>
-    </div>
+    <p
+      tabindex="0"
+      class="focus:outline-none text-sm leading-5 py-4 dark:text-white"
+    >
+      {{ category.message }}
+    </p>
   </nuxt-link>
+  <div class="px-2">
+    <div tabindex="0" class="focus:outline-none flex">
+      <nuxt-link
+        :to="tag.link"
+        v-for="(tag, index) in category.tags"
+        :key="index"
+        class="py-2 px-4 mr-2 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 hover:scale-110 transition-transform duration-500"
+      >
+        #{{ tag.title }}
+      </nuxt-link>
+    </div>
+  </div>
 </template>

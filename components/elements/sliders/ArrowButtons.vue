@@ -1,7 +1,19 @@
 <template>
   <div class="arrows">
-    <button :disabled="disabled" @click="$emit('click', 'prev')">&lt;</button>
-    <button :disabled="disabled" @click="$emit('click', 'next')">&gt;</button>
+    <button
+      class="hover:scale-105 transition-transform duration-500"
+      :disabled="disabled"
+      @click="$emit('click', 'prev')"
+    >
+      &lt;
+    </button>
+    <button
+      class="hover:scale-105 transition-transform duration-500"
+      :disabled="disabled"
+      @click="$emit('click', 'next')"
+    >
+      &gt;
+    </button>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
   >
     <ColumnAnimated animationClass="fade-in">
       <div
-        class="flex flex-col w-full max-w-sm mx-4 my-6 shadow-lg min-w-[30px] relative"
+        class="flex flex-col w-full max-w-sm mx-4 my-6 shadow-lg min-w-[30px] relative hover:scale-105 transition-transform duration-500"
       >
         <!-- Fixed width for card, responsive min width -->
         <div class="py-6 rounded-t-lg bg-gray-50 dark:bg-gray-700">
@@ -75,7 +75,7 @@
   >
     <ColumnAnimated animationClass="fade-in">
       <div
-        class="flex flex-col w-full max-w-sm mx-4 my-6 shadow-lg min-w-[30px] relative"
+        class="flex flex-col w-full max-w-sm mx-4 my-6 shadow-lg min-w-[30px] relative hover:scale-105 transition-transform duration-500"
       >
         <!-- Fixed width for card, responsive min width -->
         <div class="py-6 rounded-t-lg bg-gray-50 dark:bg-gray-700">

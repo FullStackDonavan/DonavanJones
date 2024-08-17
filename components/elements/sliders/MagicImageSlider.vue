@@ -13,7 +13,7 @@
               <div class="buttons">
                 <NuxtLink
                   :to="item.linkUrl || '/get-started'"
-                  class="carouselButton center"
+                  class="carouselButton center hover:scale-105 transition-transform duration-500"
                 >
                   {{ item.buttonText || "Get Started!" }}
                 </NuxtLink>
@@ -24,7 +24,11 @@
         <!-- list thumbnail -->
         <div>
           <div class="thumbnail">
-            <div class="item" v-for="(item, index) in items" :key="index">
+            <div
+              class="item hover:scale-105 transition-transform duration-500"
+              v-for="(item, index) in items"
+              :key="index"
+            >
               <NuxtImg :src="item.img" format="webp" />
               <div class="content">
                 <div class="title">{{ item.title }}</div>
@@ -37,6 +41,7 @@
               id="prev"
               @click="showSlider('prev')"
               :disabled="disableArrows"
+              class="hover:scale-105 transition-transform duration-500"
             >
               &lt;
             </button>
@@ -44,6 +49,7 @@
               id="next"
               @click="showSlider('next')"
               :disabled="disableArrows"
+              class="hover:scale-105 transition-transform duration-500"
             >
               &gt;
             </button>

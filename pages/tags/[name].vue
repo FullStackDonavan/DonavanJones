@@ -100,7 +100,7 @@ const totalPages = computed(() =>
       <div
         v-for="(article, index) in articles"
         :key="index"
-        class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+        class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transition-transform duration-500"
       >
         <NuxtImg
           v-if="article.excerptImage"
