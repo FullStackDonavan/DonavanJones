@@ -106,6 +106,7 @@ const totalPages = computed(() =>
         <NuxtImg
           v-if="article.excerptImage"
           :src="article.excerptImage"
+          quality="80"
           format="webp"
           :alt="article.title"
           class="w-full h-48 object-cover rounded-t-lg mb-4"

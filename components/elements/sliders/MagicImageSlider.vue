@@ -5,7 +5,7 @@
       <GridTwoColumns>
         <div class="list">
           <div class="item" v-for="(item, index) in items" :key="index">
-            <NuxtImg :src="item.img" format="webp" />
+            <NuxtImg :src="item.img" quality="80" format="webp" />
             <div class="content">
               <div class="author">{{ item.author }}</div>
               <div class="title">{{ item.title }}</div>
@@ -29,7 +29,7 @@
               v-for="(item, index) in items"
               :key="index"
             >
-              <NuxtImg :src="item.img" format="webp" />
+              <NuxtImg :src="item.img" quality="80" format="webp" />
               <div class="content">
                 <div class="title">{{ item.title }}</div>
               </div>
