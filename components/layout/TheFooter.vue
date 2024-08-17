@@ -1,5 +1,5 @@
 <template>
-  <footer class="dark:bg-gray-900 py-6 text-center">
+  <footer class="dark:bg-gray-900 py-6 text-center transition duration-500">
     <!-- <template>
   <footer class="p-4 bg-gray-900 sm:p-6"> -->
     <div class="mx-auto max-w-screen-xl">

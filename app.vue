@@ -15,7 +15,7 @@ await useUser();
 </script>
 <template>
   <NuxtLayout>
-    <div class="dark:bg-gray-900 dark:text-slate-300">
+    <div class="dark:bg-gray-900 dark:text-slate-300 transition duration-500">
       <!-- Overlay Component -->
       <!-- <Overlay /> -->
       <NuxtPage />

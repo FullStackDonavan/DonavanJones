@@ -1,5 +1,5 @@
 <template>
-  <div class="patternLight dark:patternDark">
+  <div class="patternLight dark:patternDark transition-all duration-300">
     <slot />
   </div>
 </template>
