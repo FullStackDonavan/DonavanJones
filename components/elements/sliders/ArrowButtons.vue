@@ -1,14 +1,14 @@
 <template>
   <div class="arrows">
     <button
-      class="hover:scale-105 transition-transform duration-500"
+      class="hover:scale-125 transition-transform duration-500"
       :disabled="disabled"
       @click="$emit('click', 'prev')"
     >
       &lt;
     </button>
     <button
-      class="hover:scale-105 transition-transform duration-500"
+      class="hover:scale-125 transition-transform duration-500"
       :disabled="disabled"
       @click="$emit('click', 'next')"
     >

@@ -41,7 +41,7 @@
               id="prev"
               @click="showSlider('prev')"
               :disabled="disableArrows"
-              class="hover:scale-105 transition-transform duration-500"
+              class="hover:scale-125 transition-transform duration-500"
             >
               &lt;
             </button>
@@ -49,7 +49,7 @@
               id="next"
               @click="showSlider('next')"
               :disabled="disableArrows"
-              class="hover:scale-105 transition-transform duration-500"
+              class="hover:scale-125 transition-transform duration-500"
             >
               &gt;
             </button>
