@@ -25,7 +25,7 @@
         <div>
           <div class="thumbnail">
             <div
-              class="item hover:scale-105 transition-transform duration-500"
+              class="item hover:scale-110 transition-transform duration-500"
               v-for="(item, index) in items"
               :key="index"
             >
