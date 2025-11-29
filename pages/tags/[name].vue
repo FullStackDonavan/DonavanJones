@@ -94,7 +94,7 @@ const fetchArticles = async () => {
   pending.value = true;
 
   try {
-    articles.value = await queryContent("portfolio")
+    articles.value = await queryContent()
       .where({ tags: { $contains: tagName } })
       .skip((currentPage.value - 1) * limit.value)
       .limit(limit.value)
