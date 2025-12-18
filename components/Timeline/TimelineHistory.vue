@@ -9,7 +9,8 @@
           jobDate="July 2025 to Present"
           jobTitle="Software Engineer"
           jobImage="/img/Amerus-Logo.png"
-          jobDescription="Developed an intuitive insurance agent reporting app with seamless data management. Created visually appealing websites for clients' unique needs. Implemented Go High Level for effective marketing funnels, enhancing conversions. Prioritized performance and UX, consistently exceeding expectations. Stayed updated on web trends, integrating innovation for better outcomes. Collaborated across teams, communicating complex ideas effectively. Showcased strong problem-solving, swiftly resolving challenges. Contributed to a dynamic work environment with a passion for outstanding digital experiences."
+          jobDescription="I developed two production applications, the Amerus Financial app and the NBBA app. The Amerus Financial app includes financial calculators and structured checklists to support agents and clients in the decision making process. The NBBA app is a full client management system where agents sign up insurance clients, capture required information, and complete digital paperwork, while administrators receive generated PDFs and enroll clients into group plan insurance programs. In addition to the applications, I built and maintained client facing websites and implemented Go High Level marketing funnels to improve lead capture and conversion, with a strong focus on performance, usability, and reliable data handling.
+"
         />
 
         <TimelineJob
@@ -17,8 +18,9 @@
           companyName="Web Instinct"
           jobDate="August 2024 to April 2025"
           jobTitle="Software Engineer"
-          jobImage="/img/Amerus-Logo.png"
-          jobDescription="Developed an intuitive insurance agent reporting app with seamless data management. Created visually appealing websites for clients' unique needs. Implemented Go High Level for effective marketing funnels, enhancing conversions. Prioritized performance and UX, consistently exceeding expectations. Stayed updated on web trends, integrating innovation for better outcomes. Collaborated across teams, communicating complex ideas effectively. Showcased strong problem-solving, swiftly resolving challenges. Contributed to a dynamic work environment with a passion for outstanding digital experiences."
+          jobImage="/img/web_instinct_logo.png"
+          jobDescription="At this role, I designed and developed web applications, internal portals, and marketing websites using Concrete5 and WordPress. I built custom themes and functionality to meet business requirements, improve content management workflows, and support nontechnical users. I collaborated with stakeholders to deliver reliable, scalable solutions and maintained existing sites through updates, performance improvements, and security enhancements.
+"
         />
 
         <TimelineJob
