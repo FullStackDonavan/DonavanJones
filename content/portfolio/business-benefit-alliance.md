@@ -1,10 +1,10 @@
 ---
-title: Custom Painting by Dale
+title: Business Benefit Alliance
 description:
-excerptImage: /img/portfolio/custom-painting-by-dale.png
-slug: custom-painting-by-dale
+excerptImage: /img/portfolio/nbba.png
+slug: business-benefit-alliance
 author: Donavan Jones
-date: 01 July 2024
+date: 01 Sept 2025
 category: "javascript"
 tags:
   - "nuxt"
@@ -12,8 +12,8 @@ tags:
 github: "https://github.com/FullStackDonavan/CustomPaintingByDale"
 liveSite: "https://www.custompaintingbydale.com/"
 
-projectType: "freelance"
-employmentLink: ""
+projectType: "employment"
+employmentLink: "https://www.businessbenefitalliance.com"
 ---
 
 <a href="https://www.businessbenefitalliance.com" target="_blank" rel="noopener noreferrer">
