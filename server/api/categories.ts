@@ -12,7 +12,7 @@ export default (name: string): ICategory[][] => {
       image: '/img/logos/php.svg',
       link: '/categories/php',
       lessonQuantity: 1,
-      tags: [{ title: 'WordPress', link: '/tags/wordpress' },{ title: 'Custom', link: '/tags/custom' }]
+      tags: [{ title: 'WordPress', link: '/tags/wordpress' },{ title: 'Custom', link: '/tags/custom' },{ title: 'Concrete5', link: '/tags/concrete5' }]
     },
     {
       title: 'JavaScript',
