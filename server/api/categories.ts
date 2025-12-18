@@ -5,25 +5,30 @@ import type { ICategory } from '~/types/ICategory'; // Use type-only import
 export default (name: string): ICategory[][] => {
   const rowSize = 2;
 
-  const categories: ICategory[] = [
-    {
-      title: 'PHP',
-      message: 'PHP Projects that I have Worked On',
-      image: '/img/logos/php.svg',
-      link: '/categories/php',
-      lessonQuantity: 1,
-      tags: [{ title: 'WordPress', link: '/tags/wordpress' },{ title: 'Custom', link: '/tags/custom' },{ title: 'Concrete5', link: '/tags/concrete5' }]
-    },
-    {
-      title: 'JavaScript',
-      message: 'JavaScript Projects that I have Worked On',
-      image: '/img/logos/javascript.png',
-      link: '/categories/javascript',
-      lessonQuantity: 2,
-      tags: [{ title: 'Nuxt', link: '/tags/nuxt' }]
-    },
-    // ... other categories
-  ];
+ const categories: ICategory[] = [
+  {
+    title: 'PHP',
+    message: 'A collection of PHP projects I have built and maintained, including custom applications and CMS-based solutions.',
+    image: '/img/logos/php.svg',
+    link: '/categories/php',
+    lessonQuantity: 1,
+    tags: [
+      { title: 'WordPress', link: '/tags/wordpress' },
+      { title: 'Custom', link: '/tags/custom' },
+      { title: 'Concrete5', link: '/tags/concrete5' }
+    ]
+  },
+  {
+    title: 'JavaScript',
+    message: 'JavaScript projects showcasing modern frameworks, frontend architecture, and interactive user experiences.',
+    image: '/img/logos/javascript.png',
+    link: '/categories/javascript',
+    lessonQuantity: 2,
+    tags: [{ title: 'Nuxt', link: '/tags/nuxt' }]
+  }
+  // ... other categories
+];
+
 
   let row: ICategory[][] = [];
   let i, l, chunkSize = rowSize;
