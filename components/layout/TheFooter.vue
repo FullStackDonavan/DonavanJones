@@ -3,7 +3,7 @@
     <!-- <template>
   <footer class="p-4 bg-gray-900 sm:p-6"> -->
     <div class="mx-auto max-w-screen-xl">
-      <div class="md:flex md:justify-between">
+      <!-- <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <a href="/" class="flex items-center">
             <img
@@ -18,33 +18,11 @@
             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
               Resources
             </h2>
-            <!-- <ul class="text-gray-800 dark:text-gray-400">
-              <li class="mb-4">
-                <a href="/" class="hover:underline">Flowbite</a>
-              </li>
-              <li>
-                <a href="/" class="hover:underline">Tailwind CSS</a>
-              </li>
-            </ul> -->
           </div>
           <div>
             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
               Follow me
             </h2>
-            <!-- <ul class="text-gray-800 dark:text-gray-400">
-              <li class="mb-4">
-                <a
-                  href="https://github.com/themesberg/flowbite"
-                  class="hover:underline"
-                  >Github</a
-                >
-              </li>
-              <li>
-                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline"
-                  >Discord</a
-                >
-              </li>
-            </ul> -->
           </div>
           <div>
             <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
@@ -63,7 +41,7 @@
       </div>
       <hr
         class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"
-      />
+      /> -->
       <div class="sm:flex sm:items-center sm:justify-between">
         <span class="text-sm text-gray-800 sm:text-center dark:text-gray-400"
           >© 2025
