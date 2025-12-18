@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .patternLight {
+    background:
+      calc(.9*32px) calc(.9*32px)/calc(2*32px) calc(2*32px) conic-gradient(at 20% 20%,#0000 75%,rgba(202, 212, 224, 0.1) 0),
+      calc(-.1*32px) calc(-.1*32px)/calc(2*32px) calc(2*32px) conic-gradient(at 20% 20%,#0000 75%,rgba(202, 212, 224, 0.1) 0),
+      calc(.7*32px) calc(.7*32px)/calc(2*32px) calc(2*32px) conic-gradient(at 40% 40%,#0000 75%,rgba(255, 255, 255, 0.11) 0),
+      calc(-.3*32px) calc(-.3*32px)/calc(2*32px) calc(2*32px) conic-gradient(at 40% 40%,#0000 75%,rgba(255, 255, 255, 0.11) 0),
+      conic-gradient(from 90deg at 20% 20%,rgba(202, 212, 224, 0.1) 25%,rgba(255, 255, 255, 0.11) 0) 
+      0 0/32px 32px;
+  }
+  .patternDark {
+    background: none !important;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
+  }
+  .animation-pause {
+    animation-play-state: paused;
+  }
+}
