@@ -66,7 +66,7 @@
       />
       <div class="sm:flex sm:items-center sm:justify-between">
         <span class="text-sm text-gray-800 sm:text-center dark:text-gray-400"
-          >© 2024
+          >© 2025
           <NuxtLink to="/" class="hover:underline">Donavan Jones</NuxtLink>. All
           Rights Reserved.
         </span>
