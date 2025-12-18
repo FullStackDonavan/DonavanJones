@@ -6,6 +6,24 @@
         <TimelineJob
           flexDirection="reverse"
           companyName="Amerus Financial"
+          jobDate="July 2025 to Present"
+          jobTitle="Software Engineer"
+          jobImage="/img/Amerus-Logo.png"
+          jobDescription="Developed an intuitive insurance agent reporting app with seamless data management. Created visually appealing websites for clients' unique needs. Implemented Go High Level for effective marketing funnels, enhancing conversions. Prioritized performance and UX, consistently exceeding expectations. Stayed updated on web trends, integrating innovation for better outcomes. Collaborated across teams, communicating complex ideas effectively. Showcased strong problem-solving, swiftly resolving challenges. Contributed to a dynamic work environment with a passion for outstanding digital experiences."
+        />
+
+        <TimelineJob
+          flexDirection="forward"
+          companyName="Web Instinct"
+          jobDate="August 2024 to April 2025"
+          jobTitle="Software Engineer"
+          jobImage="/img/Amerus-Logo.png"
+          jobDescription="Developed an intuitive insurance agent reporting app with seamless data management. Created visually appealing websites for clients' unique needs. Implemented Go High Level for effective marketing funnels, enhancing conversions. Prioritized performance and UX, consistently exceeding expectations. Stayed updated on web trends, integrating innovation for better outcomes. Collaborated across teams, communicating complex ideas effectively. Showcased strong problem-solving, swiftly resolving challenges. Contributed to a dynamic work environment with a passion for outstanding digital experiences."
+        />
+
+        <TimelineJob
+          flexDirection="reverse"
+          companyName="Amerus Financial"
           jobDate="December 2021 to June 2023"
           jobTitle="Software Engineer"
           jobImage="/img/Amerus-Logo.png"
