@@ -1,5 +1,6 @@
 <template>
   <PatternSection>
+    <SkeletonDoor v-if="showDoor" @done="showDoor = false" />
     <MagicImageSlider :items="carouselItems" />
     <TimelineHistory />
     <InfiniteLogoCarousel />
@@ -11,10 +12,25 @@
 <script>
 import { ref } from "vue";
 import MagicImageSlider from "@/components/elements/sliders/MagicImageSlider.vue";
+import SkeletonDoor from '@/components/SkeletonLoaders/SkeletonDoor.vue'
 
 export default {
   components: {
     MagicImageSlider,
+    SkeletonDoor,
+  },
+  data() {
+    return {
+      showDoor: true
+    }
+  },
+  mounted() {
+    // Fallback in case the component doesn't emit done (keeps overlay visible for a short time)
+    // keep fallback long enough so it doesn't interrupt the full draw -> wait -> open sequence
+    // the loader timeline + post-draw wait can be several seconds; use a generous fallback
+    setTimeout(() => {
+      this.showDoor = false
+    }, 10000)
   },
   setup() {
     const carouselItems = ref([
