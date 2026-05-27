@@ -54,7 +54,7 @@
 
             <!-- AI -->
             <NuxtLink
-              to="/ai"
+              to="/engineering/ai"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
@@ -68,7 +68,7 @@
 
             <!-- Backend -->
             <NuxtLink
-              to="/backend"
+              to="/engineering/backend"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
@@ -82,7 +82,7 @@
 
             <!-- Infrastructure -->
             <NuxtLink
-              to="/infrastructure"
+              to="/engineering/infrastructure"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
