@@ -1,0 +1,16 @@
+---
+title: "Monolith vs Microservices"
+description: "Tradeoffs and reasoning behind splitting monoliths into microservices."
+date: 2026-05-26
+tags:
+  - backend
+  - architecture
+  - microservices
+draft: false
+slug: monolith-vs-microservices
+author: Donavan Jones
+---
+
+# Monolith vs Microservices
+
+Why I split my system and the tradeoffs involved.

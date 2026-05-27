@@ -1,0 +1,16 @@
+---
+title: "Semantic Retrieval"
+description: "Semantic retrieval techniques for theological AI systems."
+date: 2026-05-26
+tags:
+  - ai-engineering
+  - retrieval
+  - semantic
+draft: false
+slug: semantic-retrieval
+author: Donavan Jones
+---
+
+# Semantic Retrieval
+
+Semantic retrieval in AI systems for theology and religious texts.

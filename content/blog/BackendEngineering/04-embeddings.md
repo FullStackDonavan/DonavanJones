@@ -1,0 +1,16 @@
+---
+title: "Embeddings"
+description: "Embedding services in AI backend architectures."
+date: 2026-05-26
+tags:
+  - backend
+  - embeddings
+  - ai
+draft: false
+slug: embeddings
+author: Donavan Jones
+---
+
+# Embeddings
+
+How embedding services are used in AI backend systems.
