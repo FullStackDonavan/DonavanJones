@@ -68,7 +68,7 @@ watch(
           </NuxtLink>
         </div>
       </div>
-      <!-- Pagination -->
+      <!-- Pagination  -->
       <Pagination :currentPage="currentPage" :limit="9" />
     </div>
   </PatternSection>
