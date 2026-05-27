@@ -18,7 +18,7 @@ const totalPages = computed(() =>
   Math.ceil(totalArticlesCount.value / limit.value)
 );
 
-const limit = ref(16);
+const limit = ref(8);
 
 const { data: articles, refresh } = await useAsyncData("blog", () =>
   queryContent("/blog")
