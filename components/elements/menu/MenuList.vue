@@ -66,7 +66,7 @@
               </div>
             </NuxtLink>
 
-            <!-- Backend -->
+            <!-- Backend  -->
             <NuxtLink
               to="/engineering/backend"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
