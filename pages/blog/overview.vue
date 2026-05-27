@@ -18,7 +18,7 @@ const totalPages = computed(() =>
   Math.ceil(totalArticlesCount.value / limit.value)
 );
 
-const limit = ref(9);
+const limit = ref(16);
 
 const { data: articles, refresh } = await useAsyncData("blog", () =>
   queryContent("/blog")
@@ -42,7 +42,7 @@ watch(
   <PatternSection class="flex justify-center w-full">
     <div class="mt-8">
       <!-- Grid container -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Render articles -->
         <div
           v-for="article in articles"
