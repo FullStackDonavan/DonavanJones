@@ -20,13 +20,15 @@ const props = defineProps({
 // Use the current route to determine the context (category or tag)
 const route = useRoute();
 const basePath = computed(() => {
-  // Example: /categories/php or /tags/name
-  if (route.path.includes("/categories/")) {
+  // Example: /categories/php or /tags/name or /blog/overview
+  if (route.path.startsWith("/categories/")) {
     return `/categories/${route.params.name}`;
-  } else if (route.path.includes("/tags/")) {
+  } else if (route.path.startsWith("/tags/")) {
     return `/tags/${route.params.name}`;
+  } else if (route.path.startsWith("/blog/overview")) {
+    return "/blog/overview";
   }
-  return "/";
+  return route.path;
 });
 </script>
 <template>
