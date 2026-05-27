@@ -136,9 +136,9 @@ const navClass = (active) => [
 // Engineering sections
 const isEngineeringActive = computed(() => {
   return (
-    route.path.startsWith('/ai') ||
-    route.path.startsWith('/backend') ||
-    route.path.startsWith('/infrastructure')
+    route.path.startsWith('/engineering/ai') ||
+    route.path.startsWith('/engineering/backend') ||
+    route.path.startsWith('/engineering/infrastructure')
   )
 })
 

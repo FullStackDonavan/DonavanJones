@@ -9,7 +9,7 @@ const currentPage = computed(() => parseInt(route.query.page) || 1);
 const { data: totalArticlesCount } = await useAsyncData(
   "totalArticlesCount",
   () =>
-    queryContent("portfolio")
+    queryContent("blog")
       .where({ category: { $contains: route.params.name } })
       .count()
 );
