@@ -106,7 +106,7 @@
       </NuxtLink>
 
       <!-- Portfolio -->
-      <NuxtLink to="/projects" class="relative group">
+      <NuxtLink to="/categories" class="relative group">
         <span :class="navClass(isPortfolioActive)">
           Projects
         </span>
