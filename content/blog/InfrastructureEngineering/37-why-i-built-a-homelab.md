@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - homelab
   - motivation
-draft: false
+draft: true
 slug: why-i-built-a-homelab
 author: Donavan Jones
 ---

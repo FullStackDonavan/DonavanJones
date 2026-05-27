@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - workloads
   - homelab
-draft: false
+draft: true
 slug: real-deployed-workloads
 author: Donavan Jones
 ---

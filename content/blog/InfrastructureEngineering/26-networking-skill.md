@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - networking
   - skills
-draft: false
+draft: true
 slug: networking-skill
 author: Donavan Jones
 ---

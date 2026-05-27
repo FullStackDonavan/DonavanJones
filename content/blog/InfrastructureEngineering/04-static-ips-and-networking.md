@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - networking
   - raspberry-pi
-draft: false
+draft: true
 slug: static-ips-and-networking
 author: Donavan Jones
 ---

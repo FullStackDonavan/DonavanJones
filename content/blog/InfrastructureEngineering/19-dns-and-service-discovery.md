@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - dns
-draft: false
+draft: true
 slug: dns-and-service-discovery
 author: Donavan Jones
 ---

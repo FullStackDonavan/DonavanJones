@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - gitea
   - ci-cd
-draft: false
+draft: true
 slug: gitea-runners-pipeline
 author: Donavan Jones
 ---

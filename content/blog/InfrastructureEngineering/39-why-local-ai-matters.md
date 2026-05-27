@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - ai
   - homelab
-draft: false
+draft: true
 slug: why-local-ai-matters
 author: Donavan Jones
 ---

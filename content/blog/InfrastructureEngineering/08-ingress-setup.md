@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - ingress
   - kubernetes
-draft: false
+draft: true
 slug: ingress-setup
 author: Donavan Jones
 ---

@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - cluster
   - kubernetes
-draft: false
+draft: true
 slug: cluster-topology
 author: Donavan Jones
 ---

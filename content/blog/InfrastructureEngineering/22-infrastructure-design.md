@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - design
   - homelab
-draft: false
+draft: true
 slug: infrastructure-design
 author: Donavan Jones
 ---

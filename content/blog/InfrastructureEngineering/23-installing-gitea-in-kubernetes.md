@@ -7,7 +7,7 @@ tags:
   - gitea
   - kubernetes
   - ci-cd
-draft: false
+draft: true
 slug: installing-gitea-in-kubernetes
 author: Donavan Jones
 ---

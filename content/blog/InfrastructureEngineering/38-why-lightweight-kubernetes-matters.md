@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - k3s
-draft: false
+draft: true
 slug: why-lightweight-kubernetes-matters
 author: Donavan Jones
 ---

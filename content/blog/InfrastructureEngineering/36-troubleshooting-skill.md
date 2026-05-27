@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - troubleshooting
   - skills
-draft: false
+draft: true
 slug: troubleshooting-skill
 author: Donavan Jones
 ---

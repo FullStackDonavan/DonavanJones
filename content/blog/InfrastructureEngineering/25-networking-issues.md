@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - networking
-draft: false
+draft: true
 slug: networking-issues
 author: Donavan Jones
 ---

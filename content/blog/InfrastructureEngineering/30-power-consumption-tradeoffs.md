@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - power
   - homelab
-draft: false
+draft: true
 slug: power-consumption-tradeoffs
 author: Donavan Jones
 ---

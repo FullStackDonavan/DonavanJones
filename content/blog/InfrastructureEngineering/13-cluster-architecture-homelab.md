@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - architecture
-draft: false
+draft: true
 slug: cluster-architecture-homelab
 author: Donavan Jones
 ---

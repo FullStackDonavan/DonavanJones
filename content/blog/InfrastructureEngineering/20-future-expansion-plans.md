@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - homelab
   - expansion
-draft: false
+draft: true
 slug: future-expansion-plans
 author: Donavan Jones
 ---

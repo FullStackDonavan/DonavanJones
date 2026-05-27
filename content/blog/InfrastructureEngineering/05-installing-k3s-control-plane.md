@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - k3s
   - kubernetes
-draft: false
+draft: true
 slug: installing-k3s-control-plane
 author: Donavan Jones
 ---

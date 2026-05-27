@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - cooling
   - power
-draft: false
+draft: true
 slug: cooling-and-power-setup
 author: Donavan Jones
 ---

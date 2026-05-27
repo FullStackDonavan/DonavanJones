@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - control-plane
-draft: false
+draft: true
 slug: control-plane-taints
 author: Donavan Jones
 ---

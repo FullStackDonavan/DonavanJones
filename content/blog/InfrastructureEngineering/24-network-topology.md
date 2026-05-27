@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - networking
   - topology
-draft: false
+draft: true
 slug: network-topology
 author: Donavan Jones
 ---

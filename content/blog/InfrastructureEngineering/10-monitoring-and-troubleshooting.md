@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - monitoring
   - troubleshooting
-draft: false
+draft: true
 slug: monitoring-and-troubleshooting
 author: Donavan Jones
 ---

@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - hardware
   - homelab
-draft: false
+draft: true
 slug: consumer-hardware-usage
 author: Donavan Jones
 ---

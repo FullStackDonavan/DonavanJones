@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - k3s
   - kubernetes
-draft: false
+draft: true
 slug: joining-worker-nodes
 author: Donavan Jones
 ---

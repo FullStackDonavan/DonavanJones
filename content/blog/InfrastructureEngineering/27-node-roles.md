@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - nodes
-draft: false
+draft: true
 slug: node-roles
 author: Donavan Jones
 ---

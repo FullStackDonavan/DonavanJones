@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - storage
   - strategy
-draft: false
+draft: true
 slug: storage-strategy
 author: Donavan Jones
 ---

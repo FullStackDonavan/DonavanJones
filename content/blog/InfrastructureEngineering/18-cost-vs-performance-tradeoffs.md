@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - cost
   - performance
-draft: false
+draft: true
 slug: cost-vs-performance-tradeoffs
 author: Donavan Jones
 ---

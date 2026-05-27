@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - storage
   - kubernetes
-draft: false
+draft: true
 slug: persistent-volumes
 author: Donavan Jones
 ---

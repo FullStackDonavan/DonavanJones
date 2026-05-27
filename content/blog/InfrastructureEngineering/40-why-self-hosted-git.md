@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - git
   - ci-cd
-draft: false
+draft: true
 slug: why-self-hosted-git
 author: Donavan Jones
 ---

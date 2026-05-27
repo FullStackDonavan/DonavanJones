@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - workloads
   - homelab
-draft: false
+draft: true
 slug: separation-of-workloads
 author: Donavan Jones
 ---

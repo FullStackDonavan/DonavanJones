@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - kubernetes
   - pods
-draft: false
+draft: true
 slug: pod-layouts
 author: Donavan Jones
 ---

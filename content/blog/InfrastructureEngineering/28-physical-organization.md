@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - homelab
   - organization
-draft: false
+draft: true
 slug: physical-organization
 author: Donavan Jones
 ---

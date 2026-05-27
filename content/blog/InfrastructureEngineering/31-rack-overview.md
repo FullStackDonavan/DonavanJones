@@ -10,7 +10,7 @@ tags:
   - gitea
   - ci-cd
   - ai
-draft: false
+draft: true
 slug: rack-overview
 author: Donavan Jones
 ---

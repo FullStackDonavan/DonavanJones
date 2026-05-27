@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - systems
   - design
-draft: false
+draft: true
 slug: systems-thinking
 author: Donavan Jones
 ---

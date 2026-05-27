@@ -6,7 +6,7 @@ tags:
   - infrastructure
   - diagrams
   - architecture
-draft: false
+draft: true
 slug: architecture-diagrams
 author: Donavan Jones
 ---
