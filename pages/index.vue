@@ -1,6 +1,6 @@
 <template>
   <PatternSection>
-    <SkeletonDoor v-if="showDoor" @done="showDoor = false" />
+    <!-- <SkeletonDoor v-if="showDoor" @done="showDoor = false" /> -->
     <MagicImageSlider :items="carouselItems" />
     <TimelineHistory />
     <InfiniteLogoCarousel />

@@ -4,6 +4,19 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const currentPage = computed(() => parseInt(route.query.page) || 1);
+
+const { data: totalArticlesCount } = await useAsyncData(
+  "totalArticlesCount",
+  () =>
+    queryContent("portfolio")
+      .where({ category: { $contains: route.params.name } })
+      .count()
+);
+
+const totalPages = computed(() =>
+  Math.ceil(totalArticlesCount.value / limit.value)
+);
+
 const limit = ref(9);
 
 const { data: articles, refresh } = await useAsyncData("blog", () =>
@@ -69,7 +82,12 @@ watch(
         </div>
       </div>
       <!-- Pagination -->
-      <Pagination :currentPage="currentPage" :limit="9" />
+      <Pagination
+        :currentPage="currentPage"
+        :limit="limit"
+        :totalPages="totalPages"
+        v-if="totalPages > 1"
+      />
     </div>
   </PatternSection>
 </template>
