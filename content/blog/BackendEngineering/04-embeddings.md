@@ -6,7 +6,7 @@ tags:
   - backend
   - embeddings
   - ai
-draft: false
+draft: true
 slug: embeddings
 author: Donavan Jones
 ---

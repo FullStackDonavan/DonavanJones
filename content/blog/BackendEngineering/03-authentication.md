@@ -6,7 +6,7 @@ tags:
   - backend
   - authentication
   - services
-draft: false
+draft: true
 slug: authentication
 author: Donavan Jones
 ---

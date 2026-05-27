@@ -6,7 +6,7 @@ tags:
   - backend
   - batching
   - ai
-draft: false
+draft: true
 slug: batching
 author: Donavan Jones
 ---

@@ -6,7 +6,7 @@ tags:
   - backend
   - gpu
   - ai
-draft: false
+draft: true
 slug: gpu-allocation
 author: Donavan Jones
 ---

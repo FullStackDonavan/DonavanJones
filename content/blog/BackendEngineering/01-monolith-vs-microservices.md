@@ -6,7 +6,7 @@ tags:
   - backend
   - architecture
   - microservices
-draft: false
+draft: true
 slug: monolith-vs-microservices
 author: Donavan Jones
 ---

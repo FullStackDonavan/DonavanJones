@@ -6,7 +6,7 @@ tags:
   - ai-engineering
   - retrieval
   - chunking
-draft: false
+draft: true
 slug: chunking-religious-texts
 author: Donavan Jones
 ---

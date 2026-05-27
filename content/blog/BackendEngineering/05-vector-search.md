@@ -6,7 +6,7 @@ tags:
   - backend
   - vector-search
   - ai
-draft: false
+draft: true
 slug: vector-search
 author: Donavan Jones
 ---

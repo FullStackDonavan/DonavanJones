@@ -6,7 +6,7 @@ tags:
   - ai-engineering
   - embeddings
   - retrieval
-draft: false
+draft: true
 slug: embedding-strategies
 author: Donavan Jones
 ---

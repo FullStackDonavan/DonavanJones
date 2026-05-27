@@ -6,7 +6,7 @@ tags:
   - ai-engineering
   - vector-db
   - retrieval
-draft: false
+draft: true
 slug: vector-databases
 author: Donavan Jones
 ---

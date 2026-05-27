@@ -6,7 +6,7 @@ tags:
   - backend
   - postgres
   - graph
-draft: false
+draft: true
 slug: graph-sql-hybrid-querying
 author: Donavan Jones
 ---

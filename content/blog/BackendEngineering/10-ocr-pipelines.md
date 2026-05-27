@@ -6,7 +6,7 @@ tags:
   - backend
   - ocr
   - ai
-draft: false
+draft: true
 slug: ocr-pipelines
 author: Donavan Jones
 ---

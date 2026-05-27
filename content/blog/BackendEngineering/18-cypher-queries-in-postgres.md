@@ -6,7 +6,7 @@ tags:
   - backend
   - postgres
   - cypher
-draft: false
+draft: true
 slug: cypher-queries-in-postgres
 author: Donavan Jones
 ---

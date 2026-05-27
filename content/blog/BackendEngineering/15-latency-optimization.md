@@ -6,7 +6,7 @@ tags:
   - backend
   - latency
   - optimization
-draft: false
+draft: true
 slug: latency-optimization
 author: Donavan Jones
 ---

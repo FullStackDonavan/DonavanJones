@@ -6,7 +6,7 @@ tags:
   - backend
   - postgres
   - age
-draft: false
+draft: true
 slug: installing-age
 author: Donavan Jones
 ---

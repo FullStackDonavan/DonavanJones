@@ -11,6 +11,7 @@ const { data: totalArticlesCount } = await useAsyncData(
   () =>
     queryContent("blog")
       .where({ category: { $contains: route.params.name } })
+      .where({ draft: { $ne: true } })
       .count()
 );
 
@@ -22,6 +23,7 @@ const limit = ref(8);
 
 const { data: articles, refresh } = await useAsyncData("blog", () =>
   queryContent("/blog")
+    .where({ draft: { $ne: true } })
     .skip((currentPage.value - 1) * limit.value)
     .limit(limit.value)
     .find()

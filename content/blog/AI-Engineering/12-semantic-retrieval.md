@@ -6,7 +6,7 @@ tags:
   - ai-engineering
   - retrieval
   - semantic
-draft: false
+draft: true
 slug: semantic-retrieval
 author: Donavan Jones
 ---
