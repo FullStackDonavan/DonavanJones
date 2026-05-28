@@ -106,8 +106,8 @@
       </NuxtLink>
 
       <!-- Portfolio -->
-      <NuxtLink to="/categories" class="relative group">
-        <span :class="navClass(isPortfolioActive)">
+      <NuxtLink to="/projects/overview" class="relative group">
+        <span :class="navClass(isProjectsActive)">
           Projects
         </span>
       </NuxtLink>
@@ -142,11 +142,10 @@ const isEngineeringActive = computed(() => {
   )
 })
 
-// Projects / portfolio
-const isPortfolioActive = computed(() => {
+// Projects / projects
+const isProjectsActive = computed(() => {
   return (
-    route.path.startsWith('/projects') ||
-    route.path.startsWith('/portfolio')
+    route.path.startsWith('/projects')
   )
 })
 

@@ -1,26 +1,43 @@
 <template>
   <BasicSection class="mt-12">
     <div class="carousel">
+
       <!-- list items -->
       <GridTwoColumns>
         <div class="list">
           <div class="item" v-for="(item, index) in items" :key="index">
-            <NuxtImg :src="item.img" quality="80" format="webp" />
+<div class="image-wrapper">
+  <NuxtImg
+    :src="item.img"
+    quality="80"
+    format="webp"
+    class="carousel-image"
+  />
+
+  <!-- dark overlay -->
+  <div class="image-overlay"></div>
+
+  <!-- gradient overlay -->
+  <div class="image-gradient"></div>
+</div>
             <div class="content">
               <div class="author">{{ item.author }}</div>
               <div class="title">{{ item.title }}</div>
               <div class="des">{{ item.des }}</div>
+
               <div class="buttons">
                 <NuxtLink
-                  :to="item.linkUrl || '/get-started'"
+                  :to="item.linkUrl || '/projects'"
                   class="carouselButton center hover:scale-105 transition-transform duration-500"
                 >
-                  {{ item.buttonText || "Get Started!" }}
+                  {{ item.buttonText || "View Project" }}
                 </NuxtLink>
               </div>
             </div>
+
           </div>
         </div>
+
         <!-- list thumbnail -->
         <div>
           <div class="thumbnail">
@@ -29,12 +46,18 @@
               v-for="(item, index) in items"
               :key="index"
             >
-              <NuxtImg :src="item.img" quality="80" format="webp" />
+              <NuxtImg
+                :src="item.img"
+                quality="80"
+                format="webp"
+              />
+
               <div class="content">
                 <div class="title">{{ item.title }}</div>
               </div>
             </div>
           </div>
+
           <!-- next prev -->
           <div class="arrows">
             <button
@@ -45,6 +68,7 @@
             >
               &lt;
             </button>
+
             <button
               id="next"
               @click="showSlider('next')"
@@ -54,8 +78,9 @@
               &gt;
             </button>
           </div>
-        </div></GridTwoColumns
-      >
+        </div>
+      </GridTwoColumns>
+
       <!-- time running -->
       <div class="time"></div>
     </div>
@@ -63,33 +88,107 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch, computed } from "vue";
 
 export default {
   name: "MagicImageSlider",
+
   props: {
-    items: {
-      type: Array,
-      required: true,
-    },
     disableArrows: {
       type: Boolean,
       default: false,
     },
   },
+
   setup(props) {
+
     const timeRunning = 5000;
     const timeAutoNext = 10000;
+
     let runTimeOut;
     let runNextAuto;
 
+    // 📦 Fetch projects
+    const { data: projects } = useAsyncData("projects-carousel", () =>
+      queryContent("/projects")
+        .where({ draft: { $ne: true } })
+        .find()
+    );
+
+    // 🧠 PRIORITY 1: In Progress (HERO)
+    const inProgress = computed(() => {
+      if (!projects.value) return [];
+      return projects.value.filter(
+        (p) => p.status?.toLowerCase() === "in progress"
+      );
+    });
+
+    // ⭐ PRIORITY 2: Featured projects
+    const featured = computed(() => {
+      if (!projects.value) return [];
+      return projects.value.filter(
+        (p) => p.featured === true
+      );
+    });
+
+    // 📅 PRIORITY 3: Latest completed
+    const latestCompleted = computed(() => {
+      if (!projects.value) return [];
+
+      return projects.value
+        .filter((p) => {
+          const status = (p.status || "").toLowerCase();
+          return status === "completed" || status === "done";
+        })
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
+    });
+
+    // 🧠 FINAL SMART ORDER MERGE
+    const orderedProjects = computed(() => {
+      const map = new Map();
+
+      // 1. In progress FIRST
+      inProgress.value.forEach(p => map.set(p._path, p));
+
+      // 2. Featured NEXT
+      featured.value.forEach(p => {
+        if (!map.has(p._path)) map.set(p._path, p);
+      });
+
+      // 3. Latest completed LAST
+      latestCompleted.value.forEach(p => {
+        if (!map.has(p._path)) map.set(p._path, p);
+      });
+
+      return Array.from(map.values());
+    });
+
+    // 🎯 Convert to carousel format
+    const items = computed(() => {
+      if (!orderedProjects.value) return [];
+
+      return orderedProjects.value.map((p) => ({
+        img: p.excerptImage || p.img || "/img/placeholder.png",
+        title: p.title,
+        author: p.author || "Donavan Jones",
+        des: p.description || "",
+        linkUrl: p.projectPage || `/projects/${p.slug}`,
+        buttonText:
+          p.status?.toLowerCase() === "in progress"
+            ? "Continue Building"
+            : p.featured
+            ? "Featured Project"
+            : "View Project",
+      }));
+    });
+
+    // carousel logic (unchanged)
     const showSlider = (type) => {
       if (props.disableArrows) return;
 
       const sliderDom = document.querySelector(".carousel .list");
-      const sliderItemsDom = sliderDom.querySelectorAll(
-        ".carousel .list .item"
-      );
+      const sliderItemsDom = sliderDom.querySelectorAll(".carousel .list .item");
       const thumbnailBorderDom = document.querySelector(".carousel .thumbnail");
       const thumbnailItemsDom = thumbnailBorderDom.querySelectorAll(".item");
       const carouselDom = document.querySelector(".carousel");
@@ -100,9 +199,7 @@ export default {
         carouselDom.classList.add("next");
       } else {
         sliderDom.prepend(sliderItemsDom[sliderItemsDom.length - 1]);
-        thumbnailBorderDom.prepend(
-          thumbnailItemsDom[thumbnailItemsDom.length - 1]
-        );
+        thumbnailBorderDom.prepend(thumbnailItemsDom[thumbnailItemsDom.length - 1]);
         carouselDom.classList.add("prev");
       }
 
@@ -121,7 +218,10 @@ export default {
     onMounted(() => {
       const thumbnailBorderDom = document.querySelector(".carousel .thumbnail");
       const thumbnailItemsDom = thumbnailBorderDom.querySelectorAll(".item");
-      thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
+
+      if (thumbnailItemsDom.length > 0) {
+        thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
+      }
 
       runNextAuto = setTimeout(() => {
         showSlider("next");
@@ -144,6 +244,7 @@ export default {
     );
 
     return {
+      items,
       showSlider,
     };
   },
@@ -482,5 +583,58 @@ header a {
   .carousel .list .item .content .title {
     font-size: 30px;
   }
+}
+/* IMAGE WRAPPER */
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* IMAGE */
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* DARK OVERLAY */
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* GRADIENT FOR TEXT AREA (BOTTOM FADE) */
+.image-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  z-index: 2;
+}
+
+/* KEEP CONTENT ABOVE OVERLAY */
+.carousel .list .item .content {
+  z-index: 5;
+}
+.carousel .list .item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+/* ONLY FIRST ITEM IS ACTIVE */
+.carousel .list .item:nth-child(1) {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 10;
 }
 </style>
