@@ -25,7 +25,7 @@ My setup is intentionally hybrid: lightweight Raspberry Pi nodes form the backbo
 
 These are the primary nodes running k3s in my homelab rack:
 
-- Raspberry Pi nodes (k3s workers + control plane)
+- Raspberry Pi 5 16gb nodes (k3s workers + control plane)
   - Role: Container orchestration, lightweight services, API workloads
   - OS: Linux (lightweight server distro)
   - Cluster: k3s (lightweight Kubernetes distribution)
@@ -85,7 +85,7 @@ These are the primary nodes running k3s in my homelab rack:
 
 ## Storage Layer
 
-- Local SSD storage on Pi nodes (light workloads)
+- Local NVMe/SSD storage on Pi nodes (light workloads)
 - Local NVMe/SSD storage on RTX 3090 machine
 - Shared storage strategy (planned/expanding):
   - Distributed storage for persistent workloads
@@ -97,14 +97,14 @@ These are the primary nodes running k3s in my homelab rack:
 
 | Component | Description | Estimated Cost |
 |----------|-------------|----------------|
-| Raspberry Pi Cluster Nodes | k3s workers/control plane | $XXX - $XXX |
-| RTX 3090 Desktop | AI compute machine | $XXX - $XXX |
-| Networking Equipment | Router, switches, cabling | $XX - $XXX |
-| Storage Devices | SSDs/NVMe drives | $XX - $XXX |
-| Power & Cooling | PSU, cooling, rack power | $XX - $XXX |
-| Miscellaneous | Cases, mounts, accessories | $XX - $XXX |
+| Raspberry Pi Cluster Nodes | K3s workers/control plane | $245 - $340 |
+| RTX 3090 Desktop | AI compute machine | $3000 - $4500 |
+| Networking Equipment | Router, switches, cabling | $100 - $200 |
+| Storage Devices | SSDs/NVMe drives | $650 - $800 |
+| Power & Cooling | PSU, cooling, rack power | $130 - $150 |
+| Miscellaneous | Cases, mounts, accessories | $200 - $250 |
 
-> Note: Costs vary depending on sourcing (new vs used hardware).
+> Note: Costs vary depending on sourcing (new vs used hardware), storage capacity, GPU pricing, and networking equipment quality.
 
 ---
 

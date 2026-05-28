@@ -11,7 +11,7 @@ slug: k3s-on-raspberry-pis
 author: Donavan Jones
 ---
 
-This guide walks through setting up a lightweight Kubernetes distribution (K3s) across a Raspberry Pi cluster, designed for homelab environments. In your setup, this typically fits into a broader rack-based infrastructure where multiple Pi nodes handle workloads like CI/CD runners, self-hosted services (such as Gitea), and internal APIs. The goal is to create a stable, low-power compute layer that integrates cleanly with your existing homelab architecture and can scale as you add more nodes or services.
+This guide walks through setting up a lightweight Kubernetes distribution (K3s) across a Raspberry Pi cluster, designed for homelab environments. In my setup, this fits into a broader rack-based infrastructure where multiple Pi nodes handle workloads like CI/CD runners, self-hosted services (such as Gitea), and internal APIs. The goal is to create a stable, low-power compute layer that integrates cleanly with my existing homelab architecture and can scale as I add more nodes or services.
 
 # K3s on Raspberry Pis
 
@@ -69,13 +69,13 @@ kubectl get nodes -o wide
 ```
 
 ## Networking Notes
-In your rack setup, ensure:
+In me rack setup, I ensured:
 
 - All Pi nodes are on the same VLAN or flat LAN segment
 - Port 6443 is open between nodes
 - Consistent DNS or /etc/hosts entries for node resolution
 
-If you're integrating with other parts of your homelab (like your Gitea runners or AI services running in Docker on your 3090 machine), consider assigning dedicated namespaces for separation.
+If I’m integrating this with other parts of my homelab—like Gitea runners or AI services running in Docker on my RTX 3090 machine—I usually separate them into dedicated Kubernetes namespaces to keep workloads cleanly isolated and easier to manage.
 
 ## Optional: Enable kubectl on Server
 ```bash
@@ -85,4 +85,4 @@ sudo chown $(id -u):$(id -g) ~/.kube/config
 ```
 
 ## Conclusion
-Your Raspberry Pi K3s cluster becomes the foundational layer of your homelab rack, giving you a distributed compute environment that can run services, CI pipelines, and internal tooling with minimal power consumption. As your infrastructure grows—especially with components like Gitea CI runners, AI workloads on your RTX 3090 machine, and additional microservices—you can treat this cluster as the orchestration backbone that ties everything together cleanly and reliably.
+My Raspberry Pi K3s cluster forms the foundation of my homelab rack, giving me a lightweight distributed compute layer for running services, CI pipelines, and internal tooling with minimal power usage. As my infrastructure expands—especially with components like Gitea CI runners, AI workloads on my RTX 3090 machine, and additional microservices—I rely on this cluster as the orchestration backbone that keeps everything connected, organized, and running reliably.
