@@ -1,9 +1,31 @@
 <script setup lang="ts">
-import type { ICategory } from "~/types/ICategory"; // Use type-only import
+import { ref, nextTick, watch } from "vue";
+import type { ICategory } from "~/types/ICategory";
 
 const props = defineProps<{
   category: ICategory;
 }>();
+
+const expanded = ref(false);
+const container = ref<HTMLElement | null>(null);
+const collapsedHeight = ref("0px");
+
+const updateHeight = async () => {
+  await nextTick();
+  if (!container.value) return;
+
+  const firstRowHeight = container.value.scrollHeight;
+
+  // temporarily force single row measurement
+  container.value.style.maxHeight = "none";
+  const fullHeight = container.value.scrollHeight;
+
+  container.value.style.maxHeight = "";
+
+  collapsedHeight.value = `${firstRowHeight}px`;
+};
+
+watch(() => props.category, updateHeight, { immediate: true });
 </script>
 
 <template>
@@ -56,16 +78,30 @@ const props = defineProps<{
       {{ category.message }}
     </p>
   </nuxt-link>
-  <div class="px-2">
-    <div tabindex="0" class="focus:outline-none flex">
-      <nuxt-link
-        :to="tag.link"
-        v-for="(tag, index) in category.tags"
-        :key="index"
-        class="py-2 px-4 mr-2 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 hover:scale-110 transition-transform duration-500"
-      >
-        #{{ tag.title }}
-      </nuxt-link>
-    </div>
+<div class="px-2 mt-2">
+  <div
+    ref="container"
+    class="flex flex-wrap gap-2 overflow-hidden transition-all duration-300 ease-in-out"
+    :style="{
+      maxHeight: expanded ? '500px' : collapsedHeight
+    }"
+  >
+    <nuxt-link
+      :to="tag.link"
+      v-for="(tag, index) in category.tags"
+      :key="index"
+      class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 hover:scale-110 transition-transform duration-300 whitespace-nowrap"
+    >
+      #{{ tag.title }}
+    </nuxt-link>
   </div>
+
+  <button
+    v-if="category.tags?.length > 3"
+    @click="expanded = !expanded"
+    class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+  >
+    {{ expanded ? "Hide Tags" : "Show Tags" }}
+  </button>
+</div>
 </template>
