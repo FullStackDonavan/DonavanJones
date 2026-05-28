@@ -31,9 +31,9 @@
 
           <ul class="mt-4 space-y-2 text-sm">
             <li><NuxtLink to="/" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Home</NuxtLink></li>
-            <li><NuxtLink to="/projects" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
-            <li><NuxtLink to="/blog" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
-            <li><NuxtLink to="/contact" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Contact</NuxtLink></li>
+            <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
+            <li><NuxtLink to="/blog/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
+            <!-- <li><NuxtLink to="/contact" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Contact</NuxtLink></li> -->
           </ul>
         </div>
 
