@@ -2,8 +2,8 @@
 title: "Future Expansion Plans"
 description: "Plans for expanding my homelab and infrastructure."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - homelab
   - expansion
 draft: true

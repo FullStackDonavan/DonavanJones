@@ -2,6 +2,7 @@
 title: "Memory Systems"
 description: "Memory systems in AI pipelines for Bible study."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - memory

@@ -2,8 +2,8 @@
 title: "OCR Pipelines"
 description: "OCR pipeline design for AI microservices."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - ocr
   - ai
 draft: true

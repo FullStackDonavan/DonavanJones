@@ -2,8 +2,8 @@
 title: "Hardware List and Costs"
 description: "Detailed hardware list and cost breakdown for my homelab Kubernetes cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - hardware
   - homelab
 draft: false

@@ -2,8 +2,8 @@
 title: "Cost vs Performance Tradeoffs"
 description: "Balancing cost and performance in homelab infrastructure."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - cost
   - performance
 draft: true

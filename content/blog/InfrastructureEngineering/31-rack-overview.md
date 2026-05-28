@@ -2,8 +2,8 @@
 title: "Rack Overview"
 description: "Overview of my homelab rack and its components."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - homelab
   - rack
   - kubernetes

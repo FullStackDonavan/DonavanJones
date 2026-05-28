@@ -2,8 +2,8 @@
 title: "Ingress Setup"
 description: "Setting up ingress for a K3s Raspberry Pi cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - ingress
   - kubernetes
 draft: true

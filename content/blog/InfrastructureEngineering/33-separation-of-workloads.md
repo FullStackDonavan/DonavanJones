@@ -2,8 +2,8 @@
 title: "Separation of Workloads"
 description: "How I separate workloads in my homelab for efficiency and reliability."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - workloads
   - homelab
 draft: true

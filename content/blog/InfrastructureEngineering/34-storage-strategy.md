@@ -2,8 +2,8 @@
 title: "Storage Strategy"
 description: "Storage strategy for my homelab and Kubernetes workloads."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - storage
   - strategy
 draft: true

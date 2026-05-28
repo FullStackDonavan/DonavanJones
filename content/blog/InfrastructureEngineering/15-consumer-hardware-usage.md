@@ -2,8 +2,8 @@
 title: "Consumer Hardware Usage"
 description: "Using consumer hardware for homelab and infrastructure projects."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - hardware
   - homelab
 draft: true

@@ -2,8 +2,8 @@
 title: "Networking (Skill)"
 description: "Networking skills developed through homelab and infrastructure projects."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - networking
   - skills
 draft: true

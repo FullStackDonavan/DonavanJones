@@ -2,6 +2,7 @@
 title: "Moderation"
 description: "Moderation strategies for AI-generated theological content."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - moderation

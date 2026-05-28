@@ -2,8 +2,8 @@
 title: "Authentication"
 description: "Authentication service design in backend engineering."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - authentication
   - services
 draft: true

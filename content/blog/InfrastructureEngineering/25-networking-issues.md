@@ -2,8 +2,8 @@
 title: "Networking Issues"
 description: "Common networking issues in Kubernetes homelab clusters."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - kubernetes
   - networking
 draft: true

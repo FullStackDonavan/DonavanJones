@@ -7,26 +7,37 @@ export default (name: string): ICategory[][] => {
 
  const categories: ICategory[] = [
   {
-    title: 'PHP',
-    message: 'A collection of PHP projects I have built and maintained, including custom applications and CMS-based solutions.',
-    image: '/img/logos/php.svg',
-    link: '/categories/php',
-    lessonQuantity: 1,
-    tags: [
-      { title: 'WordPress', link: '/tags/wordpress' },
-      { title: 'Custom', link: '/tags/custom' },
-      { title: 'Concrete5', link: '/tags/concrete5' }
-    ]
+    title: 'AI Engineering',
+    message: 'Explore core concepts and published notes for building safe, maintainable AI systems.',
+    image: '/img/logos/ai.svg',
+    link: '/categories/ai-engineering',
+    lessonQuantity: 0,
+    tags: [{ title: 'ai-engineering', link: '/tags/ai-engineering' }],
   },
   {
-    title: 'JavaScript',
-    message: 'JavaScript projects showcasing modern frameworks, frontend architecture, and interactive user experiences.',
-    image: '/img/logos/javascript.png',
-    link: '/categories/javascript',
-    lessonQuantity: 2,
-    tags: [{ title: 'Nuxt', link: '/tags/nuxt' }]
-  }
-  // ... other categories
+    title: 'Algorithms & Data Structures',
+    message: 'Study algorithmic patterns and data structure strategies for performant applications.',
+    image: '/img/logos/algorithms.svg',
+    link: '/categories/algorithms-and-data-structures',
+    lessonQuantity: 0,
+    tags: [{ title: 'algorithms', link: '/tags/algorithms' }],
+  },
+  {
+    title: 'Backend Engineering',
+    message: 'Backend engineering practices, API design, and architecture for scalable systems.',
+    image: '/img/logos/backend.svg',
+    link: '/categories/backend-engineering',
+    lessonQuantity: 0,
+    tags: [{ title: 'backend-engineering', link: '/tags/backend-engineering' }],
+  },
+  {
+    title: 'Infrastructure Engineering',
+    message: 'Infrastructure topics for deployment, observability, and resilient production environments.',
+    image: '/img/logos/infrastructure.svg',
+    link: '/categories/infrastructure-engineering',
+    lessonQuantity: 0,
+    tags: [{ title: 'infrastructure-engineering', link: '/tags/infrastructure-engineering' }],
+  },
 ];
 
 

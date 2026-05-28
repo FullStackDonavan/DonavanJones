@@ -2,8 +2,8 @@
 title: "Systems Thinking"
 description: "Applying systems thinking to infrastructure and homelab design."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - systems
   - design
 draft: true

@@ -2,8 +2,8 @@
 title: "Joining Worker Nodes"
 description: "Adding worker nodes to a K3s Raspberry Pi cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - k3s
   - kubernetes
 draft: true

@@ -2,8 +2,8 @@
 title: "Async Workers"
 description: "Asynchronous worker patterns in backend engineering."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - async
   - workers
 draft: true

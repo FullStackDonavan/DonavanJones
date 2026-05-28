@@ -2,8 +2,8 @@
 title: "Agent Orchestration (Backend)"
 description: "Orchestrating agents in backend engineering."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - orchestration
   - ai
 draft: true

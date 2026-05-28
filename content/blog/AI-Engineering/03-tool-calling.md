@@ -2,6 +2,7 @@
 title: "Tool Calling"
 description: "How AI agents use tool calling for enhanced capabilities."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - tools

@@ -2,9 +2,9 @@
 title: "Sliding Window"
 description: "Understanding the Sliding Window pattern in JavaScript"
 date: 2025-07-24
+category: "algorithms"
 tags:
   - javascript
-  - algorithms
   - data-structures
   - problem-solving-patterns
 draft: false

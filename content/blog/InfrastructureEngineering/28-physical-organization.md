@@ -2,8 +2,8 @@
 title: "Physical Organization"
 description: "How I physically organized my homelab rack and equipment."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - homelab
   - organization
 draft: true

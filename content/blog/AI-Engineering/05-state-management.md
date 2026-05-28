@@ -2,6 +2,7 @@
 title: "State Management"
 description: "State management strategies for AI agents."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - state

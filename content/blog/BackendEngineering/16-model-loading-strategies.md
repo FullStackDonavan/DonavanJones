@@ -2,8 +2,8 @@
 title: "Model Loading Strategies"
 description: "Approaches to model loading in AI backend systems."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - models
   - ai
 draft: true

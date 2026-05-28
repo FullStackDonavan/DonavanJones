@@ -2,6 +2,7 @@
 title: "Embedding Strategies"
 description: "Embedding strategies for semantic retrieval in theology."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - embeddings

@@ -2,8 +2,8 @@
 title: "Installing K3s Control Plane"
 description: "Guide to installing the K3s control plane on a Raspberry Pi cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - k3s
   - kubernetes
 draft: true

@@ -2,8 +2,8 @@
 title: "Architecture Diagrams"
 description: "Visual architecture diagrams for my homelab and Kubernetes setup."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - diagrams
   - architecture
 draft: true

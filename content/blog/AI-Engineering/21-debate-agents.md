@@ -2,6 +2,7 @@
 title: "Debate Agents"
 description: "Debate agents for theological argumentation in AI pipelines."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - agents

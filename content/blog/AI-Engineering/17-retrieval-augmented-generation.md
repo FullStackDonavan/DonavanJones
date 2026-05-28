@@ -2,6 +2,7 @@
 title: "Retrieval Augmented Generation"
 description: "Using retrieval augmented generation in theological AI pipelines."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - retrieval

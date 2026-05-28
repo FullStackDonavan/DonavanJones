@@ -2,9 +2,9 @@
 title: "Multiple Pointers"
 description: "Understanding the Multiple Pointers pattern in JavaScript."
 date: 2025-07-24
+category: "algorithms"
 tags:
   - javascript
-  - algorithms
   - data-structures
   - problem-solving-patterns
 draft: false

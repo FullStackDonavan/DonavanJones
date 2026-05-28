@@ -2,8 +2,8 @@
 title: "Why Self-Hosted Git"
 description: "Reasons for running a self-hosted Git service in my homelab."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - git
   - ci-cd
 draft: true

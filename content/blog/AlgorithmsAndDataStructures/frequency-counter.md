@@ -1,10 +1,10 @@
 ---
 title: "Understanding the Frequency Counter Pattern in JavaScript"
 description: "A deep dive into the Frequency Counter pattern with examples and a JavaScript implementation."
+category: "algorithms"
 date: 2025-07-24
 tags:
   - javascript
-  - algorithms
   - data-structures
   - problem-solving-patterns
 draft: false

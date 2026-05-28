@@ -2,8 +2,8 @@
 title: "Latency Optimization"
 description: "Optimizing latency in backend and AI microservices."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - latency
   - optimization
 draft: true

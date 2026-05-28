@@ -2,8 +2,8 @@
 title: "Inference Services"
 description: "Design and implementation of inference services in AI backends."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - inference
   - ai
 draft: true

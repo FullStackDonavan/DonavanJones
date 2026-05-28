@@ -2,6 +2,7 @@
 title: "Citation Grounding"
 description: "Grounding AI responses with citations in theological retrieval."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - retrieval

@@ -2,8 +2,8 @@
 title: "Network Topology"
 description: "Network topology design for my homelab and Kubernetes cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - networking
   - topology
 draft: true

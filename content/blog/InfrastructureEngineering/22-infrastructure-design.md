@@ -2,8 +2,8 @@
 title: "Infrastructure Design"
 description: "Principles and practices for designing robust infrastructure."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - design
   - homelab
 draft: true

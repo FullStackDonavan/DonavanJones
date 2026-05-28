@@ -2,6 +2,7 @@
 title: "Agent Orchestration"
 description: "Managing and orchestrating multiple AI agents."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - orchestration

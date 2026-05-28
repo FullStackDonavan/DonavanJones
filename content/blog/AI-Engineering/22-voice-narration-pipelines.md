@@ -2,6 +2,7 @@
 title: "Voice Narration Pipelines"
 description: "Voice narration pipelines for AI-driven Bible study."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - voice

@@ -2,8 +2,8 @@
 title: "Pod Layouts"
 description: "Pod layouts and deployment strategies in my Kubernetes cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - kubernetes
   - pods
 draft: true

@@ -3,10 +3,10 @@
 title: "Recursion"
 description: "Recursion in JavaScript and algorithmic problem solving."
 date: 2025-07-24
+category: "algorithms"
 tags:
 
 - javascript
-- algorithms
 - data-structures
 
 ---

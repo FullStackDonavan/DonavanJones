@@ -2,8 +2,8 @@
 title: "Graph + SQL Hybrid Querying"
 description: "Combining graph and SQL queries in backend systems."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - postgres
   - graph
 draft: true

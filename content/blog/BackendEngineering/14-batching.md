@@ -2,8 +2,8 @@
 title: "Batching"
 description: "Batching strategies for AI inference and backend services."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - batching
   - ai
 draft: true

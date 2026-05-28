@@ -2,8 +2,8 @@
 title: "Vector Search"
 description: "Vector search services in distributed backend architectures."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - vector-search
   - ai
 draft: true

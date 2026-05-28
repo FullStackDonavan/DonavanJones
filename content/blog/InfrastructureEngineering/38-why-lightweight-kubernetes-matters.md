@@ -2,8 +2,8 @@
 title: "Why Lightweight Kubernetes Matters"
 description: "Benefits and tradeoffs of lightweight Kubernetes distributions like K3s."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - kubernetes
   - k3s
 draft: true

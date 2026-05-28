@@ -2,8 +2,8 @@
 title: "Cooling and Power Setup"
 description: "Cooling and power strategies for a home server rack."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - cooling
   - power
 draft: true

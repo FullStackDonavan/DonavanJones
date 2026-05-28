@@ -2,8 +2,8 @@
 title: "Troubleshooting (Skill)"
 description: "Troubleshooting skills gained from building and maintaining a homelab."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - troubleshooting
   - skills
 draft: true

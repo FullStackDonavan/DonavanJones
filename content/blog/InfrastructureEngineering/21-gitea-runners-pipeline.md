@@ -2,8 +2,8 @@
 title: "Gitea Runners Pipeline"
 description: "CI/CD pipeline flow using Gitea runners in my homelab."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - gitea
   - ci-cd
 draft: true

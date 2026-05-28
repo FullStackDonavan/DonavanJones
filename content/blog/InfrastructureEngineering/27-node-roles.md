@@ -2,8 +2,8 @@
 title: "Node Roles"
 description: "Understanding node roles in a Kubernetes homelab cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - kubernetes
   - nodes
 draft: true

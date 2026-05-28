@@ -94,7 +94,7 @@ const fetchArticles = async () => {
   pending.value = true;
 
   try {
-    articles.value = await queryContent("portfolio")
+    articles.value = await queryContent("blog")
       .where({ category: { $contains: categoryName } })
       .skip((currentPage.value - 1) * limit.value)
       .limit(limit.value)

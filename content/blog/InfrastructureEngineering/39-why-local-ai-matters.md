@@ -2,8 +2,8 @@
 title: "Why Local AI Matters"
 description: "The importance of running AI workloads locally in a homelab."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - ai
   - homelab
 draft: true

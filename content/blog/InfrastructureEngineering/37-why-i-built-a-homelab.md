@@ -2,8 +2,8 @@
 title: "Why I Built a Homelab"
 description: "My motivations for building a personal homelab."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - homelab
   - motivation
 draft: true

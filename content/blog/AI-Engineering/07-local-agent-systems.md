@@ -2,6 +2,7 @@
 title: "Local Agent Systems"
 description: "Overview of local agent systems in AI engineering."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - agents

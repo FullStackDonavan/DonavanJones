@@ -2,8 +2,8 @@
 title: "Cluster Topology"
 description: "Designing cluster topology for homelab and Kubernetes."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - cluster
   - kubernetes
 draft: true

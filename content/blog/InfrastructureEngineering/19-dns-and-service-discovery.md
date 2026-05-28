@@ -2,8 +2,8 @@
 title: "DNS and Service Discovery"
 description: "How DNS and service discovery work in Kubernetes clusters."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - kubernetes
   - dns
 draft: true

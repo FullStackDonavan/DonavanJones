@@ -2,6 +2,7 @@
 title: "Semantic Retrieval"
 description: "Semantic retrieval techniques for theological AI systems."
 date: 2026-05-26
+category: "ai-engineering"
 tags:
   - ai-engineering
   - retrieval

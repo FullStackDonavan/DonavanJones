@@ -2,8 +2,8 @@
 title: "Real Deployed Workloads"
 description: "Examples of real workloads deployed in my homelab cluster."
 date: 2026-05-26
+category: "infrastructure-engineering"
 tags:
-  - infrastructure
   - workloads
   - homelab
 draft: true

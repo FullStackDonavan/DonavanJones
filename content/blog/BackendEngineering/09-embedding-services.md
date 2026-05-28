@@ -2,8 +2,8 @@
 title: "Embedding Services"
 description: "Building and scaling embedding services in backend systems."
 date: 2026-05-26
+category: "backend-engineering"
 tags:
-  - backend
   - embeddings
   - ai
 draft: true
