@@ -24,6 +24,9 @@ await useUser();
 </template>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
 .rotate-enter-active,
 .rotate-leave-active {
   transition: all 0.4s;
