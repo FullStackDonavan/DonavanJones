@@ -2,6 +2,7 @@
 
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import Categories from "~/components/elements/Categories.vue";
 
 const route = useRoute();
 const currentPage = computed(() => parseInt(route.query.page) || 1);
@@ -29,6 +30,18 @@ const { data: articles, refresh } = await useAsyncData("blog", () =>
     .find()
 );
 
+const { data: categoriesList } = await useAsyncData("blogCategories", async () => {
+  const all = await queryContent('/blog').where({ draft: { $ne: true } }).find();
+  const set = new Set();
+  all.forEach((a) => {
+    const c = a.category;
+    if (!c) return;
+    if (Array.isArray(c)) c.forEach((x) => set.add(x));
+    else set.add(c);
+  });
+  return Array.from(set);
+});
+
 const truncateDescription = (description) => {
   const words = description.split(" ");
   return words.length > 25 ? words.slice(0, 25).join(" ") + "..." : description;
@@ -41,56 +54,72 @@ watch(
 </script>
 
 <template>
-  <PatternSection class="flex justify-center w-full">
-    <div class="mt-8">
-      <!-- Grid container -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Render articles -->
-        <div
-          v-for="article in articles"
-          :key="article._path"
-          class="flex flex-col max-w-sm rounded overflow-hidden shadow-xl bg-white dark:bg-gray-800 relative group"
-        >
-          <NuxtLink :to="article._path" class="flex flex-col h-full">
-            <div class="relative flex flex-col flex-1">
-              <!-- Image with zoom effect -->
-              <img
-                :src="article.img"
-                alt="Article Image"
-                class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              <!-- Article content -->
-              <div class="p-6 flex flex-col flex-1">
-                <!-- Title with hover effect -->
-                <div
-                  class="font-bold text-xl mb-2 text-gray-900 dark:text-gray-100 transition-transform duration-300 group-hover:font-extrabold"
-                >
-                  {{ article.title }}
-                </div>
-                <!-- Truncated Description -->
-                <p
-                  class="text-gray-700 dark:text-gray-300 text-base mb-4 flex-1"
-                >
-                  {{ truncateDescription(article.description) }}
-                </p>
-                <!-- Read More Button -->
-                <button
-                  class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  Read More
-                </button>
-              </div>
-            </div>
-          </NuxtLink>
-        </div>
+  <PatternSection class="flex justify-center w-full pt-8">
+    <div class="mt-8 w-full">
+      <div class="px-4 sm:px-6 lg:px-8 mb-6 text-center">
+        <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Browse Categories</h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-300">Select a category to explore articles grouped by topic.</p>
       </div>
-      <!-- Pagination -->
+      <Categories :categories="categoriesList ?? []" />
+      <div class="w-full bg-gray-50 dark:bg-slate-950 py-8">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mb-8 text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">Latest Articles</h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">Browse the most recent blog posts across all categories.</p>
+          </div>
+
+          <!-- Grid container -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center md:justify-items-stretch">
+            <!-- Render articles -->
+            <div
+              v-for="article in articles"
+              :key="article._path"
+              class="flex flex-col max-w-sm rounded overflow-hidden shadow-xl bg-white dark:bg-gray-800 relative group"
+            >
+              <NuxtLink :to="article._path" class="flex flex-col h-full">
+                <div class="relative flex flex-col flex-1">
+                  <!-- Image with zoom effect -->
+                  <img
+                    :src="article.img"
+                    alt="Article Image"
+                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <!-- Article content -->
+                  <div class="p-6 flex flex-col flex-1">
+                    <!-- Title with hover effect -->
+                    <div
+                      class="font-bold text-xl mb-2 text-gray-900 dark:text-gray-100 transition-transform duration-300 group-hover:font-extrabold"
+                    >
+                      {{ article.title }}
+                    </div>
+                    <!-- Truncated Description -->
+                    <p
+                      class="text-gray-700 dark:text-gray-300 text-base mb-4 flex-1"
+                    >
+                      {{ truncateDescription(article.description) }}
+                    </p>
+                    <!-- Read More Button -->
+                    <button
+                      class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 hover:scale-105 transition-transform duration-300 ease-in-out"
+                    >
+                      Read More
+                    </button>
+                  </div>
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+              <!-- Pagination -->
       <Pagination
         :currentPage="currentPage"
         :limit="limit"
         :totalPages="totalPages"
         v-if="totalPages > 1"
       />
+      </div>
+      
+
     </div>
   </PatternSection>
 </template>
