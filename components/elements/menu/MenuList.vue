@@ -10,11 +10,11 @@
       </NuxtLink>
 
       <!-- About -->
-      <NuxtLink to="/about-me" class="relative group">
+      <!-- <NuxtLink to="/about-me" class="relative group">
         <span :class="navClass(isActive('/about-me'))">
           About
         </span>
-      </NuxtLink>
+      </NuxtLink> -->
 
       <!-- Engineering Dropdown -->
       <div class="relative group">

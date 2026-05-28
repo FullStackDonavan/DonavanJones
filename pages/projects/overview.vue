@@ -2,6 +2,33 @@
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
+    const carouselItems = ref([
+      {
+        img: "/img/code.jpg",
+        author: "Donavan Jones",
+        title: "View Projects",
+        des: "Dive into a curated selection of my most recent and impactful projects. From innovative web applications to dynamic websites, each project showcases my skills and dedication to crafting exceptional digital experiences. Browse through to see how I bring concepts to life with clean, efficient code and modern design principles.",
+        linkUrl: "/categories/",
+        buttonText: "View Projects",
+      },
+      {
+        img: "/img/workspace.jpg",
+        author: "Donavan Jones",
+        title: "About Me",
+        des: "Experienced in PHP, with a specialization in WordPress and Laravel, I excel at building dynamic websites and robust applications that deliver seamless user experiences through clean, efficient code. In JavaScript, my skills extend to Vue, Nuxt, and React, where I create responsive and interactive web applications, focusing on performance, modern best practices, and cutting-edge technologies.",
+        linkUrl: "/about-me",
+        buttonText: "Learn More",
+      },
+      {
+        img: "/img/contact-me.jpg",
+        author: "Donavan Jones",
+        title: "Contact Me",
+        des: "I'm always excited to connect with new people and explore opportunities. Whether you have a project in mind, need advice, or just want to chat about tech, feel free to reach out. Let's discuss how we can collaborate to bring your ideas to life.",
+        linkUrl: "/",
+        buttonText: "Contact Me",
+      },
+    ]);
+
 const route = useRoute();
 const currentPage = computed(() => parseInt(route.query.page as string) || 1);
 
@@ -37,11 +64,11 @@ watch(
 </script>
 
 <template>
-  <PatternSection class="flex justify-center w-full pt-8">
-    <div class="mt-8 w-full">
-
+  <PatternSection class="flex justify-center w-full">
+    <div class="w-full">
+      <MagicImageSlider :items="carouselItems" />
       <!-- Header -->
-      <div class="px-4 sm:px-6 lg:px-8 mb-10 text-center">
+      <div class="px-4 sm:px-6 lg:px-8 my-10 text-center">
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
           Projects
         </h1>
