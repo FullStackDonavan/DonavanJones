@@ -79,11 +79,11 @@ watch(
               <NuxtLink :to="article._path" class="flex flex-col h-full">
                 <div class="relative flex flex-col flex-1">
                   <!-- Image with zoom effect -->
-                  <img
+                  <!-- <img
                     :src="article.img"
                     alt="Article Image"
                     class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
+                  /> -->
                   <!-- Article content -->
                   <div class="p-6 flex flex-col flex-1">
                     <!-- Title with hover effect -->

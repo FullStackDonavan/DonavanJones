@@ -33,7 +33,7 @@ watch(() => props.category, updateHeight, { immediate: true });
     <div
       class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-12 mr-5"
     >
-      <img class="h-16" :src="category.image" alt="nuxt 3 logo" />
+      <!-- <img class="h-16" :src="category.image" alt="nuxt 3 logo" /> -->
       <div class="flex items-start justify-between w-full">
         <div class="pl-3 w-full">
           <div
