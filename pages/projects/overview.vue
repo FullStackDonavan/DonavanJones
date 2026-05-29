@@ -93,11 +93,11 @@ watch(
               <NuxtLink :to="project._path" class="flex flex-col h-full">
 
                 <!-- Image -->
-                <div class="relative overflow-hidden h-44">
-                  <img
+                <div class="relative overflow-hidden h-12">
+                  <!-- <img
                     :src="project.img"
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
+                  /> -->
 
                   <!-- Status badge -->
                   <div
