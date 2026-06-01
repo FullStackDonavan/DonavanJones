@@ -19,7 +19,7 @@
       />
     </div>
 
-    <div class="max-w-5xl mx-auto px-6 relative">
+    <div class="max-w-7xl mx-auto px-6 relative">
 
       <!-- TITLE -->
       <h1
@@ -39,8 +39,13 @@
         ARM64 clusters, GPU inference systems, and self-hosted backend services.
       </p>
 
-      <!-- SYSTEM STACK -->
-      <div class="mt-10 grid md:grid-cols-2 gap-6">
+      <!-- ARCHITECTURE DIAGRAM -->
+      <div class="mt-12">
+        <ArchitectureDiagram />
+      </div>
+
+      <!-- DETAILED SYSTEM STACK -->
+      <div class="mt-16 grid md:grid-cols-2 gap-6">
 
         <div class="p-5 rounded-xl border border-gray-200 dark:border-gray-800">
           <h3 class="font-semibold text-gray-900 dark:text-white">Infrastructure Layer</h3>
@@ -122,10 +127,12 @@
 <script>
 import { ref } from "vue";
 import Hero from "@/components/sections/HomePage/Hero.vue";
+import ArchitectureDiagram from "@/components/ArchitectureDiagram.vue";
 
 export default {
   components: {
     Hero,
+    ArchitectureDiagram,
   },
 };
 </script>
