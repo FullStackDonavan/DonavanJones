@@ -1,24 +1,12 @@
 <template>
     
-  <div
-    class="relative w-full bg-gradient-to-br from-[#0f0f1e] via-[#1a1a2e] to-[#0f1f2e]
-           p-4 md:p-8 lg:p-10 rounded-xl overflow-hidden border border-sky-500/20"
-  >
-    <!-- Background effects -->
-    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 bg-sky-400 pointer-events-none"></div>
-    <div class="absolute -bottom-32 -right-24 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-10 bg-purple-500 pointer-events-none"></div>
-
-    <!-- HEADER -->
-    <!-- <div class="relative z-10 text-center mb-10">
-      <h2 class="text-2xl md:text-3xl font-bold text-sky-300">
-        Private Cloud AI System Architecture
-      </h2>
-      <p class="text-slate-400 text-sm md:text-base mt-2">
-        Distributed Kubernetes + AI inference + data infrastructure system
-      </p>
-    </div> -->
-
-
+<div
+  class="relative w-full 
+         bg-gradient-to-br from-white via-slate-50 to-slate-100
+         dark:from-[#0f0f1e] dark:via-[#1a1a2e] dark:to-[#0f1f2e]
+         p-4 md:p-8 lg:p-10 rounded-xl overflow-hidden
+         border border-slate-200 dark:border-slate-500/20"
+>
 
     <!-- LOADING -->
     <div
@@ -26,7 +14,7 @@
       class="relative z-10 flex items-center justify-center min-h-96"
     >
       <div class="flex flex-col items-center gap-4">
-        <div class="w-12 h-12 border-4 border-sky-500/30 border-t-sky-400 rounded-full animate-spin"></div>
+        <div class="w-12 h-12 border-4 border-slate-500/30 border-t-slate-400 rounded-full animate-spin"></div>
         <p class="text-slate-400 text-sm">Loading architecture diagram...</p>
       </div>
     </div>
@@ -35,8 +23,10 @@
     <div v-show="!isLoading" class="relative z-10 mb-10">
       <div
         v-if="vueFlowReady"
-        class="w-full h-[520px] rounded-lg border border-sky-500/10 bg-slate-900/40 overflow-hidden"
-      >
+        class="w-full h-[520px] rounded-lg 
+            border border-slate-200 dark:border-slate-500/10 
+            bg-white dark:bg-slate-900/40 overflow-hidden"
+    >
         <component
           :is="VueFlowComponent"
           :nodes="nodes"
@@ -56,23 +46,29 @@
     </div>
 
     
-    <!-- LEGEND -->
-    <div
-      class="relative z-10 flex flex-wrap gap-4 justify-center p-4 bg-slate-900/50 rounded-lg border border-sky-500/10"
-    >
-      <div class="flex items-center gap-2 text-xs text-slate-300">
-        <div class="w-3 h-3 bg-sky-500 rounded"></div>
-        User / Flow
-      </div>
-      <div class="flex items-center gap-2 text-xs text-slate-300">
-        <div class="w-3 h-3 bg-purple-500 rounded"></div>
-        AI Systems
-      </div>
-      <div class="flex items-center gap-2 text-xs text-slate-300">
-        <div class="w-3 h-3 bg-emerald-500 rounded"></div>
-        Infrastructure
-      </div>
-    </div>
+<!-- LEGEND -->
+<div
+  class="relative z-10 flex flex-wrap gap-4 justify-center p-4 
+         bg-white/90 dark:bg-slate-900/50 
+         backdrop-blur rounded-lg 
+         border border-slate-200 dark:border-slate-500/10
+         text-slate-700 dark:text-slate-300"
+>
+  <div class="flex items-center gap-2 text-xs">
+    <div class="w-3 h-3 bg-slate-500 rounded"></div>
+    User / Flow
+  </div>
+
+  <div class="flex items-center gap-2 text-xs">
+    <div class="w-3 h-3 bg-purple-500 rounded"></div>
+    AI Systems
+  </div>
+
+  <div class="flex items-center gap-2 text-xs">
+    <div class="w-3 h-3 bg-emerald-500 rounded"></div>
+    Infrastructure
+  </div>
+</div>
   </div>
 </template>
 
@@ -127,12 +123,12 @@ const CustomNode = defineComponent({
   setup(props) {
     return () => h('div', { class: 'custom-node p-2 text-left' }, [
       h('div', { class: 'flex items-center gap-3' }, [
-        h('div', { class: 'w-8 h-8 rounded bg-slate-800/40 flex items-center justify-center border border-sky-500/10' }, [
-          h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-sky-300' })
+        h('div', { class: 'w-8 h-8 rounded bg-slate-800/40 flex items-center justify-center border border-slate-500/10' }, [
+          h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-slate-300' })
         ]),
-        h('div', { class: 'font-semibold text-sky-100' }, props.data.label)
+        h('div', { class: 'font-semibold text-slate-800 dark:text-slate-100' }, props.data.label)
       ]),
-      props.data.lines ? h('ul', { class: 'mt-2 text-xs text-slate-300 list-disc list-inside' }, props.data.lines.map(line => h('li', line))) : null
+      props.data.lines ? h('ul', { class: 'mt-2 text-xs text-slate-900 dark:text-slate-300 list-disc list-inside' }, props.data.lines.map(line => h('li', line))) : null
     ])
   }
 })
@@ -142,12 +138,12 @@ const ClusterNode = defineComponent({
   setup(props) {
     return () => h('div', { class: 'cluster-node p-3' }, [
       h('div', { class: 'flex items-center gap-3 mb-2' }, [
-        h('div', { class: 'w-8 h-8 rounded bg-slate-800/30 flex items-center justify-center border border-sky-500/8' }, [
-          h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-emerald-300' })
+        h('div', { class: 'w-8 h-8 rounded bg-slate-800/30 flex items-center justify-center border border-slate-500/8' }, [
+          h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-emerald-800' })
         ]),
-        h('div', { class: 'font-semibold text-sky-100' }, props.data.label)
+        h('div', { class: 'font-semibold text-slate-800 dark:text-slate-100' }, props.data.label)
       ]),
-      props.data.lines ? h('div', { class: 'text-sm text-slate-300' }, props.data.lines.join('\n')) : null
+      props.data.lines ? h('div', { class: 'text-sm text-slate-800' }, props.data.lines.join('\n')) : null
     ])
   }
 })
@@ -292,12 +288,12 @@ onMounted(async () => {
       setup(props) {
         return () => h('div', { class: 'custom-node p-2 text-left' }, [
           h('div', { class: 'flex items-center gap-3' }, [
-            h('div', { class: 'w-8 h-8 rounded bg-slate-800/40 flex items-center justify-center border border-sky-500/10' }, [
-              h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-sky-300' })
+            h('div', { class: 'w-8 h-8 rounded bg-slate-800/40 flex items-center justify-center border border-slate-500/10' }, [
+              h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-slate-300' })
             ]),
-            h('div', { class: 'font-semibold text-sky-100' }, props.data.label)
+            h('div', { class: 'font-semibold text-slate-800 dark:text-slate-100' }, props.data.label)
           ]),
-          props.data.lines ? h('ul', { class: 'mt-2 text-xs text-slate-300 list-disc list-inside' }, props.data.lines.map(line => h('li', line))) : null,
+          props.data.lines ? h('ul', { class: 'mt-2 text-xs text-slate-900 dark:text-slate-300 list-disc list-inside' }, props.data.lines.map(line => h('li', line))) : null,
           // left and right handles (both target/source)
           h(Handle, { type: 'target', position: Position.Left }),
           h(Handle, { type: 'source', position: Position.Right }),
@@ -312,12 +308,12 @@ onMounted(async () => {
       setup(props) {
         return () => h('div', { class: 'cluster-node p-3' }, [
           h('div', { class: 'flex items-center gap-3 mb-2' }, [
-            h('div', { class: 'w-8 h-8 rounded bg-slate-800/30 flex items-center justify-center border border-sky-500/8' }, [
+            h('div', { class: 'w-8 h-8 rounded bg-slate-800/30 flex items-center justify-center border border-slate-500/8' }, [
               h('Icon', { name: props.data.icon, class: 'w-5 h-5 text-emerald-300' })
             ]),
-            h('div', { class: 'font-semibold text-sky-100' }, props.data.label)
+            h('div', { class: 'font-semibold text-slate-800 dark:text-slate-100' }, props.data.label)
           ]),
-          props.data.lines ? h('div', { class: 'text-sm text-slate-300' }, props.data.lines.join('\n')) : null,
+          props.data.lines ? h('div', { class: 'text-sm text-slate-900 dark:text-slate-300' }, props.data.lines.join('\n')) : null,
           h(Handle, { type: 'target', position: Position.Left }),
           h(Handle, { type: 'source', position: Position.Right }),
           h(Handle, { id: 'bottom', type: 'source', position: Position.Bottom })
@@ -340,71 +336,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Mermaid diagram styling */
-.mermaid-container {
-  background: linear-gradient(135deg, rgba(15, 15, 30, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%);
-  border-radius: 12px;
-  border: 1px solid rgba(14, 165, 233, 0.2);
-  padding: 20px;
-  overflow-x: auto;
-  min-height: 400px;
-}
 
-:deep(.mermaid) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* =========================
+   RESPONSIVE (UNCHANGED)
+========================= */
 
-:deep(.mermaid svg) {
-  max-width: 100%;
-  height: auto;
-}
-
-:deep(.mermaid text) {
-  fill: #e0e7ff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-:deep(.mermaid .nodeLabel) {
-  background-color: transparent;
-  color: #f0f9ff;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-:deep(.mermaid .node rect) {
-  stroke-width: 3px;
-}
-
-:deep(.mermaid .cluster rect) {
-  stroke-width: 1.5px;
-  opacity: 0.8;
-}
-
-:deep(.mermaid .edgeLabel) {
-  background-color: rgba(15, 15, 30, 0.9);
-  color: #cbd5e1;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-:deep(.mermaid path) {
-  stroke-width: 3px;
-  stroke: rgba(14,165,233,0.9);
-}
-
-:deep(.mermaid .arrowheadPath) {
-  stroke-width: 2px;
-}
-
-:deep(.mermaid .dashed-line) {
-  stroke-dasharray: 5, 5;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
   .mermaid-container {
     padding: 12px;
@@ -426,101 +362,127 @@ onMounted(async () => {
     font-size: 9px;
   }
 }
+/* =========================
+   NODE BASE (LIGHT FIRST FIX)
+========================= */
 
-/* VueFlow custom node styles */
-:deep(.vue-flow__node.arch-node) {
+:deep(.vue-flow__node.arch-node),
+:deep(.vue-flow__node.arch-cluster) {
   border-radius: 10px;
   padding: 10px 12px;
-  background: linear-gradient(90deg, rgba(4,6,23,0.85), rgba(3,9,30,0.9));
-  border: 1px solid rgba(14,165,233,0.12);
-  box-shadow: 0 6px 22px rgba(14,165,233,0.03), 0 1px 0 rgba(255,255,255,0.02) inset;
+
+  /* LIGHT MODE (DEFAULT) */
+  background: #c5c5c5; /* light gray */
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+
+  /* DARK MODE OVERRIDE */
+  @apply dark:bg-slate-900/70;
+  @apply dark:border-slate-500/15;
+  @apply dark:shadow-[0_6px_22px_rgba(14,165,233,0.06)];
 }
 
-:deep(.vue-flow__node.arch-node .vue-flow__node-body) {
-  color: #e6f7ff;
+/* =========================
+   TEXT (LIGHT = DARK TEXT)
+========================= */
+
+:deep(.vue-flow__node.arch-node .vue-flow__node-body),
+:deep(.vue-flow__node.arch-cluster .vue-flow__node-body) {
+  color: #111827; /* dark text for light mode */
+
+  @apply dark:text-slate-200;
+
   font-weight: 700;
   font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   line-height: 1.15;
 }
 
+/* Labels */
 :deep(.vue-flow__node.arch-node .vue-flow__node-label) {
-  color: #cfeffd;
+  color: #374151;
+
+  @apply dark:text-slate-300;
 }
 
-/* Cluster / group styling */
-:deep(.vue-flow__node.arch-cluster) {
-  background: linear-gradient(180deg, rgba(8,10,20,0.45), rgba(6,8,18,0.35));
-  border: 1px solid rgba(148,163,184,0.06);
-  box-shadow: 0 10px 30px rgba(2,6,23,0.6) inset;
-  border-radius: 12px;
-}
+/* =========================
+   CLUSTER NODE TEXT
+========================= */
 
 :deep(.vue-flow__node.arch-cluster .vue-flow__node-body) {
-  color: #9fbcd8;
+  color: #1f2937;
+
+  @apply dark:text-slate-300;
+
   font-weight: 700;
   font-size: 13px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 12px 14px;
 }
 
+/* =========================
+   INGRESS NODE TEXT
+========================= */
+
 :deep(.vue-flow__node.ingress-node .vue-flow__node-body) {
+  color: #1f2937;
+
+  @apply dark:text-slate-300;
+
   white-space: pre-line;
   font-size: 13px;
   line-height: 1.2;
   text-align: left;
 }
 
-/* Edge styling (neon strokes and subtle glow) */
-:deep(.vue-flow__edge.path) {
-  filter: drop-shadow(0 6px 14px rgba(14,165,233,0.06));
-}
+/* =========================
+   EDGES (LIGHT + DARK FIX)
+========================= */
 
 :deep(.vue-flow__edge.edge-primary .vue-flow__edge-path) {
-  stroke: rgba(14,165,233,0.95);
+  stroke: #0ea5e9;
   stroke-width: 1.6px;
   stroke-linecap: round;
-  filter: drop-shadow(0 6px 18px rgba(14,165,233,0.22));
+
+  @apply dark:stroke-slate-400;
+
+  filter: drop-shadow(0 2px 6px rgba(14,165,233,0.10));
 }
 
 :deep(.vue-flow__edge.edge-ai .vue-flow__edge-path) {
-  stroke: rgba(168,85,247,0.9);
-  stroke-width: 2.5px;
-  filter: drop-shadow(0 6px 18px rgba(168,85,247,0.18));
+  stroke: #a855f7;
+  stroke-width: 2px;
+
+  @apply dark:stroke-purple-400;
 }
 
 :deep(.vue-flow__edge.edge-data .vue-flow__edge-path) {
-  stroke: rgba(34,197,94,0.9);
+  stroke: #22c55e;
   stroke-width: 2px;
-  filter: drop-shadow(0 6px 14px rgba(34,197,94,0.12));
+
+  @apply dark:stroke-emerald-400;
 }
 
 :deep(.vue-flow__edge.edge-storage .vue-flow__edge-path) {
-  stroke: rgba(96,165,250,0.9);
+  stroke: #60a5fa;
   stroke-width: 2px;
+
+  @apply dark:stroke-blue-400;
 }
 
 :deep(.vue-flow__edge.edge-support .vue-flow__edge-path) {
-  stroke: rgba(148,163,184,0.6);
+  stroke: #94a3b8;
   stroke-dasharray: 6 6;
+
+  @apply dark:stroke-slate-500;
 }
 
-/* Custom node content sizing */
+/* =========================
+   NODE SIZING
+========================= */
+
 :deep(.custom-node) {
   min-width: 140px;
   max-width: 320px;
   padding: 10px;
   box-sizing: border-box;
-}
-
-:deep(.custom-node .w-8) {
-  min-width: 32px;
-  min-height: 32px;
 }
 
 :deep(.cluster-node) {
@@ -531,47 +493,50 @@ onMounted(async () => {
   box-sizing: border-box;
 }
 
-:deep(.cluster-node .text-sm) {
-  white-space: pre-line;
-}
+/* =========================
+   HANDLES (LIGHT FIX)
+========================= */
 
-/* Connection handles styled as neon circles */
 :deep(.vue-flow__handle) {
   width: 12px;
   height: 12px;
   border-radius: 9999px;
-  background: rgba(14,165,233,0.95);
-  border: 2px solid rgba(255,255,255,0.06);
-  box-shadow: 0 6px 14px rgba(14,165,233,0.16);
-  transform: translate(-50%, -50%);
-  z-index: 40;
+
+  background: #0ea5e9;
+
+  @apply dark:bg-slate-400;
+
+  border: 2px solid rgba(255,255,255,0.8);
+  @apply dark:border-white/10;
+
+  box-shadow: 0 4px 10px rgba(14,165,233,0.15);
 }
 
 :deep(.vue-flow__handle:hover) {
   transform: translate(-50%, -50%) scale(1.25);
 }
 
-/* Per-node-type handle colors */
+/* Cluster handles */
 :deep(.vue-flow__node.arch-cluster .vue-flow__handle) {
-  background: rgba(34,197,94,0.95);
-  box-shadow: 0 6px 14px rgba(34,197,94,0.12);
+  background: #22c55e;
+  @apply dark:bg-emerald-400;
 }
 
-:deep(.vue-flow__node.arch-node .vue-flow__handle) {
-  background: rgba(14,165,233,0.95);
-  box-shadow: 0 6px 14px rgba(14,165,233,0.16);
-}
-
+/* Ingress handles */
 :deep(.vue-flow__node.ingress-node .vue-flow__handle) {
-  background: rgba(168,85,247,0.9);
-  box-shadow: 0 6px 14px rgba(168,85,247,0.12);
+  background: #a855f7;
+  @apply dark:bg-purple-400;
 }
 
-:deep(.vue-flow__handle.source) {
-  border-color: rgba(255,255,255,0.08);
-}
+/* =========================
+   REMOVE OLD DARK-ONLY RULES
+   (IMPORTANT)
+========================= */
 
-:deep(.vue-flow__handle.target) {
-  border-color: rgba(0,0,0,0.2);
-}
+/* ❌ removed:
+   - hardcoded #e6f7ff
+   - hardcoded #9fbcd8
+   - hardcoded dark gradients only
+*/
+
 </style>
