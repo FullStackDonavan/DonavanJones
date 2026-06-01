@@ -1,72 +1,76 @@
 <template>
-  <div class="relative w-full bg-gradient-to-br from-[#0f0f1e] via-[#1a1a2e] to-[#0f1f2e] p-4 md:p-8 lg:p-10 rounded-xl overflow-hidden border border-sky-500/20">
+    
+  <div
+    class="relative w-full bg-gradient-to-br from-[#0f0f1e] via-[#1a1a2e] to-[#0f1f2e]
+           p-4 md:p-8 lg:p-10 rounded-xl overflow-hidden border border-sky-500/20"
+  >
     <!-- Background effects -->
     <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-15 bg-sky-400 pointer-events-none"></div>
     <div class="absolute -bottom-32 -right-24 w-64 h-64 md:w-96 md:h-96 rounded-full blur-3xl opacity-10 bg-purple-500 pointer-events-none"></div>
 
-    <!-- Title -->
-    <h2 class="text-2xl md:text-3xl font-bold text-center text-sky-300 mb-2 relative z-10">
-      Private Cloud AI System Architecture
-    </h2>
-    <p class="text-center text-slate-400 text-sm md:text-base mb-8 relative z-10">
-      Complete distributed system with Kubernetes, AI inference, and backend services
-    </p>
+    <!-- HEADER -->
+    <!-- <div class="relative z-10 text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-bold text-sky-300">
+        Private Cloud AI System Architecture
+      </h2>
+      <p class="text-slate-400 text-sm md:text-base mt-2">
+        Distributed Kubernetes + AI inference + data infrastructure system
+      </p>
+    </div> -->
 
-    <!-- Spinner Loader -->
-    <div v-if="isLoading" class="relative z-10 mermaid-container overflow-x-auto flex items-center justify-center min-h-96">
+
+
+    <!-- LOADING -->
+    <div
+      v-if="isLoading"
+      class="relative z-10 flex items-center justify-center min-h-96"
+    >
       <div class="flex flex-col items-center gap-4">
         <div class="w-12 h-12 border-4 border-sky-500/30 border-t-sky-400 rounded-full animate-spin"></div>
         <p class="text-slate-400 text-sm">Loading architecture diagram...</p>
       </div>
     </div>
+
+    <!-- DIAGRAM -->
+    <div v-show="!isLoading" class="relative z-10 mb-10">
+      <div
+        v-if="vueFlowReady"
+        class="w-full h-[520px] rounded-lg border border-sky-500/10 bg-slate-900/40 overflow-hidden"
+      >
+        <component
+          :is="VueFlowComponent"
+          :nodes="nodes"
+          :edges="edges"
+          :nodeTypes="nodeTypes"
+          class="w-full h-full"
+        />
+      </div>
+
+      <div
+        v-else
+        class="p-6 bg-slate-900/60 rounded-lg border border-rose-500/10 text-center text-slate-300"
+      >
+        VueFlow not available. Install:
+        <span class="font-mono">npm install @vue-flow/core</span>
+      </div>
+    </div>
+
     
-    <!-- VueFlow Diagram (replaces Mermaid + custom pan/zoom) -->
-    <div v-show="!isLoading" class="relative z-10">
-      <div v-if="vueFlowReady" class="w-full h-[520px] rounded-lg border border-sky-500/10 bg-slate-900/40 overflow-hidden">
-        <component :is="VueFlowComponent" :nodes="nodes" :edges="edges" :nodeTypes="nodeTypes" class="w-full h-full" />
+    <!-- LEGEND -->
+    <div
+      class="relative z-10 flex flex-wrap gap-4 justify-center p-4 bg-slate-900/50 rounded-lg border border-sky-500/10"
+    >
+      <div class="flex items-center gap-2 text-xs text-slate-300">
+        <div class="w-3 h-3 bg-sky-500 rounded"></div>
+        User / Flow
       </div>
-      <div v-else class="p-6 bg-slate-900/60 rounded-lg border border-rose-500/10 text-center text-slate-300">
-        VueFlow not available. Run <span class="font-mono">npm install @vue-flow/core</span> and restart the dev server.
+      <div class="flex items-center gap-2 text-xs text-slate-300">
+        <div class="w-3 h-3 bg-purple-500 rounded"></div>
+        AI Systems
       </div>
-    </div>
-
-    <!-- Legend -->
-    <div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 justify-center mt-8 p-4 md:p-5 bg-slate-900/50 rounded-lg border border-sky-500/10 relative z-10">
-      <div class="flex items-center gap-3 text-xs text-slate-300">
-        <div class="w-4 h-4 rounded bg-sky-500 border border-sky-600 shadow-lg shadow-sky-500/50 flex-shrink-0"></div>
-        <span>Primary Flow / User Requests</span>
-      </div>
-      <div class="flex items-center gap-3 text-xs text-slate-300">
-        <div class="w-4 h-4 rounded bg-purple-500 border border-purple-600 shadow-lg shadow-purple-500/50 flex-shrink-0"></div>
-        <span>AI / Storage Services</span>
-      </div>
-      <div class="flex items-center gap-3 text-xs text-slate-300">
-        <div class="w-4 h-4 rounded bg-emerald-500 border border-emerald-600 shadow-lg shadow-emerald-500/50 flex-shrink-0"></div>
-        <span>Infrastructure / Data</span>
-      </div>
-    </div>
-
-    <!-- Storage Layer Icons -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-8 relative z-10">
-      <div class="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800/50 border border-emerald-500/20 hover:border-emerald-500/50 transition">
-        <Icon name="mdi:package" class="w-6 h-6 text-emerald-400" />
-        <span class="text-xs text-slate-300 text-center">Model Artifacts</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800/50 border border-emerald-500/20 hover:border-emerald-500/50 transition">
-        <Icon name="mdi:chart-box" class="w-6 h-6 text-emerald-400" />
-        <span class="text-xs text-slate-300 text-center">Datasets</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800/50 border border-emerald-500/20 hover:border-emerald-500/50 transition">
-        <Icon name="mdi:file-document" class="w-6 h-6 text-emerald-400" />
-        <span class="text-xs text-slate-300 text-center">Documents</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800/50 border border-emerald-500/20 hover:border-emerald-500/50 transition">
-        <Icon name="mdi:image" class="w-6 h-6 text-emerald-400" />
-        <span class="text-xs text-slate-300 text-center">Media Files</span>
-      </div>
-      <div class="flex flex-col items-center gap-2 p-3 rounded-lg bg-slate-800/50 border border-emerald-500/20 hover:border-emerald-500/50 transition">
-        <Icon name="mdi:content-save" class="w-6 h-6 text-emerald-400" />
-        <span class="text-xs text-slate-300 text-center">Backups</span>
+      <div class="flex items-center gap-2 text-xs text-slate-300">
+        <div class="w-3 h-3 bg-emerald-500 rounded"></div>
+        Infrastructure
       </div>
     </div>
   </div>
