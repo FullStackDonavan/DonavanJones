@@ -175,105 +175,135 @@
         </div>
 
             </div>
-
-            <!-- RIGHT -->
-            <div
-  class="grid grid-cols-2 gap-4
-         p-4 rounded-2xl
+<!-- RIGHT -->
+<div
+  class="grid grid-cols-2 gap-4 p-4 rounded-2xl
          border border-slate-300 dark:border-slate-800/60
          bg-slate-50/80 dark:bg-slate-950/30
          backdrop-blur-sm"
 >
 
-                <!-- Nodes -->
-                <div
-  class="group rounded-xl p-4
-         border border-slate-300 dark:border-slate-800
-         bg-slate-100 dark:bg-slate-900/40
-         hover:border-sky-400 dark:hover:border-sky-500/30
-         transition-all duration-200"
->
-                <div class="flex items-start justify-between">
-                    <Icon name="mdi:server-network" class="text-sky-400 text-2xl" />
-                    <span class="text-[10px] text-slate-500 uppercase tracking-wider">
-                    Cluster
-                    </span>
-                </div>
+  <!-- CARD -->
+  <div class="group rounded-xl p-4
+              border border-slate-300 dark:border-slate-800
+              bg-slate-100 dark:bg-slate-900/40
+              hover:border-sky-400 dark:hover:border-sky-500/30
+              transition-all duration-200">
 
-                <div class="mt-4">
-                    <div class="text-3xl font-bold text-slate-900 dark:text-slate-100 leading-none">8</div>
-                    <div class="text-xs text-slate-400 mt-1">Kubernetes Nodes</div>
-                </div>
-                </div>
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
 
-                <!-- Architecture -->
-                <div
-  class="group rounded-xl p-4
-         border border-slate-300 dark:border-slate-800
-         bg-slate-100 dark:bg-slate-900/40
-         hover:border-sky-400 dark:hover:border-sky-500/30
-         transition-all duration-200"
->
-                <div class="flex items-start justify-between">
-                    <Icon name="mdi:cpu-64-bit" class="text-purple-400 text-2xl" />
-                    <span class="text-[10px] text-slate-500 uppercase tracking-wider">
-                    Compute
-                    </span>
-                </div>
+      <Icon
+        name="mdi:server-network"
+        class="text-sky-400 text-5xl shrink-0"
+      />
 
-                <div class="mt-4">
-                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100 leading-none">ARM64</div>
-                    <div class="text-xs text-slate-400 mt-1">Raspberry Pi 5 Cluster</div>
-                </div>
-                </div>
+      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
+        Cluster
+      </span>
 
-                <!-- AI -->
-                <div
-  class="group rounded-xl p-4
-         border border-slate-300 dark:border-slate-800
-         bg-slate-100 dark:bg-slate-900/40
-         hover:border-sky-400 dark:hover:border-sky-500/30
-         transition-all duration-200"
->
-                <div class="flex items-start justify-between">
-                    <Icon name="mdi:brain" class="text-emerald-400 text-2xl" />
-                    <span class="text-[10px] text-slate-500 uppercase tracking-wider">
-                    Intelligence
-                    </span>
-                </div>
+    </div>
 
-                <div class="mt-4">
-                    <div class="text-3xl font-bold text-slate-900 dark:text-slate-100 leading-none">AI</div>
-                    <div class="text-xs text-slate-400 mt-1">
-                    Inference + RAG + Embeddings
-                    </div>
-                </div>
-                </div>
+    <div class="mt-4">
+      <div class="text-4xl font-bold text-slate-900 dark:text-white leading-none">
+        8
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        Kubernetes Nodes
+      </div>
+    </div>
+  </div>
 
-                <!-- CI/CD -->
-                <div
-  class="group rounded-xl p-4
-         border border-slate-300 dark:border-slate-800
-         bg-slate-100 dark:bg-slate-900/40
-         hover:border-sky-400 dark:hover:border-sky-500/30
-         transition-all duration-200"
->
-                <div class="flex items-start justify-between">
-                    <Icon name="mdi:source-branch" class="text-amber-400 text-2xl" />
-                    <span class="text-[10px] text-slate-500 uppercase tracking-wider">
-                    Delivery
-                    </span>
-                </div>
+  <!-- CARD -->
+  <div class="group rounded-xl p-4
+              border border-slate-300 dark:border-slate-800
+              bg-slate-100 dark:bg-slate-900/40
+              hover:border-sky-400 dark:hover:border-sky-500/30
+              transition-all duration-200">
 
-                <div class="mt-4">
-                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100 leading-none">CI/CD</div>
-                    <div class="text-xs text-slate-400 mt-1">
-                    Automated Deployments
-                    </div>
-                </div>
-                </div>
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
 
-            </div>
+      <Icon
+        name="mdi:cpu-64-bit"
+        class="text-purple-400 text-5xl shrink-0"
+      />
+
+      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
+        Compute
+      </span>
+
+    </div>
+
+    <div class="mt-4">
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none">
+        ARM64
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        Raspberry Pi 5 Cluster
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="group rounded-xl p-4
+              border border-slate-300 dark:border-slate-800
+              bg-slate-100 dark:bg-slate-900/40
+              hover:border-sky-400 dark:hover:border-sky-500/30
+              transition-all duration-200">
+
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
+
+      <Icon
+        name="mdi:brain"
+        class="text-emerald-400 text-5xl shrink-0"
+      />
+
+      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
+        Intelligence
+      </span>
+
+    </div>
+
+    <div class="mt-4">
+      <div class="text-4xl font-bold text-slate-900 dark:text-white leading-none">
+        AI
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        Inference + RAG + Embeddings
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="group rounded-xl p-4
+              border border-slate-300 dark:border-slate-800
+              bg-slate-100 dark:bg-slate-900/40
+              hover:border-sky-400 dark:hover:border-sky-500/30
+              transition-all duration-200">
+
+    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
+
+      <Icon
+        name="mdi:source-branch"
+        class="text-amber-400 text-5xl shrink-0"
+      />
+
+      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
+        Delivery
+      </span>
+
+    </div>
+
+    <div class="mt-4">
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none">
+        CI/CD
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        Automated Deployments
+      </div>
+    </div>
+  </div>
+
+</div>
 
             </div>
 
