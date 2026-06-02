@@ -8,6 +8,7 @@ tags:
   - pipelines
   - bible-study
 draft: true
+cluster: "ai-engineering"
 slug: ai-pipelines-for-bible-study
 author: Donavan Jones
 ---

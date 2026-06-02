@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - storage
   - kubernetes
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: storage-setup
 author: Donavan Jones
 ---

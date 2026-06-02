@@ -8,6 +8,7 @@ tags:
   - agents
   - debate
 draft: true
+cluster: "ai-engineering"
 slug: debate-agents
 author: Donavan Jones
 ---

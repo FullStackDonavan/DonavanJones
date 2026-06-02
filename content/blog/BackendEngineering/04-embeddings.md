@@ -7,6 +7,7 @@ tags:
   - embeddings
   - ai
 draft: true
+cluster: "backend-engineering"
 slug: embeddings
 author: Donavan Jones
 ---

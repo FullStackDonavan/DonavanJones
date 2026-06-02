@@ -7,6 +7,7 @@ tags:
   - vector-search
   - ai
 draft: true
+cluster: "backend-engineering"
 slug: vector-search
 author: Donavan Jones
 ---

@@ -7,6 +7,7 @@ tags:
   - k3s
   - raspberry-pi
 draft: false
+cluster: "infrastructure-engineering"
 slug: k3s-on-raspberry-pis
 author: Donavan Jones
 ---

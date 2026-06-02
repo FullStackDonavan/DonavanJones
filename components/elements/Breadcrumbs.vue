@@ -73,12 +73,70 @@
   </BasicSection>
 </template>
 
-<script>
-export default {
-  props: {
-    parentTitle: String,
-    parentUrl: String,
-    currentPageTitle: String,
+<script setup lang="ts">
+import { computed } from "vue";
+
+const props = defineProps({
+  parentTitle: String,
+  parentUrl: String,
+  currentPageTitle: {
+    type: String,
+    required: true,
   },
-};
+});
+
+const route = useRoute();
+const config = useRuntimeConfig();
+
+const siteUrl =
+  config.public.siteUrl || "https://donavanjones.com";
+
+const breadcrumbSchema = computed(() => {
+  const items = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: siteUrl,
+    },
+  ];
+
+  if (props.parentTitle && props.parentUrl) {
+    items.push({
+      "@type": "ListItem",
+      position: 2,
+      name: props.parentTitle,
+      item: `${siteUrl}${props.parentUrl}`,
+    });
+
+    items.push({
+      "@type": "ListItem",
+      position: 3,
+      name: props.currentPageTitle,
+      item: `${siteUrl}${route.path}`,
+    });
+  } else {
+    items.push({
+      "@type": "ListItem",
+      position: 2,
+      name: props.currentPageTitle,
+      item: `${siteUrl}${route.path}`,
+    });
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  };
+});
+
+useHead({
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify(breadcrumbSchema.value),
+    },
+  ],
+});
 </script>

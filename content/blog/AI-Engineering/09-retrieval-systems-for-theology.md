@@ -8,6 +8,7 @@ tags:
   - retrieval
   - theology
 draft: true
+cluster: "ai-engineering"
 slug: retrieval-systems-for-theology
 author: Donavan Jones
 ---

@@ -167,6 +167,8 @@
         AI Engineering = Systems thinking + reliability + composability.
       </div>
 
+      <ClusterArticles cluster="ai-engineering" />
+
     </div>
   </PatternSection>
 </template>

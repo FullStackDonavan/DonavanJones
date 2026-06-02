@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - kubernetes
   - architecture
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: cluster-architecture-homelab
 author: Donavan Jones
 ---

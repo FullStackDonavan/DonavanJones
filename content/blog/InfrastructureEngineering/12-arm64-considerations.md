@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - arm64
   - hardware
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: arm64-considerations
 author: Donavan Jones
 ---

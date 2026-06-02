@@ -8,6 +8,7 @@ tags:
   - vector-db
   - retrieval
 draft: true
+cluster: "ai-engineering"
 slug: vector-databases
 author: Donavan Jones
 ---

@@ -170,7 +170,7 @@
       <div class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
         Backend systems are about reliability, scale, and predictable failure handling.
       </div>
-
+      <ClusterArticles cluster="backend-engineering" />
     </div>
   </PatternSection>
 </template>

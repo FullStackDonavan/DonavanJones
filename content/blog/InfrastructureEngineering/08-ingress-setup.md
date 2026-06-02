@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - ingress
   - kubernetes
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: ingress-setup
 author: Donavan Jones
 ---

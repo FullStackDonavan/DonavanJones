@@ -210,7 +210,7 @@
       <div class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
         Infrastructure is about resilience, observability, and deterministic failure handling.
       </div>
-
+<ClusterArticles cluster="infrastructure-engineering" />
     </div>
   </PatternSection>
 </template>

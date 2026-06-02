@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - gitea
   - ci-cd
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: gitea-runners-pipeline
 author: Donavan Jones
 ---

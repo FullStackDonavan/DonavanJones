@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - power
   - homelab
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: power-consumption-tradeoffs
 author: Donavan Jones
 ---

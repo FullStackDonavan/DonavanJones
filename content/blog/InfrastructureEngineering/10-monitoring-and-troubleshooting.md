@@ -6,7 +6,8 @@ category: "infrastructure-engineering"
 tags:
   - monitoring
   - troubleshooting
-draft: true
+draft: false
+cluster: "infrastructure-engineering"
 slug: monitoring-and-troubleshooting
 author: Donavan Jones
 ---
