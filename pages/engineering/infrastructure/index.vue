@@ -210,13 +210,61 @@
       <div class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
         Infrastructure is about resilience, observability, and deterministic failure handling.
       </div>
+      <FaqSection
+        title="Frequently Asked Questions"
+        :faqs="faqs"
+      />
 <ClusterArticles cluster="infrastructure-engineering" />
     </div>
   </PatternSection>
 </template>
 
-<script>
-export default {
-  name: "EngineeringInfrastructurePage",
-};
+<script setup lang="ts">
+ const faqs = [
+  {
+    question: "What does your infrastructure look like?",
+    answer:
+      "I run a self-hosted distributed system built on a k3s Kubernetes cluster using Raspberry Pi 5 nodes and ARM64 workloads. It supports AI services, databases, APIs, and media processing across multiple machines."
+  },
+  {
+    question: "What services do you self-host?",
+    answer:
+      "I self-host databases (PostgreSQL, MySQL), caching (Redis), object storage (MinIO), Git services (Gitea), AI workloads, and custom applications including my Bible app and automation tools."
+  },
+  {
+    question: "How do you handle AI workloads?",
+    answer:
+      "AI workloads run across GPU and CPU nodes, including LLM inference, embeddings, RAG pipelines, Whisper transcription, and Stable Diffusion image generation. Heavy tasks are distributed based on node capability."
+  },
+  {
+    question: "How is your storage architecture designed?",
+    answer:
+      "I use a combination of S3-compatible MinIO for object storage, PostgreSQL/MySQL for structured data, and distributed volumes for Kubernetes workloads. Media assets and user uploads are stored in S3-compatible buckets."
+  },
+  {
+    question: "How do you manage deployments?",
+    answer:
+      "I use containerized deployments with Docker and Kubernetes (k3s). CI/CD pipelines deploy services automatically, including backend APIs, frontend apps, and AI services."
+  },
+  {
+    question: "Do you use cloud providers?",
+    answer:
+      "Yes, I combine cloud services (AWS S3, compute resources) with self-hosted infrastructure to balance scalability, cost efficiency, and control over data and services."
+  },
+  {
+    question: "How do you handle real-time features like livestreaming?",
+    answer:
+      "I use WebRTC for peer-to-peer communication and AWS IVS or custom RTMP pipelines with FFmpeg for livestreaming. Streams are processed, recorded, and optionally stored for replay."
+  },
+  {
+    question: "How do your AI systems communicate?",
+    answer:
+      "AI services communicate through internal APIs, message queues, and RAG pipelines. Models like Ollama run locally, while external APIs are used for specialized tasks when needed."
+  },
+  {
+    question: "What makes your system architecture unique?",
+    answer:
+      "It combines homelab infrastructure, Kubernetes orchestration, GPU AI workloads, and full-stack application development into a unified ecosystem that supports real production applications."
+  }
+]
 </script>

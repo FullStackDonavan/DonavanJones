@@ -5,9 +5,10 @@
         class="container text-white lg:flex justify-center overflow-hidden dark:text-white py-16 px-4"
       >
         <div>
+          <!-- Back Button -->
           <nuxt-link
             class="block cursor-pointer max-w-2xl mb-4"
-            :href="backLink"
+            :to="backLink"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,136 +27,130 @@
             Back
           </nuxt-link>
 
-          <ContentDoc v-slot="{ doc }">
-            <h2 class="text-4xl font-semibold text-black dark:text-white">
-              {{ doc.title }}
-            </h2>
-            <p class="text-gray-500 dark:text-white">
-              by {{ doc.author }}, {{ doc.date }}
-            </p>
+          <!-- Content -->
+          <ContentDoc v-slot="{ doc: contentDoc }">
+            <div>
+              <!-- Title -->
+              <h2 class="text-4xl font-semibold text-black dark:text-white">
+                {{ contentDoc.title }}
+              </h2>
 
-            <!-- Category, Tags, and Project Info section -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center"
-            >
-              <span v-if="doc.category" class="mr-4">
-                <strong>Category: </strong>
-                <NuxtLink
-                  :to="{
-                    path: `/categories/${doc.category}`,
-                    query: { from: route.fullPath },
-                  }"
-                  class="text-blue-500 hover:underline"
-                >
-                  {{ doc.category }}
-                </NuxtLink>
-              </span>
+              <p class="text-gray-500 dark:text-white">
+                by {{ contentDoc.author }}, {{ contentDoc.date }}
+              </p>
 
-              <span v-if="doc.tags && doc.tags.length" class="mr-4">
-                <strong>Tags: </strong>
-                <ul class="inline-flex gap-x-2">
-                  <li v-for="(tag, index) in doc.tags" :key="index">
-                    <NuxtLink
-                      :to="{
-                        path: `/tags/${tag}`,
-                        query: { from: route.fullPath },
-                      }"
-                      class="text-blue-500 hover:underline"
-                    >
-                      {{ tag }}
-                    </NuxtLink>
-                  </li>
-                </ul>
-              </span>
+              <!-- Meta -->
+              <div class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center">
 
-              <span v-if="doc.projectType" class="mr-4">
-                <strong>Project Type:</strong>
-                <span v-if="doc.projectType === 'personal'">
-                  Personal Project
-                </span>
-                <span v-if="doc.projectType === 'freelance'"> Freelance </span>
-                <span v-if="doc.projectType === 'employment'">
-                  <a
-                    :href="doc.employmentLink"
-                    class="text-blue-500 hover:underline ml-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Employment</a
+                <span v-if="contentDoc.category" class="mr-4">
+                  <strong>Category: </strong>
+                  <NuxtLink
+                    :to="{
+                      path: `/categories/${contentDoc.category}`,
+                      query: { from: route.fullPath },
+                    }"
+                    class="text-blue-500 hover:underline"
                   >
+                    {{ contentDoc.category }}
+                  </NuxtLink>
                 </span>
-              </span>
-            </div>
 
-            <!-- GitHub and Live Site Buttons -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center"
-            >
-              <span v-if="doc.github">
+                <span v-if="contentDoc.tags?.length" class="mr-4">
+                  <strong>Tags: </strong>
+                  <ul class="inline-flex gap-x-2">
+                    <li v-for="(tag, index) in contentDoc.tags" :key="index">
+                      <NuxtLink
+                        :to="{
+                          path: `/tags/${tag}`,
+                          query: { from: route.fullPath },
+                        }"
+                        class="text-blue-500 hover:underline"
+                      >
+                        {{ tag }}
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                </span>
+
+                <span v-if="contentDoc.projectType" class="mr-4">
+                  <strong>Project Type:</strong>
+
+                  <span v-if="contentDoc.projectType === 'personal'">
+                    Personal Project
+                  </span>
+
+                  <span v-else-if="contentDoc.projectType === 'freelance'">
+                    Freelance
+                  </span>
+
+                  <span v-else-if="contentDoc.projectType === 'employment'">
+                    <a
+                      :href="contentDoc.employmentLink"
+                      class="text-blue-500 hover:underline ml-2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Employment
+                    </a>
+                  </span>
+                </span>
+              </div>
+
+              <!-- Links -->
+              <div class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center">
                 <a
-                  :href="doc.github"
+                  v-if="contentDoc.github"
+                  :href="contentDoc.github"
                   class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   GitHub
                 </a>
-              </span>
 
-              <span v-if="doc.liveSite">
                 <a
-                  :href="doc.liveSite"
+                  v-if="contentDoc.liveSite"
+                  :href="contentDoc.liveSite"
                   class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Live Site
                 </a>
-              </span>
-            </div>
-            <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
+              </div>
 
-            <div class="max-w-4xl">
-              <ContentRenderer
-                class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
-                :value="doc"
-              />
+              <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
+
+              <div class="max-w-4xl">
+                <ContentRenderer
+                  class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
+                  :value="contentDoc"
+                />
+              </div>
             </div>
           </ContentDoc>
         </div>
-      </main></div
-  ></PatternSection>
+      </main>
+    </div>
+  </PatternSection>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "#app";
+import { ref, onMounted } from "vue"
+import { useRoute, useRuntimeConfig } from "#app"
 
-const route = useRoute();
-const backLink = ref("/blog/overview");
-const doc = ref<any>({});
+const route = useRoute()
+const config = useRuntimeConfig()
 
-// Set the back link based on the query parameter
+const backLink = ref("/blog/overview")
+
+/**
+ * Safe back navigation
+ */
 onMounted(() => {
-  if (route.query.from) {
-    backLink.value = route.query.from as string;
+  const from = route.query.from
+  if (typeof from === "string" && from.startsWith("/")) {
+    backLink.value = from
   }
-  // Load the doc data
-  // Assume you load doc data here
-});
-
-const liveSiteHostname = computed(() => {
-  if (doc.value.liveSite) {
-    try {
-      return new URL(doc.value.liveSite).hostname;
-    } catch (e) {
-      console.error("Invalid live site URL:", e);
-      return "";
-    }
-  }
-  return "";
-});
+})
 </script>
-
-<style scoped>
-/* Optional: Add additional custom styles here */
-</style>

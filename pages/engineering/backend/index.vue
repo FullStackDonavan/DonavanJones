@@ -170,13 +170,56 @@
       <div class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
         Backend systems are about reliability, scale, and predictable failure handling.
       </div>
+      <FaqSection
+        title="Frequently Asked Questions"
+        :faqs="faqs"
+      />
       <ClusterArticles cluster="backend-engineering" />
     </div>
   </PatternSection>
 </template>
 
-<script>
-export default {
-  name: "EngineeringBackendPage",
-};
+<script setup lang="ts">
+const faqs = [
+  {
+    question: 'What backend technologies do you use?',
+    answer:
+      'I build backend systems using FastAPI (Python), Node.js, PHP, Prisma, MySQL, PostgreSQL, and Redis depending on the use case and scalability needs.'
+  },
+  {
+    question: 'How do you design scalable backend systems?',
+    answer:
+      'I use modular architectures, containerization (Docker), and Kubernetes (k3s) for orchestration. I also design systems around stateless APIs, caching layers, and async processing where needed.'
+  },
+  {
+    question: 'Do you work with cloud infrastructure?',
+    answer:
+      'Yes. I work with AWS, S3, self-hosted servers, and Kubernetes clusters. I design systems that can scale horizontally and support production workloads.'
+  },
+  {
+    question: 'How do you handle databases?',
+    answer:
+      'I use relational databases like MySQL and PostgreSQL with Prisma for type-safe queries. I also use Redis for caching, queues, and real-time performance optimization.'
+  },
+  {
+    question: 'Do you build APIs?',
+    answer:
+      'Yes. I design and build RESTful and event-driven APIs, often using FastAPI or Node.js. I focus on clean architecture, authentication, and performance.'
+  },
+  {
+    question: 'How do you manage file storage and media?',
+    answer:
+      'I use AWS S3 or MinIO for object storage, often paired with FFmpeg for video processing and optimization pipelines.'
+  },
+  {
+    question: 'Do you work with AI in backend systems?',
+    answer:
+      'Yes. I integrate LLMs (like Ollama), Whisper for transcription, and AI pipelines for recommendations, automation, and content generation.'
+  },
+  {
+    question: 'How do you handle real-time features?',
+    answer:
+      'I use WebSockets, WebRTC, and event-driven architecture for live streaming, chats, debates, and collaborative features.'
+  }
+]
 </script>

@@ -167,14 +167,78 @@
         AI Engineering = Systems thinking + reliability + composability.
       </div>
 
+      <FaqSection
+        title="Frequently Asked Questions"
+        :faqs="faqs"
+      />
+
       <ClusterArticles cluster="ai-engineering" />
 
     </div>
   </PatternSection>
 </template>
 
-<script>
-export default {
-  name: "EngineeringAiPage",
-};
+<script setup lang="ts">
+  const faqs = [
+    {
+      question: 'What AI systems do you build?',
+      answer:
+        'I build AI-powered applications including chat assistants, retrieval-augmented generation (RAG) systems, knowledge bases, recommendation engines, workflow automation tools, and custom AI integrations.'
+    },
+    {
+      question: 'Do you work with local AI models?',
+      answer:
+        'Yes. I deploy and manage local AI models using Ollama and GPU infrastructure, allowing businesses to run AI workloads privately without relying entirely on external APIs.'
+    },
+    {
+      question: 'Can you build custom AI chatbots?',
+      answer:
+        'Yes. I create custom chatbots trained on company documentation, websites, PDFs, databases, and proprietary knowledge sources to provide accurate, context-aware responses.'
+    },
+    {
+      question: 'What AI technologies do you use?',
+      answer:
+        'My AI stack includes Ollama, OpenAI, FastAPI, vector databases, embedding models, Whisper speech recognition, Stable Diffusion, and retrieval-augmented generation architectures.'
+    },
+    {
+      question: 'Can AI be integrated into existing applications?',
+      answer:
+        'Absolutely. I can integrate AI capabilities into existing web applications, CRMs, internal tools, customer portals, and business workflows without requiring a complete rebuild.'
+    },
+    {
+      question: 'Do you build AI recommendation systems?',
+      answer:
+        'Yes. I develop recommendation engines that analyze user behavior, preferences, and content to deliver personalized suggestions and insights.'
+    },
+    {
+      question: 'Can you deploy AI on private infrastructure?',
+      answer:
+        'Yes. I specialize in self-hosted AI deployments using Kubernetes, GPU servers, and cloud infrastructure, giving organizations greater control over privacy, costs, and performance.'
+    },
+    {
+      question: 'Do you build voice AI applications?',
+      answer:
+        'Yes. I integrate speech-to-text, text-to-speech, AI narration, voice assistants, and conversational AI experiences using technologies such as Whisper and modern LLMs.'
+    },
+    {
+      question: 'Can AI work with company documents and databases?',
+      answer:
+        'Yes. I build RAG systems that connect AI models to documents, databases, APIs, and business knowledge so responses are based on your actual data rather than generic training information.'
+    },
+    {
+      question: 'What industries can benefit from AI systems?',
+      answer:
+        'AI can improve operations across healthcare, education, faith-based organizations, e-commerce, wellness, manufacturing, logistics, customer service, and many other industries through automation and intelligent decision-making.'
+    },
+    {
+      question: 'Do you provide end-to-end AI development?',
+      answer:
+        'Yes. I handle architecture, backend development, frontend integration, infrastructure deployment, model integration, monitoring, and ongoing optimization.'
+    },
+    {
+      question: 'Can you build AI agents and workflow automation?',
+      answer:
+        'Yes. I create AI agents capable of retrieving information, generating content, performing actions, interacting with APIs, and automating repetitive business processes.'
+    }
+  ]
 </script>
