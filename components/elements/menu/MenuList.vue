@@ -9,7 +9,7 @@
         </span>
       </NuxtLink>
 
-      <!-- Engineering Dropdown -->
+      <!-- Systems Dropdown -->
       <div class="relative group">
 
         <!-- Systems Dropdown -->
@@ -20,7 +20,7 @@
     to="/system-overview"
     :class="[
       'text-base font-medium relative transition-colors duration-300 px-3 py-1 rounded-md inline-flex items-center gap-1',
-      isEngineeringActive
+      isSystemsActive
         ? 'text-gray-900 dark:text-gray-300 bg-gray-200 dark:bg-gray-500'
         : 'text-gray-500 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-300'
     ]"
@@ -49,17 +49,17 @@
   >
     <div class="p-2 flex flex-col">
 
-      <NuxtLink to="/engineering/ai" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <NuxtLink to="/systems/ai" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
         <div class="font-medium">AI Systems</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">RAG, agents, semantic retrieval, inference</div>
       </NuxtLink>
 
-      <NuxtLink to="/engineering/backend" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <NuxtLink to="/systems/backend" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
         <div class="font-medium">Backend Systems</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">APIs, async systems, services, databases</div>
       </NuxtLink>
 
-      <NuxtLink to="/engineering/infrastructure" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <NuxtLink to="/systems/infrastructure" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
         <div class="font-medium">Infrastructure Systems</div>
         <div class="text-sm text-gray-500 dark:text-gray-400">Kubernetes, ARM64, homelab, GPU nodes</div>
       </NuxtLink>
@@ -77,7 +77,7 @@
 
             <!-- AI Systems -->
             <NuxtLink
-              to="/engineering/ai"
+              to="/systems/ai"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
@@ -90,7 +90,7 @@
 
             <!-- Backend Systems -->
             <NuxtLink
-              to="/engineering/backend"
+              to="/systems/backend"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
@@ -103,7 +103,7 @@
 
             <!-- Infrastructure Systems -->
             <NuxtLink
-              to="/engineering/infrastructure"
+              to="/systems/infrastructure"
               class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
               <div class="font-medium text-gray-900 dark:text-gray-100">
@@ -154,12 +154,12 @@ const navClass = (active) => [
     : 'text-gray-500 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-300',
 ]
 
-// Systems (was Engineering)
-const isEngineeringActive = computed(() => {
+// Systems (was Systems)
+const isSystemsActive = computed(() => {
   return (
-    route.path.startsWith('/engineering/ai') ||
-    route.path.startsWith('/engineering/backend') ||
-    route.path.startsWith('/engineering/infrastructure')
+    route.path.startsWith('/systems/ai') ||
+    route.path.startsWith('/systems/backend') ||
+    route.path.startsWith('/systems/infrastructure')
   )
 })
 
