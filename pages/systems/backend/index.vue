@@ -7,7 +7,7 @@
       currentPageTitle="Backend"
     />
 
-    <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="mx-auto max-w-7xl px-6 py-14">
 
       <!-- HEADER -->
       <div class="mb-12">
