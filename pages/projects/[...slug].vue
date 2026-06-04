@@ -1,40 +1,41 @@
 <template>
   <PatternSection>
-    <div class="flex justify-center gap-x-12">
-      <main
-        class="container text-white lg:flex justify-center overflow-hidden dark:text-white py-16 px-4"
-      >
-        <div>
-          <nuxt-link
-            class="block cursor-pointer max-w-2xl mb-4"
-            :href="backLink"
+
+    <!-- PAGE WRAPPER -->
+    <div class="min-h-screen">
+
+      <!-- BACK BUTTON -->
+      <div class="mx-auto px-4 pt-10">
+        <nuxt-link
+          class="text-slate-400 hover:text-white flex items-center gap-2"
+          :to="backLink"
+        >
+          ← Back
+        </nuxt-link>
+      </div>
+
+      <ContentDoc v-slot="{ doc }">
+
+        <!-- HERO (FULL WIDTH) -->
+         <ArticleHero
+            :title="doc.title"
+            :description="doc.description"
+            :highlight="doc.highlight || ''"
+            :badge="doc.category"
+            :badge-icon="'mdi:bible'"
+            :stack="doc.stack || []"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="inline h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M11 17l-5-5m0 0l5-5m-5 5h12"
-              />
-            </svg>
-            Back
-          </nuxt-link>
 
-          <ContentDoc v-slot="{ doc }">
-            <h2 class="text-4xl font-semibold text-black dark:text-white">
-              {{ doc.title }}
-            </h2>
-            <p class="text-gray-500 dark:text-white">
-              by {{ doc.author }}, {{ doc.date }}
-            </p>
+          
+            <!-- optional extra content inside hero -->
+            <template #default>
+              
+              <div class="text-sm text-slate-500">
+                by {{ doc.author }}, {{ doc.date }}
+              </div>
 
-            <!-- Category, Tags, and Project Info section -->
+
+               <!-- Category, Tags, and Project Info section -->
             <div
               class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center"
             >
@@ -70,9 +71,9 @@
 
               <span v-if="doc.projectType" class="mr-4">
                 <strong>Project Type:</strong>
-                <span v-if="doc.projectType === 'personal'">
-                  Personal Project
-                </span>
+                  <span v-if="doc.projectType">
+                    {{ doc.projectType }}
+                  </span> 
                 <span v-if="doc.projectType === 'freelance'"> Freelance </span>
                 <span v-if="doc.projectType === 'employment'">
                   <a
@@ -86,44 +87,79 @@
               </span>
             </div>
 
-            <!-- GitHub and Live Site Buttons -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center"
-            >
-              <span v-if="doc.github">
+
+
+              <div class="mt-4 flex gap-3 flex-wrap">
                 <a
+                  v-if="doc.github"
                   :href="doc.github"
-                  class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
                   GitHub
                 </a>
-              </span>
 
-              <span v-if="doc.liveSite">
                 <a
+                  v-if="doc.liveSite"
                   :href="doc.liveSite"
-                  class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 >
                   Live Site
                 </a>
-              </span>
-            </div>
-            <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
 
-            <div class="max-w-4xl">
-              <ContentRenderer
-                class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
-                :value="doc"
-              />
-            </div>
-          </ContentDoc>
+                
+              </div>
+            </template>
+
+            <!-- RIGHT SIDE CARDS -->
+            <template #right>
+              <div class="hero-stat">
+                <Icon name="mdi:book-open-page-variant" class="text-sky-400 text-4xl" />
+                <div class="mt-2 text-xl font-bold">Bible</div>
+                <div class="text-xs text-slate-400">Core Engine</div>
+              </div>
+
+              <div class="hero-stat">
+                <Icon name="mdi:brain" class="text-purple-400 text-4xl" />
+                <div class="mt-2 text-xl font-bold">AI</div>
+                <div class="text-xs text-slate-400">Bible Logic</div>
+              </div>
+
+              <div class="hero-stat">
+                <Icon name="mdi:video" class="text-emerald-400 text-4xl" />
+                <div class="mt-2 text-xl font-bold">Live</div>
+                <div class="text-xs text-slate-400">Streaming</div>
+              </div>
+
+              <div class="hero-stat">
+                <Icon name="mdi:account-group" class="text-amber-400 text-4xl" />
+                <div class="mt-2 text-xl font-bold">Social</div>
+                <div class="text-xs text-slate-400">Community</div>
+              </div>
+
+              
+            </template>
+          </ArticleHero>
+
+        <!-- CONTENT WRAPPER (THIS IS THE FIX) -->
+        <div class="max-w-4xl mx-auto px-4 py-12">
+
+     
+
+          <!-- CONTENT -->
+          <ContentRenderer
+            class="prose lg:prose-xl dark:prose-invert max-w-none"
+            :value="doc"
+          />
+
         </div>
-      </main></div
-  ></PatternSection>
+
+      </ContentDoc>
+
+    </div>
+
+  </PatternSection>
 </template>
 
 <script setup lang="ts">
@@ -131,7 +167,7 @@ import { ref, computed, onMounted } from "vue";
 import { useRoute } from "#app";
 
 const route = useRoute();
-const backLink = ref("/blog/overview");
+const backLink = ref("/projects/overview");
 const doc = ref<any>({});
 
 // Set the back link based on the query parameter

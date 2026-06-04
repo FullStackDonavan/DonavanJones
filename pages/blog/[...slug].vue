@@ -121,7 +121,7 @@
 
               <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
 
-              <div class="max-w-4xl">
+              <div class="max-w-8xl">
                 <ContentRenderer
                   class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
                   :value="contentDoc"
