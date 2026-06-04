@@ -17,14 +17,18 @@
       <ContentDoc v-slot="{ doc }">
 
         <!-- HERO (FULL WIDTH) -->
-         <ArticleHero
-            :title="doc.title"
-            :description="doc.description"
-            :highlight="doc.highlight || ''"
-            :badge="doc.category"
-            :badge-icon="'mdi:bible'"
-            :stack="doc.stack || []"
-          >
+        <ArticleHero
+          :title="doc.title"
+          :description="doc.description"
+          :highlight="doc.highlight || ''"
+          :badge="doc.category"
+          :badge-icon="'mdi:bible'"
+          :frontend="doc.frontend || []"
+          :backend="doc.backend || []"
+          :cloud="doc.cloud || []"
+          :ai="doc.ai || []"
+          :project-scope="doc.projectScope || []"
+        >
 
           
             <!-- optional extra content inside hero -->
@@ -143,7 +147,7 @@
           </ArticleHero>
 
         <!-- CONTENT WRAPPER (THIS IS THE FIX) -->
-        <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="max-w-6xl mx-auto px-4 py-12">
 
      
 

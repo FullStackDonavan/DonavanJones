@@ -70,26 +70,87 @@
 
         </div>
 
-        <!-- STACK -->
-        <div v-if="stack?.length" class="mt-10 pt-8 border-t border-slate-800">
+<!-- STACK WRAPPER -->
+<div
+  v-if="frontend?.length || backend?.length || cloud?.length || ai?.length || projectScope?.length"
+  class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800"
+>
 
-          <div class="text-xs uppercase tracking-widest text-slate-500 mb-4">
-            Technology Stack
-          </div>
+  <div class="grid md:grid-cols-4 gap-4">
 
-          <div class="flex flex-wrap gap-2">
-            <span
-              v-for="item in stack"
-              :key="item"
-              class="px-2 py-1 rounded-md text-xs
-                     bg-slate-100 dark:bg-slate-800
-                     text-slate-600 dark:text-slate-300"
-            >
-              {{ item }}
-            </span>
-          </div>
+    <!-- FRONTEND CARD -->
+    <div v-if="frontend?.length" class="stack-card border-sky-400/20">
+      <div class="stack-title text-sky-400">
+        Frontend
+      </div>
 
-        </div>
+      <div class="stack-body">
+        <span v-for="item in frontend" :key="item" class="tech-pill">
+          {{ item }}
+        </span>
+      </div>
+    </div>
+
+    <!-- BACKEND CARD -->
+    <div v-if="backend?.length" class="stack-card border-emerald-400/20">
+      <div class="stack-title text-emerald-400">
+        Backend
+      </div>
+
+      <div class="stack-body">
+        <span v-for="item in backend" :key="item" class="tech-pill">
+          {{ item }}
+        </span>
+      </div>
+    </div>
+
+    <!-- CLOUD / INFRA -->
+    <div v-if="cloud?.length" class="stack-card border-purple-400/20">
+      <div class="stack-title text-purple-400">
+        Infrastructure
+      </div>
+
+      <div class="stack-body">
+        <span v-for="item in cloud" :key="item" class="tech-pill">
+          {{ item }}
+        </span>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div v-if="ai?.length" class="stack-card border-amber-400/20">
+      <div class="stack-title text-amber-400">
+        AI
+      </div>
+
+      <div class="stack-body">
+        <span v-for="item in ai" :key="item" class="tech-pill">
+          {{ item }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROJECT SCOPE (full width card) -->
+  <div v-if="projectScope?.length" class="mt-6 stack-card border-slate-700">
+    <div class="stack-title text-slate-300">
+      Project Scope
+    </div>
+
+    <div class="stack-body">
+      <span
+        v-for="item in projectScope"
+        :key="item"
+        class="px-3 py-1 rounded-full text-xs font-medium
+               bg-sky-500/10 text-sky-300 border border-sky-500/20"
+      >
+        {{ item }}
+      </span>
+    </div>
+  </div>
+
+</div>
 
       </div>
     </div>
@@ -108,6 +169,39 @@ defineProps({
   stack: {
     type: Array,
     default: () => []
+  },
+
+  projectScope: {
+    type: Array,
+    default: () => []
+  },
+
+  frontend: {
+    type: Array,
+    default: () => []
+  },
+
+  backend: {
+    type: Array,
+    default: () => []
+  },
+
+  cloud: {
+    type: Array,
+    default: () => []
+  },
+
+  ai: {
+    type: Array,
+    default: () => []
   }
 })
 </script>
+
+<style scoped>
+.tech-pill {
+  @apply px-2 py-1 rounded-md text-xs
+         bg-slate-100 dark:bg-slate-800
+         text-slate-600 dark:text-slate-300;
+}
+</style>
