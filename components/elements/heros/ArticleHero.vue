@@ -52,7 +52,53 @@
               {{ description }}
             </p>
 
-            <!-- SLOT (for lifecycle / extra content) -->
+            <!-- 🔥 SYSTEM SNAPSHOT STRIP -->
+            <div
+              v-if="frontend?.length || backend?.length || cloud?.length || ai?.length"
+              class="mt-8 rounded-xl border border-slate-200 dark:border-slate-800
+                     bg-slate-50/60 dark:bg-slate-950/30
+                     p-5 backdrop-blur"
+            >
+
+              <div class="text-xs uppercase tracking-widest text-slate-500 mb-4">
+                System Snapshot
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                <div v-if="frontend?.length">
+                  <div class="text-xs text-sky-400 mb-1">Frontend</div>
+                  <div class="text-sm text-slate-700 dark:text-slate-200">
+                    {{ frontend.join(' · ') }}
+                  </div>
+                </div>
+
+                <div v-if="backend?.length">
+                  <div class="text-xs text-emerald-400 mb-1">Backend</div>
+                  <div class="text-sm text-slate-700 dark:text-slate-200">
+                    {{ backend.join(' · ') }}
+                  </div>
+                </div>
+
+                <div v-if="cloud?.length">
+                  <div class="text-xs text-purple-400 mb-1">Infra</div>
+                  <div class="text-sm text-slate-700 dark:text-slate-200">
+                    {{ cloud.join(' · ') }}
+                  </div>
+                </div>
+
+                <div v-if="ai?.length">
+                  <div class="text-xs text-amber-400 mb-1">AI</div>
+                  <div class="text-sm text-slate-700 dark:text-slate-200">
+                    {{ ai.join(' · ') }}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- SLOT -->
             <div v-if="$slots.default" class="mt-10">
               <slot />
             </div>
@@ -60,97 +106,41 @@
           </div>
 
           <!-- RIGHT (CARDS SLOT) -->
-          <div v-if="$slots.right" class="grid grid-cols-2 gap-4 p-4
-                                         rounded-2xl border
-                                         border-slate-300 dark:border-slate-800/60
-                                         bg-slate-50/80 dark:bg-slate-950/30
-                                         backdrop-blur-sm">
+          <div
+            v-if="$slots.right"
+            class="grid grid-cols-2 gap-4 p-4
+                   rounded-2xl border
+                   border-slate-300 dark:border-slate-800/60
+                   bg-slate-50/80 dark:bg-slate-950/30
+                   backdrop-blur-sm"
+          >
             <slot name="right" />
           </div>
 
         </div>
 
-<!-- STACK WRAPPER -->
-<div
-  v-if="frontend?.length || backend?.length || cloud?.length || ai?.length || projectScope?.length"
-  class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800"
->
+        <!-- STACK WRAPPER -->
+        <div
+          v-if="projectScope?.length"
+          class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800"
+        >
 
-  <div class="grid md:grid-cols-4 gap-4">
+          <div class="text-xs uppercase tracking-widest text-slate-500 mb-4">
+            Project Scope
+          </div>
 
-    <!-- FRONTEND CARD -->
-    <div v-if="frontend?.length" class="stack-card border-sky-400/20">
-      <div class="stack-title text-sky-400">
-        Frontend
-      </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="item in projectScope"
+              :key="item"
+              class="px-3 py-1 rounded-full text-xs font-medium
+                     bg-sky-500/10 text-sky-300 border border-sky-500/20"
+            >
+              {{ item }}
+            </span>
+          </div>
 
-      <div class="stack-body">
-        <span v-for="item in frontend" :key="item" class="tech-pill">
-          {{ item }}
-        </span>
-      </div>
-    </div>
-
-    <!-- BACKEND CARD -->
-    <div v-if="backend?.length" class="stack-card border-emerald-400/20">
-      <div class="stack-title text-emerald-400">
-        Backend
-      </div>
-
-      <div class="stack-body">
-        <span v-for="item in backend" :key="item" class="tech-pill">
-          {{ item }}
-        </span>
-      </div>
-    </div>
-
-    <!-- CLOUD / INFRA -->
-    <div v-if="cloud?.length" class="stack-card border-purple-400/20">
-      <div class="stack-title text-purple-400">
-        Infrastructure
-      </div>
-
-      <div class="stack-body">
-        <span v-for="item in cloud" :key="item" class="tech-pill">
-          {{ item }}
-        </span>
-      </div>
-    </div>
-
-    <!-- AI -->
-    <div v-if="ai?.length" class="stack-card border-amber-400/20">
-      <div class="stack-title text-amber-400">
-        AI
-      </div>
-
-      <div class="stack-body">
-        <span v-for="item in ai" :key="item" class="tech-pill">
-          {{ item }}
-        </span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- PROJECT SCOPE (full width card) -->
-  <div v-if="projectScope?.length" class="mt-6 stack-card border-slate-700">
-    <div class="stack-title text-slate-300">
-      Project Scope
-    </div>
-
-    <div class="stack-body">
-      <span
-        v-for="item in projectScope"
-        :key="item"
-        class="px-3 py-1 rounded-full text-xs font-medium
-               bg-sky-500/10 text-sky-300 border border-sky-500/20"
-      >
-        {{ item }}
-      </span>
-    </div>
-  </div>
-
-</div>
+        </div>
 
       </div>
     </div>
