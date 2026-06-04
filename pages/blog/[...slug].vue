@@ -2,7 +2,7 @@
   <PatternSection>
     <div class="flex justify-center gap-x-12">
       <main
-        class="container text-white lg:flex justify-center overflow-hidden dark:text-white py-16 px-4"
+        class="max-w-7xl text-white lg:flex justify-center overflow-hidden dark:text-white py-16 px-4"
       >
         <div>
           <!-- Back Button -->

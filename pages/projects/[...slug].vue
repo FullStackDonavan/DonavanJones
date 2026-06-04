@@ -147,7 +147,7 @@
           </ArticleHero>
 
         <!-- CONTENT WRAPPER (THIS IS THE FIX) -->
-        <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="max-w-7xl mx-auto px-4 py-12">
 
      
 
