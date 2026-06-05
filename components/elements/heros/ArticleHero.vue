@@ -52,51 +52,58 @@
               {{ description }}
             </p>
 
-            <!-- 🔥 SYSTEM SNAPSHOT STRIP -->
-            <div
-              v-if="frontend?.length || backend?.length || cloud?.length || ai?.length"
-              class="mt-8 rounded-xl border border-slate-200 dark:border-slate-800
-                     bg-slate-50/60 dark:bg-slate-950/30
-                     p-5 backdrop-blur"
-            >
+           
+<!-- ARTICLE OVERVIEW HERO -->
+<div
+  v-if="overviewDescription"
+  class="rounded-2xl mt-8"
+>
 
-              <div class="text-xs uppercase tracking-widest text-slate-500 mb-4">
-                System Snapshot
-              </div>
 
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <!-- MAIN DESCRIPTION -->
+  <p class="text-base md:text-lg text-slate-700 dark:text-slate-200 leading-relaxed mb-5">
+    {{ overviewDescription }}
+  </p>
 
-                <div v-if="frontend?.length">
-                  <div class="text-xs text-sky-400 mb-1">Frontend</div>
-                  <div class="text-sm text-slate-700 dark:text-slate-200">
-                    {{ frontend.join(' · ') }}
-                  </div>
-                </div>
+  <!-- FLOW STEPS -->
+  <div v-if="overviewSteps?.length" class="space-y-3 mb-5">
 
-                <div v-if="backend?.length">
-                  <div class="text-xs text-emerald-400 mb-1">Backend</div>
-                  <div class="text-sm text-slate-700 dark:text-slate-200">
-                    {{ backend.join(' · ') }}
-                  </div>
-                </div>
+    <div
+      v-for="(step, i) in overviewSteps"
+      :key="i"
+      class="flex items-start gap-3"
+    >
+      <div class="mt-1 w-5 h-5 rounded-full bg-sky-500/10 text-sky-500
+                  flex items-center justify-center text-xs font-semibold">
+        {{ i + 1 }}
+      </div>
 
-                <div v-if="cloud?.length">
-                  <div class="text-xs text-purple-400 mb-1">Infra</div>
-                  <div class="text-sm text-slate-700 dark:text-slate-200">
-                    {{ cloud.join(' · ') }}
-                  </div>
-                </div>
+      <div class="text-sm text-slate-700 dark:text-slate-200">
+        {{ step }}
+      </div>
+    </div>
 
-                <div v-if="ai?.length">
-                  <div class="text-xs text-amber-400 mb-1">AI</div>
-                  <div class="text-sm text-slate-700 dark:text-slate-200">
-                    {{ ai.join(' · ') }}
-                  </div>
-                </div>
+  </div>
 
-              </div>
+  <!-- EMPTY STATE -->
+  <div v-else>
+    <p class="text-sm text-slate-500 italic">
+      No steps defined.
+    </p>
+  </div>
 
-            </div>
+  <!-- SUMMARY -->
+  <div
+    v-if="overviewSummary"
+    class="pt-4 border-t border-slate-200 dark:border-slate-800"
+  >
+    <p class="text-sm text-slate-600 dark:text-slate-300 italic">
+      {{ overviewSummary }}
+    </p>
+  </div>
+
+</div>
+
 
             <!-- SLOT -->
             <div v-if="$slots.default" class="mt-10">
@@ -104,18 +111,147 @@
             </div>
 
           </div>
+<div
+  v-if="$slots.right || frontend?.length || backend?.length || cloud?.length || ai?.length"
+  class="flex flex-col"
+>
 
-          <!-- RIGHT (CARDS SLOT) -->
-          <div
-            v-if="$slots.right"
-            class="grid grid-cols-2 gap-4 p-4
-                   rounded-2xl border
-                   border-slate-300 dark:border-slate-800/60
-                   bg-slate-50/80 dark:bg-slate-950/30
-                   backdrop-blur-sm"
-          >
-            <slot name="right" />
-          </div>
+  <!-- HEADER STRIP -->
+  <div
+    v-if="$slots.right"
+    class="flex items-center justify-between w-full px-5 py-4
+           rounded-t-2xl
+           border border-b-0
+           border-slate-300 dark:border-slate-800
+           bg-gradient-to-r
+           from-slate-100 to-slate-50
+           dark:from-slate-900 dark:to-slate-950
+           backdrop-blur-sm"
+  >
+    <slot name="right" />
+  </div>
+
+<!-- SYSTEM SNAPSHOT -->
+<div
+  v-if="frontend?.length || backend?.length || cloud?.length || ai?.length"
+  class="rounded-b-2xl
+         border border-slate-300 dark:border-slate-800
+         bg-slate-50/60 dark:bg-slate-950/30
+         p-5 backdrop-blur"
+>
+
+  <!-- HEADER -->
+  <div class="flex items-center justify-between mb-4">
+    <div class="text-xs uppercase tracking-widest text-slate-500">
+      System Snapshot
+    </div>
+
+    <div class="h-px flex-1 ml-4 bg-slate-200 dark:bg-slate-800"></div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+    <!-- Frontend -->
+    <div v-if="frontend?.length">
+      <div class="text-xs font-medium text-sky-400 mb-2">
+        Frontend
+      </div>
+      <ul class="space-y-1">
+        <li
+          v-for="item in frontend"
+          :key="item"
+          class="text-sm text-slate-700 dark:text-slate-200 before:content-['•'] before:mr-2 before:text-slate-400"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Backend -->
+    <div v-if="backend?.length">
+      <div class="text-xs font-medium text-emerald-400 mb-2">
+        Backend
+      </div>
+      <ul class="space-y-1">
+        <li
+          v-for="item in backend"
+          :key="item"
+          class="text-sm text-slate-700 dark:text-slate-200 before:content-['•'] before:mr-2 before:text-slate-400"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Infra -->
+    <div v-if="cloud?.length">
+      <div class="text-xs font-medium text-purple-400 mb-2">
+        Infrastructure
+      </div>
+      <ul class="space-y-1">
+        <li
+          v-for="item in cloud"
+          :key="item"
+          class="text-sm text-slate-700 dark:text-slate-200 before:content-['•'] before:mr-2 before:text-slate-400"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- AI -->
+    <div v-if="ai?.length">
+      <div class="text-xs font-medium text-amber-400 mb-2">
+        AI
+      </div>
+      <ul class="space-y-1">
+        <li
+          v-for="item in ai"
+          :key="item"
+          class="text-sm text-slate-700 dark:text-slate-200 before:content-['•'] before:mr-2 before:text-slate-400"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- FOOTER: USE CASES STRIP -->
+  <div
+    v-if="projectScope?.length"
+    class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800"
+  >
+    <div class="text-xs uppercase tracking-widest text-slate-500 mb-3">
+      Use Cases
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <span
+        v-for="scope in projectScope"
+        :key="scope"
+        class="text-xs px-2 py-1 rounded-md
+               bg-slate-100 dark:bg-slate-900
+               text-slate-600 dark:text-slate-300
+               border border-slate-200 dark:border-slate-800"
+      >
+        {{ scope }}
+      </span>
+    </div>
+  </div>
+
+</div>
+
+
+  
+
+</div>
+
+
+
+
+
 
         </div>
 
@@ -155,11 +291,17 @@ defineProps({
 
   badge: String,
   badgeIcon: String,
-
-  stack: {
+  overviewDescription: String,
+  overviewSummary: String,
+  overviewSteps: {
     type: Array,
     default: () => []
   },
+
+
+
+
+
 
   projectScope: {
     type: Array,
@@ -186,6 +328,7 @@ defineProps({
     default: () => []
   }
 })
+
 </script>
 
 <style scoped>

@@ -23,11 +23,17 @@
           :highlight="doc.highlight || ''"
           :badge="doc.category"
           :badge-icon="'mdi:bible'"
+
           :frontend="doc.frontend || []"
           :backend="doc.backend || []"
           :cloud="doc.cloud || []"
           :ai="doc.ai || []"
+
           :project-scope="doc.projectScope || []"
+
+          :overview-description="doc.overviewDescription || ''"
+          :overview-steps="doc.overviewSteps || []"
+          :overview-summary="doc.overviewSummary || ''"
         >
 
           
