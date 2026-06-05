@@ -220,7 +220,7 @@
 
   <!-- FOOTER: USE CASES STRIP -->
   <div
-    v-if="projectScope?.length"
+    v-if="useCase?.length"
     class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800"
   >
     <div class="text-xs uppercase tracking-widest text-slate-500 mb-3">
@@ -229,14 +229,14 @@
 
     <div class="flex flex-wrap gap-2">
       <span
-        v-for="scope in projectScope"
-        :key="scope"
+        v-for="item in useCase"
+        :key="item"
         class="text-xs px-2 py-1 rounded-md
                bg-slate-100 dark:bg-slate-900
                text-slate-600 dark:text-slate-300
                border border-slate-200 dark:border-slate-800"
       >
-        {{ scope }}
+        {{ item }}
       </span>
     </div>
   </div>
@@ -299,7 +299,10 @@ defineProps({
   },
 
 
-
+ useCase: {
+    type: Array,
+    default: () => []
+  },
 
 
 

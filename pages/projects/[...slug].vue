@@ -31,6 +31,8 @@
 
           :project-scope="doc.projectScope || []"
 
+          :use-case="doc.useCase || []"
+
           :overview-description="doc.overviewDescription || ''"
           :overview-steps="doc.overviewSteps || []"
           :overview-summary="doc.overviewSummary || ''"
