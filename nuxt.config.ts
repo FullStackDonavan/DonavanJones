@@ -1,6 +1,15 @@
 export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+
+    head: {
+      meta: [
+        {
+          name: 'google-site-verification',
+          content: '7iUSMERZz_LsMNzstyp4-5uwlbeiPZYvmRoIZ3VDNyU',
+        },
+      ],
+    },
   },
   components: {
     dirs: [
