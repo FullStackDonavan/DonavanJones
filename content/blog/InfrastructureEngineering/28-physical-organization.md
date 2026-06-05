@@ -1,12 +1,12 @@
 ---
 title: "Physical Organization"
 description: "How I physically organized my homelab rack and equipment."
-date: 2026-05-26
+date: 2025-12-09
 category: "infrastructure-engineering"
 tags:
   - homelab
   - organization
-draft: true
+draft: false
 slug: physical-organization
 author: Donavan Jones
 ---

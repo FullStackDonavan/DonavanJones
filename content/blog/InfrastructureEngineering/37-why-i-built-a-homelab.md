@@ -1,12 +1,12 @@
 ---
 title: "Why I Built a Homelab"
 description: "My motivations for building a personal homelab."
-date: 2026-05-26
+date: 2026-01-25
 category: "infrastructure-engineering"
 tags:
   - homelab
   - motivation
-draft: true
+draft: false
 slug: why-i-built-a-homelab
 author: Donavan Jones
 ---

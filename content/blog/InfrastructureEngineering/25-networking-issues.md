@@ -1,12 +1,12 @@
 ---
 title: "Networking Issues"
 description: "Common networking issues in Kubernetes homelab clusters."
-date: 2026-05-26
+date: 2025-11-26
 category: "infrastructure-engineering"
 tags:
   - kubernetes
   - networking
-draft: true
+draft: false
 slug: networking-issues
 author: Donavan Jones
 ---

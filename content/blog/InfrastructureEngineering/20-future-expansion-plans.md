@@ -1,12 +1,12 @@
 ---
 title: "Future Expansion Plans"
 description: "Plans for expanding my homelab and infrastructure."
-date: 2026-05-26
+date: 2025-11-12
 category: "infrastructure-engineering"
 tags:
   - homelab
   - expansion
-draft: true
+draft: false
 slug: future-expansion-plans
 author: Donavan Jones
 ---

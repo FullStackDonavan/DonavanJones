@@ -1,12 +1,12 @@
 ---
 title: "Systems Thinking"
 description: "Applying systems thinking to infrastructure and homelab design."
-date: 2026-05-26
+date: 2026-01-14
 category: "infrastructure-engineering"
 tags:
   - systems
   - design
-draft: true
+draft: false
 slug: systems-thinking
 author: Donavan Jones
 ---

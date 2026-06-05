@@ -1,13 +1,13 @@
 ---
 title: "Installing Gitea in Kubernetes"
 description: "How to install Gitea in a Kubernetes cluster for CI/CD."
-date: 2026-05-26
+date: 2025-11-20
 category: "infrastructure-engineering"
 tags:
   - gitea
   - kubernetes
   - ci-cd
-draft: true
+draft: false
 slug: installing-gitea-in-kubernetes
 author: Donavan Jones
 ---

@@ -1,12 +1,12 @@
 ---
 title: "Joining Worker Nodes"
 description: "Adding worker nodes to a K3s Raspberry Pi cluster."
-date: 2026-05-26
+date: 2025-10-06
 category: "infrastructure-engineering"
 tags:
   - k3s
   - kubernetes
-draft: true
+draft: false
 slug: joining-worker-nodes
 author: Donavan Jones
 ---

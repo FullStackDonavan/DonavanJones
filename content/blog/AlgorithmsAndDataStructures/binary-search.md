@@ -1,7 +1,7 @@
 ---
 title: "Binary Search"
 description: "Learn how Binary Search works in JavaScript with examples, time complexity analysis, and practical use cases."
-date: 2025-07-24
+date: 2025-08-14
 category: "algorithms"
 tags:
   - javascript

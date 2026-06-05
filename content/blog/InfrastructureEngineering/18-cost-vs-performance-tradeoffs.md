@@ -1,12 +1,12 @@
 ---
 title: "Cost vs Performance Tradeoffs"
 description: "Balancing cost and performance in homelab infrastructure."
-date: 2026-05-26
+date: 2025-11-08
 category: "infrastructure-engineering"
 tags:
   - cost
   - performance
-draft: true
+draft: false
 slug: cost-vs-performance-tradeoffs
 author: Donavan Jones
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Flashing Raspberry Pi OS"
 description: "How to flash Raspberry Pi OS for a Kubernetes homelab."
-date: 2026-05-26
+date: 2025-09-20
 category: "infrastructure-engineering"
 tags:
   - raspberry-pi

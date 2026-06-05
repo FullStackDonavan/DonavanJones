@@ -1,7 +1,7 @@
 ---
 title: "Rack Overview"
 description: "Overview of my homelab rack and its components."
-date: 2026-05-26
+date: 2025-12-22
 category: "infrastructure-engineering"
 tags:
   - homelab
@@ -10,7 +10,7 @@ tags:
   - gitea
   - ci-cd
   - ai
-draft: true
+draft: false
 slug: rack-overview
 author: Donavan Jones
 ---

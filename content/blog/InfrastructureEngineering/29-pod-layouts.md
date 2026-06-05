@@ -1,12 +1,12 @@
 ---
 title: "Pod Layouts"
 description: "Pod layouts and deployment strategies in my Kubernetes cluster."
-date: 2026-05-26
+date: 2025-12-12
 category: "infrastructure-engineering"
 tags:
   - kubernetes
   - pods
-draft: true
+draft: false
 slug: pod-layouts
 author: Donavan Jones
 ---

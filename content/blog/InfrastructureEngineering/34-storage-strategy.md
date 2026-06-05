@@ -1,12 +1,12 @@
 ---
 title: "Storage Strategy"
 description: "Storage strategy for my homelab and Kubernetes workloads."
-date: 2026-05-26
+date: 2026-01-12
 category: "infrastructure-engineering"
 tags:
   - storage
   - strategy
-draft: true
+draft: false
 slug: storage-strategy
 author: Donavan Jones
 ---

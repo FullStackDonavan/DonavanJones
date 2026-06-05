@@ -1,7 +1,7 @@
 ---
 title: "Monitoring and Troubleshooting"
 description: "Monitoring and troubleshooting a Raspberry Pi Kubernetes cluster."
-date: 2026-05-26
+date: 2025-10-18
 category: "infrastructure-engineering"
 tags:
   - monitoring

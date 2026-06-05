@@ -1,12 +1,12 @@
 ---
 title: "Separation of Workloads"
 description: "How I separate workloads in my homelab for efficiency and reliability."
-date: 2026-05-26
+date: 2026-01-10
 category: "infrastructure-engineering"
 tags:
   - workloads
   - homelab
-draft: true
+draft: false
 slug: separation-of-workloads
 author: Donavan Jones
 ---

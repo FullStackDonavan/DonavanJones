@@ -1,12 +1,12 @@
 ---
 title: "Persistent Volumes"
 description: "Using persistent volumes in a Raspberry Pi Kubernetes cluster."
-date: 2026-05-26
+date: 2025-10-16
 category: "infrastructure-engineering"
 tags:
   - storage
   - kubernetes
-draft: true
+draft: false
 slug: persistent-volumes
 author: Donavan Jones
 ---

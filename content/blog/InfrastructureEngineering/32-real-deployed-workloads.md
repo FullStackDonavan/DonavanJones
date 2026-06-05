@@ -1,12 +1,12 @@
 ---
 title: "Real Deployed Workloads"
 description: "Examples of real workloads deployed in my homelab cluster."
-date: 2026-05-26
+date: 2026-01-02
 category: "infrastructure-engineering"
 tags:
   - workloads
   - homelab
-draft: true
+draft: false
 slug: real-deployed-workloads
 author: Donavan Jones
 ---

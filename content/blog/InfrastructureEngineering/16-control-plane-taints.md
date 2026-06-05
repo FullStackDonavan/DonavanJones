@@ -1,12 +1,12 @@
 ---
 title: "Control Plane Taints"
 description: "How control plane taints affect scheduling in Kubernetes clusters."
-date: 2026-05-26
+date: 2025-11-02
 category: "infrastructure-engineering"
 tags:
   - kubernetes
   - control-plane
-draft: true
+draft: false
 slug: control-plane-taints
 author: Donavan Jones
 ---

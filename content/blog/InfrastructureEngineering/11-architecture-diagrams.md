@@ -1,12 +1,12 @@
 ---
 title: "Architecture Diagrams"
 description: "Visual architecture diagrams for my homelab and Kubernetes setup."
-date: 2026-05-26
+date: 2025-10-21
 category: "infrastructure-engineering"
 tags:
   - diagrams
   - architecture
-draft: true
+draft: false
 slug: architecture-diagrams
 author: Donavan Jones
 ---

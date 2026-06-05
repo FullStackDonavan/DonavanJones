@@ -1,7 +1,7 @@
 ---
 title: "Power Consumption Tradeoffs"
 description: "Balancing power consumption and performance in homelab clusters."
-date: 2026-05-26
+date: 2025-12-18
 category: "infrastructure-engineering"
 tags:
   - power

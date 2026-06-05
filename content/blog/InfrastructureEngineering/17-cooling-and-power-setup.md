@@ -1,12 +1,12 @@
 ---
 title: "Cooling and Power Setup"
 description: "Cooling and power strategies for a home server rack."
-date: 2026-05-26
+date: 2025-11-05
 category: "infrastructure-engineering"
 tags:
   - cooling
   - power
-draft: true
+draft: false
 slug: cooling-and-power-setup
 author: Donavan Jones
 ---

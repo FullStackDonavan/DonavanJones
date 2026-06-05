@@ -1,7 +1,7 @@
 ---
 title: "Multiple Pointers"
 description: "Understanding the Multiple Pointers pattern in JavaScript."
-date: 2025-07-24
+date: 2025-07-30
 category: "algorithms"
 tags:
   - javascript

@@ -1,12 +1,12 @@
 ---
 title: "Cluster Topology"
 description: "Designing cluster topology for homelab and Kubernetes."
-date: 2026-05-26
+date: 2025-10-28
 category: "infrastructure-engineering"
 tags:
   - cluster
   - kubernetes
-draft: true
+draft: false
 slug: cluster-topology
 author: Donavan Jones
 ---

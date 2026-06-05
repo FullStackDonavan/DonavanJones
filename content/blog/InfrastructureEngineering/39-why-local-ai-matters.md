@@ -1,12 +1,12 @@
 ---
 title: "Why Local AI Matters"
 description: "The importance of running AI workloads locally in a homelab."
-date: 2026-05-26
+date: 2026-02-13
 category: "infrastructure-engineering"
 tags:
   - ai
   - homelab
-draft: true
+draft: false
 slug: why-local-ai-matters
 author: Donavan Jones
 ---

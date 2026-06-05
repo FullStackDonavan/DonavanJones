@@ -1,7 +1,7 @@
 ---
 title: "Cluster Architecture (Homelab)"
 description: "Architecture of my homelab Kubernetes cluster."
-date: 2026-05-26
+date: 2025-10-26
 category: "infrastructure-engineering"
 tags:
   - kubernetes

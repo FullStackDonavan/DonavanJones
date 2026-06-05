@@ -1,12 +1,12 @@
 ---
 title: "Troubleshooting (Skill)"
 description: "Troubleshooting skills gained from building and maintaining a homelab."
-date: 2026-05-26
+date: 2026-01-20
 category: "infrastructure-engineering"
 tags:
   - troubleshooting
   - skills
-draft: true
+draft: false
 slug: troubleshooting-skill
 author: Donavan Jones
 ---

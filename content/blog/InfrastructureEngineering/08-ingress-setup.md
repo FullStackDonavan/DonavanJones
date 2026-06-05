@@ -1,7 +1,7 @@
 ---
 title: "Ingress Setup"
 description: "Setting up ingress for a K3s Raspberry Pi cluster."
-date: 2026-05-26
+date: 2025-10-13
 category: "infrastructure-engineering"
 tags:
   - ingress

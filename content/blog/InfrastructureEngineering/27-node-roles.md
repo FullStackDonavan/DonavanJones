@@ -1,12 +1,12 @@
 ---
 title: "Node Roles"
 description: "Understanding node roles in a Kubernetes homelab cluster."
-date: 2026-05-26
+date: 2025-12-02
 category: "infrastructure-engineering"
 tags:
   - kubernetes
   - nodes
-draft: true
+draft: false
 slug: node-roles
 author: Donavan Jones
 ---

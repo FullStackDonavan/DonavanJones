@@ -1,12 +1,12 @@
 ---
 title: "Infrastructure Design"
 description: "Principles and practices for designing robust infrastructure."
-date: 2026-05-26
+date: 2025-11-17
 category: "infrastructure-engineering"
 tags:
   - design
   - homelab
-draft: true
+draft: false
 slug: infrastructure-design
 author: Donavan Jones
 ---

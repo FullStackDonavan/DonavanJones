@@ -1,7 +1,7 @@
 ---
 title: "Storage Setup"
 description: "Configuring storage for a Raspberry Pi Kubernetes cluster."
-date: 2026-05-26
+date: 2025-10-10
 category: "infrastructure-engineering"
 tags:
   - storage

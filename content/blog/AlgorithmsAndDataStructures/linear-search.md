@@ -1,7 +1,7 @@
 ---
 title: "Linear Search"
 description: "Linear Search"
-date: 2025-07-24
+date: 2025-08-07
 category: "algorithms"
 tags:
 - javascript

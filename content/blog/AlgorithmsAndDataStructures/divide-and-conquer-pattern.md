@@ -1,7 +1,7 @@
 ---
 title: "Divide And Conquer Pattern"
 description: "Understanding the Divide And Conquer problem-solving pattern in JavaScript."
-date: 2025-07-24
+date: 2025-08-21
 category: "algorithms"
 tags:
   - javascript

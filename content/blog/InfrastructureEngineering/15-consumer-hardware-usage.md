@@ -1,12 +1,12 @@
 ---
 title: "Consumer Hardware Usage"
 description: "Using consumer hardware for homelab and infrastructure projects."
-date: 2026-05-26
+date: 2025-10-30
 category: "infrastructure-engineering"
 tags:
   - hardware
   - homelab
-draft: true
+draft: false
 slug: consumer-hardware-usage
 author: Donavan Jones
 ---

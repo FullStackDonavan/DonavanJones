@@ -1,12 +1,12 @@
 ---
 title: "Network Topology"
 description: "Network topology design for my homelab and Kubernetes cluster."
-date: 2026-05-26
+date: 2025-11-22
 category: "infrastructure-engineering"
 tags:
   - networking
   - topology
-draft: true
+draft: false
 slug: network-topology
 author: Donavan Jones
 ---

@@ -6,7 +6,7 @@
            p-6"
   >
     <h3
-      class="text-xl font-bold mb-4
+      class="text-xl font-bold mb-4 not-prose
              text-slate-900 dark:text-white"
     >
       {{ title }}

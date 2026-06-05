@@ -1,12 +1,12 @@
 ---
 title: "Static IPs and Networking"
 description: "Configuring static IPs and networking for a Raspberry Pi Kubernetes cluster."
-date: 2026-05-26
+date: 2025-09-24
 category: "infrastructure-engineering"
 tags:
   - networking
   - raspberry-pi
-draft: true
+draft: false
 slug: static-ips-and-networking
 author: Donavan Jones
 ---

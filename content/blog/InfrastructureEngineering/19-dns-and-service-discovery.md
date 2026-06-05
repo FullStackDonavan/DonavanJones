@@ -1,12 +1,12 @@
 ---
 title: "DNS and Service Discovery"
 description: "How DNS and service discovery work in Kubernetes clusters."
-date: 2026-05-26
+date: 2025-11-10
 category: "infrastructure-engineering"
 tags:
   - kubernetes
   - dns
-draft: true
+draft: false
 slug: dns-and-service-discovery
 author: Donavan Jones
 ---

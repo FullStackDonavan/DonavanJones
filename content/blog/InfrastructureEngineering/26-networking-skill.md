@@ -1,12 +1,12 @@
 ---
 title: "Networking (Skill)"
 description: "Networking skills developed through homelab and infrastructure projects."
-date: 2026-05-26
+date: 2025-11-30
 category: "infrastructure-engineering"
 tags:
   - networking
   - skills
-draft: true
+draft: false
 slug: networking-skill
 author: Donavan Jones
 ---

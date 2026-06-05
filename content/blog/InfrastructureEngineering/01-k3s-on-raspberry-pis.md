@@ -1,7 +1,7 @@
 ---
 title: "K3s on Raspberry Pis"
 description: "Guide to setting up K3s on Raspberry Pi clusters."
-date: 2026-05-26
+date: 2025-09-07
 category: "infrastructure-engineering"
 tags:
   - k3s

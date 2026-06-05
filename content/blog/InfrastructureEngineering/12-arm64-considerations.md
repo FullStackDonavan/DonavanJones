@@ -1,7 +1,7 @@
 ---
 title: "ARM64 Considerations"
 description: "Considerations for running infrastructure on ARM64 hardware."
-date: 2026-05-26
+date: 2025-10-24
 category: "infrastructure-engineering"
 tags:
   - arm64

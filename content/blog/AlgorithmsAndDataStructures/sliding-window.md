@@ -1,7 +1,7 @@
 ---
 title: "Sliding Window"
 description: "Understanding the Sliding Window pattern in JavaScript"
-date: 2025-07-24
+date: 2025-09-06
 category: "algorithms"
 tags:
   - javascript
