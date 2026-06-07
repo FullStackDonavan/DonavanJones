@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-06-07',
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+<<<<<<< HEAD
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
@@ -42,6 +43,14 @@ export default defineNuxtConfig({
               },
             ],
           }),
+=======
+
+    head: {
+      meta: [
+        {
+          name: 'google-site-verification',
+          content: '7iUSMERZz_LsMNzstyp4-5uwlbeiPZYvmRoIZ3VDNyU',
+>>>>>>> 495c8fd7ba1125bfee4b41705c8f8b0069986b60
         },
       ],
     },
