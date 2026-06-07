@@ -4,4 +4,4 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 
-Sitemap: https://donavanjones.dev/sitemap.xml
+Sitemap: https://donavanjones.com/sitemap.xml
