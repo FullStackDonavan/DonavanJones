@@ -21,10 +21,10 @@ export default defineNuxtConfig({
             '@graph': [
               {
                 '@type': 'Person',
-                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#person`,
+                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#person`,
                 name: 'Donavan Jones',
                 jobTitle: 'Full-Stack Engineer',
-                url: process.env.APP_DOMAIN || 'https://donavanjones.dev',
+                url: process.env.APP_DOMAIN || 'https://donavanjones.com',
                 email: 'donavanjones79@gmail.com',
                 knowsAbout: [
                   'Vue.js', 'Nuxt.js', 'Node.js', 'TypeScript',
@@ -34,11 +34,11 @@ export default defineNuxtConfig({
               },
               {
                 '@type': 'WebSite',
-                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#website`,
+                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#website`,
                 name: 'Donavan Jones',
-                url: process.env.APP_DOMAIN || 'https://donavanjones.dev',
+                url: process.env.APP_DOMAIN || 'https://donavanjones.com',
                 description: 'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
-                author: { '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#person` },
+                author: { '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#person` },
               },
             ],
           }),

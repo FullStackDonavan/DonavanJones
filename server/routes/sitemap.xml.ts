@@ -1,6 +1,6 @@
 import { serverQueryContent } from '#content/server'
 
-const SITE_URL = process.env.APP_DOMAIN || 'https://donavanjones.dev'
+const SITE_URL = process.env.APP_DOMAIN || 'https://donavanjones.com'
 
 export default defineEventHandler(async (event) => {
   const docs = await serverQueryContent(event)

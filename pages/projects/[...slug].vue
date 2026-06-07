@@ -180,7 +180,7 @@ import { useRoute } from '#app'
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 const backLink = ref('/projects/overview')
 
 // Fetch doc server-side for SEO head tags

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const config = useRuntimeConfig()
-const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 // Fetch frontmatter only (no body) for SSR SEO head tags
 const { data: seoDoc } = await useAsyncData(

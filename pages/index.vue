@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
-const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
   title: 'Donavan Jones — Full-Stack Engineer',
