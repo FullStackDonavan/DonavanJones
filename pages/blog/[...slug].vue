@@ -1,3 +1,66 @@
+<script setup lang="ts">
+const route = useRoute()
+const config = useRuntimeConfig()
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+
+// Fetch frontmatter only (no body) for SSR SEO head tags
+const { data: seoDoc } = await useAsyncData(
+  `blog-seo-${route.path}`,
+  () => queryContent(route.path).without(['body']).findOne()
+)
+
+useSeoMeta({
+  title: () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
+  ogTitle: () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
+  description: () => seoDoc.value?.description || '',
+  ogDescription: () => seoDoc.value?.description || '',
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => seoDoc.value?.title || 'Donavan Jones',
+  twitterDescription: () => seoDoc.value?.description || '',
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => {
+        const doc = seoDoc.value
+        if (!doc) return '{}'
+        const pageUrl = `${SITE}${route.path}`
+        const personId = `${SITE}/#person`
+        return JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          '@id': pageUrl,
+          headline: doc.title,
+          description: doc.description,
+          url: pageUrl,
+          datePublished: doc.date ? new Date(doc.date).toISOString() : undefined,
+          dateModified: doc.lastUpdated
+            ? new Date(doc.lastUpdated).toISOString()
+            : doc.date ? new Date(doc.date).toISOString() : undefined,
+          author: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
+          publisher: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
+          keywords: Array.isArray(doc.tags) ? doc.tags.join(', ') : undefined,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+          isPartOf: { '@id': `${SITE}/#website` },
+        })
+      }),
+    },
+  ],
+})
+
+const backLink = ref('/blog/overview')
+
+onMounted(() => {
+  const from = route.query.from
+  if (typeof from === 'string' && from.startsWith('/')) {
+    backLink.value = from
+  }
+})
+</script>
+
 <template>
   <PatternSection>
     <div class="flex justify-center gap-x-12">
@@ -6,10 +69,7 @@
       >
         <div>
           <!-- Back Button -->
-          <nuxt-link
-            class="block cursor-pointer max-w-2xl mb-4"
-            :to="backLink"
-          >
+          <nuxt-link class="block cursor-pointer max-w-2xl mb-4" :to="backLink">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="inline h-6 w-6"
@@ -18,11 +78,7 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M11 17l-5-5m0 0l5-5m-5 5h12"
-              />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
             Back
           </nuxt-link>
@@ -30,7 +86,6 @@
           <!-- Content -->
           <ContentDoc v-slot="{ doc: contentDoc }">
             <div>
-              <!-- Title -->
               <h2 class="text-4xl font-semibold text-black dark:text-white">
                 {{ contentDoc.title }}
               </h2>
@@ -39,16 +94,11 @@
                 by {{ contentDoc.author }}, {{ contentDoc.date }}
               </p>
 
-              <!-- Meta -->
               <div class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center">
-
                 <span v-if="contentDoc.category" class="mr-4">
                   <strong>Category: </strong>
                   <NuxtLink
-                    :to="{
-                      path: `/categories/${contentDoc.category}`,
-                      query: { from: route.fullPath },
-                    }"
+                    :to="{ path: `/categories/${contentDoc.category}`, query: { from: route.fullPath } }"
                     class="text-blue-500 hover:underline"
                   >
                     {{ contentDoc.category }}
@@ -60,10 +110,7 @@
                   <ul class="inline-flex gap-x-2">
                     <li v-for="(tag, index) in contentDoc.tags" :key="index">
                       <NuxtLink
-                        :to="{
-                          path: `/tags/${tag}`,
-                          query: { from: route.fullPath },
-                        }"
+                        :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
                         class="text-blue-500 hover:underline"
                       >
                         {{ tag }}
@@ -71,32 +118,8 @@
                     </li>
                   </ul>
                 </span>
-
-                <span v-if="contentDoc.projectType" class="mr-4">
-                  <strong>Project Type:</strong>
-
-                  <span v-if="contentDoc.projectType === 'personal'">
-                    Personal Project
-                  </span>
-
-                  <span v-else-if="contentDoc.projectType === 'freelance'">
-                    Freelance
-                  </span>
-
-                  <span v-else-if="contentDoc.projectType === 'employment'">
-                    <a
-                      :href="contentDoc.employmentLink"
-                      class="text-blue-500 hover:underline ml-2"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Employment
-                    </a>
-                  </span>
-                </span>
               </div>
 
-              <!-- Links -->
               <div class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center">
                 <a
                   v-if="contentDoc.github"
@@ -107,7 +130,6 @@
                 >
                   GitHub
                 </a>
-
                 <a
                   v-if="contentDoc.liveSite"
                   :href="contentDoc.liveSite"
@@ -134,23 +156,3 @@
     </div>
   </PatternSection>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted } from "vue"
-import { useRoute, useRuntimeConfig } from "#app"
-
-const route = useRoute()
-const config = useRuntimeConfig()
-
-const backLink = ref("/blog/overview")
-
-/**
- * Safe back navigation
- */
-onMounted(() => {
-  const from = route.query.from
-  if (typeof from === "string" && from.startsWith("/")) {
-    backLink.value = from
-  }
-})
-</script>

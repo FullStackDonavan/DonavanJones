@@ -175,35 +175,83 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "#app";
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from '#app'
 
-const route = useRoute();
-const backLink = ref("/projects/overview");
-const doc = ref<any>({});
+const route = useRoute()
+const config = useRuntimeConfig()
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+const backLink = ref('/projects/overview')
 
-// Set the back link based on the query parameter
+// Fetch doc server-side for SEO head tags
+const { data: seoDoc } = await useAsyncData(
+  `project-seo-${route.path}`,
+  () => queryContent(route.path).findOne()
+)
+
+const pageTitle = computed(() =>
+  seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones'
+)
+const pageDescription = computed(() => seoDoc.value?.description || '')
+
+useSeoMeta({
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
+  ogType: 'website',
+  ogImage: computed(() => seoDoc.value?.excerptImage || undefined),
+  twitterCard: 'summary_large_image',
+  twitterTitle: pageTitle,
+  twitterDescription: pageDescription,
+  twitterImage: computed(() => seoDoc.value?.excerptImage || undefined),
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => {
+        const doc = seoDoc.value
+        if (!doc) return '{}'
+        const pageUrl = `${SITE}${route.path}`
+        const personId = `${SITE}/#person`
+        const techStack = [
+          ...(doc.frontend || []),
+          ...(doc.backend || []),
+          ...(doc.cloud || []),
+          ...(doc.ai || []),
+        ]
+        return JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          '@id': pageUrl,
+          name: doc.title,
+          description: doc.description,
+          url: pageUrl,
+          applicationCategory: 'WebApplication',
+          keywords: Array.isArray(doc.tags) ? doc.tags.join(', ') : undefined,
+          datePublished: doc.date ? new Date(doc.date).toISOString() : undefined,
+          dateModified: doc.lastUpdated
+            ? new Date(doc.lastUpdated).toISOString()
+            : doc.date ? new Date(doc.date).toISOString() : undefined,
+          author: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
+          creator: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
+          ...(techStack.length ? { runtimePlatform: techStack.join(', ') } : {}),
+          ...(doc.liveSite ? { installUrl: doc.liveSite } : {}),
+          ...(doc.github ? { codeRepository: doc.github } : {}),
+          isPartOf: { '@id': `${SITE}/#website` },
+          image: doc.excerptImage || undefined,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+        })
+      }),
+    },
+  ],
+})
+
 onMounted(() => {
   if (route.query.from) {
-    backLink.value = route.query.from as string;
+    backLink.value = route.query.from as string
   }
-  // Load the doc data
-  // Assume you load doc data here
-});
-
-const liveSiteHostname = computed(() => {
-  if (doc.value.liveSite) {
-    try {
-      return new URL(doc.value.liveSite).hostname;
-    } catch (e) {
-      console.error("Invalid live site URL:", e);
-      return "";
-    }
-  }
-  return "";
-});
+})
 </script>
-
-<style scoped>
-/* Optional: Add additional custom styles here */
-</style>

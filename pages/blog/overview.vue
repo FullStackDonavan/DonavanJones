@@ -1,26 +1,22 @@
-<script setup>
-
+<script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import Categories from "~/components/elements/Categories.vue";
 
 const route = useRoute();
-const currentPage = computed(() => parseInt(route.query.page) || 1);
+const currentPage = computed(() => parseInt(route.query.page as string) || 1);
+const limit = ref(9);
 
 const { data: totalArticlesCount } = await useAsyncData(
   "totalArticlesCount",
   () =>
     queryContent("blog")
-      .where({ category: { $contains: route.params.name } })
       .where({ draft: { $ne: true } })
       .count()
 );
 
 const totalPages = computed(() =>
-  Math.ceil(totalArticlesCount.value / limit.value)
+  Math.ceil((totalArticlesCount.value || 0) / limit.value)
 );
-
-const limit = ref(8);
 
 const { data: articles, refresh } = await useAsyncData("blog", () =>
   queryContent("/blog")
@@ -31,8 +27,8 @@ const { data: articles, refresh } = await useAsyncData("blog", () =>
 );
 
 const { data: categoriesList } = await useAsyncData("blogCategories", async () => {
-  const all = await queryContent('/blog').where({ draft: { $ne: true } }).find();
-  const set = new Set();
+  const all = await queryContent("/blog").where({ draft: { $ne: true } }).find();
+  const set = new Set<string>();
   all.forEach((a) => {
     const c = a.category;
     if (!c) return;
@@ -42,99 +38,186 @@ const { data: categoriesList } = await useAsyncData("blogCategories", async () =
   return Array.from(set);
 });
 
-const truncateDescription = (description) => {
-  const words = description.split(" ");
-  return words.length > 25 ? words.slice(0, 25).join(" ") + "..." : description;
-};
-
 watch(
   () => route.query,
   () => refresh()
 );
+
+function truncate(text: string, max = 120): string {
+  if (!text) return "";
+  return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
+}
+
+function formatDate(dateStr: string): string {
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
 </script>
 
 <template>
-  <PatternSection class="flex justify-center w-full pt-8">
-    <div class="mt-8 w-full">
-      <div class="px-4 sm:px-6 lg:px-8 mb-6 text-center">
-        <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">Browse Categories</h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-300">Select a category to explore articles grouped by topic.</p>
-      </div>
-      <Categories :categories="categoriesList ?? []" />
-      <div class="w-full bg-gray-50 dark:bg-slate-950 py-8">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mb-8 text-center">
-            <h2 class="text-3xl font-semibold text-gray-900 dark:text-white">Latest Articles</h2>
-            <p class="mt-2 text-gray-600 dark:text-gray-300">Browse the most recent blog posts across all categories.</p>
+  <PatternSection class="flex justify-center w-full">
+    <div class="w-full">
+
+      <!-- ── HERO ───────────────────────────────────────────────────── -->
+      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
+          <!-- Label -->
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
+                   bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium"
+          >
+            <Icon name="mdi:pencil-outline" class="text-sm" />
+            Writing
           </div>
 
-          <!-- Grid container -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center md:justify-items-stretch">
-            <!-- Render articles -->
-            <div
-              v-for="article in articles"
-              :key="article._path"
-              class="flex flex-col max-w-sm rounded overflow-hidden shadow-xl bg-white dark:bg-gray-800 relative group"
-            >
-              <NuxtLink :to="article._path" class="flex flex-col h-full">
-                <div class="relative flex flex-col flex-1">
-                  <!-- Image with zoom effect -->
-                  <!-- <img
-                    :src="article.img"
-                    alt="Article Image"
-                    class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                  /> -->
-                  <!-- Article content -->
-                  <div class="p-6 flex flex-col flex-1">
-                    <!-- Title with hover effect -->
-                    <div
-                      class="font-bold text-xl mb-2 text-gray-900 dark:text-gray-100 transition-transform duration-300 group-hover:font-extrabold"
-                    >
-                      {{ article.title }}
-                    </div>
-                    <!-- Truncated Description -->
-                    <p
-                      class="text-gray-700 dark:text-gray-300 text-base mb-4 flex-1"
-                    >
-                      {{ truncateDescription(article.description) }}
-                    </p>
-                    <!-- Read More Button -->
-                    <button
-                      class="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600 hover:scale-105 transition-transform duration-300 ease-in-out"
-                    >
-                      Read More
-                    </button>
-                  </div>
-                </div>
-              </NuxtLink>
-            </div>
+          <!-- Heading -->
+          <h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
+            The Blog
+          </h1>
+
+          <!-- Subtext -->
+          <p class="mt-5 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Engineering breakdowns, architecture decisions, and lessons from building
+            production systems — written for developers who want the real story.
+          </p>
+
+          <!-- Stats row -->
+          <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:text-box-multiple-outline" class="text-sky-400" />
+              {{ totalArticlesCount ?? 0 }} articles
+            </span>
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:tag-multiple-outline" class="text-sky-400" />
+              {{ categoriesList?.length ?? 0 }} categories
+            </span>
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:account-outline" class="text-sky-400" />
+              Donavan Jones
+            </span>
           </div>
         </div>
-              <!-- Pagination -->
-      <Pagination
-        :currentPage="currentPage"
-        :limit="limit"
-        :totalPages="totalPages"
-        v-if="totalPages > 1"
-      />
       </div>
-      
+
+      <!-- ── CATEGORIES ─────────────────────────────────────────────── -->
+      <div class="px-4 sm:px-6 lg:px-8 pb-6 max-w-7xl mx-auto">
+        <Categories :categories="categoriesList ?? []" />
+      </div>
+
+      <!-- ── GRID ───────────────────────────────────────────────────── -->
+      <div class="w-full bg-slate-50 dark:bg-slate-950 py-10">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <NuxtLink
+              v-for="article in articles"
+              :key="article._path"
+              :to="article._path"
+              class="group flex flex-col rounded-2xl overflow-hidden
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     hover:border-sky-500/40 dark:hover:border-sky-500/30
+                     transition-all duration-200 hover:shadow-lg hover:shadow-sky-500/5"
+            >
+
+              <!-- Image / placeholder -->
+              <div class="relative overflow-hidden h-44 bg-slate-100 dark:bg-slate-800">
+                <img
+                  v-if="article.excerptImage"
+                  :src="article.excerptImage"
+                  :alt="article.title"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div
+                  v-else
+                  class="w-full h-full flex items-center justify-center"
+                >
+                  <Icon name="mdi:text-box-outline" class="text-5xl text-slate-300 dark:text-slate-600" />
+                </div>
+
+                <!-- Category badge -->
+                <div
+                  v-if="article.category"
+                  class="absolute top-3 right-3 text-[11px] font-medium px-2.5 py-1 rounded-full
+                         bg-black/50 text-white backdrop-blur-sm border border-white/10"
+                >
+                  {{ article.category }}
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="flex flex-col flex-1 p-5">
+
+                <!-- Title + date -->
+                <div class="mb-3">
+                  <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100
+                             group-hover:text-sky-400 transition-colors">
+                    {{ article.title }}
+                  </h2>
+                  <p v-if="article.date" class="text-xs font-medium text-slate-400 dark:text-slate-500 mt-0.5">
+                    {{ formatDate(article.date) }}
+                  </p>
+                </div>
+
+                <!-- Description -->
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+                  {{ truncate(article.description) }}
+                </p>
+
+                <!-- Tags -->
+                <div v-if="article.tags?.length" class="mt-4 flex flex-wrap gap-1.5">
+                  <span
+                    v-for="tag in article.tags.slice(0, 5)"
+                    :key="tag"
+                    class="text-[11px] px-2 py-0.5 rounded-md
+                           bg-slate-100 dark:bg-slate-800
+                           text-slate-500 dark:text-slate-400
+                           border border-slate-200 dark:border-slate-700/50"
+                  >
+                    {{ tag }}
+                  </span>
+                  <span
+                    v-if="article.tags.length > 5"
+                    class="text-[11px] px-2 py-0.5 rounded-md
+                           bg-slate-100 dark:bg-slate-800 text-slate-400"
+                  >
+                    +{{ article.tags.length - 5 }}
+                  </span>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
+                    {{ article.author || 'Donavan Jones' }}
+                  </span>
+                  <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
+                               group-hover:translate-x-1 transition-transform duration-200">
+                    Read Article
+                    <Icon name="mdi:arrow-right" class="text-base" />
+                  </span>
+                </div>
+
+              </div>
+            </NuxtLink>
+          </div>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-10">
+          <Pagination
+            v-if="totalPages > 1"
+            :currentPage="currentPage"
+            :limit="limit"
+            :totalPages="totalPages"
+          />
+        </div>
+      </div>
 
     </div>
   </PatternSection>
 </template>
-
-<style scoped>
-/* Image zoom effect */
-img {
-  transition: transform 0.3s ease;
-}
-
-.group:hover img {
-  transform: scale(1.1);
-}
-
-.group:hover button {
-  transform: scale(1.05);
-}
-</style>

@@ -2,39 +2,10 @@
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
-    const carouselItems = ref([
-      {
-        img: "/img/code.jpg",
-        author: "Donavan Jones",
-        title: "View Projects",
-        des: "Dive into a curated selection of my most recent and impactful projects. From innovative web applications to dynamic websites, each project showcases my skills and dedication to crafting exceptional digital experiences. Browse through to see how I bring concepts to life with clean, efficient code and modern design principles.",
-        linkUrl: "/categories/",
-        buttonText: "View Projects",
-      },
-      {
-        img: "/img/workspace.jpg",
-        author: "Donavan Jones",
-        title: "About Me",
-        des: "Experienced in PHP, with a specialization in WordPress and Laravel, I excel at building dynamic websites and robust applications that deliver seamless user experiences through clean, efficient code. In JavaScript, my skills extend to Vue, Nuxt, and React, where I create responsive and interactive web applications, focusing on performance, modern best practices, and cutting-edge technologies.",
-        linkUrl: "/about-me",
-        buttonText: "Learn More",
-      },
-      {
-        img: "/img/contact-me.jpg",
-        author: "Donavan Jones",
-        title: "Contact Me",
-        des: "I'm always excited to connect with new people and explore opportunities. Whether you have a project in mind, need advice, or just want to chat about tech, feel free to reach out. Let's discuss how we can collaborate to bring your ideas to life.",
-        linkUrl: "/",
-        buttonText: "Contact Me",
-      },
-    ]);
-
 const route = useRoute();
 const currentPage = computed(() => parseInt(route.query.page as string) || 1);
+const limit = ref(9);
 
-const limit = ref(8);
-
-// Total projects count
 const { data: totalProjectsCount } = await useAsyncData(
   "totalProjectsCount",
   () =>
@@ -47,7 +18,6 @@ const totalPages = computed(() =>
   Math.ceil((totalProjectsCount.value || 0) / limit.value)
 );
 
-// Projects fetch
 const { data: projects, refresh } = await useAsyncData("projects", () =>
   queryContent("/projects")
     .where({ draft: { $ne: true } })
@@ -56,96 +26,175 @@ const { data: projects, refresh } = await useAsyncData("projects", () =>
     .find()
 );
 
-// Refresh on route change
 watch(
   () => route.query,
   () => refresh()
 );
+
+function truncate(text: string, max = 120): string {
+  if (!text) return "";
+  return text.length > max ? text.slice(0, max).trimEnd() + "…" : text;
+}
+
+const statusColor: Record<string, string> = {
+  "In Progress": "bg-amber-500/15 text-amber-400 border-amber-500/30",
+  "Completed":   "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+  "Live":        "bg-sky-500/15 text-sky-400 border-sky-500/30",
+  "Archived":    "bg-slate-500/15 text-slate-400 border-slate-500/30",
+};
 </script>
 
 <template>
   <PatternSection class="flex justify-center w-full">
     <div class="w-full">
-      <MagicImageSlider :items="carouselItems" />
-      <!-- Header -->
-      <div class="px-4 sm:px-6 lg:px-8 my-10 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
-          Projects
-        </h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-300">
-          A collection of things I’ve built, experimented with, and deployed.
-        </p>
+
+      <!-- ── HERO ───────────────────────────────────────────────────── -->
+      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
+          <!-- Label -->
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
+                   bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium"
+          >
+            <Icon name="mdi:folder-multiple-outline" class="text-sm" />
+            Portfolio
+          </div>
+
+          <!-- Heading -->
+          <h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Projects
+          </h1>
+
+          <!-- Subtext -->
+          <p class="mt-5 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Full-stack systems, AI integrations, and engineering experiments —
+            built with production architecture and real-world constraints in mind.
+          </p>
+
+          <!-- Stats row -->
+          <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:code-braces" class="text-sky-400" />
+              {{ totalProjectsCount ?? 0 }} projects
+            </span>
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:layers-outline" class="text-sky-400" />
+              Full-stack · AI · Infrastructure
+            </span>
+            <span class="flex items-center gap-1.5">
+              <Icon name="mdi:account-outline" class="text-sky-400" />
+              Donavan Jones
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- Grid wrapper -->
-      <div class="w-full bg-gray-50 dark:bg-slate-950 py-10">
+      <!-- ── GRID ───────────────────────────────────────────────────── -->
+      <div class="w-full bg-slate-50 dark:bg-slate-950 py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          <!-- Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-            <div
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <NuxtLink
               v-for="project in projects"
               :key="project._path"
-              class="group bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden flex flex-col transition hover:shadow-2xl"
+              :to="project._path"
+              class="group flex flex-col rounded-2xl overflow-hidden
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     hover:border-sky-500/40 dark:hover:border-sky-500/30
+                     transition-all duration-200 hover:shadow-lg hover:shadow-sky-500/5"
             >
 
-              <NuxtLink :to="project._path" class="flex flex-col h-full">
-
-                <!-- Image -->
-                <div class="relative overflow-hidden h-12">
-                  <!-- <img
-                    :src="project.img"
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  /> -->
-
-                  <!-- Status badge -->
-                  <div
-                    v-if="project.status"
-                    class="absolute top-3 left-3 text-xs px-3 py-1 rounded-full bg-black/60 text-white backdrop-blur"
-                  >
-                    {{ project.status }}
-                  </div>
+              <!-- Image -->
+              <div class="relative overflow-hidden h-44 bg-slate-100 dark:bg-slate-800">
+                <img
+                  v-if="project.excerptImage"
+                  :src="project.excerptImage"
+                  :alt="project.title"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div
+                  v-else
+                  class="w-full h-full flex items-center justify-center"
+                >
+                  <Icon name="mdi:code-braces" class="text-5xl text-slate-300 dark:text-slate-600" />
                 </div>
 
-                <!-- Content -->
-                <div class="p-5 flex flex-col flex-1">
+                <!-- Status badge -->
+                <div
+                  v-if="project.status"
+                  class="absolute top-3 left-3 text-[11px] font-medium px-2.5 py-1 rounded-full border backdrop-blur-sm"
+                  :class="statusColor[project.status] ?? 'bg-slate-500/15 text-slate-400 border-slate-500/30'"
+                >
+                  {{ project.status }}
+                </div>
 
-                  <h2
-                    class="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-yellow-400 transition"
-                  >
+                <!-- Category badge -->
+                <div
+                  v-if="project.category"
+                  class="absolute top-3 right-3 text-[11px] font-medium px-2.5 py-1 rounded-full
+                         bg-black/50 text-white backdrop-blur-sm border border-white/10"
+                >
+                  {{ project.category }}
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="flex flex-col flex-1 p-5">
+
+                <!-- Title + highlight -->
+                <div class="mb-3">
+                  <h2 class="text-base font-semibold text-slate-900 dark:text-slate-100
+                             group-hover:text-sky-400 transition-colors">
                     {{ project.title }}
                   </h2>
-
-                  <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 flex-1">
-                    {{ project.description }}
+                  <p v-if="project.highlight" class="text-xs font-medium text-sky-500 dark:text-sky-400 mt-0.5">
+                    {{ project.highlight }}
                   </p>
-
-                  <!-- Tech tags -->
-                  <div class="mt-4 flex flex-wrap gap-2">
-                    <span
-                      v-for="tag in project.tags"
-                      :key="tag"
-                      class="text-xs px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
-                    >
-                      {{ tag }}
-                    </span>
-                  </div>
-
-                  <!-- CTA -->
-                  <div class="mt-5">
-                    <span
-                      class="inline-flex items-center text-sm font-medium text-yellow-500 group-hover:translate-x-1 transition"
-                    >
-                      View Project →
-                    </span>
-                  </div>
-
                 </div>
-              </NuxtLink>
-            </div>
 
+                <!-- Description -->
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+                  {{ truncate(project.description) }}
+                </p>
+
+                <!-- Tags -->
+                <div v-if="project.tags?.length" class="mt-4 flex flex-wrap gap-1.5">
+                  <span
+                    v-for="tag in project.tags.slice(0, 5)"
+                    :key="tag"
+                    class="text-[11px] px-2 py-0.5 rounded-md
+                           bg-slate-100 dark:bg-slate-800
+                           text-slate-500 dark:text-slate-400
+                           border border-slate-200 dark:border-slate-700/50"
+                  >
+                    {{ tag }}
+                  </span>
+                  <span
+                    v-if="project.tags.length > 5"
+                    class="text-[11px] px-2 py-0.5 rounded-md
+                           bg-slate-100 dark:bg-slate-800 text-slate-400"
+                  >
+                    +{{ project.tags.length - 5 }}
+                  </span>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
+                    {{ project.projectType || 'Personal Project' }}
+                  </span>
+                  <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
+                               group-hover:translate-x-1 transition-transform duration-200">
+                    View Project
+                    <Icon name="mdi:arrow-right" class="text-base" />
+                  </span>
+                </div>
+
+              </div>
+            </NuxtLink>
           </div>
+
         </div>
 
         <!-- Pagination -->

@@ -17,66 +17,78 @@ const props = defineProps({
   },
 });
 
-// Use the current route to determine the context (category or tag)
 const route = useRoute();
 const basePath = computed(() => {
-  // Example: /categories/php or /tags/name or /blog/overview
-  if (route.path.startsWith("/categories/")) {
-    return `/categories/${route.params.name}`;
-  } else if (route.path.startsWith("/tags/")) {
-    return `/tags/${route.params.name}`;
-  } else if (route.path.startsWith("/blog/overview")) {
-    return "/blog/overview";
-  }
+  if (route.path.startsWith("/categories/")) return `/categories/${route.params.name}`;
+  if (route.path.startsWith("/tags/")) return `/tags/${route.params.name}`;
+  if (route.path.startsWith("/blog/overview")) return "/blog/overview";
+  if (route.path.startsWith("/projects/overview")) return "/projects/overview";
   return route.path;
 });
 </script>
+
 <template>
-  <div class="flex justify-center mt-4">
-    <div class="flex items-center gap-2 md:gap-4">
-      <!-- Previous Page Button -->
+  <div class="flex justify-center py-6">
+    <div class="flex items-center gap-1.5">
+
+      <!-- Previous -->
       <NuxtLink
         v-if="currentPage > 1"
-        :to="{
-          path: basePath,
-          query: { page: currentPage - 1 },
-        }"
-        class="flex items-center justify-center rounded-full p-2 md:p-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
+        :to="{ path: basePath, query: { page: currentPage - 1 } }"
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg
+               border border-slate-200 dark:border-slate-700/50
+               bg-white dark:bg-slate-900
+               text-slate-500 dark:text-slate-400
+               hover:border-sky-500/40 hover:text-sky-500
+               transition-all duration-200"
       >
-        <Icon
-          name="heroicons-arrow-small-left-20-solid"
-          class="text-white text-xl md:text-3xl"
-        />
+        <Icon name="mdi:chevron-left" class="text-lg" />
       </NuxtLink>
+      <span
+        v-else
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg
+               border border-slate-100 dark:border-slate-800
+               text-slate-300 dark:text-slate-600 cursor-not-allowed"
+      >
+        <Icon name="mdi:chevron-left" class="text-lg" />
+      </span>
 
-      <!-- Page Numbers -->
+      <!-- Page numbers -->
       <NuxtLink
         v-for="i in totalPages"
         :key="i"
-        :to="{
-          path: basePath,
-          query: { page: i },
-        }"
-        class="text-sm md:text-2xl font-semibold px-2 md:px-4 py-1 md:py-2 rounded-md border border-yellow-400 transition duration-1000 ease-in-out transform hover:scale-105"
-        :class="{ 'bg-yellow-500 text-white': currentPage === i }"
+        :to="{ path: basePath, query: { page: i } }"
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium
+               border transition-all duration-200"
+        :class="currentPage === i
+          ? 'bg-sky-500 border-sky-500 text-white'
+          : 'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:border-sky-500/40 hover:text-sky-500'"
       >
         {{ i }}
       </NuxtLink>
 
-      <!-- Next Page Button -->
+      <!-- Next -->
       <NuxtLink
         v-if="currentPage < totalPages"
-        :to="{
-          path: basePath,
-          query: { page: currentPage + 1 },
-        }"
-        class="flex items-center justify-center rounded-full p-2 md:p-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105"
+        :to="{ path: basePath, query: { page: currentPage + 1 } }"
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg
+               border border-slate-200 dark:border-slate-700/50
+               bg-white dark:bg-slate-900
+               text-slate-500 dark:text-slate-400
+               hover:border-sky-500/40 hover:text-sky-500
+               transition-all duration-200"
       >
-        <Icon
-          name="heroicons-arrow-small-right-20-solid"
-          class="text-white text-xl md:text-3xl"
-        />
+        <Icon name="mdi:chevron-right" class="text-lg" />
       </NuxtLink>
+      <span
+        v-else
+        class="inline-flex items-center justify-center w-9 h-9 rounded-lg
+               border border-slate-100 dark:border-slate-800
+               text-slate-300 dark:text-slate-600 cursor-not-allowed"
+      >
+        <Icon name="mdi:chevron-right" class="text-lg" />
+      </span>
+
     </div>
   </div>
 </template>

@@ -1,7 +1,62 @@
 export default defineNuxtConfig({
+  compatibilityDate: '2026-06-07',
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      titleTemplate: '%s — Donavan Jones',
+      meta: [
+        { name: 'author', content: 'Donavan Jones' },
+        { name: 'robots', content: 'index, follow' },
+        { property: 'og:site_name', content: 'Donavan Jones' },
+        { property: 'og:locale', content: 'en_US' },
+        { name: 'twitter:creator', content: '@donavanjones' },
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'Person',
+                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#person`,
+                name: 'Donavan Jones',
+                jobTitle: 'Full-Stack Engineer',
+                url: process.env.APP_DOMAIN || 'https://donavanjones.dev',
+                email: 'donavanjones79@gmail.com',
+                knowsAbout: [
+                  'Vue.js', 'Nuxt.js', 'Node.js', 'TypeScript',
+                  'AI Systems', 'RAG Pipelines', 'Kubernetes', 'PostgreSQL', 'Redis',
+                ],
+                sameAs: [],
+              },
+              {
+                '@type': 'WebSite',
+                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#website`,
+                name: 'Donavan Jones',
+                url: process.env.APP_DOMAIN || 'https://donavanjones.dev',
+                description: 'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+                author: { '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.dev'}/#person` },
+              },
+            ],
+          }),
+        },
+      ],
+    },
   },
+
+  // ── Modules ──────────────────────────────────────────────────────────────
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
+    '@nuxt/content',
+    'nuxt-icon',
+    '@nuxt/image',
+  ],
+
+  // ── Components ───────────────────────────────────────────────────────────
   components: {
     dirs: [
       {
@@ -12,13 +67,8 @@ export default defineNuxtConfig({
       },
     ],
   },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/color-mode',
-    '@nuxt/content',
-    'nuxt-icon',
-    '@nuxt/image',
-  ],
+
+  // ── Tailwind ─────────────────────────────────────────────────────────────
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config.js',
@@ -26,9 +76,13 @@ export default defineNuxtConfig({
     injectPosition: 0,
     viewer: true,
   },
+
+  // ── Color mode ───────────────────────────────────────────────────────────
   colorMode: {
     classSuffix: '',
   },
+
+  // ── @nuxt/content ────────────────────────────────────────────────────────
   content: {
     highlight: {
       theme: 'github-dark',
@@ -38,6 +92,8 @@ export default defineNuxtConfig({
       fields: ['author', 'subject', 'position'],
     },
   },
+
+  // ── Runtime config ───────────────────────────────────────────────────────
   runtimeConfig: {
     private: {
       stripeSecretKey: process.env.STRIPE_SECRET_KEY,
@@ -50,18 +106,19 @@ export default defineNuxtConfig({
       releaseVersion: process.env.RELEASE_VERSION,
     },
   },
+
   experimental: {
     writeEarlyHints: false,
   },
+
   vite: {
-    
-    base: "./",
+    base: './',
     build: {
-      minify: "terser", // Vite minification using Terser
+      minify: 'terser',
     },
-    // Additional Vite configurations can go here
   },
+
   plugins: [
-    '~/plugins/kaboom.js', 
+    '~/plugins/kaboom.js',
   ],
 });

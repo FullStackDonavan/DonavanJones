@@ -1,3 +1,41 @@
+<script setup lang="ts">
+const config = useRuntimeConfig()
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.dev'
+
+useSeoMeta({
+  title: 'Donavan Jones — Full-Stack Engineer',
+  description:
+    'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+  ogTitle: 'Donavan Jones — Full-Stack Engineer',
+  ogDescription:
+    'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Donavan Jones — Full-Stack Engineer',
+  twitterDescription:
+    'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        '@id': `${SITE}/`,
+        url: `${SITE}/`,
+        name: 'Donavan Jones — Full-Stack Engineer',
+        description:
+          'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+        mainEntity: { '@id': `${SITE}/#person` },
+        isPartOf: { '@id': `${SITE}/#website` },
+      }),
+    },
+  ],
+})
+</script>
+
 <template>
   <PatternSection>
 
@@ -91,26 +129,5 @@
     </div>
   </section>
 
-    <!-- <TimelineHistory />
-    <InfiniteLogoCarousel />
-    <OurPortfolioSection />
-    <SalesGeneratingMachineSection /> -->
   </PatternSection>
 </template>
-
-<script>
-import { ref } from "vue";
-import Hero from "@/components/sections/HomePage/Hero.vue";
-
-export default {
-  components: {
-    Hero,
-  },
-};
-</script>
-
-
-
-
-
-

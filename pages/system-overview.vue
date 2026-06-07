@@ -1,306 +1,293 @@
+<script setup lang="ts">
+// ArchitectureDiagram is registered globally via Nuxt auto-imports
+</script>
+
 <template>
   <PatternSection>
-    <!-- SYSTEM HERO -->
+
+    <!-- ── HERO ─────────────────────────────────────────────────────── -->
     <SystemOverview />
 
+    <!-- ── CORE SYSTEMS ──────────────────────────────────────────────── -->
+    <section class="relative w-full bg-slate-50 dark:bg-slate-950 py-16">
+      <div class="max-w-7xl mx-auto px-6">
 
-
-<section
-  class="relative w-full overflow-hidden
-         bg-gradient-to-b from-white via-slate-50 to-slate-100
-         dark:from-gray-950 dark:via-gray-950 dark:to-gray-900
-         transition-colors duration-300"
->
-  <!-- Background glow -->
-  <div class="absolute inset-0 -z-10">
-    <div
-      class="absolute top-[-120px] left-1/2 -translate-x-1/2
-             w-[500px] h-[500px] rounded-full blur-3xl opacity-30
-             bg-blue-200 dark:bg-blue-900"
-    />
-    <div
-      class="absolute bottom-[-120px] right-[-80px]
-             w-[400px] h-[400px] rounded-full blur-3xl opacity-20
-             bg-purple-200 dark:bg-purple-900"
-    />
-  </div>
-
-  <div class="max-w-7xl mx-auto px-6 relative">
-
-    <!-- HERO -->
-    <div class="text-center pt-20 pb-14">
-      <div
-        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
-               bg-sky-500/10 text-sky-600 dark:text-sky-400
-               border border-sky-200/40 dark:border-sky-500/10"
-      >
-        <Icon name="mdi:kubernetes" />
-        Private Cloud AI Infrastructure
-      </div>
-
-      <h2 class="mt-5 text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
-        System Overview
-      </h2>
-
-      <p class="mt-4 max-w-3xl mx-auto text-slate-600 dark:text-slate-400">
-        A self-hosted distributed platform combining Kubernetes, AI inference,
-        data systems, storage, and automation on ARM64 infrastructure.
-      </p>
-    </div>
-
-    <!-- CORE SYSTEM CARDS -->
-    <section class="pb-16">
-      <div class="grid md:grid-cols-3 gap-6">
-
-        <div class="rounded-4xl p-6 transition
-                    bg-white dark:bg-slate-900
-                    border border-slate-200 dark:border-slate-800
-                    hover:shadow-lg hover:-translate-y-1">
-
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:brain" class="text-purple-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">AI Systems</h3>
+        <div class="text-center mb-10">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4
+                   bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium"
+          >
+            <Icon name="mdi:layers-triple" class="text-sm" />
+            System Architecture
           </div>
-
-          <p class="text-sm mt-3 text-slate-600 dark:text-slate-400">
-            LLM inference, embeddings, RAG pipelines, and agent workflows.
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
+            Core Systems
+          </h2>
+          <p class="mt-3 text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm">
+            A self-hosted distributed platform combining Kubernetes, AI inference,
+            data systems, storage, and automation on ARM64 infrastructure.
           </p>
         </div>
 
-        <div class="rounded-4xl p-6 transition
-                    bg-white dark:bg-slate-900
-                    border border-slate-200 dark:border-slate-800
-                    hover:shadow-lg hover:-translate-y-1">
+        <!-- Primary 3-col -->
+        <div class="grid md:grid-cols-3 gap-5 mb-5">
 
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:database" class="text-emerald-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">Data Layer</h3>
+          <div
+            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-purple-500/40
+                   transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/5"
+          >
+            <div
+              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
+                     bg-purple-500/10 border border-purple-500/20"
+            >
+              <Icon name="mdi:brain" class="text-purple-400 text-2xl" />
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">AI Systems</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              LLM inference, embeddings, RAG pipelines, and agent workflows running on-cluster.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span v-for="t in ['Llama 3.2', 'Weaviate', 'RAG', 'Embeddings']" :key="t"
+                class="text-[11px] px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                {{ t }}
+              </span>
+            </div>
           </div>
 
-          <p class="text-sm mt-3 text-slate-600 dark:text-slate-400">
-            PostgreSQL, Redis, Weaviate, search indexing, caching systems.
-          </p>
+          <div
+            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-emerald-500/40
+                   transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/5"
+          >
+            <div
+              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
+                     bg-emerald-500/10 border border-emerald-500/20"
+            >
+              <Icon name="mdi:database" class="text-emerald-400 text-2xl" />
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Data Layer</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              PostgreSQL, Redis, Weaviate vector search, Apache AGE graph engine, and search indexing.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span v-for="t in ['PostgreSQL', 'Redis', 'Weaviate', 'Apache AGE']" :key="t"
+                class="text-[11px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                {{ t }}
+              </span>
+            </div>
+          </div>
+
+          <div
+            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-amber-500/40
+                   transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/5"
+          >
+            <div
+              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
+                     bg-amber-500/10 border border-amber-500/20"
+            >
+              <Icon name="mdi:harddisk" class="text-amber-400 text-2xl" />
+            </div>
+            <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Storage</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              MinIO S3-compatible object storage for datasets, model weights, and media assets.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              <span v-for="t in ['MinIO', 'S3-Compatible', 'Pre-signed URLs']" :key="t"
+                class="text-[11px] px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                {{ t }}
+              </span>
+            </div>
+          </div>
+
         </div>
 
-        <div class="rounded-4xl p-6 transition
-                    bg-white dark:bg-slate-900
-                    border border-slate-200 dark:border-slate-800
-                    hover:shadow-lg hover:-translate-y-1">
+        <!-- Infrastructure 4-col -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:harddisk" class="text-amber-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">Storage</h3>
+          <div
+            v-for="node in [
+              { icon: 'mdi:raspberry-pi',   color: 'sky',    label: 'ARM64 Cluster',  sub: '8 Raspberry Pi 5 nodes running k3s' },
+              { icon: 'mdi:kubernetes',      color: 'purple', label: 'Orchestration',  sub: 'Scheduling, networking, autoscaling' },
+              { icon: 'mdi:source-branch',   color: 'emerald',label: 'CI/CD',          sub: 'Automated builds via Gitea runners' },
+              { icon: 'mdi:chart-line',      color: 'rose',   label: 'Observability',  sub: 'Metrics, logs, dashboards, alerting' },
+            ]"
+            :key="node.label"
+            class="rounded-2xl p-5 border transition-all duration-200"
+            :class="{
+              'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60': true,
+            }"
+          >
+            <Icon :name="node.icon" class="text-3xl mb-3"
+              :class="{
+                'text-sky-400':    node.color === 'sky',
+                'text-purple-400': node.color === 'purple',
+                'text-emerald-400':node.color === 'emerald',
+                'text-rose-400':   node.color === 'rose',
+              }"
+            />
+            <div class="text-sm font-semibold text-slate-900 dark:text-white">{{ node.label }}</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ node.sub }}</div>
           </div>
 
-          <p class="text-sm mt-3 text-slate-600 dark:text-slate-400">
-            MinIO object storage, datasets, models, and media assets.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- INFRASTRUCTURE -->
-    <section class="pb-16">
-      <div class="grid md:grid-cols-4 gap-6">
-
-        <div class="rounded-4xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:raspberry-pi" class="text-sky-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">ARM64 Cluster</h3>
-          </div>
-          <p class="text-sm mt-2 text-slate-600 dark:text-slate-400">
-            8 Raspberry Pi 5 nodes running k3s.
-          </p>
-        </div>
-
-        <div class="rounded-4xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:kubernetes" class="text-purple-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">Orchestration</h3>
-          </div>
-          <p class="text-sm mt-2 text-slate-600 dark:text-slate-400">
-            Scheduling, networking, scaling, service discovery.
-          </p>
-        </div>
-
-        <div class="rounded-4xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:source-branch" class="text-emerald-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">CI/CD</h3>
-          </div>
-          <p class="text-sm mt-2 text-slate-600 dark:text-slate-400">
-            Automated builds and deployments via Gitea runners.
-          </p>
-        </div>
-
-        <div class="rounded-4xl p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <div class="flex items-center gap-2 text-slate-900 dark:text-white">
-            <Icon name="mdi:chart-line" class="text-amber-500 text-5xl" />
-            <h3 class="text-2xl font-semibold">Observability</h3>
-          </div>
-          <p class="text-sm mt-2 text-slate-600 dark:text-slate-400">
-            Metrics, logs, dashboards, and alerting.
-          </p>
         </div>
 
       </div>
     </section>
 
-    <!-- ARCHITECTURE -->
-    <section class="pb-16">
-      <div class="text-center mb-10">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
-                    bg-sky-500/10 text-sky-600 dark:text-sky-400">
-          <Icon name="mdi:sitemap" />
-          Architecture Visualization
+    <!-- ── ARCHITECTURE DIAGRAM ──────────────────────────────────────── -->
+    <section class="w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center mb-10">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4
+                   bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium"
+          >
+            <Icon name="mdi:sitemap" class="text-sm" />
+            Architecture Visualization
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
+            System Architecture Diagram
+          </h2>
+          <p class="mt-3 text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm">
+            Visual representation of compute, storage, AI, and backend layers across the cluster.
+          </p>
         </div>
 
-        <h2 class="mt-5 text-2xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          System Architecture Diagram
-        </h2>
+        <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+          <ArchitectureDiagram />
+        </div>
 
-        <p class="mt-3 max-w-4xl mx-auto text-slate-600 dark:text-slate-400">
-          Visual representation of compute, storage, AI, and backend layers.
-        </p>
-      </div>
-
-      <div class="rounded-4xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-        <ArchitectureDiagram />
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <div class="pb-16 text-center text-sm text-slate-500 dark:text-slate-400">
-      A self-hosted distributed system combining Kubernetes, AI inference,
-      and backend services running on a personal homelab infrastructure.
-    </div>
+    <!-- ── SYSTEM CATEGORIES ─────────────────────────────────────────── -->
+    <section class="w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6">
 
-  </div>
-</section>
-
-<section
-  class="relative w-full overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-300"
->
-  <div class="max-w-7xl mx-auto px-6 py-12 relative">
-
-    <!-- TITLE -->
-    <div class="mb-8 text-center">
-      <h2 class="text-4xl md:text-3xl font-bold text-slate-900 dark:text-white">
-        Systems Overview
-      </h2>
-      <p class="mt-2 text-sm md:text-base text-slate-600 dark:text-slate-400 max-w-4xl mx-auto">
-        A breakdown of the core architecture powering AI, backend services, and infrastructure.
-        Each system is modular, scalable, and designed for distributed execution.
-      </p>
-    </div>
-
-    <!-- CARDS -->
-    <div class="flex flex-col md:flex-row gap-4">
-
-      <!-- AI Systems -->
-      <NuxtLink
-        to="/systems/ai"
-        class="flex-1 rounded-xl overflow-hidden
-               bg-slate-100 dark:bg-slate-800/30
-               hover:bg-slate-200 dark:hover:bg-slate-800/60
-               transition"
-      >
-        <img
-          src="https://picsum.photos/400/200?random=1"
-          class="w-full h-32 object-cover"
-        />
-
-        <div class="p-4">
-          <div class="font-semibold text-slate-900 dark:text-white">
-            AI Systems
-          </div>
-          <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-            RAG, agents, semantic retrieval, inference
-          </div>
-
-          <div class="mt-3 text-sm text-sky-600 dark:text-sky-400 font-medium">
-            Read more →
-          </div>
+        <div class="text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+            Explore by System
+          </h2>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Each domain is independently documented with architecture, design decisions, and component details.
+          </p>
         </div>
-      </NuxtLink>
 
-      <!-- Backend Systems -->
-      <NuxtLink
-        to="/systems/backend"
-        class="flex-1 rounded-xl overflow-hidden
-               bg-slate-100 dark:bg-slate-800/30
-               hover:bg-slate-200 dark:hover:bg-slate-800/60
-               transition"
-      >
-        <img
-          src="https://picsum.photos/400/200?random=2"
-          class="w-full h-32 object-cover"
-        />
+        <div class="grid md:grid-cols-3 gap-5">
 
-        <div class="p-4">
-          <div class="font-semibold text-slate-900 dark:text-white">
-            Backend Systems
-          </div>
-          <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-            APIs, async systems, services, databases
-          </div>
+          <NuxtLink
+            v-for="sys in [
+              {
+                to: '/systems/ai',
+                icon: 'mdi:brain',
+                color: 'purple',
+                title: 'AI Systems',
+                sub: 'RAG · Agents · Inference · Embeddings',
+                desc: 'LLM inference pipeline, vector retrieval, semantic search, and agent orchestration on-cluster.',
+                tags: ['Llama 3.2', 'Weaviate', 'RAG Pipeline', 'Embeddings'],
+              },
+              {
+                to: '/systems/backend',
+                icon: 'mdi:api',
+                color: 'sky',
+                title: 'Backend Systems',
+                sub: 'APIs · Async · Services · Databases',
+                desc: 'FastAPI services, Redis caching, PostgreSQL with Apache AGE graph extension, job queues.',
+                tags: ['FastAPI', 'PostgreSQL', 'Redis', 'BullMQ'],
+              },
+              {
+                to: '/systems/infrastructure',
+                icon: 'mdi:kubernetes',
+                color: 'emerald',
+                title: 'Infrastructure',
+                sub: 'Kubernetes · ARM64 · Homelab · CI/CD',
+                desc: 'k3s cluster across 8 Raspberry Pi 5 nodes with Gitea CI/CD, Prometheus, and Grafana.',
+                tags: ['k3s', 'Raspberry Pi 5', 'Gitea', 'Prometheus'],
+              },
+            ]"
+            :key="sys.to"
+            :to="sys.to"
+            class="group flex flex-col rounded-2xl border transition-all duration-200
+                   border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60
+                   hover:shadow-lg"
+            :class="{
+              'hover:border-purple-500/40 hover:shadow-purple-500/5': sys.color === 'purple',
+              'hover:border-sky-500/40 hover:shadow-sky-500/5':       sys.color === 'sky',
+              'hover:border-emerald-500/40 hover:shadow-emerald-500/5': sys.color === 'emerald',
+            }"
+          >
+            <div class="p-6 flex flex-col flex-1">
 
-          <div class="mt-3 text-sm text-sky-600 dark:text-sky-400 font-medium">
-            Read more →
-          </div>
+              <div
+                class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 border"
+                :class="{
+                  'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
+                  'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
+                  'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
+                }"
+              >
+                <Icon :name="sys.icon" class="text-2xl"
+                  :class="{
+                    'text-purple-400': sys.color === 'purple',
+                    'text-sky-400':    sys.color === 'sky',
+                    'text-emerald-400':sys.color === 'emerald',
+                  }"
+                />
+              </div>
+
+              <div class="mb-3">
+                <h3 class="text-base font-semibold text-slate-900 dark:text-white
+                           group-hover:text-sky-400 transition-colors">
+                  {{ sys.title }}
+                </h3>
+                <p class="text-xs font-medium mt-0.5"
+                  :class="{
+                    'text-purple-400': sys.color === 'purple',
+                    'text-sky-400':    sys.color === 'sky',
+                    'text-emerald-400':sys.color === 'emerald',
+                  }"
+                >
+                  {{ sys.sub }}
+                </p>
+              </div>
+
+              <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+                {{ sys.desc }}
+              </p>
+
+              <div class="mt-4 flex flex-wrap gap-1.5">
+                <span
+                  v-for="tag in sys.tags"
+                  :key="tag"
+                  class="text-[11px] px-2 py-0.5 rounded-md border
+                         bg-slate-100 dark:bg-slate-800
+                         text-slate-500 dark:text-slate-400
+                         border-slate-200 dark:border-slate-700/50"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+
+            </div>
+
+            <div class="px-6 pb-5 pt-0 border-t border-slate-100 dark:border-slate-800 mt-auto">
+              <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
+                           group-hover:translate-x-1 transition-transform duration-200 pt-4">
+                Explore system
+                <Icon name="mdi:arrow-right" class="text-base" />
+              </span>
+            </div>
+
+          </NuxtLink>
+
         </div>
-      </NuxtLink>
 
-      <!-- Infrastructure Systems -->
-      <NuxtLink
-        to="/systems/infrastructure"
-        class="flex-1 rounded-xl overflow-hidden
-               bg-slate-100 dark:bg-slate-800/30
-               hover:bg-slate-200 dark:hover:bg-slate-800/60
-               transition"
-      >
-        <img
-          src="https://picsum.photos/400/200?random=3"
-          class="w-full h-32 object-cover"
-        />
-
-        <div class="p-4">
-          <div class="font-semibold text-slate-900 dark:text-white">
-            Infrastructure Systems
-          </div>
-          <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-            Kubernetes, ARM64, homelab, GPU nodes
-          </div>
-
-          <div class="mt-3 text-sm text-sky-600 dark:text-sky-400 font-medium">
-            Read more →
-          </div>
-        </div>
-      </NuxtLink>
-
-    </div>
-  </div>
-</section>
+      </div>
+    </section>
 
   </PatternSection>
 </template>
-
-<script>
-import { ref } from "vue";
-import Hero from "@/components/sections/HomePage/Hero.vue";
-import ArchitectureDiagram from "@/components/ArchitectureDiagram.vue";
-
-export default {
-  components: {
-    Hero,
-    ArchitectureDiagram,
-  },
-};
-</script>
-
-
-
-
-
-

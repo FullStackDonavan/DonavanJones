@@ -46,7 +46,7 @@ export default (name: string): ICategory[][] => {
     title: 'Algorithms & Data Structures',
     message: 'Study algorithmic patterns and data structure strategies for performant applications.',
     image: '/img/logos/algorithms.svg',
-    link: '/categories/algorithms-and-data-structures',
+    link: '/categories/algorithms',
     lessonQuantity: 0,
     tags: [
       { title: 'algorithms', link: '/tags/algorithms' },

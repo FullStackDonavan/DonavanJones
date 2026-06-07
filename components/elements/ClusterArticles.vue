@@ -3,22 +3,23 @@
 
     <!-- HEADER -->
     <div class="flex items-center justify-between mb-6">
-      <div>
-        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">
+      <div class="flex items-center gap-3">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full
+                 bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium"
+        >
+          <Icon name="mdi:text-box-multiple-outline" class="text-sm" />
           Related Articles
-        </h3>
-
-        <!-- <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-          Related articles from this learning cluster
-        </p> -->
+        </div>
       </div>
 
       <span
-        class="px-3 py-1 rounded-full text-xs font-medium
+        class="text-[11px] px-2.5 py-1 rounded-full font-medium
                bg-slate-100 dark:bg-slate-800
-               text-slate-600 dark:text-slate-300"
+               text-slate-500 dark:text-slate-400
+               border border-slate-200 dark:border-slate-700/50"
       >
-        {{ articles?.length || 0 }} Articles
+        {{ articles?.length || 0 }} articles
       </span>
     </div>
 
@@ -53,92 +54,84 @@
         v-for="article in articles"
         :key="article._path"
         :to="article._path"
-        class="group overflow-hidden rounded-2xl
-               border border-slate-200 dark:border-slate-800
-               bg-white dark:bg-slate-900
-               hover:border-sky-400 dark:hover:border-sky-500/40
-               hover:-translate-y-1
-               transition-all duration-300"
+        class="group flex flex-col rounded-2xl overflow-hidden
+               border border-slate-200 dark:border-slate-700/50
+               bg-white dark:bg-slate-900/60
+               hover:border-sky-500/40 dark:hover:border-sky-500/30
+               transition-all duration-200 hover:shadow-lg hover:shadow-sky-500/5"
       >
 
         <!-- IMAGE -->
-        <div class="overflow-hidden">
+        <div class="relative overflow-hidden h-44 bg-slate-100 dark:bg-slate-800">
           <img
-            :src="`https://placehold.co/600x400/png?text=${encodeURIComponent(article.title)}`"
+            v-if="article.excerptImage"
+            :src="article.excerptImage"
             :alt="article.title"
-            class="w-full h-48 object-cover
-                   transition-transform duration-500
-                   group-hover:scale-105"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-        </div>
+          <div v-else class="w-full h-full flex items-center justify-center">
+            <Icon name="mdi:text-box-outline" class="text-5xl text-slate-300 dark:text-slate-600" />
+          </div>
 
-        <!-- CONTENT -->
-        <div class="p-5">
-
-          <!-- CATEGORY -->
+          <!-- Category badge -->
           <div
-            class="inline-flex items-center px-2 py-1 rounded-md
-                   text-[10px] uppercase tracking-wider
-                   bg-sky-500/10 text-sky-500"
+            v-if="article.category"
+            class="absolute top-3 right-3 text-[11px] font-medium px-2.5 py-1 rounded-full
+                   bg-black/50 text-white backdrop-blur-sm border border-white/10"
           >
             {{ article.category }}
           </div>
+        </div>
 
-          <!-- TITLE -->
-          <h4
-            class="mt-3 text-lg font-semibold
-                   text-slate-900 dark:text-white
-                   group-hover:text-sky-400
-                   transition-colors
-                   line-clamp-2"
-          >
-            {{ article.title }}
-          </h4>
+        <!-- CONTENT -->
+        <div class="flex flex-col flex-1 p-5">
+
+          <!-- TITLE + DATE -->
+          <div class="mb-3">
+            <h4 class="text-base font-semibold text-slate-900 dark:text-slate-100
+                       group-hover:text-sky-400 transition-colors">
+              {{ article.title }}
+            </h4>
+            <p v-if="article.date" class="text-xs font-medium text-slate-400 dark:text-slate-500 mt-0.5">
+              {{ formatDate(article.date) }}
+            </p>
+          </div>
 
           <!-- DESCRIPTION -->
-          <p
-            class="mt-2 text-sm
-                   text-slate-600 dark:text-slate-400
-                   line-clamp-3"
-          >
-            {{ article.description }}
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+            {{ truncate(article.description) }}
           </p>
 
           <!-- TAGS -->
-          <div
-            v-if="article.tags?.length"
-            class="mt-4 flex flex-wrap gap-2"
-          >
+          <div v-if="article.tags?.length" class="mt-4 flex flex-wrap gap-1.5">
             <span
-              v-for="tag in article.tags.slice(0, 3)"
+              v-for="tag in article.tags.slice(0, 5)"
               :key="tag"
-              class="px-2 py-1 rounded-md text-xs
+              class="text-[11px] px-2 py-0.5 rounded-md
                      bg-slate-100 dark:bg-slate-800
-                     text-slate-600 dark:text-slate-300"
+                     text-slate-500 dark:text-slate-400
+                     border border-slate-200 dark:border-slate-700/50"
             >
-              #{{ tag }}
+              {{ tag }}
+            </span>
+            <span
+              v-if="article.tags.length > 5"
+              class="text-[11px] px-2 py-0.5 rounded-md
+                     bg-slate-100 dark:bg-slate-800 text-slate-400"
+            >
+              +{{ article.tags.length - 5 }}
             </span>
           </div>
 
           <!-- FOOTER -->
-          <div
-            class="mt-5 pt-4 border-t
-                   border-slate-200 dark:border-slate-800
-                   flex items-center justify-between"
-          >
-            <span class="text-xs text-slate-500">
-              {{ formatDate(article.date) }}
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
+              {{ article.author || 'Donavan Jones' }}
             </span>
-
-            <span
-              class="flex items-center gap-1 text-xs
-                     text-sky-500 font-medium"
-            >
-              Read
-              <Icon
-                name="mdi:arrow-right"
-                class="group-hover:translate-x-1 transition-transform"
-              />
+            <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
+                         group-hover:translate-x-1 transition-transform duration-200">
+              Read Article
+              <Icon name="mdi:arrow-right" class="text-base" />
             </span>
           </div>
 
@@ -168,11 +161,15 @@ const { data: articles } = await useAsyncData(
 
 function formatDate(date?: string) {
   if (!date) return ""
-
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
-    day: "numeric"
+    day: "numeric",
   })
+}
+
+function truncate(text: string, max = 120): string {
+  if (!text) return ""
+  return text.length > max ? text.slice(0, max).trimEnd() + "…" : text
 }
 </script>

@@ -1,107 +1,68 @@
 <script setup lang="ts">
-import { ref, nextTick, watch } from "vue";
+import { ref, computed } from "vue";
 import type { ICategory } from "~/types/ICategory";
 
 const props = defineProps<{
   category: ICategory;
 }>();
 
+const VISIBLE = 4;
 const expanded = ref(false);
-const container = ref<HTMLElement | null>(null);
-const collapsedHeight = ref("0px");
 
-const updateHeight = async () => {
-  await nextTick();
-  if (!container.value) return;
+const visibleTags = computed(() =>
+  expanded.value ? props.category.tags : props.category.tags?.slice(0, VISIBLE)
+);
 
-  const firstRowHeight = container.value.scrollHeight;
-
-  // temporarily force single row measurement
-  container.value.style.maxHeight = "none";
-  const fullHeight = container.value.scrollHeight;
-
-  container.value.style.maxHeight = "";
-
-  collapsedHeight.value = `${firstRowHeight}px`;
-};
-
-watch(() => props.category, updateHeight, { immediate: true });
+const hiddenCount = computed(() =>
+  Math.max(0, (props.category.tags?.length ?? 0) - VISIBLE)
+);
 </script>
 
 <template>
-  <nuxt-link v-if="category" :to="category.link">
-    <div
-      class="flex items-center border-b border-gray-200 dark:border-gray-700 pb-12 mr-5"
-    >
-      <!-- <img class="h-16" :src="category.image" alt="nuxt 3 logo" /> -->
-      <div class="flex items-start justify-between w-full">
-        <div class="pl-3 w-full">
-          <div
-            tabindex="0"
-            class="focus:outline-none text-xl font-medium leading-5 text-gray-800 dark:text-white"
-          >
-            <div class="mt-5">
-              {{ category.title }}
-            </div>
-          </div>
-          <p
-            tabindex="0"
-            class="focus:outline-none text-sm leading-normal pt-2 text-gray-500 dark:text-gray-200"
-          >
-            <!--              {{category.lessonQuantity}}-->
-          </p>
-        </div>
-        <!-- <div role="img" aria-label="bookmark">
-          <svg
-            class="focus:outline-none dark:text-white text-gray-800"
-            width="28"
-            height="28"
-            viewBox="0 0 28 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10.5001 4.66667H17.5001C18.1189 4.66667 18.7124 4.9125 19.15 5.35009C19.5876 5.78767 19.8334 6.38117 19.8334 7V23.3333L14.0001 19.8333L8.16675 23.3333V7C8.16675 6.38117 8.41258 5.78767 8.85017 5.35009C9.28775 4.9125 9.88124 4.66667 10.5001 4.66667Z"
-              stroke="currentColor"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div> -->
-      </div>
-    </div>
-    <p
-      tabindex="0"
-      class="focus:outline-none text-sm leading-5 py-4 dark:text-white"
-    >
+  <div v-if="category" class="flex flex-col p-5 h-full">
+
+    <!-- Title -->
+    <nuxt-link v-if="category.link" :to="category.link" class="group">
+      <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100
+                 group-hover:text-sky-400 transition-colors">
+        {{ category.title }}
+      </h3>
+    </nuxt-link>
+    <h3 v-else class="text-sm font-semibold text-slate-900 dark:text-slate-100">
+      {{ category.title }}
+    </h3>
+
+    <!-- Message -->
+    <p v-if="category.message" class="mt-1.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
       {{ category.message }}
     </p>
-  </nuxt-link>
-<div class="px-2 mt-2">
-  <div
-    ref="container"
-    class="flex flex-wrap gap-2 overflow-hidden transition-all duration-300 ease-in-out"
-    :style="{
-      maxHeight: expanded ? '500px' : collapsedHeight
-    }"
-  >
-    <nuxt-link
-      :to="tag.link"
-      v-for="(tag, index) in category.tags"
-      :key="index"
-      class="py-2 px-4 text-xs leading-3 text-indigo-700 rounded-full bg-indigo-100 hover:scale-110 transition-transform duration-300 whitespace-nowrap"
-    >
-      #{{ tag.title }}
-    </nuxt-link>
-  </div>
 
-  <button
-    v-if="category.tags?.length > 3"
-    @click="expanded = !expanded"
-    class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
-  >
-    {{ expanded ? "Hide Tags" : "Show Tags" }}
-  </button>
-</div>
+    <!-- Tags -->
+    <div v-if="category.tags?.length" class="mt-4">
+      <div class="flex flex-wrap gap-1.5">
+        <nuxt-link
+          v-for="(tag, index) in visibleTags"
+          :key="index"
+          :to="tag.link"
+          class="text-[11px] px-2 py-0.5 rounded-md
+                 bg-slate-100 dark:bg-slate-800
+                 text-slate-500 dark:text-slate-400
+                 border border-slate-200 dark:border-slate-700/50
+                 hover:border-sky-500/40 hover:text-sky-500 dark:hover:text-sky-400
+                 transition-colors whitespace-nowrap"
+        >
+          #{{ tag.title }}
+        </nuxt-link>
+      </div>
+
+      <button
+        v-if="hiddenCount > 0 || expanded"
+        @click="expanded = !expanded"
+        class="mt-3 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
+      >
+        {{ expanded ? "Show less" : `+${hiddenCount} more` }}
+      </button>
+    </div>
+
+  </div>
 </template>
