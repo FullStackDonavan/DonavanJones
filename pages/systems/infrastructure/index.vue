@@ -116,6 +116,26 @@ const faqs = [
     answer: 'It combines ARM64 homelab hardware, Kubernetes orchestration, self-hosted AI inference, and full-stack application deployment into a single unified ecosystem supporting real production applications.'
   },
 ]
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }),
+    },
+  ],
+})
 </script>
 
 <template>

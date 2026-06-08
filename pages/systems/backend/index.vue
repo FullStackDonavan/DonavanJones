@@ -96,6 +96,26 @@ const faqs = [
     answer: 'Yes. Backend services dispatch to Llama (on-cluster) or OpenAI via a custom orchestration layer, with BullMQ queuing AI batch jobs. Results stream back to the client via SSE.'
   },
 ]
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }),
+    },
+  ],
+})
 </script>
 
 <template>

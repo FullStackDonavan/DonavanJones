@@ -96,6 +96,26 @@ const faqs = [
     answer: 'Yes. I build agents capable of retrieving information, calling tools, executing multi-step tasks, and automating business processes with proper termination and error handling.'
   },
 ]
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }),
+    },
+  ],
+})
 </script>
 
 <template>
