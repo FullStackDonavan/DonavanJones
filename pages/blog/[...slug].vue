@@ -208,7 +208,6 @@ function isoDate(d: string | undefined) {
               <time
                 v-if="seoDoc.date"
                 :datetime="isoDate(seoDoc.date)"
-                itemprop="datePublished"
                 class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
               >
                 <Icon name="mdi:calendar-outline" class="text-base" />
@@ -219,7 +218,6 @@ function isoDate(d: string | undefined) {
               <time
                 v-if="seoDoc.lastUpdated"
                 :datetime="isoDate(seoDoc.lastUpdated)"
-                itemprop="dateModified"
                 class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
               >
                 <Icon name="mdi:update" class="text-base" />
@@ -305,8 +303,7 @@ function isoDate(d: string | undefined) {
               <BibleVerseCaseStudy />
 
               <!-- AUTHOR BOX -->
-              <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8"
-                   itemscope itemtype="https://schema.org/Person">
+              <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">Written by</p>
 
                 <div class="flex flex-col sm:flex-row gap-5">
@@ -319,7 +316,6 @@ function isoDate(d: string | undefined) {
                         alt="Donavan Jones — Full-Stack Engineer & Systems Architect"
                         width="72"
                         height="72"
-                        itemprop="image"
                         class="w-[72px] h-[72px] rounded-full border-2 border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
                       />
                     </a>
@@ -331,18 +327,16 @@ function isoDate(d: string | undefined) {
                       <a
                         href="/about"
                         rel="author"
-                        itemprop="name"
                         class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
                       >
                         Donavan Jones
                       </a>
-                      <span class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium"
-                            itemprop="jobTitle">
+                      <span class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium">
                         Full-Stack Engineer &amp; Systems Architect
                       </span>
                     </div>
 
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3" itemprop="description">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
                       5+ years building production systems · AI, Backend &amp; Infrastructure · Founder of Bible Logic
                     </p>
 
