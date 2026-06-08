@@ -2,7 +2,19 @@
 // ArchitectureDiagram is registered globally via Nuxt auto-imports
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: `${_SITE}/system-overview` })
+useSeoMeta({
+  title: 'System Overview — Donavan Jones',
+  description: 'A self-hosted distributed platform combining Kubernetes, AI inference, data systems, storage, and automation on ARM64 infrastructure.',
+  ogTitle: 'System Overview — Donavan Jones',
+  ogDescription: 'A self-hosted distributed platform combining Kubernetes, AI inference, data systems, storage, and automation on ARM64 infrastructure.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/system-overview`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'System Overview — Donavan Jones',
+  twitterDescription: 'Self-hosted Kubernetes platform combining AI inference, data systems, and automation on ARM64.',
+  canonical: `${_SITE}/system-overview`,
+})
 </script>
 
 <template>

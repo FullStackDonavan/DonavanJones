@@ -5,7 +5,19 @@ import { useRoute } from "#app";
 const route = useRoute();
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: () => `${_SITE}${route.path}` })
+useSeoMeta({
+  title: () => `#${tagName.value} Articles — Donavan Jones`,
+  description: () => `Browse ${totalArticlesCount.value ?? 0} articles tagged with "${tagName.value}" on donavanjones.com.`,
+  ogTitle: () => `#${tagName.value} Articles — Donavan Jones`,
+  ogDescription: () => `Browse ${totalArticlesCount.value ?? 0} articles tagged with "${tagName.value}".`,
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: () => `${_SITE}${route.path}`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => `#${tagName.value} — Donavan Jones`,
+  twitterDescription: () => `Browse articles tagged with "${tagName.value}".`,
+  canonical: () => `${_SITE}${route.path}`,
+})
 
 const articles = ref<any[]>([]);
 const pending = ref(true);

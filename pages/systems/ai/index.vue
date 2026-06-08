@@ -1,7 +1,19 @@
 <script setup lang="ts">
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: `${_SITE}/systems/ai` })
+useSeoMeta({
+  title: 'AI Systems Engineering — Donavan Jones',
+  description: 'Practical patterns for designing scalable AI systems: RAG pipelines, agents, memory systems, evaluation frameworks, and real-world inference architecture.',
+  ogTitle: 'AI Systems Engineering — Donavan Jones',
+  ogDescription: 'RAG pipelines, agents, memory systems, evaluation frameworks, and real-world AI inference architecture.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/systems/ai`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'AI Systems Engineering — Donavan Jones',
+  twitterDescription: 'RAG pipelines, agents, memory systems, and real-world AI inference architecture.',
+  canonical: `${_SITE}/systems/ai`,
+})
 
 const principles = [
   { icon: 'mdi:layers-triple',    color: 'purple', text: 'Separate retrieval, reasoning, and generation into distinct layers' },

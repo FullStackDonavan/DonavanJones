@@ -30,7 +30,7 @@
                 Self-Hosted Kubernetes Infrastructure
                 </div>
 
-                <h2
+                <h1
                 class="text-4xl md:text-5xl lg:text-6xl
                 font-bold leading-tight
                 text-slate-900 dark:text-slate-100"
@@ -39,7 +39,7 @@
                 <span class="block text-sky-400">
                     AI Platform
                 </span>
-                </h2>
+                </h1>
 
                 <p
                 class="mt-6 max-w-2xl text-lg

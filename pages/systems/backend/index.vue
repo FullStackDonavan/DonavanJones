@@ -1,7 +1,19 @@
 <script setup lang="ts">
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: `${_SITE}/systems/backend` })
+useSeoMeta({
+  title: 'Backend Systems Engineering — Donavan Jones',
+  description: 'Practical backend architecture for APIs, distributed services, async job queues, data layers, and production-grade infrastructure design.',
+  ogTitle: 'Backend Systems Engineering — Donavan Jones',
+  ogDescription: 'APIs, distributed services, async job queues, data layers, and production-grade backend architecture.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/systems/backend`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Backend Systems Engineering — Donavan Jones',
+  twitterDescription: 'APIs, distributed services, async job queues, and production-grade backend architecture.',
+  canonical: `${_SITE}/systems/backend`,
+})
 
 const principles = [
   { icon: 'mdi:arrow-decision',   color: 'sky',    text: 'Design stateless APIs wherever possible — state lives in the store, not the server' },

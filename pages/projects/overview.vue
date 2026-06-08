@@ -5,7 +5,19 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: `${_SITE}/projects/overview` })
+useSeoMeta({
+  title: 'Projects — Donavan Jones',
+  description: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, web applications, and production-grade engineering work.',
+  ogTitle: 'Projects — Donavan Jones',
+  ogDescription: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, web applications, and production-grade engineering work.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/projects/overview`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Projects — Donavan Jones',
+  twitterDescription: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, and production-grade engineering work.',
+  canonical: `${_SITE}/projects/overview`,
+})
 
 const currentPage = computed(() => parseInt(route.query.page as string) || 1);
 const limit = ref(9);

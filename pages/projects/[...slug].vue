@@ -200,11 +200,12 @@ useSeoMeta({
   description: pageDescription,
   ogDescription: pageDescription,
   ogType: 'website',
-  ogImage: computed(() => seoDoc.value?.excerptImage || undefined),
+  ogImage: computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`),
+  ogUrl: () => `${SITE}${route.path}`,
   twitterCard: 'summary_large_image',
   twitterTitle: pageTitle,
   twitterDescription: pageDescription,
-  twitterImage: computed(() => seoDoc.value?.excerptImage || undefined),
+  twitterImage: computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`),
   canonical: () => `${SITE}${route.path}`,
 })
 

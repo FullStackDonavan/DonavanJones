@@ -196,10 +196,10 @@
 
         <!-- IMAGE GRID -->
         <div class="mt-10 grid md:grid-cols-4 gap-4">
-          <img src="https://placehold.co/600x400?text=Kubernetes+Cluster" class="rounded-xl border border-slate-700" />
-          <img src="https://placehold.co/600x400?text=Storage+Layer" class="rounded-xl border border-slate-700" />
-          <img src="https://placehold.co/600x400?text=CI/CD+Pipeline" class="rounded-xl border border-slate-700" />
-          <img src="https://placehold.co/600x400?text=Observability" class="rounded-xl border border-slate-700" />
+          <img src="https://placehold.co/600x400?text=Kubernetes+Cluster" class="rounded-xl border border-slate-700" alt="Kubernetes Cluster diagram" />
+          <img src="https://placehold.co/600x400?text=Storage+Layer" class="rounded-xl border border-slate-700" alt="Storage Layer diagram" />
+          <img src="https://placehold.co/600x400?text=CI/CD+Pipeline" class="rounded-xl border border-slate-700" alt="CI/CD Pipeline diagram" />
+          <img src="https://placehold.co/600x400?text=Observability" class="rounded-xl border border-slate-700" alt="Observability stack diagram" />
         </div>
 
         <!-- STACK -->

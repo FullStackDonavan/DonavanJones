@@ -2,7 +2,7 @@
   <div id="formList" ref="formList">
     <div id="list" class="flex items-center space-x-4">
       <div v-for="(item, index) in items" :key="index" class="item">
-        <img :src="item.imageUrl" class="avatar" />
+        <img :src="item.imageUrl" :alt="item.name || 'Carousel image'" class="avatar" />
       </div>
     </div>
   </div>

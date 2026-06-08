@@ -19,7 +19,7 @@
               </div>
               <!-- <p class="text-md text-justify">{{ description }}</p> -->
               <div>
-                <img :src="image" />
+                <img :src="image" :alt="title" />
               </div>
             </NuxtLink>
           </div>

@@ -1,7 +1,19 @@
 <script setup lang="ts">
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
-useSeoMeta({ canonical: `${_SITE}/systems/infrastructure` })
+useSeoMeta({
+  title: 'Infrastructure Engineering — Donavan Jones',
+  description: 'Designing and operating a self-hosted Kubernetes cluster with distributed storage, networking, observability, CI/CD automation, and AI workloads on ARM64 nodes.',
+  ogTitle: 'Infrastructure Engineering — Donavan Jones',
+  ogDescription: 'Self-hosted Kubernetes on ARM64: distributed storage, networking, observability, CI/CD, and AI workloads.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/systems/infrastructure`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Infrastructure Engineering — Donavan Jones',
+  twitterDescription: 'Self-hosted Kubernetes on ARM64: storage, networking, observability, and CI/CD.',
+  canonical: `${_SITE}/systems/infrastructure`,
+})
 
 const principles = [
   { icon: 'mdi:docker',            color: 'sky',    text: 'Everything runs as a containerized workload — no bare-metal service installs' },

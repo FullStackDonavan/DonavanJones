@@ -15,9 +15,12 @@ useSeoMeta({
   description: () => seoDoc.value?.description || '',
   ogDescription: () => seoDoc.value?.description || '',
   ogType: 'article',
+  ogImage: () => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`,
+  ogUrl: () => `${SITE}${route.path}`,
   twitterCard: 'summary_large_image',
   twitterTitle: () => seoDoc.value?.title || 'Donavan Jones',
   twitterDescription: () => seoDoc.value?.description || '',
+  twitterImage: () => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`,
   canonical: () => `${SITE}${route.path}`,
 })
 

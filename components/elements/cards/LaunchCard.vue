@@ -13,7 +13,7 @@
                 {{ title }}
               </h2>
             </div>
-            <img :src="image" />
+            <img :src="image" :alt="title" />
             <!-- <p class="text-md text-justify">{{ description }}</p>
             <div class="p-4 flex flex-wrap items-center">
               <p class="px-1 py-2 tracking-wide text-xs mr-2 mb-2">Tag #1</p>

@@ -5,6 +5,14 @@ const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.c
 useSeoMeta({
   title: 'Privacy Policy — Donavan Jones',
   description: 'Privacy policy for donavanjones.com. Learn how data is collected, used, and protected.',
+  ogTitle: 'Privacy Policy — Donavan Jones',
+  ogDescription: 'Privacy policy for donavanjones.com. Learn how data is collected, used, and protected.',
+  ogType: 'website',
+  ogImage: `${_SITE}/img/logo.png`,
+  ogUrl: `${_SITE}/privacy`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Privacy Policy — Donavan Jones',
+  twitterDescription: 'Privacy policy for donavanjones.com.',
   canonical: `${_SITE}/privacy`,
 })
 </script>

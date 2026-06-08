@@ -6,11 +6,14 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       titleTemplate: '%s — Donavan Jones',
+      htmlAttrs: { lang: 'en' },
       meta: [
         { name: 'author', content: 'Donavan Jones' },
         { name: 'robots', content: 'index, follow' },
         { property: 'og:site_name', content: 'Donavan Jones' },
         { property: 'og:locale', content: 'en_US' },
+        { property: 'og:image', content: `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/img/logo.png` },
+        { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:creator', content: '@donavanjones' },
       ],
       script: [
