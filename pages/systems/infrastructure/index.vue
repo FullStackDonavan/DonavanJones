@@ -350,6 +350,7 @@ useHead({
       </section>
 
       <FaqSection title="Frequently Asked Questions" :faqs="faqs" />
+      <BibleVerseCaseStudy />
       <ClusterArticles cluster="infrastructure-engineering" />
 
     </div>

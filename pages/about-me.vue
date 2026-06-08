@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+
 useSeoMeta({
   title: 'About Me — Donavan Jones',
   description: 'Donavan Jones is a full-stack engineer and systems architect. Learn about his work building production AI, SaaS platforms, and Kubernetes infrastructure.',
   ogTitle: 'About Me — Donavan Jones',
   ogDescription: 'Full-stack engineer and systems architect building production AI, SaaS platforms, and Kubernetes infrastructure. Learn the story behind the work.',
-  ogType: 'website',
+  ogType: 'profile',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/about-me`,
   twitterCard: 'summary_large_image',
@@ -14,19 +15,347 @@ useSeoMeta({
   twitterDescription: 'Full-stack engineer and systems architect — AI systems, SaaS platforms, and Kubernetes infrastructure.',
   canonical: `${_SITE}/about-me`,
 })
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        '@id': `${_SITE}/about-me`,
+        url: `${_SITE}/about-me`,
+        name: 'About Donavan Jones',
+        mainEntity: {
+          '@type': 'Person',
+          '@id': `${_SITE}/#person`,
+          name: 'Donavan Jones',
+          url: _SITE,
+          jobTitle: 'Full-Stack Engineer & Systems Architect',
+          description: 'Full-stack engineer specializing in production AI systems, SaaS platforms, backend architecture, and Kubernetes infrastructure.',
+          knowsAbout: [
+            'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'FastAPI',
+            'RAG Pipelines', 'LLM Integration', 'Kubernetes', 'PostgreSQL',
+            'Redis', 'BullMQ', 'Weaviate', 'Docker', 'Infrastructure',
+          ],
+          sameAs: [
+            'https://github.com/FullStackDonavan',
+            'https://linkedin.com/in/donavanjones',
+            'https://twitter.com/jack_fullstack',
+          ],
+        },
+      }),
+    },
+  ],
+})
+
+const focuses = [
+  {
+    icon: 'mdi:brain',
+    color: 'purple',
+    title: 'AI Systems',
+    desc: 'RAG pipelines, LLM orchestration, agent frameworks, hybrid model routing, and production inference infrastructure.',
+    tags: ['Weaviate', 'Llama 3.2', 'OpenAI', 'RAG', 'Agents'],
+    link: '/systems/ai',
+  },
+  {
+    icon: 'mdi:server',
+    color: 'sky',
+    title: 'Backend Engineering',
+    desc: 'Scalable APIs, async job queues, domain-driven service layers, and typed data pipelines in Node.js and FastAPI.',
+    tags: ['Nuxt 3', 'BullMQ', 'Prisma', 'PostgreSQL', 'Redis'],
+    link: '/systems/backend',
+  },
+  {
+    icon: 'mdi:cloud-braces',
+    color: 'emerald',
+    title: 'Infrastructure',
+    desc: 'Self-hosted Kubernetes on ARM64, CI/CD with GitHub Actions, MinIO object storage, and secure Cloudflare routing.',
+    tags: ['Kubernetes', 'Docker', 'GitHub Actions', 'MinIO'],
+    link: '/systems/infrastructure',
+  },
+  {
+    icon: 'mdi:view-dashboard',
+    color: 'amber',
+    title: 'Full-Stack SaaS',
+    desc: 'End-to-end product development — from data model and auth to UI, real-time features, and payments.',
+    tags: ['Vue 3', 'Nuxt 3', 'Stripe', 'WebSockets', 'Auth'],
+    link: '/projects/overview',
+  },
+]
+
+const techStack = {
+  'Frontend': ['Vue 3', 'Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Pinia'],
+  'Backend': ['Node.js', 'Nitro', 'FastAPI', 'Zod', 'BullMQ'],
+  'Data': ['PostgreSQL', 'Prisma', 'Redis', 'Weaviate', 'MinIO'],
+  'AI': ['Llama 3.2', 'OpenAI API', 'Whisper', 'ElevenLabs', 'Stable Diffusion'],
+  'Infrastructure': ['Kubernetes', 'Docker', 'GitHub Actions', 'Cloudflare', 'ARM64'],
+}
+
+const milestones = [
+  {
+    year: '2024–Now',
+    title: 'Building Bible Verse AI',
+    desc: 'Full-stack AI platform indexing 37K+ Bible verses across 5 bounded domains with RAG retrieval, 5 AI models, and BullMQ job queues.',
+    color: 'purple',
+  },
+  {
+    year: '2023–Now',
+    title: 'Self-Hosted Kubernetes Cluster',
+    desc: 'Designed and deployed a private ARM64 Kubernetes cluster running production AI workloads, CI/CD pipelines, and object storage.',
+    color: 'emerald',
+  },
+  {
+    year: '2022–Now',
+    title: 'Full-Stack Content Platform',
+    desc: 'Built this site from scratch — video tutorials, blog, pro membership, AI search, and real-time features on a Nuxt 3 stack.',
+    color: 'sky',
+  },
+  {
+    year: '2020+',
+    title: 'Production SaaS & AI Integration',
+    desc: 'Shipped multiple client projects integrating LLMs, WebRTC video, Stripe billing, and complex auth flows into production systems.',
+    color: 'amber',
+  },
+]
+
+const socials = [
+  { label: 'GitHub',   href: 'https://github.com/FullStackDonavan',        icon: 'mdi:github' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/donavanjones',       icon: 'mdi:linkedin' },
+]
 </script>
 
 <template>
   <PatternSection>
-    <BasicSection
-      class="flex flex-col items-center justify-center text-center space-y-4"
-    >
-      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">A Game About Me</h1>
-      <ParagraphDescription>
-        Play my game to get to get to know me better!
-      </ParagraphDescription>
-      <Game
-    /></BasicSection>
-    <!-- Other sections -->
+    <div class="mx-auto max-w-7xl px-6 py-14">
+
+      <!-- HERO -->
+      <div class="mb-16 grid lg:grid-cols-5 gap-10 items-start">
+        <div class="lg:col-span-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5
+                      bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-medium">
+            <Icon name="mdi:account-circle" class="text-sm" />
+            About Me
+          </div>
+
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+            Donavan Jones
+          </h1>
+          <p class="mt-2 text-lg font-medium text-sky-500 dark:text-sky-400">
+            Full-Stack Engineer &amp; Systems Architect
+          </p>
+
+          <p class="mt-5 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            I build production systems at the intersection of AI, backend engineering, and infrastructure.
+            My work spans RAG pipelines, async job queues, self-hosted Kubernetes clusters, and full-stack
+            SaaS platforms — always with a focus on correctness, observability, and production-readiness.
+          </p>
+          <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            Currently deep in building
+            <NuxtLink to="/projects/bible-verse" class="text-purple-400 hover:text-purple-300 font-medium transition-colors">Bible Verse AI</NuxtLink>
+            — a multi-domain platform that indexes 37,000+ Bible verses with semantic search, five AI models,
+            and a fully async processing pipeline.
+          </p>
+
+          <!-- Socials -->
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a
+              v-for="s in socials"
+              :key="s.label"
+              :href="s.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/60
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon :name="s.icon" class="text-base" />
+              {{ s.label }}
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats card -->
+        <div class="lg:col-span-2">
+          <div class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+                      bg-white dark:bg-slate-900/60">
+            <h2 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-5">
+              By the Numbers
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="rounded-xl p-4 bg-purple-500/5 border border-purple-500/20 text-center">
+                <div class="text-2xl font-extrabold text-purple-400">37K+</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Verses Indexed</div>
+              </div>
+              <div class="rounded-xl p-4 bg-sky-500/5 border border-sky-500/20 text-center">
+                <div class="text-2xl font-extrabold text-sky-400">5</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">AI Models</div>
+              </div>
+              <div class="rounded-xl p-4 bg-emerald-500/5 border border-emerald-500/20 text-center">
+                <div class="text-2xl font-extrabold text-emerald-400">K8s</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Self-Hosted</div>
+              </div>
+              <div class="rounded-xl p-4 bg-amber-500/5 border border-amber-500/20 text-center">
+                <div class="text-2xl font-extrabold text-amber-400">5+</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Years Building</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHAT I BUILD -->
+      <section class="mb-14">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">What I Build</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+          Systems designed to run in production, not just demos.
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <NuxtLink
+            v-for="f in focuses"
+            :key="f.title"
+            :to="f.link"
+            class="group flex flex-col rounded-2xl p-5 border
+                   border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60
+                   hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5
+                   transition-all duration-200"
+          >
+            <div
+              class="w-10 h-10 rounded-lg flex items-center justify-center border mb-4"
+              :class="{
+                'bg-purple-500/10 border-purple-500/20': f.color === 'purple',
+                'bg-sky-500/10 border-sky-500/20':       f.color === 'sky',
+                'bg-emerald-500/10 border-emerald-500/20': f.color === 'emerald',
+                'bg-amber-500/10 border-amber-500/20':   f.color === 'amber',
+              }"
+            >
+              <Icon :name="f.icon" class="text-xl"
+                :class="{
+                  'text-purple-400': f.color === 'purple',
+                  'text-sky-400':    f.color === 'sky',
+                  'text-emerald-400':f.color === 'emerald',
+                  'text-amber-400':  f.color === 'amber',
+                }"
+              />
+            </div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+              {{ f.title }}
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed flex-1">
+              {{ f.desc }}
+            </p>
+            <div class="flex flex-wrap gap-1 mt-4">
+              <span
+                v-for="tag in f.tags" :key="tag"
+                class="text-[11px] px-2 py-0.5 rounded-md border
+                       bg-slate-100 dark:bg-slate-800
+                       text-slate-500 dark:text-slate-400
+                       border-slate-200 dark:border-slate-700/50"
+              >{{ tag }}</span>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- TECH STACK -->
+      <section class="mb-14">
+        <div class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+                    bg-white dark:bg-slate-900/60">
+          <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-5">Technology Stack</h2>
+          <div class="space-y-4">
+            <div v-for="(tags, category) in techStack" :key="category" class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-medium text-slate-500 dark:text-slate-500 w-24 flex-shrink-0">
+                {{ category }}
+              </span>
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  v-for="tag in tags" :key="tag"
+                  class="px-2.5 py-1 rounded-lg text-xs border
+                         bg-slate-100 dark:bg-slate-800
+                         text-slate-600 dark:text-slate-300
+                         border-slate-200 dark:border-slate-700/50"
+                >{{ tag }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIMELINE -->
+      <section class="mb-14">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Notable Work</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-8">
+          Projects and systems that defined my engineering approach.
+        </p>
+        <div class="relative space-y-0">
+          <div
+            v-for="(m, i) in milestones"
+            :key="i"
+            class="relative flex gap-6 pb-8 last:pb-0"
+          >
+            <!-- Timeline line -->
+            <div class="flex flex-col items-center flex-shrink-0">
+              <div
+                class="w-3 h-3 rounded-full border-2 mt-1"
+                :class="{
+                  'bg-purple-500 border-purple-400': m.color === 'purple',
+                  'bg-sky-500 border-sky-400':       m.color === 'sky',
+                  'bg-emerald-500 border-emerald-400':m.color === 'emerald',
+                  'bg-amber-500 border-amber-400':   m.color === 'amber',
+                }"
+              />
+              <div v-if="i < milestones.length - 1"
+                   class="w-px flex-1 mt-1 bg-slate-200 dark:bg-slate-800" />
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 pb-2">
+              <span class="text-xs font-medium text-slate-400 dark:text-slate-500">{{ m.year }}</span>
+              <h3 class="text-base font-semibold text-slate-900 dark:text-white mt-0.5">{{ m.title }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ m.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section>
+        <div class="rounded-2xl p-8 border border-sky-500/20 bg-sky-500/5 text-center">
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">
+            Want to see the work in depth?
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-lg mx-auto">
+            Explore the projects, read the articles, or follow along with what I'm currently building.
+          </p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <NuxtLink
+              to="/projects/overview"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     bg-sky-500 hover:bg-sky-400 text-white transition-colors duration-200"
+            >
+              <Icon name="mdi:folder-multiple-outline" class="text-base" />
+              View Projects
+            </NuxtLink>
+            <NuxtLink
+              to="/blog/overview"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/60
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:text-box-multiple-outline" class="text-base" />
+              Read the Blog
+            </NuxtLink>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </PatternSection>
 </template>
