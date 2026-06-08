@@ -165,7 +165,7 @@ function isoDate(d: string | undefined) {
       >
         <div>
           <!-- Back Button -->
-          <nuxt-link class="block cursor-pointer max-w-2xl mb-4" :to="backLink">
+          <!-- <nuxt-link class="block cursor-pointer max-w-2xl mb-4" :to="backLink">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="inline h-6 w-6"
@@ -177,7 +177,7 @@ function isoDate(d: string | undefined) {
               <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
             </svg>
             Back
-          </nuxt-link>
+          </nuxt-link> -->
 
           <!-- Header (driven by seoDoc — available immediately, no slot dependency) -->
           <div v-if="seoDoc">
