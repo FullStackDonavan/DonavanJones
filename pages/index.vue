@@ -35,6 +35,66 @@ useHead({
         isPartOf: { '@id': `${SITE}/#website` },
       }),
     },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        '@id': `${SITE}/#organization`,
+        name: 'Donavan Jones',
+        url: SITE,
+        logo: {
+          '@type': 'ImageObject',
+          '@id': `${SITE}/#logo`,
+          url: `${SITE}/img/logo.png`,
+          contentUrl: `${SITE}/img/logo.png`,
+          caption: 'Donavan Jones',
+        },
+        image: { '@id': `${SITE}/#logo` },
+        description:
+          'Full-stack engineering and systems architecture — AI systems, SaaS platforms, self-hosted Kubernetes infrastructure, and production-grade web applications.',
+        founder: { '@id': `${SITE}/#person` },
+        sameAs: [
+          'https://github.com/FullStackDonavan',
+          'https://linkedin.com/in/donavanjones',
+        ],
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        '@id': `${SITE}/#website`,
+        url: SITE,
+        name: 'Donavan Jones',
+        description:
+          'Full-stack engineer and systems architect — writing and building in Nuxt, AI, Kubernetes, and distributed systems.',
+        inLanguage: 'en-US',
+        publisher: { '@id': `${SITE}/#organization` },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        '@id': `${SITE}/#person`,
+        name: 'Donavan Jones',
+        url: SITE,
+        jobTitle: 'Full-Stack Engineer & Systems Architect',
+        worksFor: { '@id': `${SITE}/#organization` },
+        knowsAbout: [
+          'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL',
+          'Redis', 'Kubernetes', 'RAG Pipelines', 'LLM Integration',
+          'WebRTC', 'BullMQ', 'Weaviate', 'Docker', 'CI/CD',
+        ],
+        sameAs: [
+          'https://github.com/FullStackDonavan',
+          'https://linkedin.com/in/donavanjones',
+        ],
+      }),
+    },
   ],
 })
 
