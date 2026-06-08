@@ -182,34 +182,67 @@ onMounted(() => {
                 {{ contentDoc.title }}
               </h2>
 
-              <p class="text-gray-500 dark:text-white">
-                by {{ contentDoc.author }}, {{ contentDoc.date }}
-              </p>
+              <!-- Publication meta -->
+              <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
 
-              <div class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center">
-                <span v-if="contentDoc.category" class="mr-4">
-                  <strong>Category: </strong>
-                  <NuxtLink
-                    :to="{ path: `/categories/${contentDoc.category}`, query: { from: route.fullPath } }"
-                    class="text-blue-500 hover:underline"
-                  >
-                    {{ contentDoc.category }}
-                  </NuxtLink>
-                </span>
+                <!-- Author -->
+                <a
+                  href="/about"
+                  rel="author"
+                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+                >
+                  <Icon name="mdi:account-circle-outline" class="text-base" />
+                  {{ contentDoc.author || 'Donavan Jones' }}
+                </a>
 
-                <span v-if="contentDoc.tags?.length" class="mr-4">
-                  <strong>Tags: </strong>
-                  <ul class="inline-flex gap-x-2">
-                    <li v-for="(tag, index) in contentDoc.tags" :key="index">
-                      <NuxtLink
-                        :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
-                        class="text-blue-500 hover:underline"
-                      >
-                        {{ tag }}
-                      </NuxtLink>
-                    </li>
-                  </ul>
-                </span>
+                <!-- Published date -->
+                <time
+                  v-if="contentDoc.date"
+                  :datetime="new Date(contentDoc.date).toISOString()"
+                  itemprop="datePublished"
+                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
+                >
+                  <Icon name="mdi:calendar-outline" class="text-base" />
+                  Published {{ new Date(contentDoc.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                </time>
+
+                <!-- Last updated -->
+                <time
+                  v-if="contentDoc.lastUpdated && contentDoc.lastUpdated !== contentDoc.date"
+                  :datetime="new Date(contentDoc.lastUpdated).toISOString()"
+                  itemprop="dateModified"
+                  class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
+                >
+                  <Icon name="mdi:update" class="text-base" />
+                  Updated {{ new Date(contentDoc.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+                </time>
+
+                <!-- Category -->
+                <NuxtLink
+                  v-if="contentDoc.category"
+                  :to="{ path: `/categories/${contentDoc.category}`, query: { from: route.fullPath } }"
+                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+                >
+                  <Icon name="mdi:folder-outline" class="text-base" />
+                  {{ contentDoc.category }}
+                </NuxtLink>
+
+              </div>
+
+              <!-- Tags -->
+              <div v-if="contentDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
+                <NuxtLink
+                  v-for="(tag, index) in contentDoc.tags"
+                  :key="index"
+                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                  class="text-xs px-2.5 py-1 rounded-lg border
+                         bg-slate-100 dark:bg-slate-800
+                         text-slate-500 dark:text-slate-400
+                         border-slate-200 dark:border-slate-700/50
+                         hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+                >
+                  #{{ tag }}
+                </NuxtLink>
               </div>
 
               <div class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center">
