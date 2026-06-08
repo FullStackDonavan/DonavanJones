@@ -9,47 +9,129 @@ const { data: seoDoc } = await useAsyncData(
   () => queryContent(route.path).without(['body']).findOne()
 )
 
+const pageImage = computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`)
+const pageUrl   = computed(() => `${SITE}${route.path}`)
+const personId  = `${SITE}/#person`
+const siteId    = `${SITE}/#website`
+
 useSeoMeta({
-  title: () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
-  ogTitle: () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
-  description: () => seoDoc.value?.description || '',
-  ogDescription: () => seoDoc.value?.description || '',
-  ogType: 'article',
-  ogImage: () => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`,
-  ogUrl: () => `${SITE}${route.path}`,
-  twitterCard: 'summary_large_image',
-  twitterTitle: () => seoDoc.value?.title || 'Donavan Jones',
+  title:            () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
+  ogTitle:          () => seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones',
+  description:      () => seoDoc.value?.description || '',
+  ogDescription:    () => seoDoc.value?.description || '',
+  ogType:           'article',
+  ogImage:          pageImage,
+  ogUrl:            pageUrl,
+  twitterCard:      'summary_large_image',
+  twitterTitle:     () => seoDoc.value?.title || 'Donavan Jones',
   twitterDescription: () => seoDoc.value?.description || '',
-  twitterImage: () => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`,
-  canonical: () => `${SITE}${route.path}`,
+  twitterImage:     pageImage,
+  canonical:        pageUrl,
+  // Article-specific Open Graph
+  articlePublishedTime: () => seoDoc.value?.date
+    ? new Date(seoDoc.value.date).toISOString() : undefined,
+  articleModifiedTime: () => seoDoc.value?.lastUpdated
+    ? new Date(seoDoc.value.lastUpdated).toISOString()
+    : seoDoc.value?.date ? new Date(seoDoc.value.date).toISOString() : undefined,
+  articleAuthor:  `${SITE}/about-me`,
+  articleSection: () => seoDoc.value?.category || undefined,
 })
 
 useHead({
   script: [
+    // ── BlogPosting ───────────────────────────────────────────────────────────
     {
       type: 'application/ld+json',
       innerHTML: computed(() => {
         const doc = seoDoc.value
         if (!doc) return '{}'
-        const pageUrl = `${SITE}${route.path}`
-        const personId = `${SITE}/#person`
+        const url = pageUrl.value
+        const iso = (d?: string) => d ? new Date(d).toISOString() : undefined
         return JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
-          '@id': pageUrl,
+          '@id': url,
           headline: doc.title,
           description: doc.description,
-          url: pageUrl,
-          datePublished: doc.date ? new Date(doc.date).toISOString() : undefined,
-          dateModified: doc.lastUpdated
-            ? new Date(doc.lastUpdated).toISOString()
-            : doc.date ? new Date(doc.date).toISOString() : undefined,
-          author: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
-          publisher: { '@type': 'Person', '@id': personId, name: 'Donavan Jones' },
+          url,
+          inLanguage: 'en-US',
+          image: pageImage.value,
+          datePublished: iso(doc.date),
+          dateModified: iso(doc.lastUpdated) ?? iso(doc.date),
+          articleSection: doc.category || undefined,
           keywords: Array.isArray(doc.tags) ? doc.tags.join(', ') : undefined,
-          mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
-          isPartOf: { '@id': `${SITE}/#website` },
+          author: {
+            '@type': 'Person',
+            '@id': personId,
+            name: 'Donavan Jones',
+            url: SITE,
+            sameAs: [
+              'https://github.com/FullStackDonavan',
+              'https://linkedin.com/in/donavanjones',
+              `${SITE}/resume`,
+            ],
+          },
+          publisher: {
+            '@type': 'Person',
+            '@id': personId,
+            name: 'Donavan Jones',
+            url: SITE,
+          },
+          mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+          isPartOf: { '@id': siteId },
         })
+      }),
+    },
+    // ── BreadcrumbList ────────────────────────────────────────────────────────
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => {
+        const doc = seoDoc.value
+        if (!doc) return '{}'
+        return JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home',  item: SITE },
+            { '@type': 'ListItem', position: 2, name: 'Blog',  item: `${SITE}/blog/overview` },
+            { '@type': 'ListItem', position: 3, name: doc.title, item: pageUrl.value },
+          ],
+        })
+      }),
+    },
+    // ── Person (author entity) ────────────────────────────────────────────────
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        '@id': personId,
+        name: 'Donavan Jones',
+        url: SITE,
+        jobTitle: 'Full-Stack Engineer & Systems Architect',
+        knowsAbout: [
+          'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL',
+          'Redis', 'Kubernetes', 'RAG Pipelines', 'LLM Integration',
+          'WebRTC', 'BullMQ', 'Weaviate',
+        ],
+        sameAs: [
+          'https://github.com/FullStackDonavan',
+          'https://linkedin.com/in/donavanjones',
+        ],
+      }),
+    },
+    // ── WebSite ───────────────────────────────────────────────────────────────
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        '@id': siteId,
+        name: 'Donavan Jones',
+        url: SITE,
+        description: 'Full-Stack Engineer & Systems Architect — writing about Nuxt, AI systems, infrastructure, and production engineering.',
+        inLanguage: 'en-US',
+        publisher: { '@id': personId },
       }),
     },
   ],
@@ -153,6 +235,9 @@ onMounted(() => {
                   :value="contentDoc"
                 />
               </div>
+
+              <!-- CASE STUDY -->
+              <BibleVerseCaseStudy />
 
               <!-- AUTHOR BOX -->
               <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
