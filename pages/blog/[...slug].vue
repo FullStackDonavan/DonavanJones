@@ -252,47 +252,68 @@ onMounted(() => {
               <BibleVerseCaseStudy />
 
               <!-- AUTHOR BOX -->
-              <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
+              <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8"
+                   itemscope itemtype="https://schema.org/Person">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">Written by</p>
 
                 <div class="flex flex-col sm:flex-row gap-5">
 
                   <!-- Avatar -->
                   <div class="flex-shrink-0">
-                    <NuxtLink to="/about-me" aria-label="About Donavan Jones">
+                    <a href="/about-me" rel="author" aria-label="About Donavan Jones — author bio">
                       <img
                         src="/images/donavan.jpg"
-                        alt="Donavan Jones"
+                        alt="Donavan Jones — Full-Stack Engineer & Systems Architect"
                         width="72"
                         height="72"
+                        itemprop="image"
                         class="w-[72px] h-[72px] rounded-full border-2 border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
                       />
-                    </NuxtLink>
+                    </a>
                   </div>
 
                   <!-- Details -->
                   <div class="flex-1 min-w-0">
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
-                      <NuxtLink
-                        to="/about-me"
+                      <a
+                        href="/about-me"
+                        rel="author"
+                        itemprop="name"
                         class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
                       >
                         Donavan Jones
-                      </NuxtLink>
-                      <span class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium">
-                        Full-Stack Engineer
+                      </a>
+                      <span class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium"
+                            itemprop="jobTitle">
+                        Full-Stack Engineer &amp; Systems Architect
                       </span>
                     </div>
 
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                      Systems Architect · AI &amp; Infrastructure · Founder of Bible Logic
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3" itemprop="description">
+                      5+ years building production systems · AI, Backend &amp; Infrastructure · Founder of Bible Logic
                     </p>
 
                     <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                      I build production-grade systems end-to-end — from Nuxt 3 frontends and Nitro APIs to
-                      self-hosted Kubernetes clusters, RAG pipelines, and real-time AI applications.
+                      Full-stack engineer with 5+ years of hands-on experience designing and shipping production systems — from
+                      Nuxt 3 frontends and Nitro APIs to self-hosted Kubernetes clusters, RAG pipelines, and real-time AI applications.
                       Everything I write comes from systems I've designed, deployed, and operated in production.
                     </p>
+
+                    <!-- Credentials row -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">
+                        <Icon name="mdi:check-decagram" class="text-sm" />
+                        5+ Years Experience
+                      </span>
+                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-purple-500/5 border-purple-500/20 text-purple-500 dark:text-purple-400 font-medium">
+                        <Icon name="mdi:brain" class="text-sm" />
+                        AI Systems Specialist
+                      </span>
+                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-sky-500/5 border-sky-500/20 text-sky-500 dark:text-sky-400 font-medium">
+                        <Icon name="mdi:server-network" class="text-sm" />
+                        Kubernetes &amp; Infrastructure
+                      </span>
+                    </div>
 
                     <!-- Expertise pills -->
                     <div class="flex flex-wrap gap-1.5 mb-4">
@@ -305,6 +326,14 @@ onMounted(() => {
 
                     <!-- Authority links -->
                     <div class="flex flex-wrap gap-3">
+                      <a
+                        href="/about-me"
+                        rel="author"
+                        class="inline-flex items-center gap-1.5 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
+                      >
+                        <Icon name="mdi:account-circle-outline" class="text-base" />
+                        Full Author Bio
+                      </a>
                       <a
                         href="https://github.com/FullStackDonavan"
                         target="_blank"
