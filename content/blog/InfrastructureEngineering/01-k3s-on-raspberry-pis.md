@@ -1,4 +1,4 @@
-﻿---
+---
 title: "K3s on Raspberry Pis"
 description: "Step-by-step guide to setting up a K3s Kubernetes cluster on Raspberry Pi nodes — networking, configuration, and first workload deployment."
 date: 2025-09-07

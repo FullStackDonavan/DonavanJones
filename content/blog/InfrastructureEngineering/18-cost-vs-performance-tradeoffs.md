@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cost vs Performance Tradeoffs"
 description: "How to balance cost and performance when building homelab infrastructure — hardware choices, power costs, and what you actually get for the money."
 date: 2025-11-08

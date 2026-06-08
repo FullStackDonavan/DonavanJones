@@ -145,6 +145,16 @@ onMounted(() => {
     backLink.value = from
   }
 })
+
+function formatDate(d: string | undefined) {
+  if (!d) return ''
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
+function isoDate(d: string | undefined) {
+  if (!d) return ''
+  return new Date(d).toISOString()
+}
 </script>
 
 <template>
@@ -169,105 +179,109 @@ onMounted(() => {
             Back
           </nuxt-link>
 
-          <!-- Content -->
+          <!-- Header (driven by seoDoc — available immediately, no slot dependency) -->
+          <div v-if="seoDoc">
+            <Breadcrumbs
+              parentTitle="Blog"
+              parentUrl="/blog/overview"
+              :currentPageTitle="seoDoc.title"
+            />
+
+            <h2 class="text-4xl font-semibold text-black dark:text-white">
+              {{ seoDoc.title }}
+            </h2>
+
+            <!-- Publication meta -->
+            <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+
+              <!-- Author -->
+              <NuxtLink
+                to="/about"
+                rel="author"
+                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+              >
+                <Icon name="mdi:account-circle-outline" class="text-base" />
+                {{ seoDoc.author || 'Donavan Jones' }}
+              </NuxtLink>
+
+              <!-- Published date -->
+              <time
+                v-if="seoDoc.date"
+                :datetime="isoDate(seoDoc.date)"
+                itemprop="datePublished"
+                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
+              >
+                <Icon name="mdi:calendar-outline" class="text-base" />
+                Published {{ formatDate(seoDoc.date) }}
+              </time>
+
+              <!-- Last updated -->
+              <time
+                v-if="seoDoc.lastUpdated"
+                :datetime="isoDate(seoDoc.lastUpdated)"
+                itemprop="dateModified"
+                class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
+              >
+                <Icon name="mdi:update" class="text-base" />
+                Updated {{ formatDate(seoDoc.lastUpdated) }}
+              </time>
+
+              <!-- Category -->
+              <NuxtLink
+                v-if="seoDoc.category"
+                :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
+                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+              >
+                <Icon name="mdi:folder-outline" class="text-base" />
+                {{ seoDoc.category }}
+              </NuxtLink>
+
+            </div>
+
+            <!-- Tags -->
+            <div v-if="seoDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
+              <NuxtLink
+                v-for="(tag, index) in seoDoc.tags"
+                :key="index"
+                :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                class="text-xs px-2.5 py-1 rounded-lg border
+                       bg-slate-100 dark:bg-slate-800
+                       text-slate-500 dark:text-slate-400
+                       border-slate-200 dark:border-slate-700/50
+                       hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+              >
+                #{{ tag }}
+              </NuxtLink>
+            </div>
+
+            <!-- GitHub / Live Site -->
+            <div v-if="seoDoc.github || seoDoc.liveSite" class="mt-4 flex gap-x-4 items-center">
+              <a
+                v-if="seoDoc.github"
+                :href="seoDoc.github"
+                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+              <a
+                v-if="seoDoc.liveSite"
+                :href="seoDoc.liveSite"
+                class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live Site
+              </a>
+            </div>
+          </div>
+
+          <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
+
+          <!-- Article body -->
           <ContentDoc v-slot="{ doc: contentDoc }">
             <div>
-              <Breadcrumbs
-                parentTitle="Blog"
-                parentUrl="/blog/overview"
-                :currentPageTitle="contentDoc.title"
-              />
-
-              <h2 class="text-4xl font-semibold text-black dark:text-white">
-                {{ contentDoc.title }}
-              </h2>
-
-              <!-- Publication meta -->
-              <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-
-                <!-- Author -->
-                <a
-                  href="/about"
-                  rel="author"
-                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-                >
-                  <Icon name="mdi:account-circle-outline" class="text-base" />
-                  {{ contentDoc.author || 'Donavan Jones' }}
-                </a>
-
-                <!-- Published date -->
-                <time
-                  v-if="contentDoc.date"
-                  :datetime="new Date(contentDoc.date).toISOString()"
-                  itemprop="datePublished"
-                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
-                >
-                  <Icon name="mdi:calendar-outline" class="text-base" />
-                  Published {{ new Date(contentDoc.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-                </time>
-
-                <!-- Last updated -->
-                <time
-                  v-if="contentDoc.lastUpdated && contentDoc.lastUpdated !== contentDoc.date"
-                  :datetime="new Date(contentDoc.lastUpdated).toISOString()"
-                  itemprop="dateModified"
-                  class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
-                >
-                  <Icon name="mdi:update" class="text-base" />
-                  Updated {{ new Date(contentDoc.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-                </time>
-
-                <!-- Category -->
-                <NuxtLink
-                  v-if="contentDoc.category"
-                  :to="{ path: `/categories/${contentDoc.category}`, query: { from: route.fullPath } }"
-                  class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-                >
-                  <Icon name="mdi:folder-outline" class="text-base" />
-                  {{ contentDoc.category }}
-                </NuxtLink>
-
-              </div>
-
-              <!-- Tags -->
-              <div v-if="contentDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
-                <NuxtLink
-                  v-for="(tag, index) in contentDoc.tags"
-                  :key="index"
-                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
-                  class="text-xs px-2.5 py-1 rounded-lg border
-                         bg-slate-100 dark:bg-slate-800
-                         text-slate-500 dark:text-slate-400
-                         border-slate-200 dark:border-slate-700/50
-                         hover:border-sky-500/40 hover:text-sky-500 transition-colors"
-                >
-                  #{{ tag }}
-                </NuxtLink>
-              </div>
-
-              <div class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center">
-                <a
-                  v-if="contentDoc.github"
-                  :href="contentDoc.github"
-                  class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  GitHub
-                </a>
-                <a
-                  v-if="contentDoc.liveSite"
-                  :href="contentDoc.liveSite"
-                  class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Live Site
-                </a>
-              </div>
-
-              <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
-
               <div class="max-w-8xl">
                 <ContentRenderer
                   class="mt-4 max-w-none prose prose-xl dark:prose-invert
@@ -282,8 +296,8 @@ onMounted(() => {
 
               <!-- RELATED ARTICLES -->
               <RelatedArticles
-                v-if="contentDoc.category"
-                :category="contentDoc.category"
+                v-if="seoDoc?.category"
+                :category="seoDoc.category"
                 :current-path="route.path"
               />
 

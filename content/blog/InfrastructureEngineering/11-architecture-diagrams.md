@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Architecture Diagrams"
 description: "Visual architecture diagrams for my ARM64 homelab Kubernetes setup — network layout, node topology, storage paths, and service ingress flows."
 date: 2025-10-21

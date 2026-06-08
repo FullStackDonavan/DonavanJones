@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Installing Gitea in Kubernetes"
 description: "Step-by-step guide to installing Gitea in a Kubernetes cluster — Helm chart configuration, persistent storage, ingress setup, and CI/CD integration."
 date: 2025-11-20

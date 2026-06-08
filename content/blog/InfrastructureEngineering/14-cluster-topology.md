@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cluster Topology"
 description: "How I designed the cluster topology for my homelab Kubernetes setup — node placement, workload zones, networking boundaries, and failure domains."
 date: 2025-10-28

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Network Topology"
 description: "How I designed the network topology for my homelab Kubernetes cluster — VLANs, subnet planning, node communication paths, and external access routing."
 date: 2025-11-22

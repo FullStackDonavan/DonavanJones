@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Power Consumption Tradeoffs"
 description: "How I balance power consumption and performance in my homelab Kubernetes cluster — per-node wattage, idle vs load draw, and total monthly cost."
 date: 2025-12-18

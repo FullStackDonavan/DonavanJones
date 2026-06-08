@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Why Local AI Matters"
 description: "Why running AI workloads locally matters — privacy, latency, cost control, and the engineering value of owning your inference stack end to end."
 date: 2026-02-13

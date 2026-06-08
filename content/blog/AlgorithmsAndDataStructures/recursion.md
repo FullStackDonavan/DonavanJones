@@ -1,4 +1,4 @@
-﻿---
+---
 
 title: "Recursion"
 description: "How recursion works in JavaScript — base cases, the call stack, recursive vs iterative tradeoffs, and practical algorithmic problem-solving examples."

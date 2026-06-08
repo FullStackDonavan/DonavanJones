@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Physical Organization"
 description: "How I physically organized my homelab rack — cable management, node placement, switch positioning, power distribution, and lessons from the build."
 date: 2025-12-09

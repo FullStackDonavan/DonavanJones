@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Static IPs and Networking"
 description: "How to configure static IP addresses and networking on Raspberry Pi nodes so every Kubernetes cluster member has a stable, predictable address."
 date: 2025-09-24

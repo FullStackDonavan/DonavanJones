@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Infrastructure Design"
 description: "Core principles for designing robust self-hosted infrastructure — separation of concerns, redundancy planning, and lessons from building a production homelab."
 date: 2025-11-17

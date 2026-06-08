@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Troubleshooting (Skill)"
 description: "Troubleshooting skills I built running a homelab — diagnosing Kubernetes failures, network issues, storage errors, and node crashes in production."
 date: 2026-01-20

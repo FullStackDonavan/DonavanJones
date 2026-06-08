@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Cluster Architecture (Homelab)"
 description: "Deep dive into the architecture of my homelab Kubernetes cluster — control plane design, worker node layout, networking, and storage topology explained."
 date: 2025-10-26

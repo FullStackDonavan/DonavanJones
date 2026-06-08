@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Persistent Volumes"
 description: "How persistent volumes and persistent volume claims work in a K3s homelab — storage classes, binding, and real workload data persistence strategies."
 date: 2025-10-16

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "DNS and Service Discovery"
 description: "How DNS and service discovery work inside a Kubernetes cluster — CoreDNS configuration, service naming, and resolving inter-pod communication issues."
 date: 2025-11-10

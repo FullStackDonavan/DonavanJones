@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Control Plane Taints"
 description: "How control plane taints work in Kubernetes and why preventing workload scheduling on the control plane keeps your cluster stable and performant."
 date: 2025-11-02

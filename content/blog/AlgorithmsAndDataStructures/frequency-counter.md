@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Understanding the Frequency Counter Pattern in JavaScript"
 description: "A deep dive into the Frequency Counter pattern in JavaScript — how it replaces nested loops, reduces time complexity to O(n), and solves anagram problems."
 category: "algorithms"

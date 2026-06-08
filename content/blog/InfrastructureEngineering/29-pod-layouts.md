@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Pod Layouts"
 description: "How I lay out pods and deployments across my Kubernetes cluster — affinity rules, namespace separation, resource limits, and workload placement strategy."
 date: 2025-12-12
