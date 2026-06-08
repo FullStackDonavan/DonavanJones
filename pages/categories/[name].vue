@@ -5,6 +5,17 @@ import { useRoute } from "#app";
 const route = useRoute();
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+
+const categoryName = computed(() => route.params.name as string);
+
+const { data: totalArticlesCount } = await useAsyncData(
+  `category-count-${categoryName.value}`,
+  () =>
+    queryContent("blog")
+      .where({ category: { $contains: categoryName.value }, draft: { $ne: true } })
+      .count()
+);
+
 useSeoMeta({
   title: () => `${categoryName.value ? categoryName.value.charAt(0).toUpperCase() + categoryName.value.slice(1) : 'Category'} Articles — Donavan Jones`,
   description: () => `Browse ${totalArticlesCount.value ?? 0} articles in the ${categoryName.value} category on donavanjones.com.`,
@@ -24,8 +35,6 @@ const pending = ref(true);
 const limit = ref(9);
 
 const currentPage = computed(() => parseInt(route.query.page as string) || 1);
-
-const categoryName = computed(() => route.params.name as string);
 
 const fetchArticles = async () => {
   pending.value = true;
@@ -50,14 +59,6 @@ onMounted(() => {
   const from = route.query.from as string;
   if (from?.startsWith("/")) previousRoute.value = from;
 });
-
-const { data: totalArticlesCount } = await useAsyncData(
-  `category-count-${categoryName.value}`,
-  () =>
-    queryContent("blog")
-      .where({ category: { $contains: categoryName.value }, draft: { $ne: true } })
-      .count()
-);
 
 const totalPages = computed(() =>
   Math.ceil((totalArticlesCount.value || 0) / limit.value)
