@@ -33,7 +33,7 @@ useSeoMeta({
   articleModifiedTime: () => seoDoc.value?.lastUpdated
     ? new Date(seoDoc.value.lastUpdated).toISOString()
     : seoDoc.value?.date ? new Date(seoDoc.value.date).toISOString() : undefined,
-  articleAuthor:  `${SITE}/about-me`,
+  articleAuthor:  `${SITE}/about`,
   articleSection: () => seoDoc.value?.category || undefined,
 })
 
@@ -260,7 +260,7 @@ onMounted(() => {
 
                   <!-- Avatar -->
                   <div class="flex-shrink-0">
-                    <a href="/about-me" rel="author" aria-label="About Donavan Jones — author bio">
+                    <a href="/about" rel="author" aria-label="About Donavan Jones — author bio">
                       <img
                         src="/images/donavan.jpg"
                         alt="Donavan Jones — Full-Stack Engineer & Systems Architect"
@@ -276,7 +276,7 @@ onMounted(() => {
                   <div class="flex-1 min-w-0">
                     <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
                       <a
-                        href="/about-me"
+                        href="/about"
                         rel="author"
                         itemprop="name"
                         class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
@@ -327,7 +327,7 @@ onMounted(() => {
                     <!-- Authority links -->
                     <div class="flex flex-wrap gap-3">
                       <a
-                        href="/about-me"
+                        href="/about"
                         rel="author"
                         class="inline-flex items-center gap-1.5 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
                       >

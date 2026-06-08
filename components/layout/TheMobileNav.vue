@@ -103,7 +103,7 @@ watch(
                 Ask Donavan
               </span>
             </nuxt-link>
-            <nuxt-link to="/about-me">
+            <nuxt-link to="/about">
               <span
                 class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
               >
@@ -452,7 +452,7 @@ watch(
           </li>
           <li>
             <NuxtLink
-              to="/about-me"
+              to="/about"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <svg

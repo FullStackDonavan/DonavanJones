@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   })
 
   // Static pages
-  const staticPages = ['/', '/projects/overview', '/blog/overview', '/system-overview', '/about-me']
+  const staticPages = ['/', '/projects/overview', '/blog/overview', '/system-overview', '/about']
   const staticUrls = staticPages.map((path) => [
     '  <url>',
     `    <loc>${SITE_URL}${path}</loc>`,

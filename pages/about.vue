@@ -9,11 +9,11 @@ useSeoMeta({
   ogDescription: 'Full-stack engineer and systems architect building production AI, SaaS platforms, and Kubernetes infrastructure. Learn the story behind the work.',
   ogType: 'profile',
   ogImage: `${_SITE}/img/logo.png`,
-  ogUrl: `${_SITE}/about-me`,
+  ogUrl: `${_SITE}/about`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'About Me — Donavan Jones',
   twitterDescription: 'Full-stack engineer and systems architect — AI systems, SaaS platforms, and Kubernetes infrastructure.',
-  canonical: `${_SITE}/about-me`,
+  canonical: `${_SITE}/about`,
 })
 
 useHead({
@@ -23,8 +23,8 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'ProfilePage',
-        '@id': `${_SITE}/about-me`,
-        url: `${_SITE}/about-me`,
+        '@id': `${_SITE}/about`,
+        url: `${_SITE}/about`,
         name: 'About Donavan Jones',
         mainEntity: {
           '@type': 'Person',

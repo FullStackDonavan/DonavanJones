@@ -134,8 +134,8 @@
       </NuxtLink>
 
       <!-- About -->
-      <NuxtLink to="/about-me" class="relative group">
-        <span :class="navClass(isActive('/about-me'))">
+      <NuxtLink to="/about" class="relative group">
+        <span :class="navClass(isActive('/about'))">
           About
         </span>
       </NuxtLink>
