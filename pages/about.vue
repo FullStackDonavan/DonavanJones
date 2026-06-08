@@ -33,6 +33,7 @@ useHead({
           url: _SITE,
           jobTitle: 'Full-Stack Engineer & Systems Architect',
           description: 'Full-stack engineer specializing in production AI systems, SaaS platforms, backend architecture, and Kubernetes infrastructure.',
+          worksFor: { '@id': `${_SITE}/#organization` },
           knowsAbout: [
             'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'FastAPI',
             'RAG Pipelines', 'LLM Integration', 'Kubernetes', 'PostgreSQL',
@@ -44,6 +45,35 @@ useHead({
             'https://twitter.com/jack_fullstack',
           ],
         },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        '@id': `${_SITE}/#organization`,
+        name: 'Donavan Jones',
+        url: _SITE,
+        logo: {
+          '@type': 'ImageObject',
+          '@id': `${_SITE}/#logo`,
+          url: `${_SITE}/img/logo.png`,
+          contentUrl: `${_SITE}/img/logo.png`,
+          caption: 'Donavan Jones',
+        },
+        description: 'Full-stack engineering practice specializing in production AI systems, SaaS platforms, backend architecture, and self-hosted Kubernetes infrastructure.',
+        founder: { '@id': `${_SITE}/#person` },
+        foundingDate: '2020',
+        knowsAbout: [
+          'AI Systems Engineering', 'Full-Stack Development', 'Backend Architecture',
+          'Kubernetes Infrastructure', 'RAG Pipelines', 'SaaS Platforms',
+        ],
+        sameAs: [
+          'https://github.com/FullStackDonavan',
+          'https://linkedin.com/in/donavanjones',
+          'https://twitter.com/jack_fullstack',
+        ],
       }),
     },
   ],
