@@ -1,8 +1,15 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
+const route = useRoute()
 
 useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: computed(() => `${SITE}${route.path}`),
+    },
+  ],
   script: [
     {
       type: 'application/ld+json',
