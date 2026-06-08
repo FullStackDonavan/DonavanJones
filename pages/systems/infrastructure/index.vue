@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: `${_SITE}/systems/infrastructure` })
+
 const principles = [
   { icon: 'mdi:docker',            color: 'sky',    text: 'Everything runs as a containerized workload — no bare-metal service installs' },
   { icon: 'mdi:source-branch',     color: 'emerald',text: 'Infrastructure is declarative (GitOps-first) — config is code, reviewed like code' },
@@ -288,6 +292,12 @@ const faqs = [
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{{ obs.desc }}</p>
           </div>
         </div>
+      </section>
+
+      <!-- DIAGRAM -->
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Diagram</h2>
+        <InfraDiagram />
       </section>
 
       <!-- STACK -->

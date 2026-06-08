@@ -3,6 +3,10 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: `${_SITE}/blog/overview` })
+
 const currentPage = computed(() => parseInt(route.query.page as string) || 1);
 const limit = ref(9);
 

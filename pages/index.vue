@@ -14,6 +14,7 @@ useSeoMeta({
   twitterTitle: 'Donavan Jones — Full-Stack Engineer',
   twitterDescription:
     'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
+  canonical: `${SITE}/`,
 })
 
 useHead({

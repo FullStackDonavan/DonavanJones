@@ -3,6 +3,10 @@ import { ref, onMounted, watch, computed } from "vue";
 import { useRoute } from "#app";
 
 const route = useRoute();
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: () => `${_SITE}${route.path}` })
+
 const articles = ref<any[]>([]);
 const pending = ref(true);
 const limit = ref(9);

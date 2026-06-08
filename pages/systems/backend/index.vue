@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: `${_SITE}/systems/backend` })
+
 const principles = [
   { icon: 'mdi:arrow-decision',   color: 'sky',    text: 'Design stateless APIs wherever possible — state lives in the store, not the server' },
   { icon: 'mdi:layers-triple',    color: 'purple', text: 'Separate compute, storage, and messaging into distinct service layers' },
@@ -229,6 +233,12 @@ const faqs = [
             </div>
           </div>
         </div>
+      </section>
+
+      <!-- DIAGRAM -->
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Diagram</h2>
+        <BackendDiagram />
       </section>
 
       <!-- STACK -->

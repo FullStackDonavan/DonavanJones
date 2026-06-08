@@ -18,6 +18,7 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
   twitterTitle: () => seoDoc.value?.title || 'Donavan Jones',
   twitterDescription: () => seoDoc.value?.description || '',
+  canonical: () => `${SITE}${route.path}`,
 })
 
 useHead({

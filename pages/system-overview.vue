@@ -1,5 +1,8 @@
 <script setup lang="ts">
 // ArchitectureDiagram is registered globally via Nuxt auto-imports
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: `${_SITE}/system-overview` })
 </script>
 
 <template>

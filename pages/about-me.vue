@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+useSeoMeta({ canonical: `${_SITE}/about-me` })
+</script>
+
 <template>
   <PatternSection>
     <BasicSection

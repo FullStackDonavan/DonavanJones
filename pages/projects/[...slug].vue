@@ -205,6 +205,7 @@ useSeoMeta({
   twitterTitle: pageTitle,
   twitterDescription: pageDescription,
   twitterImage: computed(() => seoDoc.value?.excerptImage || undefined),
+  canonical: () => `${SITE}${route.path}`,
 })
 
 useHead({
