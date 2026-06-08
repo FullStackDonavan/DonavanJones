@@ -5,14 +5,14 @@
     <div class="min-h-screen">
 
       <!-- BACK BUTTON -->
-      <div class="mx-auto px-4 pt-10">
+      <!-- <div class="mx-auto px-4 pt-10">
         <nuxt-link
           class="text-slate-400 hover:text-white flex items-center gap-2"
           :to="backLink"
         >
           ← Back
         </nuxt-link>
-      </div>
+      </div> -->
 
       <ContentDoc v-slot="{ doc }">
 
