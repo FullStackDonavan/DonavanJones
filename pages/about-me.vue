@@ -3,15 +3,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'About Me — Donavan Jones',
-  description: 'Learn about Donavan Jones — full-stack engineer, builder, and the person behind the projects.',
+  description: 'Donavan Jones is a full-stack engineer and systems architect. Learn about his work building production AI, SaaS platforms, and Kubernetes infrastructure.',
   ogTitle: 'About Me — Donavan Jones',
-  ogDescription: 'Learn about Donavan Jones — full-stack engineer, builder, and the person behind the projects.',
+  ogDescription: 'Full-stack engineer and systems architect building production AI, SaaS platforms, and Kubernetes infrastructure. Learn the story behind the work.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/about-me`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'About Me — Donavan Jones',
-  twitterDescription: 'Learn about Donavan Jones — full-stack engineer and builder.',
+  twitterDescription: 'Full-stack engineer and systems architect — AI systems, SaaS platforms, and Kubernetes infrastructure.',
   canonical: `${_SITE}/about-me`,
 })
 </script>

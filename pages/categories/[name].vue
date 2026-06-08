@@ -18,9 +18,9 @@ const { data: totalArticlesCount } = await useAsyncData(
 
 useSeoMeta({
   title: () => `${categoryName.value ? categoryName.value.charAt(0).toUpperCase() + categoryName.value.slice(1) : 'Category'} Articles — Donavan Jones`,
-  description: () => `Browse ${totalArticlesCount.value ?? 0} articles in the ${categoryName.value} category on donavanjones.com.`,
+  description: () => `${totalArticlesCount.value ?? 0} articles in the ${categoryName.value} category on donavanjones.com — engineering breakdowns, architecture decisions, and real-world production lessons.`,
   ogTitle: () => `${categoryName.value ? categoryName.value.charAt(0).toUpperCase() + categoryName.value.slice(1) : 'Category'} Articles — Donavan Jones`,
-  ogDescription: () => `Browse ${totalArticlesCount.value ?? 0} articles in the ${categoryName.value} category.`,
+  ogDescription: () => `Browse ${totalArticlesCount.value ?? 0} ${categoryName.value} articles on donavanjones.com — engineering breakdowns, architecture decisions, and lessons from production systems.`,
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: () => `${_SITE}${route.path}`,

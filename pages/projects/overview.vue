@@ -7,15 +7,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Projects — Donavan Jones',
-  description: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, web applications, and production-grade engineering work.',
+  description: 'A collection of full-stack projects spanning AI systems, Kubernetes infrastructure, SaaS platforms, and web applications — designed and built by Donavan Jones.',
   ogTitle: 'Projects — Donavan Jones',
-  ogDescription: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, web applications, and production-grade engineering work.',
+  ogDescription: 'A collection of full-stack projects spanning AI systems, Kubernetes infrastructure, SaaS platforms, and web applications — designed and built by Donavan Jones.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/projects/overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Projects — Donavan Jones',
-  twitterDescription: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, and production-grade engineering work.',
+  twitterDescription: 'Full-stack projects spanning AI systems, Kubernetes infrastructure, SaaS platforms, and production engineering.',
   canonical: `${_SITE}/projects/overview`,
 })
 

@@ -3,15 +3,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'AI Systems Engineering — Donavan Jones',
-  description: 'Practical patterns for designing scalable AI systems: RAG pipelines, agents, memory systems, evaluation frameworks, and real-world inference architecture.',
+  description: 'How I design production AI systems — RAG pipelines with Weaviate, agent frameworks, memory systems, hybrid LLM routing, and real-world inference architecture.',
   ogTitle: 'AI Systems Engineering — Donavan Jones',
-  ogDescription: 'RAG pipelines, agents, memory systems, evaluation frameworks, and real-world AI inference architecture.',
+  ogDescription: 'Production AI system patterns — RAG pipelines with Weaviate, agent frameworks, hybrid LLM routing, and evaluation architecture for real-world inference.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/systems/ai`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'AI Systems Engineering — Donavan Jones',
-  twitterDescription: 'RAG pipelines, agents, memory systems, and real-world AI inference architecture.',
+  twitterDescription: 'Production AI systems — RAG pipelines, agent frameworks, hybrid LLM routing, and inference architecture.',
   canonical: `${_SITE}/systems/ai`,
 })
 

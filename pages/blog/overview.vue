@@ -7,15 +7,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'The Blog — Donavan Jones',
-  description: 'Engineering breakdowns, architecture decisions, and lessons from building production systems — written for developers who want the real story.',
+  description: 'Engineering breakdowns, architecture deep-dives, and real-world lessons from building production systems in Nuxt 3, AI, Kubernetes, and distributed backends.',
   ogTitle: 'The Blog — Donavan Jones',
-  ogDescription: 'Engineering breakdowns, architecture decisions, and lessons from building production systems.',
+  ogDescription: 'Deep-dive engineering articles on production systems — Nuxt 3, AI pipelines, Kubernetes infrastructure, and real-world architecture decisions from the field.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/blog/overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'The Blog — Donavan Jones',
-  twitterDescription: 'Engineering breakdowns, architecture decisions, and lessons from building production systems.',
+  twitterDescription: 'Engineering breakdowns and real-world lessons from building production Nuxt 3, AI, and Kubernetes systems.',
   canonical: `${_SITE}/blog/overview`,
 })
 

@@ -4,15 +4,15 @@ const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.c
 
 useSeoMeta({
   title: 'Terms of Service — Donavan Jones',
-  description: 'Terms of service for donavanjones.com. Understand the terms governing your use of this site.',
+  description: 'Terms of service for donavanjones.com — the rules governing how you may use this site, including content rights, disclaimers, and limitations of liability.',
   ogTitle: 'Terms of Service — Donavan Jones',
-  ogDescription: 'Terms of service for donavanjones.com. Understand the terms governing your use of this site.',
+  ogDescription: 'Terms of service for donavanjones.com — the rules governing how you may use this site, including content rights, disclaimers, and limitations of liability.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/terms`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Terms of Service — Donavan Jones',
-  twitterDescription: 'Terms of service for donavanjones.com.',
+  twitterDescription: 'Terms of service — content rights, disclaimers, and usage rules for donavanjones.com.',
   canonical: `${_SITE}/terms`,
 })
 </script>

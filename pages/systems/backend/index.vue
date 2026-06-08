@@ -3,15 +3,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Backend Systems Engineering — Donavan Jones',
-  description: 'Practical backend architecture for APIs, distributed services, async job queues, data layers, and production-grade infrastructure design.',
+  description: 'Backend architecture patterns for APIs, distributed services, async job queues with BullMQ, typed data layers, and production-grade Nuxt 3 and Node.js systems.',
   ogTitle: 'Backend Systems Engineering — Donavan Jones',
-  ogDescription: 'APIs, distributed services, async job queues, data layers, and production-grade backend architecture.',
+  ogDescription: 'Production backend patterns — REST APIs, BullMQ queues, PostgreSQL with Prisma, Redis caching, and typed service layers in Nuxt 3 and Node.js.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/systems/backend`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Backend Systems Engineering — Donavan Jones',
-  twitterDescription: 'APIs, distributed services, async job queues, and production-grade backend architecture.',
+  twitterDescription: 'Backend architecture for production systems — BullMQ queues, PostgreSQL, Redis, typed service layers in Nuxt 3.',
   canonical: `${_SITE}/systems/backend`,
 })
 

@@ -3,15 +3,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Infrastructure Engineering — Donavan Jones',
-  description: 'Designing and operating a self-hosted Kubernetes cluster with distributed storage, networking, observability, CI/CD automation, and AI workloads on ARM64 nodes.',
+  description: 'Designing and operating a self-hosted Kubernetes cluster on ARM64 — covering storage, networking, observability, CI/CD automation, and AI inference workloads.',
   ogTitle: 'Infrastructure Engineering — Donavan Jones',
-  ogDescription: 'Self-hosted Kubernetes on ARM64: distributed storage, networking, observability, CI/CD, and AI workloads.',
+  ogDescription: 'Self-hosted Kubernetes on 8 Raspberry Pi 5 ARM64 nodes — distributed storage, networking, observability, CI/CD automation, and AI inference workloads.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/systems/infrastructure`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Infrastructure Engineering — Donavan Jones',
-  twitterDescription: 'Self-hosted Kubernetes on ARM64: storage, networking, observability, and CI/CD.',
+  twitterDescription: 'Self-hosted Kubernetes on ARM64 — storage, networking, observability, CI/CD, and AI inference workloads.',
   canonical: `${_SITE}/systems/infrastructure`,
 })
 

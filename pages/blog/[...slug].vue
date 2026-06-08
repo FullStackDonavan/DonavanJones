@@ -231,10 +231,22 @@ onMounted(() => {
 
               <div class="max-w-8xl">
                 <ContentRenderer
-                  class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
+                  class="mt-4 max-w-none prose prose-xl dark:prose-invert
+                         [&_h1]:text-5xl [&_h1]:font-extrabold [&_h1]:tracking-tight
+                         [&_h2]:text-4xl [&_h2]:font-bold [&_h2]:tracking-tight
+                         [&_h3]:text-3xl [&_h3]:font-bold
+                         [&_h4]:text-2xl [&_h4]:font-semibold
+                         [&_h5]:text-xl  [&_h5]:font-semibold"
                   :value="contentDoc"
                 />
               </div>
+
+              <!-- RELATED ARTICLES -->
+              <RelatedArticles
+                v-if="contentDoc.category"
+                :category="contentDoc.category"
+                :current-path="route.path"
+              />
 
               <!-- CASE STUDY -->
               <BibleVerseCaseStudy />

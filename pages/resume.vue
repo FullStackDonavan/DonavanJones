@@ -4,15 +4,15 @@ const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.c
 
 useSeoMeta({
   title: 'Resume — Donavan Jones',
-  description: 'Full-stack / Platform Engineer with 20+ years of experience building web applications, SaaS platforms, AI systems, and self-hosted infrastructure.',
+  description: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
   ogTitle: 'Resume — Donavan Jones | Full-Stack / Platform Engineer',
-  ogDescription: 'Full-stack engineer with 20+ years building production web apps, SaaS platforms, AI systems, and distributed infrastructure.',
+  ogDescription: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/resume`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Resume — Donavan Jones',
-  twitterDescription: 'Full-stack / Platform Engineer with 20+ years of experience.',
+  twitterDescription: 'Full-stack and platform engineer — 20+ years across web apps, SaaS, AI systems, and Kubernetes infrastructure.',
   canonical: `${_SITE}/resume`,
 })
 

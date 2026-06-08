@@ -4,15 +4,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'System Overview — Donavan Jones',
-  description: 'A self-hosted distributed platform combining Kubernetes, AI inference, data systems, storage, and automation on ARM64 infrastructure.',
+  description: 'An overview of the self-hosted platform — Kubernetes on ARM64, AI inference, PostgreSQL, Redis, Weaviate, and automated CI/CD pipelines running in production.',
   ogTitle: 'System Overview — Donavan Jones',
-  ogDescription: 'A self-hosted distributed platform combining Kubernetes, AI inference, data systems, storage, and automation on ARM64 infrastructure.',
+  ogDescription: 'An overview of the self-hosted platform — Kubernetes on ARM64, AI inference, PostgreSQL, Redis, Weaviate, and automated CI/CD pipelines running in production.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/system-overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'System Overview — Donavan Jones',
-  twitterDescription: 'Self-hosted Kubernetes platform combining AI inference, data systems, and automation on ARM64.',
+  twitterDescription: 'Self-hosted Kubernetes on ARM64 — AI inference, PostgreSQL, Redis, Weaviate, and CI/CD pipelines in production.',
   canonical: `${_SITE}/system-overview`,
 })
 </script>

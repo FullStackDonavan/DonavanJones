@@ -4,15 +4,15 @@ const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.c
 
 useSeoMeta({
   title: 'Privacy Policy — Donavan Jones',
-  description: 'Privacy policy for donavanjones.com. Learn how data is collected, used, and protected.',
+  description: 'Privacy policy for donavanjones.com — read how visitor data is collected, what it is used for, and what rights you have when using this site.',
   ogTitle: 'Privacy Policy — Donavan Jones',
-  ogDescription: 'Privacy policy for donavanjones.com. Learn how data is collected, used, and protected.',
+  ogDescription: 'Privacy policy for donavanjones.com — how visitor data is collected, what it is used for, and your rights as a visitor to this site.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/privacy`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Privacy Policy — Donavan Jones',
-  twitterDescription: 'Privacy policy for donavanjones.com.',
+  twitterDescription: 'Privacy policy for donavanjones.com — minimal data collection, no tracking cookies, no data sales.',
   canonical: `${_SITE}/privacy`,
 })
 </script>
