@@ -1,6 +1,6 @@
----
+﻿---
 title: "Storage Setup"
-description: "Configuring storage for a Raspberry Pi Kubernetes cluster."
+description: "How to configure persistent storage for a Raspberry Pi Kubernetes cluster using local volumes, NFS mounts, and Longhorn distributed storage."
 date: 2025-10-10
 category: "infrastructure-engineering"
 tags:

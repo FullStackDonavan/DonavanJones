@@ -1,6 +1,6 @@
----
+﻿---
 title: "Consumer Hardware Usage"
-description: "Using consumer hardware for homelab and infrastructure projects."
+description: "How consumer-grade hardware performs in homelab infrastructure — tradeoffs between cost, reliability, and capability for running Kubernetes clusters."
 date: 2025-10-30
 category: "infrastructure-engineering"
 tags:

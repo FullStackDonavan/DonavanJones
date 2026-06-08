@@ -1,6 +1,6 @@
----
+﻿---
 title: "Persistent Volumes"
-description: "Using persistent volumes in a Raspberry Pi Kubernetes cluster."
+description: "How persistent volumes and persistent volume claims work in a K3s homelab — storage classes, binding, and real workload data persistence strategies."
 date: 2025-10-16
 category: "infrastructure-engineering"
 tags:

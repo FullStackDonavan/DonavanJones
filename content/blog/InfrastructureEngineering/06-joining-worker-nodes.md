@@ -1,6 +1,6 @@
----
+﻿---
 title: "Joining Worker Nodes"
-description: "Adding worker nodes to a K3s Raspberry Pi cluster."
+description: "How to join worker nodes to an existing K3s cluster on Raspberry Pi — token-based authentication, node labeling, and verifying node readiness."
 date: 2025-10-06
 category: "infrastructure-engineering"
 tags:

@@ -1,6 +1,6 @@
----
+﻿---
 title: "Future Expansion Plans"
-description: "Plans for expanding my homelab and infrastructure."
+description: "My plans for expanding my homelab infrastructure — additional nodes, GPU workloads, expanded storage, and the next phase of the Kubernetes cluster."
 date: 2025-11-12
 category: "infrastructure-engineering"
 tags:

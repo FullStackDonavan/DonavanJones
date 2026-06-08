@@ -18,15 +18,15 @@ const { data: totalArticlesCount } = await useAsyncData(
 
 useSeoMeta({
   title: () => `#${tagName.value} Articles — Donavan Jones`,
-  description: () => `Browse ${totalArticlesCount.value ?? 0} articles tagged with "${tagName.value}" on donavanjones.com — engineering patterns, architecture decisions, and production system lessons.`,
+  description: () => `Read all "${tagName.value}" articles on donavanjones.com. Explore ${totalArticlesCount.value ?? 0} in-depth posts on engineering patterns, architecture decisions, and production system design.`,
   ogTitle: () => `#${tagName.value} Articles — Donavan Jones`,
-  ogDescription: () => `Browse ${totalArticlesCount.value ?? 0} articles tagged "${tagName.value}" on donavanjones.com — engineering breakdowns, architecture decisions, and production system lessons.`,
+  ogDescription: () => `All "${tagName.value}" articles on donavanjones.com — ${totalArticlesCount.value ?? 0} posts with engineering breakdowns, architecture decisions, and real-world production system lessons.`,
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: () => `${_SITE}${route.path}`,
   twitterCard: 'summary_large_image',
   twitterTitle: () => `#${tagName.value} — Donavan Jones`,
-  twitterDescription: () => `Browse articles tagged with "${tagName.value}".`,
+  twitterDescription: () => `Read all "${tagName.value}" articles on donavanjones.com — engineering patterns, architecture decisions, and production system lessons.`,
   canonical: () => `${_SITE}${route.path}`,
 })
 

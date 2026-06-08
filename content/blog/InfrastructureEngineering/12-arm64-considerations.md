@@ -1,6 +1,6 @@
----
+﻿---
 title: "ARM64 Considerations"
-description: "Considerations for running infrastructure on ARM64 hardware."
+description: "Key considerations for running Kubernetes and production workloads on ARM64 hardware — image compatibility, build pipelines, and performance tradeoffs."
 date: 2025-10-24
 category: "infrastructure-engineering"
 tags:

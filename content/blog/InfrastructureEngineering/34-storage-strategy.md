@@ -1,6 +1,6 @@
----
+﻿---
 title: "Storage Strategy"
-description: "Storage strategy for my homelab and Kubernetes workloads."
+description: "My storage strategy for homelab Kubernetes workloads — local volumes for performance, NFS for shared access, and Longhorn for distributed replication."
 date: 2026-01-12
 category: "infrastructure-engineering"
 tags:

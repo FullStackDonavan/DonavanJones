@@ -1,6 +1,6 @@
----
+﻿---
 title: "Pod Layouts"
-description: "Pod layouts and deployment strategies in my Kubernetes cluster."
+description: "How I lay out pods and deployments across my Kubernetes cluster — affinity rules, namespace separation, resource limits, and workload placement strategy."
 date: 2025-12-12
 category: "infrastructure-engineering"
 tags:

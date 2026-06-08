@@ -1,6 +1,6 @@
----
+﻿---
 title: "Networking Issues"
-description: "Common networking issues in Kubernetes homelab clusters."
+description: "Common networking issues in a Kubernetes homelab and how to diagnose them — DNS failures, pod connectivity, CNI misconfigurations, and routing problems."
 date: 2025-11-26
 category: "infrastructure-engineering"
 tags:

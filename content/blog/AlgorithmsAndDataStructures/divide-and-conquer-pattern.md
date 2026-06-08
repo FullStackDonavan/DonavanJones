@@ -1,6 +1,6 @@
----
+﻿---
 title: "Divide And Conquer Pattern"
-description: "Understanding the Divide And Conquer problem-solving pattern in JavaScript."
+description: "Understanding the Divide and Conquer pattern in JavaScript — how it splits problems into subproblems, with complexity analysis and practical examples."
 date: 2025-08-21
 category: "algorithms"
 tags:

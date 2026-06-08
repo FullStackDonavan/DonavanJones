@@ -1,6 +1,6 @@
----
+﻿---
 title: "Real Deployed Workloads"
-description: "Examples of real workloads deployed in my homelab cluster."
+description: "Real workloads I run in my homelab Kubernetes cluster — Gitea, Weaviate, BullMQ workers, MinIO, and AI inference nodes running in production."
 date: 2026-01-02
 category: "infrastructure-engineering"
 tags:

@@ -1,6 +1,6 @@
----
+﻿---
 title: "Gitea Runners Pipeline"
-description: "CI/CD pipeline flow using Gitea runners in my homelab."
+description: "How CI/CD pipeline execution works using Gitea runners inside my homelab Kubernetes cluster — job routing, runner registration, and pipeline design."
 date: 2025-11-15
 category: "infrastructure-engineering"
 tags:

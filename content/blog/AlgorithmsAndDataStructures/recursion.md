@@ -1,7 +1,7 @@
----
+﻿---
 
 title: "Recursion"
-description: "Recursion in JavaScript and algorithmic problem solving."
+description: "How recursion works in JavaScript — base cases, the call stack, recursive vs iterative tradeoffs, and practical algorithmic problem-solving examples."
 date: 2025-08-28
 category: "algorithms"
 tags:

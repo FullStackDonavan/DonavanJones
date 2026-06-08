@@ -1,6 +1,6 @@
----
+﻿---
 title: "Why Self-Hosted Git"
-description: "Reasons for running a self-hosted Git service in my homelab."
+description: "Why I run a self-hosted Git service in my homelab — data ownership, CI/CD control, zero rate limits, and deep integration with my Kubernetes cluster."
 date: 2026-02-18
 category: "infrastructure-engineering"
 tags:

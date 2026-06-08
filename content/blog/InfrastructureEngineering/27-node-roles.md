@@ -1,6 +1,6 @@
----
+﻿---
 title: "Node Roles"
-description: "Understanding node roles in a Kubernetes homelab cluster."
+description: "How node roles work in a Kubernetes cluster — control plane responsibilities, worker scheduling rules, taints, tolerations, and node label strategies."
 date: 2025-12-02
 category: "infrastructure-engineering"
 tags:

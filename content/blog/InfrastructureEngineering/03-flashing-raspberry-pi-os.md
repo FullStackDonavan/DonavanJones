@@ -1,6 +1,6 @@
----
+﻿---
 title: "Flashing Raspberry Pi OS"
-description: "How to flash Raspberry Pi OS for a Kubernetes homelab."
+description: "How to flash Raspberry Pi OS Lite and configure base settings for a production-ready Kubernetes homelab node from scratch on ARM64 hardware."
 date: 2025-09-20
 category: "infrastructure-engineering"
 tags:

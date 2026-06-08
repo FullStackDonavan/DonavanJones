@@ -172,6 +172,12 @@ onMounted(() => {
           <!-- Content -->
           <ContentDoc v-slot="{ doc: contentDoc }">
             <div>
+              <Breadcrumbs
+                parentTitle="Blog"
+                parentUrl="/blog/overview"
+                :currentPageTitle="contentDoc.title"
+              />
+
               <h2 class="text-4xl font-semibold text-black dark:text-white">
                 {{ contentDoc.title }}
               </h2>

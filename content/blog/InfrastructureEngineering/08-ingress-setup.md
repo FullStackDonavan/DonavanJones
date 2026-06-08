@@ -1,6 +1,6 @@
----
+﻿---
 title: "Ingress Setup"
-description: "Setting up ingress for a K3s Raspberry Pi cluster."
+description: "How to configure Traefik ingress on a K3s Raspberry Pi cluster — routing external traffic, TLS termination, and deploying your first service."
 date: 2025-10-13
 category: "infrastructure-engineering"
 tags:

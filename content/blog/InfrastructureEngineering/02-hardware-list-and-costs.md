@@ -1,6 +1,6 @@
----
+﻿---
 title: "Hardware List and Costs"
-description: "Detailed hardware list and cost breakdown for my homelab Kubernetes cluster."
+description: "Full hardware list and cost breakdown for my ARM64 homelab Kubernetes cluster — Raspberry Pis, switches, storage, and rack components included."
 date: 2025-09-13
 category: "infrastructure-engineering"
 tags:

@@ -1,6 +1,6 @@
----
+﻿---
 title: "Troubleshooting (Skill)"
-description: "Troubleshooting skills gained from building and maintaining a homelab."
+description: "Troubleshooting skills I built running a homelab — diagnosing Kubernetes failures, network issues, storage errors, and node crashes in production."
 date: 2026-01-20
 category: "infrastructure-engineering"
 tags:
