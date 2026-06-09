@@ -387,14 +387,25 @@ const projectSystems = [
                 <!-- Bible Logic -->
                 <div class="mb-2">
                   <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                    <h3 class="text-base font-semibold text-slate-900 dark:text-white">Bible Logic</h3>
+                    <NuxtLink
+                      to="/projects/bible-verse"
+                      class="text-base font-semibold text-slate-900 dark:text-white hover:text-purple-400 transition-colors"
+                    >
+                      Bible Verse AI
+                    </NuxtLink>
                     <span class="text-[11px] px-2 py-0.5 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20 self-start sm:self-auto">
                       Full-Stack SaaS Platform — Founder &amp; Developer
                     </span>
                   </div>
-                  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
+                  <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
                     Production-grade multi-system platform combining AI, streaming, search, and real-time communication features.
                   </p>
+                  <NuxtLink
+                    to="/projects/bible-verse"
+                    class="inline-flex items-center gap-1 text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors mb-4"
+                  >
+                    View project <Icon name="mdi:arrow-right" class="text-sm" />
+                  </NuxtLink>
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-5">
