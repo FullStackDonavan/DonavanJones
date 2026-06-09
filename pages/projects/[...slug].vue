@@ -160,6 +160,12 @@
             :value="seoDoc"
           />
 
+          <!-- CATEGORY PILLARS -->
+          <ProjectCategoryPillars
+            v-if="seoDoc.pillars?.length"
+            :pillars="seoDoc.pillars"
+          />
+
         </div>
 
       </div>

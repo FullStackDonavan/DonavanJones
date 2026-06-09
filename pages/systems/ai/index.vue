@@ -294,6 +294,28 @@ useHead({
       <BibleVerseCaseStudy />
       <ClusterArticles cluster="ai-engineering" /> -->
 
+      <!-- CATEGORY LINK -->
+      <section class="mb-10">
+        <NuxtLink
+          to="/categories/ai-engineering"
+          class="flex items-center justify-between gap-6 rounded-2xl p-6
+                 border border-sky-500/20 bg-sky-500/5
+                 hover:border-sky-500/40 hover:bg-sky-500/10
+                 transition-all duration-200 group"
+        >
+          <div>
+            <p class="text-xs font-medium text-sky-500 uppercase tracking-wider mb-1">Knowledge Base</p>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+              Explore the AI Engineering Articles
+            </h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              24 articles covering memory systems, RAG, vector databases, agents, and production AI patterns.
+            </p>
+          </div>
+          <Icon name="mdi:arrow-right" class="flex-shrink-0 text-2xl text-sky-500 group-hover:translate-x-1 transition-transform duration-200" />
+        </NuxtLink>
+      </section>
+
     </div>
   </PatternSection>
 </template>

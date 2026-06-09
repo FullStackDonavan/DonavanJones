@@ -141,21 +141,21 @@ const focuses = [
 
 const systems = [
   {
-    to: '/systems/ai',
+    to: '/categories/ai-engineering',
     icon: 'mdi:brain',
     color: 'purple',
     title: 'AI Systems',
     tags: ['RAG', 'Weaviate', 'Llama 3.2', 'Agents'],
   },
   {
-    to: '/systems/backend',
+    to: '/categories/backend-engineering',
     icon: 'mdi:api',
     color: 'sky',
     title: 'Backend',
     tags: ['Nitro', 'FastAPI', 'BullMQ', 'PostgreSQL'],
   },
   {
-    to: '/systems/infrastructure',
+    to: '/categories/infrastructure-engineering',
     icon: 'mdi:server-network',
     color: 'emerald',
     title: 'Infrastructure',

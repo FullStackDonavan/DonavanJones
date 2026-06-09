@@ -153,6 +153,8 @@ const socials = [
   { label: 'GitHub',   href: 'https://github.com/FullStackDonavan',        icon: 'mdi:github' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/donavanjones',       icon: 'mdi:linkedin' },
 ]
+
+const { data: projects } = await useFetch('/api/projects-list', { key: 'about-projects-list' })
 </script>
 
 <template>
@@ -349,6 +351,95 @@ const socials = [
               <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ m.desc }}</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS I BUILT -->
+      <section v-if="projects?.length" class="mb-14">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Projects I Built</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+          Production systems shipped from concept to deployment.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <NuxtLink
+            v-for="p in projects"
+            :key="p.slug"
+            :to="`/projects/${p.slug}`"
+            class="group flex flex-col rounded-2xl border overflow-hidden
+                   border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60
+                   hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5
+                   transition-all duration-200"
+          >
+            <!-- Image -->
+            <div v-if="p.excerptImage" class="relative h-44 overflow-hidden bg-slate-100 dark:bg-slate-800">
+              <img
+                :src="p.excerptImage"
+                :alt="p.title"
+                class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+              />
+            </div>
+            <div v-else class="h-44 flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+              <Icon name="mdi:code-braces" class="text-5xl text-slate-300 dark:text-slate-600" />
+            </div>
+
+            <!-- Body -->
+            <div class="flex flex-col flex-1 p-5">
+              <!-- Highlight badge -->
+              <div v-if="p.highlight" class="mb-3">
+                <span class="text-[11px] px-2 py-0.5 rounded-md font-medium
+                             bg-purple-500/10 border border-purple-500/20 text-purple-400">
+                  {{ p.highlight }}
+                </span>
+              </div>
+
+              <h3 class="text-base font-semibold text-slate-900 dark:text-white
+                         group-hover:text-sky-400 transition-colors mb-2">
+                {{ p.title }}
+              </h3>
+              <p v-if="p.description" class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1 line-clamp-3">
+                {{ p.description }}
+              </p>
+
+              <!-- Footer -->
+              <div class="mt-4 flex items-center justify-between">
+                <div class="flex gap-2">
+                  <a
+                    v-if="p.github"
+                    :href="p.github"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border
+                           border-slate-200 dark:border-slate-700/50
+                           text-slate-500 dark:text-slate-400
+                           hover:text-sky-400 hover:border-sky-500/40
+                           transition-colors"
+                    @click.stop
+                  >
+                    <Icon name="mdi:github" class="text-sm" /> GitHub
+                  </a>
+                  <a
+                    v-if="p.liveSite"
+                    :href="p.liveSite"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border
+                           border-slate-200 dark:border-slate-700/50
+                           text-slate-500 dark:text-slate-400
+                           hover:text-emerald-400 hover:border-emerald-500/40
+                           transition-colors"
+                    @click.stop
+                  >
+                    <Icon name="mdi:open-in-new" class="text-sm" /> Live Site
+                  </a>
+                </div>
+                <span class="inline-flex items-center gap-1 text-xs font-medium text-sky-500
+                             group-hover:translate-x-1 transition-transform duration-200">
+                  View project <Icon name="mdi:arrow-right" class="text-sm" />
+                </span>
+              </div>
+            </div>
+          </NuxtLink>
         </div>
       </section>
 
