@@ -100,6 +100,7 @@ const faqs = [
 useHead({
   script: [
     {
+      key: 'faq-jsonld',
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',

@@ -62,11 +62,12 @@ useSeoMeta({
 });
 
 // ── FAQ JSON-LD ───────────────────────────────────────────────────────────────
-useHead({
-  script: computed(() => {
-    if (!hub.value?.faqs?.length) return [];
-    return [
+useHead(computed(() => {
+  if (!hub.value?.faqs?.length) return {}
+  return {
+    script: [
       {
+        key: 'faq-jsonld',
         type: "application/ld+json",
         innerHTML: JSON.stringify({
           "@context": "https://schema.org",
@@ -78,9 +79,9 @@ useHead({
           })),
         }),
       },
-    ];
-  }) as any,
-});
+    ],
+  }
+}))
 
 // ── Article grid (client-side paginated) ──────────────────────────────────────
 const articles = ref<any[]>([]);
