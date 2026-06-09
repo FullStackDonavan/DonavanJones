@@ -16,6 +16,8 @@ author: Donavan Jones
 
 The earlier articles in this series have covered individual components of retrieval-augmented generation in detail: vector databases, embedding strategies, semantic retrieval, chunking, citation grounding, hallucination reduction, and prompt engineering. This article steps back and explains the whole: what RAG is, why it is the right architecture for theological AI specifically, how the retrieval and generation sides interact, and the design decisions that make the difference between a RAG system that feels like a knowledgeable guide and one that feels like an expensive search engine with a language model stapled to the end.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What RAG Is and Why It Exists
 
 Language models are trained on a fixed corpus. Once training ends, the model's knowledge is frozen. It knows what it learned and nothing more. For many applications this is fine — a model trained on enough text has broad general knowledge. But for applications that require specific, authoritative, up-to-date, or verifiable knowledge, frozen training knowledge is a serious limitation.
@@ -149,6 +151,12 @@ All three are addressable through context assembly design:
 
 **Constraints matter.** The system prompt instruction "base your response on the provided context" is not magical, but it is real. Combined with citation requirements that force the model to reference specific passages, it significantly increases the probability that generation uses what was retrieved rather than falling back to training memory.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## The Generation Pipeline
 
 Generation is the last step, not the most important step. By the time the model generates, the hard work should be done: the right evidence assembled, the context structured to surface what matters, the constraints specified to prevent the failure modes.
@@ -194,3 +202,7 @@ Evaluation runs after each significant change to retrieval strategy, system prom
 The platform runs continuous evaluation on a sample of production queries (with user permission and privacy controls). Production queries reveal failure patterns that synthetic test sets do not — the unexpected combinations, the edge cases, the ways users phrase questions that no test writer would have predicted. Production evaluation is how the system improves over time rather than only at deployment time.
 
 RAG is not a feature or a product — it is a system discipline. Every component matters: the knowledge base structure, the chunking, the embedding strategy, the retrieval pipeline, the context assembly, the prompt design, the generation constraints, the post-processing, the evaluation. Getting one component right while leaving another unaddressed produces a system that works in some cases and fails in others. The work is getting all of them right, together, for the specific domain they serve.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

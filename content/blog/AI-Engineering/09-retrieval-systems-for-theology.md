@@ -19,6 +19,8 @@ Retrieval is the evidence-gathering half of a RAG system — the part that deter
 
 Theological content breaks this simplicity in instructive ways. Scripture is not a generic knowledge corpus. It is a structured, cross-referenced, multiply-interpreted body of texts with specific linguistic properties, a complex internal relationship graph, and a centuries-long tradition of commentary that must be handled alongside the primary texts. Retrieval systems that treat it like a Wikipedia dump get mediocre results. Systems designed for its specific characteristics get dramatically better ones.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 This article covers what makes theological retrieval distinct, the multiple retrieval strategies the platform uses, how they compose, and what the evaluation process looks like.
 
 ## What Makes Theological Retrieval Distinct
@@ -109,6 +111,12 @@ const results = await vectorStore.search("bible_verses", {
 ```
 
 **High-recall retrieval followed by reranking.** Initial semantic search retrieves top-20 candidates. A cross-encoder reranker then scores each candidate against the full query, reordering results by genuine relevance rather than embedding proximity. Reranking regularly promotes results from position 8-15 to the top 5 — the embedding captures broad semantic similarity; the reranker captures nuanced relevance.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ### 3. Graph-Based Cross-Reference Traversal
 
@@ -282,3 +290,7 @@ The quality ceiling for RAG-based theological responses is determined by retriev
 Retrieval engineering is not glamorous work. Tuning query expansion vocabulary, calibrating cross-reference boost weights, evaluating tier weighting for commentary — none of it feels like building AI. But the hours spent on retrieval quality compound directly into the quality of every answer the platform produces. It is the most leverage-rich engineering work in the system.
 
 The next two articles go deeper into two components of this pipeline: chunking strategies for religious texts (article 10) and semantic retrieval techniques (article 12).
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

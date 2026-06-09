@@ -17,6 +17,8 @@ Binary Search is an efficient searching algorithm used to find a target value in
 
 Because it cuts the search area in half each step, Binary Search is much faster on large datasets.
 
+*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+
 ## How Binary Search Works
 
 The algorithm follows these steps:
@@ -88,6 +90,12 @@ Binary Search is significantly faster than Linear Search for large sorted datase
 | Iterative      | O(1)       |
 | Recursive      | O(log n)   |
 
+---
+
+*Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
+
+---
+
 ## When to Use Binary Search
 
 Binary Search is useful when:
@@ -136,3 +144,7 @@ function recursiveBinarySearch(arr, target, left = 0, right = arr.length - 1) {
 Binary Search is one of the most important algorithms in computer science and technical interviews. Understanding how it works helps build stronger problem-solving skills and introduces the concept of divide-and-conquer algorithms.
 
 Once you understand Binary Search, it becomes easier to learn more advanced searching and tree-based algorithms.
+
+---
+
+*[← Back to Algorithms & Data Structures](/categories/algorithms)*

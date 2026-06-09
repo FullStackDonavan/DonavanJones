@@ -20,6 +20,8 @@ This platform has two distinct latency profiles that need different approaches. 
 
 This article covers the specific techniques I use across the stack to hit those budgets: where time actually goes in a request, the high-leverage optimizations I reached for first, and the lower-leverage work I did once the easy wins were exhausted.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## Measuring Before Optimizing
 
 The first rule of latency optimization is measure before you change anything. Intuitions about where time is spent are wrong more often than right. The database query you were sure was the bottleneck turns out to take 4ms. The SDK initialization you never thought about takes 40ms on every cold request.
@@ -169,6 +171,12 @@ This means the optimization goal for LLM requests is not "reduce total generatio
 
 For my platform, the dominant TTFT driver is prompt length — specifically, the length of the retrieved context prepended before the user's question. A full context window of retrieved passages can add 500–800ms to TTFT compared to a minimal prompt. I cap retrieved context aggressively for real-time queries and allow larger context for async jobs where TTFT does not matter.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## The Long Tail: p99 Latency
 
 Optimizing p50 is straightforward. Optimizing p99 requires finding and fixing a different class of problem — things that happen rarely but when they do, they are very slow.
@@ -212,3 +220,7 @@ If I were starting fresh and needed to get to good latency quickly:
 Steps 1–4 together typically move p50 by 30–50% in a system that has not been latency-optimized before. Steps 5–7 get the remaining gains. Everything after that is long-tail work that delivers diminishing returns.
 
 Latency optimization is never done — the system grows, new bottlenecks emerge, and user expectations rise. But hitting the initial targets with a disciplined approach leaves a system that is fast enough that the work after this is maintenance, not crisis.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

@@ -25,6 +25,8 @@ This technique is especially useful for:
 
 Using a sliding window can often reduce a brute-force solution from O(n²) to O(n).
 
+*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+
 ## Basic Idea
 
 A “window” represents a range of elements inside an array or string.
@@ -135,6 +137,12 @@ Time complexity:
 O(n)
 ```
 
+---
+
+*Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
+
+---
+
 ## Common Sliding Window Problems
 
 ### Fixed Window Size
@@ -191,3 +199,7 @@ The pattern is useful when:
 The Sliding Window pattern is one of the most important optimization techniques in algorithm design. It appears frequently in coding interviews, competitive programming, and real-world applications involving streams, arrays, and strings.
 
 Mastering this pattern will help you write more efficient and scalable JavaScript solutions.
+
+---
+
+*[← Back to Algorithms & Data Structures](/categories/algorithms)*

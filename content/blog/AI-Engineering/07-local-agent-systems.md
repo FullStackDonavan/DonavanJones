@@ -20,6 +20,8 @@ But cloud APIs are not the only option, and for certain tasks they are not the b
 
 This article covers what local agent systems are, when they make sense over cloud APIs, the tooling ecosystem for running models locally, and how local and cloud inference mix on this platform.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What "Local" Means
 
 "Local" in this context means inference happens on hardware under your control — your development machine, a server in your infrastructure, a device the user owns — rather than on a cloud provider's hardware reached over the internet.
@@ -59,6 +61,12 @@ The offline mode does not need to match the quality of the connected experience 
 Cloud API pricing is per token. At high volume — millions of inference calls per day — the per-token cost compounds to significant infrastructure spend. A local model with a fixed hardware cost amortizes that cost across unlimited inference calls. At sufficient volume, local becomes cheaper than cloud.
 
 The break-even depends on the model size (larger models need more expensive hardware), the hardware utilization rate (an underutilized GPU is expensive), and the cloud API pricing for equivalent quality. For most early-stage products, cloud APIs are cheaper because utilization is low. At scale, the math changes.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## The Local Model Ecosystem
 
@@ -261,3 +269,7 @@ Local models are practical for constrained, well-defined tasks. They are not pra
 For these, the quality difference between a local 7B–13B model and claude-opus-4-8 is significant and user-visible. The platform uses local where local is good enough and cloud where quality is the primary constraint.
 
 The frontier/local quality gap will narrow over time. Models are getting smaller without proportional quality loss. Tasks that require cloud today may be tractable locally in 18–24 months. The abstraction layer is designed to accommodate that shift — adding a new capable local model is a routing policy update, not an application change.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

@@ -23,6 +23,8 @@ My homelab rack is the foundation of my entire infrastructure ecosystem. It is d
 
 At the core of this setup is a Raspberry Pi-based K3s Kubernetes cluster, which handles container orchestration and service deployment. Supporting this is a dedicated development machine equipped with an RTX 3090 GPU running AI models in Docker containers. Together, these systems form a hybrid edge-and-local compute architecture that allows me to develop, test, and deploy seamlessly across environments.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Rack Architecture Overview
@@ -84,6 +86,10 @@ Rather than overloading the Kubernetes cluster with GPU workloads, I offload hea
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Application Ecosystem
 
 Built on top of this rack is a growing ecosystem of applications, including:
@@ -130,3 +136,7 @@ Planned improvements to the rack include:
 This homelab rack is more than just a collection of hardware—it is a full engineering platform. It combines distributed systems, CI/CD automation, and AI development into a unified environment that mirrors real-world infrastructure.
 
 By integrating Kubernetes, Gitea, and a dedicated GPU workstation, the system allows me to move from idea to deployment quickly while still maintaining control over scalability and reliability. As it continues to evolve, the rack will serve as the backbone for increasingly complex applications, especially in AI, backend systems, and interactive platform development.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

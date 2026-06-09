@@ -21,6 +21,8 @@ In my rack, I’m running a multi-node K3s cluster distributed across Raspberry 
 
 This guide walks through how I structured static IPs and networking so my cluster remains stable, reproducible, and easy to manage.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 # Why Static IPs Matter in a Kubernetes Homelab
@@ -114,6 +116,12 @@ sudo systemctl restart dhcpcd
 
 This method is useful when devices need to remain stable even if moved between networks.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## DNS and Hostname Resolution
 Static IPs alone are not enough—you also need predictable name resolution.
 
@@ -169,3 +177,7 @@ Static IP networking is one of the foundational layers that makes a Raspberry Pi
 Once static IPs are in place, everything else in the stack becomes easier: Kubernetes stops breaking on reboot, services become predictable, and the entire homelab starts to feel like a real production-like environment rather than a hobby cluster.
 
 This is one of those “invisible” infrastructure decisions that quietly determines whether your system feels fragile or solid.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

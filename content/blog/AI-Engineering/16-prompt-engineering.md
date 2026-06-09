@@ -18,6 +18,8 @@ Prompt engineering for a theological AI system is different from prompt engineer
 
 This article is about how prompts are built on this platform: the system prompt architecture, instruction patterns that work, patterns that fail, how prompts adapt to context, and how they get evaluated. Not theory — the specific design decisions that emerged from building and operating a production theological AI system.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The System Prompt is Architecture
 
 The system prompt is not a greeting or a role assignment. It is the structural contract that governs every response the model produces. Getting it wrong means every response is wrong in the same systematic way — and systematic failures are the hardest kind to notice because they look like the model's personality rather than a design error.
@@ -186,6 +188,12 @@ When addressing personal application:
 
 The "ground application in what the text actually says, not what would be most comforting" instruction pushes against a specific model tendency: models fine-tuned for helpfulness drift toward responses that validate and comfort the user's framing. For devotional content, some of that is appropriate. But when the text says something challenging, the prompt needs to explicitly prevent the model from softening it.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Prompting for Uncertainty Expression
 
 One of the hardest prompt engineering problems on this platform is getting the model to express uncertainty accurately. Models are trained on human-generated text where confident assertions are more common than hedged ones, and this training distribution biases toward confidence. Left to their own devices, models will state uncertain things confidently.
@@ -284,3 +292,7 @@ The most useful framing I have found for prompt engineering in this domain: prom
 That probabilistic enforcement is why prompt engineering requires an evaluation set. You cannot know whether your specification is working by reading it — you can only know by running it against the full range of inputs it will encounter and observing whether the outputs are within the acceptable distribution. The evaluation set is what makes prompt engineering engineering rather than guesswork.
 
 Every constraint in the system prompt on this platform exists because a version without it produced a systematic failure on a real query. The specification grew from the failures. That is the only reliable way to build it.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

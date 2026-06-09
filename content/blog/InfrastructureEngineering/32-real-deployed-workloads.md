@@ -19,6 +19,8 @@ This article documents real workloads currently running in my homelab environmen
 
 The goal of this environment is to simulate production-grade infrastructure at home—covering CI/CD pipelines, distributed services, AI inference workloads, and persistent storage systems. This setup also integrates Gitea for source control and self-hosted automation pipelines using Kubernetes runners.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 # Cluster Overview
@@ -107,6 +109,10 @@ This effectively turns the homelab into a small distributed AI system.
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## 5. Vector Search + Retrieval Systems
 
 I run retrieval systems for semantic search across theological and study content.
@@ -189,3 +195,5 @@ This homelab is not just a collection of services—it’s a full production-sty
 As the system evolves, the focus is shifting toward tighter AI integration, improved workload routing, and more autonomous deployment pipelines. The end goal is a fully self-sustaining infrastructure where development, deployment, and AI inference all operate seamlessly across the cluster and GPU nodes.
 
 ---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

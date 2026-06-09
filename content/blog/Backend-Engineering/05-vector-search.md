@@ -18,6 +18,8 @@ The previous article covered how the embedding service converts text into vector
 
 Vector search is deceptively simple on the surface — "find the nearest neighbors to this query vector" — but the details around index design, query construction, result ranking, and operational scaling are where the real engineering lives. Getting it right is the difference between a search feature that feels magical and one that returns plausible-looking but unhelpful results.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What Vector Search Is Solving
 
 Traditional search is keyword-based. It matches documents that contain the words in the query. This breaks down in two ways for a Bible study platform:
@@ -152,6 +154,12 @@ I use a lightweight cross-encoder model running locally. The reranker narrows 20
 Query → Embed → ANN search (top-20) → Rerank → Top-5 context passages
 ```
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Metadata Filtering
 
 Filters are what make vector search practical for structured content like scripture. Without filters, a semantic query for "suffering builds character" might surface results from across the entire Bible corpus — including passages that are semantically related but contextually irrelevant (a user studying the New Testament epistles does not want results from the Psalms unless they ask for them).
@@ -211,3 +219,7 @@ Vector search is the retrieval backbone of the entire platform. Every RAG-powere
 The patterns here — hybrid search, two-stage retrieval with reranking, metadata filtering, calibrated relevance tiers — are not specific to Bible study. They apply to any system where users need to find information by meaning rather than by exact terms. The infrastructure is generic; the value is in how you tune it for your specific content and users.
 
 The next article covers streaming — getting responses from the inference service back to users in real time, which is the other half of making AI features feel fast and responsive.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

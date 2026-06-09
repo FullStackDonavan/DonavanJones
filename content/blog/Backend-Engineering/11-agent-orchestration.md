@@ -19,6 +19,8 @@ But some tasks cannot be completed in a single inference call. A full study guid
 
 That coordination is agent orchestration. This article covers how it is implemented in the backend: the task graph model, how agents use tools, how failures are handled, and what makes multi-step agent execution different from the single-call inference patterns covered earlier.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What an Agent Is (in This Context)
 
 The word "agent" carries a lot of baggage. In the context of this backend, an agent is a specific, bounded thing: a process that executes a predefined task graph, makes LLM calls at decision points, uses a set of registered tools, and produces a structured output.
@@ -128,6 +130,12 @@ async function callTool(tool: RegisteredTool, rawArgs: unknown): Promise<ToolOut
 
 Validation failures are returned to the model as a tool error with a description of what went wrong. The model can then retry the tool call with corrected inputs. This retry loop is bounded — a tool that fails validation three times in a row causes the step to fail rather than letting the model spin in a correction loop indefinitely.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## LLM Fan-Out
 
 The `llm_fan_out` step type is worth explaining separately. When the study guide outline is ready, each section needs to be generated independently. There might be five sections. Generating them sequentially wastes time — each takes 10–20 seconds.
@@ -211,3 +219,7 @@ Single-call inference is a request/response: send a prompt, get a completion, va
 The patterns that make agents tractable in production are not unique to agents — they are the same patterns that make any complex async process manageable: durable state, explicit failure modes, observable execution, and bounded resource consumption. The model is just one component inside a larger system. Building it as a system, not as a series of model calls with some glue code, is what makes it reliable.
 
 The next article covers async workers more broadly — the infrastructure layer that underlies agent execution, job queues, and every other async process in the backend.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

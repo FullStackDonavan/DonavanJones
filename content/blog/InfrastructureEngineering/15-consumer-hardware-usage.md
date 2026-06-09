@@ -15,6 +15,8 @@ author: Donavan Jones
 
 Building infrastructure at home does not always require enterprise servers, expensive networking gear, or a massive budget. A large part of my homelab is built around consumer hardware, Raspberry Pis, gaming PCs, and repurposed components that allow me to experiment with Kubernetes, AI workloads, CI/CD pipelines, and distributed services from my own rack. My setup focuses on learning practical infrastructure engineering while keeping costs manageable and power usage reasonable. Over time, the rack evolved from a small development environment into a platform for hosting microservices, AI tooling, databases, Gitea runners, and parts of my Bible app ecosystem.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 How I use consumer hardware in my homelab.
 
 ## Why Consumer Hardware
@@ -77,6 +79,12 @@ My GPU machine is currently used for:
 
 Using consumer GPUs allows me to prototype AI systems locally before moving workloads to cloud infrastructure.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Storage and Networking
 
 Consumer hardware also works well for storage and networking when properly organized. Instead of enterprise SAN systems, I use simpler storage approaches combined with backups and redundancy where possible.
@@ -101,3 +109,7 @@ Building infrastructure this way also makes experimentation easier. I can break 
 ## Conclusion
 
 Consumer hardware has become powerful enough to support serious development, infrastructure engineering, and AI experimentation. My rack demonstrates that you can build practical Kubernetes clusters, AI pipelines, self-hosted platforms, and distributed systems using affordable components and incremental upgrades over time. While enterprise hardware still has advantages in reliability and scalability, consumer systems provide an accessible path into modern infrastructure engineering, especially for developers building homelabs, learning DevOps, or experimenting with AI workloads locally.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

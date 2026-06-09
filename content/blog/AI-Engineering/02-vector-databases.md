@@ -21,6 +21,8 @@ A relational database retrieves by equality or range: give me the row where `id 
 
 This article covers what vector databases are, why they are the right tool for AI agent memory specifically, how to think about collection design, and how a vector database fits into the broader memory architecture alongside relational storage.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What a Vector Database Actually Does
 
 A vector database stores vectors — arrays of floating-point numbers — alongside metadata payloads. Its primary operation is approximate nearest neighbor (ANN) search: given a query vector, return the K vectors in the database that are geometrically closest to it.
@@ -74,6 +76,12 @@ Retrieval: "find commentary that is semantically relevant to this passage and th
 Retrieval: "find this user's past notes that are relevant to what they are currently studying."
 
 The collection boundaries are not arbitrary. They correspond to distinct retrieval contexts with different filter requirements and different payload schemas. Merging them would require more complex filters on every query and would compromise the clarity of what each retrieval operation means.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## The Role of Payload Filtering in Agent Memory
 
@@ -200,3 +208,7 @@ The vector store knows how to find things by similarity. It does not know how to
 The clean division: Postgres is the system of record; the vector store is the retrieval index. Every piece of data in the vector store also has an authoritative copy in Postgres. If the vector index is corrupted or needs rebuilding, everything can be reindexed from Postgres. If a user deletes their data, the deletion happens in Postgres first and propagates to the vector store — not the other way around.
 
 This architecture means the vector store can be treated as a cache with rebuild semantics, not as a primary store. That simplifies the operational model significantly and keeps the source of truth in a system that has decades of reliability tooling around it.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

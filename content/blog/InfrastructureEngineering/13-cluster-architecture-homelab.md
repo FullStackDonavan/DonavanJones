@@ -18,6 +18,8 @@ My homelab cluster is the foundation behind nearly everything I build — from A
 
 The rack combines ARM nodes, self-hosted services, storage, networking, and GPU-assisted AI workloads into a single ecosystem that I can continuously expand and refine over time.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 How my homelab Kubernetes cluster is architected.
 
 ## Overview
@@ -79,6 +81,12 @@ This system is used for:
 - Retrieval pipelines
 
 Long term, the plan is to integrate the GPU machine more tightly into the cluster for shared orchestration and scheduling.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
 
 ## Networking
 
@@ -235,3 +243,7 @@ Planned improvements include:
 This homelab has become more than just a place to host applications — it functions as an active research and engineering environment where I can develop real-world skills across infrastructure, AI engineering, Kubernetes, distributed systems, and backend development.
 
 By combining self-hosted services, GPU-powered AI workloads, and automated deployment pipelines into a unified rack setup, the cluster gives me the flexibility to rapidly prototype ideas while learning how modern production systems are designed and operated at scale.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

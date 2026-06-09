@@ -19,6 +19,8 @@ My homelab didn’t start as a “cool tech project” — it started out of nec
 
 What began as a few machines running locally has grown into a structured rack-based environment with a Raspberry Pi K3s cluster, a separate development machine with an RTX 3090 running containerized models, and a CI/CD pipeline powered by Gitea. This setup gives me full control over how I build and deploy software — from backend services to AI workflows and game systems.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## The Problem I Was Trying to Solve
 
 Before the homelab, I was constantly hitting the same walls:
@@ -58,6 +60,12 @@ Every time I push code:
 This setup turned my homelab into something closer to a real production environment. It also forces me to think in terms of infrastructure-as-code, repeatability, and reliability.
 
 It’s not just a dev environment anymore — it’s a full lifecycle system.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
 
 ## Why Not Just Use the Cloud?
 
@@ -109,3 +117,7 @@ It gives me a controlled environment to experiment, fail, and iterate quickly wh
 More importantly, it represents independence. Instead of renting infrastructure, I’m building it. Instead of being limited by platforms, I’m designing my own.
 
 And as my Bible app, AI systems, and game ecosystem grow, this homelab grows with them — not as a support tool, but as the backbone of everything.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

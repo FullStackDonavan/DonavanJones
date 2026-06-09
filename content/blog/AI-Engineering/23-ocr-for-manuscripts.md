@@ -20,6 +20,8 @@ Getting this content into the platform's knowledge base requires optical charact
 
 This article covers how the manuscript OCR pipeline is built, what makes theological manuscripts specifically hard, and the post-processing layers that convert noisy OCR output into clean, indexed text.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What Makes Theological Manuscripts Hard
 
 Standard OCR engines are trained primarily on modern, typeset Latin-script text. They perform well on printed books from the last century and poorly on everything else. Theological manuscripts pile up every dimension of difficulty:
@@ -235,6 +237,12 @@ async function recognizeGreek(image: ImageBuffer): Promise<RecognitionResult> {
 }
 ```
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Stage 4: Post-Processing
 
 Raw OCR output contains errors. The post-processing stage uses domain knowledge to correct the most common ones.
@@ -436,3 +444,7 @@ interface OCRChunkMetadata {
 This metadata is carried through to the retrieval layer. Citation rendering uses it to mark OCR-derived passages appropriately and to link to the original scanned page when available.
 
 The manuscript OCR pipeline is slow and expensive relative to processing clean digital text. A 400-page Calvin commentary takes 2–4 hours of compute time, including preprocessing, multi-pass recognition, and post-processing. This is a batch operation run overnight, not a request-time operation. The result — the accumulated contents of theological libraries that existed only in physical form — justifies the investment. The most important scholarship on the texts the platform serves was written before the digital age. Getting it into a form that can be retrieved and reasoned over is what makes the knowledge base worth building.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

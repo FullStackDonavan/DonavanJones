@@ -20,6 +20,8 @@ Gitea is a lightweight, self-hosted Git service that fits well in a Kubernetes-b
 
 This guide walks through installing Gitea in Kubernetes with a clean, repeatable setup. It also calls out a common formatting issue that can break setup docs and copied commands: unfinished code fences. A missing closing triple backtick can cause bash blocks to swallow YAML, break rendering, or make a copied command fail in ways that are easy to miss.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Prerequisites
 
 Before you begin, make sure you have:
@@ -133,6 +135,12 @@ spec:
                   number: 3000
 ```
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Applying the manifests
 
 Once the files are ready, apply them in order.
@@ -167,3 +175,7 @@ Always make sure every code block starts and ends cleanly, especially when mixin
 ## Conclusion
 
 Installing Gitea in Kubernetes is a solid fit for a homelab rack because it keeps source control, automation, and deployment workflows close together. With a namespace, persistent storage, a deployment, a service, and optional ingress, you can stand up a reliable self-hosted Git platform that supports your CI/CD pipeline and grows with the rest of your cluster. The key is keeping the Markdown clean, the YAML valid, and every code fence properly closed so the document renders correctly from start to finish.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

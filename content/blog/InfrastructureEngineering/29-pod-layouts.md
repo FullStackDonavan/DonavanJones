@@ -19,6 +19,8 @@ In my homelab Kubernetes environment, running on a Raspberry Pi-based K3s cluste
 
 This setup forces me to think differently about architecture: instead of scaling vertically with cloud instances, I design around node specialization, workload isolation, and predictable scheduling behavior. Pod layout becomes the backbone of system reliability, performance, and maintainability in my cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 # Understanding Pod Layouts in My Cluster
@@ -86,6 +88,10 @@ This hybrid approach keeps the cluster responsive even under load.
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## 4. External Compute Integration (Rack + GPU Machine)
 
 One of the most important parts of my setup is that not everything runs inside Kubernetes.
@@ -146,3 +152,7 @@ By combining:
 I’ve built a hybrid system that behaves like a small-scale cloud, but remains fully under my control.
 
 As the cluster evolves, pod layout will continue to be one of the most important factors in scaling services like my Bible app, AI systems, and future microservices architecture.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -20,6 +20,8 @@ How to set up K3s on a Raspberry Pi cluster for homelab infrastructure.
 
 K3s is a lightweight Kubernetes distribution designed for edge devices and resource-constrained systems like Raspberry Pi clusters. It removes many of the heavy dependencies of full Kubernetes while still maintaining core functionality, making it ideal for homelabs and small production-like environments.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Prerequisites
 
 - Raspberry Pi 4 or newer (recommended for control plane node)
@@ -69,6 +71,12 @@ Verify from the server:
 kubectl get nodes -o wide
 ```
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Networking Notes
 In me rack setup, I ensured:
 
@@ -87,3 +95,7 @@ sudo chown $(id -u):$(id -g) ~/.kube/config
 
 ## Conclusion
 My Raspberry Pi K3s cluster forms the foundation of my homelab rack, giving me a lightweight distributed compute layer for running services, CI pipelines, and internal tooling with minimal power usage. As my infrastructure expands—especially with components like Gitea CI runners, AI workloads on my RTX 3090 machine, and additional microservices—I rely on this cluster as the orchestration backbone that keeps everything connected, organized, and running reliably.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

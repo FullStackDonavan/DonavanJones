@@ -21,6 +21,8 @@ In my setup, I run a Raspberry Pi–based K3s cluster as the backbone of my infr
 
 This document breaks down how I physically organized my rack and supporting equipment so that everything stays maintainable, scalable, and easy to debug.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Rack Overview
@@ -90,6 +92,10 @@ Gitea, CI runners, and Kubernetes API endpoints all rely on predictable network 
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Cable Management Strategy
 
 Cable management is not just aesthetic—it directly impacts debugging speed.
@@ -154,3 +160,7 @@ In my setup, the combination of a Raspberry Pi K3s cluster, a dedicated networki
 This physical discipline directly supports everything built on top of it—from CI/CD pipelines in Gitea to AI workloads running in Docker containers. When the physical layer is organized well, the software layer becomes significantly easier to scale, debug, and evolve.
 
 Ultimately, the rack is not just hardware—it is the foundation that everything else runs on.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -17,6 +17,8 @@ The previous article covered installing Apache AGE and creating a graph. This ar
 
 Cypher is a declarative pattern-matching language. You describe the shape of the graph you want to find — nodes connected by edges in a certain pattern — and the engine finds it. Once you internalize the pattern-matching model, it reads almost like a diagram of the query you are thinking about.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The AGE Query Wrapper
 
 Every Cypher query in AGE runs through a SQL function call:
@@ -283,6 +285,12 @@ A cleaner approach is using a dedicated AGE client library that handles type par
 
 **Transaction scope**: Cypher queries participate in Postgres transactions normally. Begin a transaction, run multiple Cypher operations, commit or rollback — it works as expected. This is one of AGE's strongest advantages over a standalone graph database.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Building the Biblical Graph
 
 With the data model defined and the query patterns established, the full Biblical graph is built from two sources: a structured dataset of people, places, and cross-references (sourced from publicly available Biblical reference data), and platform-generated relationships created as users interact with content.
@@ -303,3 +311,7 @@ The load order matters for edges — vertices must exist before edges that refer
 ```
 
 Total: roughly 44,000 vertices and 1,035,000 edges. At this scale, AGE handles queries in milliseconds for most traversal patterns. Index configuration matters for performance at this size — the next article covers that along with hybrid SQL/graph queries.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

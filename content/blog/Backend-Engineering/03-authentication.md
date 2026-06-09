@@ -18,6 +18,8 @@ Authentication is the first service every request touches and the last one you w
 
 I built a dedicated authentication service for my Bible study platform early on. This article covers the design decisions behind it: why JWTs, how sessions are managed, how the service integrates with the rest of the backend, and where I hardened security over time.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## Why a Dedicated Auth Service
 
 In the monolith, authentication was middleware — a few functions that ran before route handlers. Simple and fine for a prototype. As the system split into microservices, I needed every service to be able to verify identity without calling home to a central database on every request.
@@ -101,6 +103,12 @@ The platform never touches the user's Google password or Google access token bey
 
 New accounts created via OAuth do not have a password set. If a user later wants password login, they go through the password reset flow which sets a password on the existing account.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Service Integration
 
 Every other service validates tokens using a shared JWT middleware. The middleware:
@@ -142,3 +150,7 @@ Authentication is infrastructure, not a feature. It needs to be correct from the
 The patterns here — short-lived access tokens, rotating refresh tokens, local validation, JTI revocation — are not novel. They are standard practice for a reason: they compose well, they fail gracefully, and they give you meaningful controls when something goes wrong.
 
 Build it once, build it right, and let every other service trust it.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

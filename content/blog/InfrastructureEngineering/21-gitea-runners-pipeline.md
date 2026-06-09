@@ -20,6 +20,8 @@ This document explains how my CI/CD pipeline is structured using Gitea runners i
 
 My setup is built around a Kubernetes (K3s) cluster running on a small rack of machines, including Raspberry Pi nodes and a dedicated x86 machine used for heavier workloads. In addition, I use a separate development machine with an RTX 3090 for local AI workloads and testing before deployment. Gitea acts as the central source control system, while runners handle automation tasks across the cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Pipeline Overview
@@ -54,6 +56,12 @@ My CI/CD pipeline is designed to be lightweight, distributed, and reproducible a
 - Kubernetes manifests or Helm charts are applied automatically.
 - Services are rolled out using rolling updates to avoid downtime.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ### 6. Observability
 - Logs from runners are collected and stored for debugging.
 - Cluster monitoring is handled through internal tooling and dashboards.
@@ -80,3 +88,7 @@ This setup allows me to iterate quickly while keeping everything fully self-host
 This Gitea runner pipeline turns my homelab into a full production-style DevOps environment. Instead of relying on external CI/CD platforms, everything runs inside my own infrastructure, giving me full control over build processes, deployment logic, and compute distribution.
 
 It also creates a strong foundation for future expansion, such as AI-driven CI agents, automated testing pipelines, and multi-service deployment systems across the cluster. As the system evolves, Gitea continues to act as the central orchestration layer that connects development, automation, and deployment into one unified workflow.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -18,6 +18,8 @@ The first two articles in this series covered installing Apache AGE and writing 
 
 The hybrid pattern is not a curiosity — it is the primary reason to use AGE over a standalone graph database. The Biblical relationship graph on this platform does not exist in isolation. Every vertex in the graph corresponds to a row somewhere in the relational schema: passages in the `verses` table, persons in the `biblical_persons` table, themes in the `themes` table. The graph stores traversal structure; the relational tables store the full content. Queries that need both — "find passages related to this theme, then retrieve their full text and the user's personal notes on each" — require both models to cooperate.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The Fundamental Pattern
 
 A `cypher()` call returns a SQL result set. That result set can be used anywhere a SQL subquery or CTE can be used — joined against tables, filtered with WHERE clauses, aggregated, ordered, and paged.
@@ -253,6 +255,12 @@ ORDER BY ptc.theme_count DESC, v.book_order, v.chapter, v.verse;
 
 The graph handles the concept-to-passage and passage-to-theme relationships. The relational `lexicon` table holds the full Strong's definition. Ranking by theme count is computed in the graph and used as an ordering key in the SQL layer.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Performance: Indexing Graph Properties
 
 Unindexed graph property lookups are full scans of the vertex/edge tables. For a graph with 44,000 vertices and 1,035,000 edges, a scan on a hot lookup property is still fast — but it becomes noticeable when multiple graph lookups compose in a single query.
@@ -376,3 +384,7 @@ Apache AGE with hybrid querying gives this platform something neither pure Postg
 The graph holds structure. The relational schema holds content. Hybrid queries join them at read time. The result is a data layer that can answer questions like "what has this user already read among the passages most connected to this theme?" in a single query, without denormalizing data into the wrong model or accepting the operational complexity of a separate graph database process.
 
 That combination — graph traversal for relationship-shaped questions, relational storage for content-shaped data, joined in Postgres — is the right architecture for a domain as richly interconnected as Biblical literature.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

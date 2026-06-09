@@ -18,6 +18,8 @@ Bible study has always had an oral dimension. Scripture was read aloud in synago
 
 Voice narration on this platform serves two distinct use cases. The first is audio Bible reading: generating high-quality narration of scripture passages for listening during commutes, workouts, or any context where reading is not practical. The second is narrated study content: converting AI-generated study responses, commentary summaries, and word studies into audio format for extended listening sessions. Each use case has different requirements and a different pipeline.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Core TTS Pipeline
 
 Both use cases share a common text-to-speech foundation. The platform uses ElevenLabs for primary narration, with Amazon Polly as a fallback for lower-priority content and cost management.
@@ -189,6 +191,12 @@ Scripture narration runs at 90% of normal TTS speed. The measured pace matches h
 
 Emphasis tags are applied to direct speech (quotation marks) throughout both scripture and commentary. In scripture, this highlights the words of Jesus, prophets, and characters. In commentary, it marks direct quotes from the text being discussed.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Stage 4: TTS API Call and Chunking
 
 ElevenLabs has a character limit per API call (5,000 characters for standard voices). Long texts are chunked before submission:
@@ -353,3 +361,7 @@ Audio quality issues that escape the automated pipeline surface through user fee
 **Quality metrics**: the audio generation pipeline emits metrics to the monitoring system: generation latency, API error rate, chunk count per request, post-processing duration. Elevated error rates (ElevenLabs API errors, post-processing failures) trigger alerts.
 
 The combination of user feedback and automated metrics keeps the narration quality at a level where users actually use the feature. Voice narration that mispronounces "Gethsemane" or "propitiation" will be trusted less than audio that gets these right — and trust, once lost, is not easily regained. Getting the preprocessing and pronunciation right is the work that makes the feature usable for the users it is built to serve.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

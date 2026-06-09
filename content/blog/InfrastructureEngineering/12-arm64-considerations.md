@@ -16,6 +16,8 @@ author: Donavan Jones
 
 As I continue building out my homelab rack and Kubernetes infrastructure, ARM64 hardware has become a major part of my workflow. From Raspberry Pi nodes running K3s to lightweight backend services and CI/CD workloads, ARM64 offers a balance of low power consumption, affordability, and scalability that makes it attractive for self-hosted infrastructure. Running ARM64 in a mixed environment alongside x86 systems and GPU machines also introduces important considerations around compatibility, performance, container images, and deployment strategy.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 What to consider when running infrastructure on ARM64 hardware.
 
 ## Compatibility
@@ -68,6 +70,12 @@ Benefits include:
 
 This becomes especially valuable when running multiple nodes 24/7 in a homelab or rack environment. A cluster of Raspberry Pis or ARM mini PCs can provide enough compute for development, automation, and infrastructure services without dramatically increasing power usage.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Kubernetes Considerations
 
 Running K3s or Kubernetes on ARM64 generally works well, but there are a few important things to plan for:
@@ -118,3 +126,7 @@ However, large models still benefit heavily from dedicated GPUs. In my setup, AR
 ## Conclusion
 
 ARM64 has become an important part of modern self-hosted infrastructure because it enables efficient, scalable, and affordable deployments without requiring enterprise hardware. Whether running K3s clusters, CI/CD pipelines, APIs, or lightweight backend services, ARM64 hardware can handle far more than many people expect. In hybrid environments like my rack setup, combining ARM64 nodes for infrastructure workloads with dedicated x86 GPU systems for AI and heavy compute creates a flexible architecture that balances performance, cost, and power efficiency. As software support continues improving across the ecosystem, ARM64 will likely become even more common in homelabs, edge computing, and production-ready infrastructure.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

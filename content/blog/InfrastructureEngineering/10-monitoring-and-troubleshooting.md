@@ -20,6 +20,8 @@ In a homelab environment like my Raspberry Pi–based K3s cluster, things are in
 
 Because resources are limited and nodes can be sensitive to network or power fluctuations, monitoring and troubleshooting becomes a core part of keeping everything stable. Instead of relying on heavy enterprise tools, I focus on simple, effective observability: logs, metrics, and Kubernetes-native tooling that helps me quickly identify when something drifts out of expected behavior.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## How I Monitor My Cluster
@@ -67,6 +69,10 @@ This helps me separate infrastructure issues from application bugs quickly.
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Observability Tools I Use
 
 In my setup, I prefer lightweight tools that don’t overwhelm the cluster:
@@ -86,3 +92,7 @@ I intentionally avoid heavy observability stacks unless I specifically need them
 Monitoring and troubleshooting in a Raspberry Pi K3s homelab is less about enterprise-grade tooling and more about consistency and visibility. My rack setup forces me to stay close to the system, which actually makes me a better engineer—I see failures early, understand resource limits clearly, and learn how Kubernetes behaves under constrained conditions.
 
 Over time, this approach has made my cluster more predictable and easier to scale, especially as I continue adding services like CI/CD pipelines, AI workloads, and experimental applications on top of the same infrastructure.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

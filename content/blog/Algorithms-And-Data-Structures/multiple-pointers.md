@@ -18,6 +18,8 @@ The Multiple Pointers pattern is a common problem-solving technique used in Java
 
 This approach can significantly improve time complexity, often reducing an O(n²) solution down to O(n).
 
+*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+
 ## When to Use Multiple Pointers
 
 The Multiple Pointers pattern works well when:
@@ -74,6 +76,12 @@ Because the array is sorted, the algorithm avoids unnecessary comparisons.
 | Time       | O(n)  |
 | Space      | O(1)  |
 
+---
+
+*Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
+
+---
+
 ## Another Example
 
 Count unique values in a sorted array:
@@ -112,3 +120,7 @@ console.log(countUniqueValues([1, 1, 1, 2, 3, 4, 4, 5]));
 The Multiple Pointers pattern is an essential algorithmic technique for improving efficiency in JavaScript applications. By using pointers that move through data intelligently, you can solve problems faster and with cleaner logic.
 
 Learning this pattern will help build a stronger foundation in data structures, algorithms, and technical interview preparation.
+
+---
+
+*[← Back to Algorithms & Data Structures](/categories/algorithms)*

@@ -19,6 +19,8 @@ A daily devotional is ready. A long-running study guide finished generating. A r
 
 Getting notifications right means solving two distinct problems: reliably detecting that an event worth notifying about has occurred, and reliably delivering that notification across multiple channels (in-app, push, email) to wherever the user actually is.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What Counts as a Notification
 
 Before designing the service, it helps to be precise about what types of events actually need to notify users on this platform:
@@ -133,6 +135,12 @@ notification_id = hash(event_id + user_id + channel)
 
 Together, these give at-least-once event processing with at-most-once notification delivery per channel.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Retry Behavior
 
 Not every delivery attempt succeeds. Push tokens expire. Email providers have transient errors. The in-app socket drops mid-send.
@@ -200,3 +208,7 @@ Notifications are easy to overlook in observability because they are asynchronou
 A spike in push delivery failures usually means the device token store has gone stale and needs a refresh cycle. A spike in time-to-delivery usually means the queue consumer is backed up. Both are actionable from metrics alone, without needing to dig into logs.
 
 Notifications are infrastructure that users rarely notice when it works and immediately notice when it does not. The goal is to be invisible — reliable enough that users trust the platform will tell them what they need to know, at the right time, through the right channel, exactly once.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

@@ -19,6 +19,8 @@ This document breaks down the hardware powering my homelab Kubernetes cluster, i
 
 My setup is intentionally hybrid: lightweight Raspberry Pi nodes form the backbone of the Kubernetes cluster, while a dedicated RTX 3090 machine handles heavier AI workloads and model inference in Docker containers. On top of this, I run supporting services like Gitea for source control and CI runners for automated deployments, creating a fully self-hosted development environment.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Compute Nodes (Kubernetes Cluster)
@@ -93,6 +95,10 @@ These are the primary nodes running k3s in my homelab rack:
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Estimated Cost Breakdown
 
 | Component | Description | Estimated Cost |
@@ -115,3 +121,5 @@ This homelab setup is designed as a scalable, self-hosted infrastructure for bot
 Over time, this architecture will evolve into a more production-like environment, supporting CI/CD pipelines, AI agent systems, and the backend infrastructure for my Bible app ecosystem. The goal is not just infrastructure for development, but a fully autonomous system that can build, deploy, and scale services with minimal external dependencies.
 
 ---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -18,6 +18,8 @@ The Divide And Conquer pattern is a problem-solving approach where a large probl
 
 This pattern is commonly used in efficient algorithms like binary search, merge sort, and quicksort. Instead of looping through every value one by one, the algorithm repeatedly reduces the size of the problem, which often improves time complexity significantly.
 
+*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+
 ## When To Use Divide And Conquer
 
 Use this pattern when:
@@ -85,6 +87,12 @@ because the search space is divided in half during each step.
 - Can be harder to understand at first
 - Recursive implementations may use more memory
 
+---
+
+*Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
+
+---
+
 ## Real-World Uses
 
 Divide And Conquer is heavily used in:
@@ -100,5 +108,9 @@ Divide And Conquer is heavily used in:
 The Divide And Conquer pattern is one of the most important algorithmic strategies in software engineering. By repeatedly splitting problems into smaller pieces, developers can build solutions that are significantly faster and more scalable than brute-force approaches.
 
 Learning this pattern will help you better understand advanced algorithms, improve coding interview performance, and write more optimized JavaScript applications.
+
+---
+
+*[← Back to Algorithms & Data Structures](/categories/algorithms)*
 
 

@@ -20,6 +20,8 @@ In any homelab environment, especially a growing cluster like a Raspberry Pi–b
 
 In your setup specifically—where you’re running a multi-node Raspberry Pi cluster for Kubernetes workloads alongside a separate RTX 3090-based machine handling local model inference in Docker—you’re effectively balancing two very different power profiles. One side is ultra-efficient, low-wattage ARM nodes optimized for orchestration and lightweight services. The other is a high-performance GPU system that can spike power usage significantly under load. Understanding how these components interact is key to building a stable, cost-aware infrastructure.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Understanding the Power Spectrum in a Homelab
@@ -72,6 +74,10 @@ Your current hybrid model is effectively the optimal compromise:
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Power Optimization Strategies
 
 ### 1. Workload Scheduling
@@ -120,3 +126,7 @@ Power consumption in a homelab is not just a cost issue—it’s an architectura
 The real optimization comes from refinement: deciding what truly needs to be always-on, what can be scheduled, and what should only exist on demand. As your infrastructure grows—especially with CI/CD pipelines, AI workloads, and service orchestration—your ability to consciously allocate power will directly determine both performance efficiency and long-term scalability.
 
 A well-designed homelab isn’t just powerful. It’s intentionally powered.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

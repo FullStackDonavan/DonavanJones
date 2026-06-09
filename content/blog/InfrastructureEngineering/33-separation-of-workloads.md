@@ -19,6 +19,8 @@ In a homelab environment, especially one built around a mixed setup like a Raspb
 
 My setup is intentionally split across multiple layers: lightweight services run in a K3s Kubernetes cluster on Raspberry Pis, while heavier compute workloads like AI models, embeddings, and local inference run on a dedicated development machine with a GPU. On top of that, tools like Gitea and CI runners act as the glue between code, deployment, and infrastructure automation. This separation allows me to iterate quickly without breaking production-like services running in the cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Core Principle: Right Workload, Right Environment
@@ -80,6 +82,10 @@ This is also where infrastructure-as-code becomes powerful. My cluster state is 
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Networking and Service Boundaries
 
 To keep everything clean and secure, I separate communication paths:
@@ -126,3 +132,7 @@ Separating workloads in a homelab is not just about organization—it is about c
 Over time, this architecture also makes it easier to scale horizontally. New services can be added to the cluster without touching compute workloads, and new AI experiments can run on the GPU machine without risking production uptime.
 
 The result is a system that behaves like a small-scale production environment, but still remains flexible enough for rapid development and learning.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -19,6 +19,8 @@ Running an embedding service in production is different from building one. The d
 
 This article covers the operational and engineering concerns that only surface once the service is carrying real load.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## API vs Self-Hosted Models
 
 The first decision when building an embedding service is where the model runs. There are two options:
@@ -117,6 +119,12 @@ class RateLimiter {
 ```
 
 The 90% threshold gives headroom. Hitting 90% of the rate limit and pausing is far better than hitting 100%, getting a 429, waiting for the retry-after window, and potentially losing the batch.
+
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
 
 ## Consistency: Keeping the Index in Sync
 
@@ -235,3 +243,7 @@ Without this attribution, a runaway reindex job looks identical to a sudden spik
 The embedding service looks simple from the outside — send text, get vector — but it is one of the most operationally interesting services in the backend. The statefulness of the vector index, the irreversibility of model migrations, the invisibility of quality degradation, and the long-tail cost of bulk operations all require deliberate design.
 
 The patterns that matter most in practice: write-through consistency with a background auditor, adaptive batching to maximize throughput without overwhelming rate limits, evaluation-first model migrations, and cost attribution by source. None of these are hard individually. Missing any one of them will eventually produce a problem that is harder to diagnose than it needed to be.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

@@ -19,6 +19,8 @@ This document outlines the network topology of my homelab, which is built around
 
 The network is designed to prioritize reliability, low latency between nodes, and clear separation between development workloads, production-like Kubernetes services, and high-performance compute tasks running outside the cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Topology Overview
 
 My homelab network is centered around a managed switch in my rack, which connects all core infrastructure components:
@@ -53,6 +55,12 @@ My development workflow is tightly integrated into the network:
 
 This creates a self-hosted pipeline that reduces dependency on external CI services and keeps all deployment traffic within the local network.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## GPU Compute Node (External to Cluster)
 
 The RTX 3090 machine runs separately from the Kubernetes cluster but is still part of the same network. It hosts Docker containers for AI workloads, model inference, and experimentation. In future iterations, this node may be integrated into the cluster as a GPU-enabled worker.
@@ -64,3 +72,7 @@ Communication between the cluster and this node happens over internal APIs and s
 This network topology is designed to scale from a simple homelab into a production-like distributed system. By combining a Kubernetes-based Raspberry Pi cluster, a dedicated GPU compute machine, and a tightly integrated CI/CD pipeline using Gitea, the system functions as a unified development and deployment environment.
 
 As the infrastructure evolves, the next steps include deeper network segmentation (VLANs), improved observability, and potential integration of the GPU node into the Kubernetes scheduling system for hybrid workloads.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

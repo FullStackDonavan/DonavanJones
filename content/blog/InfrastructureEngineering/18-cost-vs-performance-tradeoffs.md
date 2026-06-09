@@ -19,6 +19,8 @@ Building a homelab is always a balancing act between what you *can afford* and w
 
 The real challenge isn’t just raw performance—it’s deciding where performance actually matters and where cost-efficient systems are “good enough.” Every component in the rack has to justify its place, whether it's compute, storage, networking, or orchestration overhead.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## The Core Tradeoff: Cost vs Performance
 
 At the heart of my setup is a clear split:
@@ -69,6 +71,12 @@ A distributed homelab introduces:
 
 This is where tools like Kubernetes and Gitea runners become essential—they reduce mental overhead even if they add system overhead.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## What I’ve Learned So Far
 
 The biggest realization is that optimization is not about minimizing cost everywhere—it’s about placing resources where they create leverage.
@@ -84,3 +92,7 @@ My rack works because each layer has a clear purpose instead of trying to make e
 The real tradeoff in homelab design isn’t just cost versus performance—it’s simplicity versus flexibility. My setup leans into both extremes: inexpensive distributed nodes for resilience and experimentation, and a high-performance GPU machine for heavy workloads that actually need power.
 
 Over time, I’ve found that the goal isn’t to eliminate tradeoffs, but to understand them well enough that every piece of the system earns its place. In a way, the rack is less about hardware and more about intentional design—knowing exactly what should be cheap, what should be fast, and what should stay simple.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

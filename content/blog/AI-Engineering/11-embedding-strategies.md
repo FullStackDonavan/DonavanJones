@@ -18,6 +18,8 @@ Earlier articles in this series covered what embeddings are (article 02), how th
 
 Embedding strategies are the choices made at the interface between text and vector: which model, which representation of the text, how to handle domain-specific vocabulary, how to embed asymmetric queries vs documents, and how to evaluate whether the strategy is working for the specific domain. Generic embedding strategies work for generic content. Theological content has properties that reward domain-specific choices.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Asymmetry Problem
 
 The most important embedding strategy decision for RAG systems is often the least discussed: queries and documents are different kinds of text, and a good embedding model handles this asymmetry deliberately.
@@ -164,6 +166,12 @@ The summary is what gets embedded; the full chunk text is what gets returned whe
 
 I use summary-as-index selectively — for patristic chunks with high conceptual density and for modern commentary sections that cover multiple register shifts. For scripture (short, natural units) and user notes (personal, specific), direct embedding of the text works better.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Handling Theological Vocabulary Distribution
 
 General-purpose embedding models are trained on web text, books, and Wikipedia. Biblical content appears in their training data, but as a small fraction of the total. This means theological vocabulary — especially technical terms, transliterated Greek and Hebrew, and archaic theological phrasing — is underrepresented in the model's training distribution.
@@ -257,3 +265,7 @@ A good embedding strategy produces a space where the Psalms cluster near each ot
 This visualization is qualitative, not quantitative — it informs intuition about what the embedding space represents. Quantitative evaluation against the ground truth set provides the actionable metric; the visualization explains why the numbers are what they are.
 
 Every embedding strategy decision in this article — HyDE, query rewriting, title augmentation, glossary normalization — produces a measurable change in retrieval quality when evaluated against the ground truth set. The decisions that shipped to production are those that showed clear improvement. The ones that did not are documented as negative results so they are not re-evaluated from scratch when the strategy is revisited.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

@@ -27,6 +27,8 @@ Ingress acts as the **single routing layer** that connects all of these moving p
 
 Ingress becomes the bridge between all of them.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Prerequisites
@@ -110,6 +112,10 @@ This is what makes Ingress actually reachable from your browser.
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## SSL (Recommended)
 
 Even in a homelab, you should plan for TLS early.
@@ -154,3 +160,7 @@ In your setup—where you’re running a hybrid system of:
 Ingress is what ties it all together into one clean routing system.
 
 Once it is stable, you stop thinking in terms of individual nodes and start thinking in terms of **services behind a single unified gateway**, which is exactly what you want for scaling your architecture cleanly over time.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

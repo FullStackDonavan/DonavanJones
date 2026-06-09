@@ -19,6 +19,8 @@ This platform runs several local models: the fine-tuned Tesseract model for hist
 
 This article covers how models are loaded in each context, how loading interacts with service availability, and the strategies I use to make loading transparent to users.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What Model Loading Actually Involves
 
 Loading a model from disk into a usable state has four distinct phases, each with different cost:
@@ -140,6 +142,12 @@ async function loadModel(name: string, version: string): Promise<LoadedModel> {
 
 The cache is keyed by name and version — upgrading the model version automatically fetches a new copy without manual cache invalidation. Old versions are cleaned up by a maintenance job that deletes cache entries not referenced by the current startup manifest.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Deployment and Zero-Downtime Updates
 
 Model updates are the most disruptive type of deployment for this service. Updating a stateless API service is straightforward — roll new containers, traffic shifts gradually, old containers drain. Updating a model-serving service adds the loading time to the rollout window. If the new model takes 8 seconds to load, each new instance is unavailable for 8 seconds during rollout.
@@ -235,3 +243,7 @@ At 10–100GB, loading a model once and sharing it across multiple request handl
 At 100GB+, model sharding across multiple GPUs is required — the model does not fit on a single device. This is infrastructure I do not currently run; the platform uses managed APIs for workloads that need models of this size.
 
 The strategies in this article are appropriate for the model sizes I actually deploy locally. They are the right starting point for any system running small-to-medium local models, and the right mental model for reasoning about what changes as those models grow.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

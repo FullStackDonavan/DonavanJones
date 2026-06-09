@@ -17,6 +17,8 @@ When I started building the backend for my AI-powered Bible study platform, I ma
 
 I started with a monolith. Then I split it. Here is what I learned.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What a Monolith Actually Is
 
 A monolith is a single deployable unit. All of your application logic — user authentication, data access, business rules, background jobs — lives in one codebase and deploys together. One `git push`, one build, one running process.
@@ -86,6 +88,12 @@ Running five services locally requires either Docker Compose or careful port man
 
 When something breaks in a monolith, the stack trace tells you everything. When something breaks across services, you are reading logs from multiple places and reconstructing what happened. I invested early in structured logging and a local log aggregator (Loki + Grafana) to make this tractable.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## The Framework I Use for Deciding
 
 The question is not "monolith or microservices" — it is "where does the pain actually live?"
@@ -109,3 +117,7 @@ But I extracted services gradually. Auth and Bible text came first because the b
 The general pattern: start with a modular monolith where domain boundaries are respected in code even if they are not enforced by network. When a specific service needs to scale, deploy, or evolve independently — extract it then.
 
 Do not split prematurely. Distributed systems are hard. Make the complexity earn its place.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

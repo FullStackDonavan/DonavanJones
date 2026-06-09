@@ -18,6 +18,8 @@ Every AI agent exists in a world of state. The conversation so far. The tools it
 
 Managing this state correctly is one of the less glamorous but most consequential parts of AI engineering. Get it wrong and agents lose context mid-conversation, produce responses that contradict earlier turns, fail to use information they retrieved two steps ago, or repeat work that was already done. The model itself is stateless — every inference call is independent. State management is entirely the application's responsibility.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 This article covers the distinct types of state an AI agent system manages, how each is represented and stored, and the failure modes that emerge from state mismanagement.
 
 ## The Statelessness of Models
@@ -108,6 +110,12 @@ async function compressHistoryIfNeeded(session: SessionState): Promise<SessionSt
 ```
 
 The accumulated summary is prepended to the context window as a `<prior_context>` block before the recent turns. The model sees a compressed representation of older conversation, full representation of recent turns.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ### Layer 3: Task State
 
@@ -264,3 +272,7 @@ The failure modes from poor state management are subtle and expensive to debug:
 **Orphaned task state** — a long-running task completes but the user's session has expired. The task result is never delivered. The user returns later, checks their tasks, and finds a completed study guide — but the notification was never sent because the session state that held the delivery target was gone.
 
 Each of these is avoidable with explicit state management: clear ownership of each state type, explicit reads and writes, invariant checks before model calls, and session-independent delivery for task results. State management is not exciting work, but its absence is immediately visible in the quality of the user experience.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

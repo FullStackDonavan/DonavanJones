@@ -19,6 +19,8 @@ Troubleshooting has become one of the most valuable skills developed through bui
 
 Rather than treating troubleshooting as reactive “fixing,” it has become a structured engineering skill: observing system behavior, isolating variables, reproducing issues, and validating fixes under real workloads.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Building Troubleshooting as a Core Skill
@@ -76,6 +78,10 @@ This structured approach reduced downtime and made debugging significantly faste
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Common Lessons Learned
 
 Some of the most important lessons came from repeated failures:
@@ -95,3 +101,7 @@ These lessons became more important as the system scaled.
 Troubleshooting in a homelab environment is not just about fixing broken services—it is about understanding systems deeply enough to predict failure points before they happen. Working through issues in my K3s cluster, Gitea pipelines, and GPU-based development machine has turned debugging into a core engineering skill rather than a reactive task.
 
 As the infrastructure continues to grow, especially with more services and automation layers being added, this troubleshooting foundation becomes essential for maintaining stability, scalability, and confidence in the system as a whole.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

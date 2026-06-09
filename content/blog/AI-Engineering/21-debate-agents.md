@@ -21,6 +21,8 @@ A single-agent response to these questions tends toward premature closure. The m
 
 Debate agents address this by using multiple agents, each assigned to argue a distinct theological position, with an orchestrating agent that moderates the exchange and synthesizes a balanced summary. The output is not one position — it is the debate itself, structured so the user can follow the argument and form their own view.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## When Debate Agents Are Appropriate
 
 Not every question warrants a debate pipeline. Deploying multi-agent orchestration for "What does Romans 8:28 say?" produces unnecessary overhead and a confusing response. The debate pipeline is appropriate for:
@@ -245,6 +247,12 @@ The critic runs on the stronger Sonnet model. The reasoning required — holding
 
 The critic's output is not a judgment. It is a diagnostic: "The Reformed position's strength is its exegesis of Romans 9:11-13; its vulnerability is explaining why God's choice does not render human response meaningless. The Arminian position's strength is integrating passages about genuine human responsibility; its vulnerability is the exegetical tension in Romans 9:16 where Paul explicitly denies that election depends on human will."
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## The Moderator Agent
 
 The moderator reads all previous outputs — both advocate arguments and the critic's challenges — and produces the final structured response:
@@ -342,3 +350,7 @@ Compared to the standard single-agent pipeline at ~1,800ms end-to-end, the debat
 The cost difference is similar: six model calls versus one, with two of those calls on Sonnet. Debate responses are cached aggressively. The same question about Romans 9 election asked by two different users within a 24-hour window reuses the cached debate structure; only the moderator summary is personalized and regenerated.
 
 The debate pipeline is not a general architecture — it is a specialized tool for the specific cases where understanding a contested question requires hearing both sides argued from their own sources. Used in those cases, it produces responses that no single-agent approach can match: not one answer, but a structured engagement with the genuine disagreement that has animated Christian theology for centuries.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

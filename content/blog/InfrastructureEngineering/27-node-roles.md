@@ -19,6 +19,8 @@ In a Kubernetes cluster, node roles define how compute resources are organized, 
 
 This structure becomes especially important in a homelab setting where hardware is limited and efficiency matters. By clearly defining node roles, I can ensure that critical services like the Kubernetes API server remain stable on dedicated nodes, while worker nodes handle more dynamic workloads such as my Bible app services, CI/CD pipelines from Gitea, and supporting microservices running across the cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Control Plane Nodes
@@ -49,6 +51,10 @@ In my homelab rack, worker nodes handle:
 Because my setup is ARM64-based across Raspberry Pi devices, workload efficiency is important. I often tune resource limits and requests carefully so multiple services can coexist without starving the node.
 
 Worker nodes are also the most scalable part of the system—adding a new Raspberry Pi to the rack immediately increases compute capacity without changing cluster architecture.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
@@ -84,3 +90,7 @@ This design is what allows my homelab to support a mix of infrastructure, AI eng
 Node roles are the foundation that make a Kubernetes cluster understandable and maintainable, especially in a constrained homelab environment. In my Raspberry Pi rack, this separation transforms a collection of small devices into a structured, cloud-like system where each node has a purpose.
 
 By clearly defining control plane, worker, and specialized nodes, I can scale individual parts of the system independently, improve reliability, and keep workloads isolated. As the cluster grows—whether through new services, AI workloads, or CI/CD expansion—these roles ensure the architecture remains clean, predictable, and easy to evolve.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

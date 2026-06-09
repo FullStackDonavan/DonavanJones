@@ -26,6 +26,8 @@ This pattern is especially useful for:
 - Data validation
 - Interview-style algorithm questions
 
+*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+
 ---
 
 # Why Use the Frequency Counter Pattern?
@@ -182,6 +184,12 @@ console.log(same([1, 2, 2], [1, 4, 4])); // true
 console.log(same([1, 2, 3], [1, 9])); // false
 ```
 
+---
+
+*Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
+
+---
+
 ## When to Use the Frequency Counter Pattern
 
 You should consider using this pattern when:
@@ -234,3 +242,7 @@ Mastering this pattern also helps prepare you for:
 - Efficient frontend state comparisons
 
 If you are learning algorithms and data structures, this is one of the first optimization techniques worth mastering.
+
+---
+
+*[← Back to Algorithms & Data Structures](/categories/algorithms)*

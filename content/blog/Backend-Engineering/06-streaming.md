@@ -19,6 +19,8 @@ Streaming fixes the perception problem and, more importantly, fixes the actual e
 
 This article covers how streaming is implemented across the stack: from the LLM API through the inference service, through the backend API gateway, and into the browser.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The Streaming Stack
 
 There are four layers where streaming is relevant:
@@ -183,6 +185,12 @@ async function streamCompletion(prompt: string, onToken: (text: string) => void)
 
 The buffer handling is the part that catches people: chunks from `reader.read()` do not align with SSE event boundaries. A single read may contain multiple events, or a partial event that continues in the next read. The buffer accumulates incoming bytes, splits on the double-newline event delimiter, processes complete events, and holds the incomplete trailing fragment for the next iteration.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Error Handling Mid-Stream
 
 Standard HTTP error handling — check the status code, parse the error body — does not apply once a streaming response has started. The connection is open with a 200 status before any tokens arrive. If the inference service encounters an error mid-generation (model API error, timeout, output validation failure), it needs to signal that error through the stream itself.
@@ -236,3 +244,7 @@ Streaming is not just a transport detail — it changes how you think about the 
 These are solvable problems. The point is to go in with eyes open: streaming changes the operational profile of a service in ways that do not show up until you are running at real load.
 
 The next article covers notifications — the other side of server-to-client communication, for events that happen outside the request lifecycle entirely.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

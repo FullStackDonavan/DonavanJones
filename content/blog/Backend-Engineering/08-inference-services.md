@@ -18,6 +18,8 @@ The inference service is where a user's question becomes an answer. Every other 
 
 Earlier in this series I covered AI services at a high level and streaming as a transport mechanism. This article goes one layer deeper: the internal design of the inference service itself — how prompts are constructed, how requests are routed, how outputs are validated, how long-running jobs are handled, and how the service scales without burning through API budget.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The Two Modes of Inference
 
 Not all inference requests are the same shape. I split inference into two modes with different handling:
@@ -131,6 +133,12 @@ async function validateStudyGuide(raw: string): Promise<StudyGuide> {
 
 **Theological consistency** is a light-touch check specific to this platform. A small set of high-confidence rules flags responses that contradict core Christian doctrinal positions (asserting Jesus did not rise from the dead, denying the existence of God, etc.). These are edge cases the model rarely hits, but when it does, the failure is significant. Flagged responses are sent to a moderation queue rather than returned to the user.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## The Job Queue for Async Tasks
 
 Study guide generation is the canonical async task. A full study guide for a passage might involve:
@@ -232,3 +240,7 @@ Inference is the only service where the output is probabilistic. Every other ser
 This changes the operational posture. You test other services by asserting their output. You evaluate inference by measuring its output distribution against a quality baseline. You monitor other services for errors. You monitor inference for both errors and silent quality degradation.
 
 Build the service like any other — clean boundaries, explicit contracts, observable internals — but hold it to a different standard of evidence when you want to know if it is working well.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

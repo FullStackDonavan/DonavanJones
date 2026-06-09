@@ -21,6 +21,8 @@ Hallucination is when a model generates content that is confidently stated but f
 
 The engineering response to this is not to find a model that never hallucinates — no such model exists. It is to design a system where hallucinations are structurally prevented where possible, detected when they occur, and surfaced transparently when they cannot be corrected.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Taxonomy of Hallucinations in Theological AI
 
 Not all hallucinations are the same problem. Categorizing them reveals which interventions apply where.
@@ -210,6 +212,12 @@ function checkPositionAttribution(
 
 This is a coarse check — theological traditions have nuance that a flat list cannot capture. But it catches the most common misattributions: "Calvinists believe salvation can be lost" (inconsistent), "Arminians deny grace entirely" (inconsistent).
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Detection Layer: Confidence Calibration
 
 Some hallucinations are not preventable through retrieval or prompting — they emerge from the model's training distribution. The best response to these is accurate confidence signaling: the system should express less certainty when the evidence is weaker.
@@ -257,3 +265,7 @@ Hallucination reduction is a continuous engineering problem with no complete sol
 **Be honest with users about uncertainty.** The most hallucination-resistant thing an AI theological tool can do is model intellectual humility. "The text does not directly address this question" and "theologians disagree on this point" are correct, useful responses that prevent the user from leaving with false confidence. A model that always produces an answer, however uncertain its evidence, is more dangerous than one that regularly says "I am not sure — here is what the text says, and you should draw your own conclusion."
 
 The platform's ultimate responsibility is not to produce right answers — it is to help users engage with the actual text. Hallucination reduction in service of that goal is not primarily a technical concern. It is a form of respect for the text and for the people trying to understand it.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

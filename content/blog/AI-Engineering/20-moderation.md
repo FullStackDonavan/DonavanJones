@@ -18,6 +18,8 @@ Moderation for a theological AI platform is not primarily about filtering offens
 
 This article covers how moderation is structured on the platform — what categories of harm exist in theological AI specifically, where moderation checks are placed in the pipeline, how they are implemented, and what the system does when intervention is warranted.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Theological Harm Taxonomy
 
 Before building a moderation system, you need a precise vocabulary for what you are moderating. For a general-purpose AI, the harm categories are familiar: violence, hate speech, CSAM, dangerous instructions. For a theological AI, the relevant harm categories are different:
@@ -172,6 +174,12 @@ High-risk inputs are routed to a modified pipeline that:
 
 The goal is not to refuse engagement but to ensure that difficult passages are handled with the weight of the full scholarly tradition, including the tradition's own self-criticism.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Output Moderation
 
 ### Doctrinal Accuracy Checking
@@ -318,3 +326,7 @@ Events with `reviewFlag: true` enter a review queue. Human review focuses on:
 The review process is how the moderation system improves over time. False positive patterns are used to make rules more precise. Missed cases are used to extend coverage. This loop — deploy, monitor, review, refine — is the operational discipline that keeps moderation calibrated to actual behavior rather than theoretical risk.
 
 Moderation is not a feature you build once. It is a process you operate continuously. The theological domain makes it more complex than most, because the harms it guards against are often subtle — a misattributed position, a false consensus claim, a pastoral moment missed — rather than obvious. Getting it right requires both the technical infrastructure to detect and intervene and the ongoing human judgment to keep it calibrated.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

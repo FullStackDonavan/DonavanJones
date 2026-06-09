@@ -18,6 +18,8 @@ Every article in this series that describes a job queue, a background pipeline, 
 
 This article covers the worker system itself: how jobs are queued and claimed, how workers are structured, how concurrency is managed, how failures are handled, and how the system scales. It is the substrate under everything that does not happen in the request path.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## Why Async Workers
 
 The core reason to move work off the request path is that some operations are too slow, too expensive, or too unreliable to run synchronously inside an HTTP request.
@@ -234,6 +236,12 @@ Scheduled jobs are inserted at creation time with their future `run_at`. Cancell
 
 Recurring jobs are handled by having each job, on completion, insert the next occurrence with the appropriate `run_at`. A reading plan job that runs successfully schedules the next day's chapter. This is simple and observable — the next occurrence always exists in the jobs table and can be inspected or cancelled like any other job.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Scaling Workers
 
 Workers scale horizontally. Running two worker processes doubles throughput for a given queue. Running ten doubles it again. Worker processes are stateless — each one is identical, and Postgres handles coordination.
@@ -266,3 +274,7 @@ The jobs table is its own observability surface. At any point I can query:
 Beyond the table, workers emit structured logs on job start, completion, and failure. A job that takes significantly longer than its typical processing time is flagged automatically — a study guide job that runs for 10 minutes when the average is 60 seconds is either hung or encountering an unusual input.
 
 Async workers are invisible when they work and highly visible when they do not. The goal is not to make them invisible in monitoring — it is to make failures immediately obvious before users notice. A queue that is silently backing up, workers that are silently hanging, and dead jobs that are silently accumulating are all failures even if no user has complained yet. Monitoring the queue is how you find out first.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

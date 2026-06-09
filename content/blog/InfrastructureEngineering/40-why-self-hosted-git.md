@@ -21,6 +21,8 @@ For me, self-hosted Git is not just about “owning my code.” It’s about con
 
 This article breaks down why self-hosting Git fits into that architecture and why it has become a core piece of my system design.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Why Self-Hosted Git Matters in a Homelab
@@ -100,6 +102,10 @@ This turns Git from a storage system into an active part of the infrastructure r
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## How It Fits Into My Rack Architecture
 
 In my current setup:
@@ -119,3 +125,7 @@ Self-hosting Git in my homelab isn’t about replacing GitHub—it’s about bui
 By integrating Git directly into my K3s cluster, I gain tighter control, better security, and a development workflow that mirrors production infrastructure. More importantly, it allows me to treat my homelab as a fully integrated system rather than a collection of disconnected tools.
 
 As my rack continues to evolve, self-hosted Git remains one of the foundational pieces that everything else builds on.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

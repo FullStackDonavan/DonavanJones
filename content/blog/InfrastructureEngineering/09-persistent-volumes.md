@@ -21,6 +21,8 @@ To solve this, I use Persistent Volumes (PVs) and Persistent Volume Claims (PVCs
 
 In my rack setup, storage is distributed across mounted external drives connected to Raspberry Pi nodes, with K3s handling orchestration and binding storage dynamically where needed.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Persistent Volume Architecture in My Cluster
@@ -108,6 +110,12 @@ Used for:
 
 This keeps the system lightweight while still giving me reliability where it matters.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## K3s Considerations on ARM64 Nodes
 
 Running Kubernetes on Raspberry Pi hardware introduces some constraints:
@@ -142,3 +150,7 @@ Persistent volumes are the foundation that turns a Kubernetes homelab from a sta
 By combining local SSD-backed storage, careful node scheduling, and a simple but effective backup strategy, I can maintain a lightweight yet resilient storage layer that fits the constraints of ARM64 hardware while still behaving like production-grade infrastructure.
 
 As the cluster grows, this storage layer becomes the backbone for everything else—CI/CD, AI services, and future distributed applications.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

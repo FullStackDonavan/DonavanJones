@@ -19,6 +19,8 @@ Standard backend services are CPU-light, stateless, and fast. An auth service re
 
 This article covers how AI services fit into a distributed backend, what makes them different, and the design patterns I use to make them reliable.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The AI Service Landscape
 
 In my platform, "AI services" refers to three distinct concerns, each running as its own deployable:
@@ -115,6 +117,12 @@ AI services communicate with the rest of the backend in two ways depending on wh
 
 **Async message queue** for anything that does not need to be in the critical path. After a response is sent, the inference service publishes a `completion.finished` event. Downstream consumers (logging, analytics, note-saving, narration triggers) process it independently. If one of them fails, it does not affect the response the user already received.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Model Selection as a Service Concern
 
 Not every request needs the most capable — and most expensive — model. I treat model selection as a first-class routing decision inside the inference service, not something callers control directly.
@@ -149,3 +157,7 @@ If I were starting over, I would introduce the **embedding service earlier**. I 
 I would also set up cost monitoring on day one rather than week four. The first month of development had several experiments that generated significant API spend that I only noticed after the fact. A daily budget alert with a hard cutoff would have caught it immediately.
 
 AI services are not special — they are just services with unusual performance characteristics. Design them like any other service: clear boundaries, explicit contracts, graceful degradation, and observable internals. The model is an implementation detail inside the service, not something the rest of the system should know about.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

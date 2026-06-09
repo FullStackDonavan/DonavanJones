@@ -17,6 +17,8 @@ author: Donavan Jones
 
 A small Kubernetes cluster is a strong fit for a homelab, especially when it is built from low-power hardware like Raspberry Pis in a rack. K3s keeps the control plane lightweight while still giving you the core Kubernetes features needed to manage workloads, services, secrets, storage, and deployments. In this guide, we will set up the K3s control plane in a way that is practical for a home rack environment, with an eye toward stability, simplicity, and easy expansion later.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Prerequisites
 
 Before you begin, make sure you have:
@@ -72,6 +74,12 @@ kubectl get nodes -o wide
 
 You should see the control plane node listed and the system pods moving into a ready state.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Optional: Add More Nodes Later
 
 If your rack grows and you want to add more Pi nodes, you can join them to the cluster as agents or additional servers. K3s makes it straightforward to expand without the overhead of a full upstream Kubernetes installation. That is one of the reasons it works so well in a homelab where simplicity matters.
@@ -79,3 +87,7 @@ If your rack grows and you want to add more Pi nodes, you can join them to the c
 ## Conclusion
 
 K3s is one of the easiest ways to get a reliable Kubernetes control plane running on a Raspberry Pi cluster. For a rack-based homelab, it gives you a good balance of lightweight performance and real Kubernetes functionality, which makes it a solid foundation for apps, databases, CI/CD, and other services. With the control plane in place, you can move on to deploying workloads, setting up storage, and building out the rest of your home infrastructure.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

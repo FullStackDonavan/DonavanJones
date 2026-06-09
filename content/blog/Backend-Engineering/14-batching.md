@@ -17,6 +17,8 @@ Batching is one of the highest-leverage optimizations in an AI backend. It appea
 
 Earlier articles touched on batching in specific contexts: adaptive batching in the embedding service, dynamic batching for GPU workloads, bulk writes in the job queue. This article pulls those threads together into a complete treatment: where batching applies, how to implement it correctly, and how to tune the tradeoffs between latency and throughput that batching always introduces.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The Fundamental Economics
 
 Every operation has two cost components: fixed overhead and variable cost per unit.
@@ -168,6 +170,12 @@ async function batchWithFallback<T, R>(
 
 This finds the failing items in O(log n) retries rather than O(n) individual retries.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Batching and Request Ordering
 
 A subtle hazard: batching can reorder operations in ways that violate expected consistency.
@@ -242,3 +250,7 @@ Batching is not always the right choice.
 The pattern to avoid is reflexive batching — adding a batch window everywhere because it sounds like a good idea. Measure the fixed overhead of the operation first. If it is small relative to variable cost, batching will not help much and will add latency and complexity for minimal gain.
 
 Batching is a tool for a specific problem. When the problem is there, it is one of the most impactful optimizations available. When it is not, it is just complexity.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

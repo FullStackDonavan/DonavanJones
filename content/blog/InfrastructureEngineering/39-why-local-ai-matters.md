@@ -19,6 +19,8 @@ Running AI locally isn’t just a hobbyist preference anymore—it’s becoming 
 
 Local AI changes the way you think about systems design. Instead of treating AI as a remote service, it becomes part of your infrastructure—something you deploy, monitor, scale, and optimize just like any other service in your stack.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Full Control Over Your Stack
@@ -53,6 +55,10 @@ This makes it possible to iterate quickly on things like:
 - Game logic or narrative systems that use offline inference
 
 My Raspberry Pi K3s cluster handles orchestration, while the GPU box handles compute-heavy tasks. That separation mirrors real production architectures, but in a fully controllable lab environment.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
@@ -97,3 +103,7 @@ But in exchange, you gain ownership and flexibility. For me, that tradeoff is wo
 Local AI shifts your mindset from “using AI tools” to “building AI infrastructure.” In my homelab, the combination of a Raspberry Pi K3s cluster and a GPU-powered development machine creates a full ecosystem where I can design, deploy, and iterate on AI systems end-to-end.
 
 It’s not just about independence from cloud providers—it’s about learning how these systems actually work under the hood. And once you start thinking in terms of infrastructure instead of APIs, you stop being just a user of AI and start becoming an architect of it.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

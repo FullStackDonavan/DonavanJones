@@ -19,6 +19,8 @@ In a Kubernetes-based homelab environment, having consistent and repeatable node
 
 This guide walks through the process of flashing Raspberry Pi OS in a way that aligns with infrastructure-as-code thinking, so each node in the cluster behaves predictably and can be reproduced or replaced without manual drift.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Steps to Flash Raspberry Pi OS for Cluster Nodes
@@ -60,6 +62,10 @@ ssh pi@k3s-node-1.local
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Post-Flash Cluster Preparation (Homelab Context)
 
 Once flashed, I integrate the node into my broader homelab stack:
@@ -75,3 +81,7 @@ This keeps the system modular, where nodes are interchangeable parts of a larger
 ## Conclusion
 
 Flashing Raspberry Pi OS is more than just imaging an SD card—it is the first step in building a reproducible edge computing environment. In a homelab rack like mine, where Kubernetes, CI/CD automation, and local AI services all run together, consistent node setup ensures stability and scalability. Once a node is flashed and standardized, it becomes a plug-and-play unit in the cluster, ready to handle workloads, run pipelines, and participate in the larger distributed system.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

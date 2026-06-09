@@ -17,6 +17,8 @@ A good cluster topology starts with understanding what you are optimizing for: r
 
 My current setup focuses on separating workloads across different systems while still keeping everything connected through Kubernetes and containerized services. The cluster handles infrastructure, deployments, self-hosted tooling, databases, and application services, while heavier AI models currently run on a separate development machine with an RTX 3090. This separation allows the rack to stay stable while still giving access to high-performance inference and development workflows.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Why Topology Matters
 
 Cluster topology affects almost everything:
@@ -114,6 +116,12 @@ More powerful x86 systems are better suited for:
 - GPU acceleration
 
 My topology separates these responsibilities so the cluster remains efficient instead of forcing every workload onto the same hardware class.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
 
 ## Network Segmentation
 
@@ -224,4 +232,8 @@ The important part is designing the foundation early so expansion does not requi
 Cluster topology is less about building the biggest rack possible and more about creating clear separation between workloads, responsibilities, and resource usage. A small but well-designed cluster is often far more useful than a large cluster with poor organization.
 
 For my homelab, the focus is on building a practical infrastructure platform that supports Kubernetes, AI engineering, CI/CD, self-hosting, and application development without becoming overly complicated too early. By separating lightweight cluster services from heavier GPU workloads and designing around modular growth, the rack can continue evolving into a more production-like environment over time.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*
 

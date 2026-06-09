@@ -20,6 +20,8 @@ Persistent memory systems are how AI agents overcome this limitation. They give 
 
 This article covers the architecture of persistent memory in AI agent systems — the different types of memory, how each is stored and retrieved, how memory integrates into inference, and the tradeoffs involved. The platform context throughout is a Bible study application where memory makes the difference between a generic AI assistant and one that knows this user's faith journey.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Core Problem: Context Window Limits
 
 A language model processes everything it knows about the current situation from its context window — the text passed in with each request. Context windows have grown large (100K–1M tokens in recent models), but they are still finite, and filling them entirely on every request is expensive.
@@ -88,6 +90,12 @@ Each memory type has different storage requirements:
 **Procedural storage** is a simple key-value structure. Keys like `response_style`, `explanation_depth`, `preferred_translation` map to learned values. These are updated slowly through explicit feedback and inferred behavioral patterns.
 
 **Working memory** lives in Redis as a session-scoped list. The current session's conversation turns are pushed to the list as they happen. When the list exceeds a token threshold, the oldest turns are summarized and the summary replaces them, keeping the list within bounds.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## Memory Formation: How Episodic Becomes Semantic
 
@@ -202,3 +210,7 @@ With memory: "Romans 8:28 builds directly on the tension you were exploring last
 The second response is only possible because the system knows this user: their current study context, their prior questions, their interest in Greek. It is not a better generic answer — it is a specifically appropriate answer for this person at this point in their study.
 
 That specificity is what persistent memory makes possible. It is what makes an AI tool feel less like a search engine and more like a companion who has been paying attention.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

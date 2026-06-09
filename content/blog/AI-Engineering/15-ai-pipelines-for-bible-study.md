@@ -25,6 +25,8 @@ The case for multi-step pipelines over single-shot generation comes down to one 
 
 Pipeline design is mostly the engineering work of making sure the model has the right inputs at the right time, structured in a way that surfaces what matters and suppresses what does not.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Core Bible Study Pipeline
 
 The platform's primary Bible study flow runs through four sequential stages with two parallel fan-out operations embedded in the first stage.
@@ -303,6 +305,12 @@ Return a JSON object with: { passages: [], topics: [], preferences: [] }`,
 
 Memory extraction runs entirely in the background — the user's response is not delayed. But the extracted information is available immediately for subsequent questions in the same session and persists to future sessions.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Pipeline Variants
 
 The core four-stage pipeline handles most queries, but specific study tasks use pipeline variants:
@@ -406,3 +414,7 @@ Seven patterns that emerged from building and operating this pipeline:
 **Log everything.** Each stage should emit structured events. The trace is the only reliable way to understand pipeline behavior under production load conditions — you cannot diagnose a 2-second response without knowing which of the four stages consumed that 2 seconds.
 
 The pipeline structure on this platform grew from a single-call prototype that worked well for simple questions and poorly for everything else. Each stage was added when the previous version hit a quality ceiling: retrieval when generation from memory was too unreliable, memory when retrieval alone missed user context, classification when one prompt served all intents poorly, post-processing when citation failures were invisible. The final pipeline is not a designed-upfront architecture — it is the accumulated response to observed failures, one stage at a time.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

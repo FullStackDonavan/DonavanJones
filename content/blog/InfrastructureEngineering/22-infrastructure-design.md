@@ -19,6 +19,8 @@ Infrastructure design is not just about servers, clusters, or networking—it’
 
 My current setup reflects this philosophy. I run a homelab rack powered by a K3s Kubernetes cluster on multiple nodes, combined with a separate development machine running an RTX 3090 for local model execution and experimentation. I also use Gitea as the central Git system, paired with self-hosted CI runners that act as the glue between code and deployment. This separation of concerns—compute, orchestration, and development—lets me iterate quickly without sacrificing stability.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Core Principles
@@ -81,6 +83,10 @@ This setup allows me to simulate real-world distributed systems while still main
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Design Philosophy
 
 The goal of this infrastructure is not maximum scale—it’s maximum learning velocity with production-grade patterns.
@@ -112,3 +118,7 @@ This allows the system to grow organically without requiring a full redesign.
 This infrastructure is designed to behave like a small production cloud, but fully controlled in a homelab environment. The combination of a K3s cluster, a GPU-powered development machine, and a CI/CD-driven workflow creates a system where experimentation and production engineering coexist.
 
 The real value is not in the hardware itself, but in the workflow it enables: rapid iteration, safe deployment, and the ability to treat infrastructure as code rather than manual setup. As the system grows, the goal remains the same—keep it modular, automated, and close to real-world production standards while still flexible enough for experimentation.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

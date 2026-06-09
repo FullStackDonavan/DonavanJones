@@ -19,6 +19,8 @@ OCR — Optical Character Recognition — is how the platform ingests this conte
 
 This article covers how the OCR pipeline is designed, what makes it reliable, how it handles the specific challenges of religious and historical texts, and how it connects to the rest of the backend.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## The Pipeline Overview
 
 OCR is not a single operation — it is a sequence of steps, each of which can fail or produce degraded output that compounds errors downstream:
@@ -101,6 +103,12 @@ function pageConfidence(words: OcrWord[]): number {
 
 Length-weighting ensures that a single low-confidence short word does not drag down the score for an otherwise clean page. Pages below 0.75 confidence are flagged for user review before being indexed — the user sees a side-by-side of the original image and the extracted text and can correct errors before they propagate into search.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Handling Multi-Page Documents
 
 Most uploaded documents are more than one page. PDFs and multi-page TIFFs are split at the upload stage — each page becomes an independent OCR job. This serves two purposes: failed pages can be retried individually without reprocessing the whole document, and multiple pages can be processed in parallel by different workers.
@@ -168,3 +176,7 @@ A 20-page PDF takes 40–120 seconds end-to-end with pages processed in parallel
 Workers scale horizontally. During bulk upload events (a user uploading a stack of scanned commentaries), the worker pool expands automatically. Peak load is bounded by the Google Cloud Vision API rate limit, not by local compute.
 
 OCR pipelines are not glamorous infrastructure. Nobody writes blog posts about the adaptive thresholding step. But for a platform where significant user content lives in physical form, it is the difference between a product that meets users where they are and one that requires them to change how they study to use it.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

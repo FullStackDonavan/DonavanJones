@@ -19,6 +19,8 @@ In a Kubernetes-based homelab, DNS and service discovery are what make the entir
 
 As the cluster grows to include services like my Bible app, Gitea CI runners, AI microservices, and backend APIs, DNS becomes essential for keeping communication stable even when pods restart, scale, or move between nodes. Instead of chasing IP addresses, services simply find each other by name.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## How Kubernetes DNS Works
@@ -51,6 +53,10 @@ In my setup, this is what allows things like:
 - CI/CD runners in Gitea picking up jobs and routing them correctly across nodes
 
 Everything is loosely coupled but still deeply connected.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
@@ -115,3 +121,7 @@ DNS and service discovery are not just Kubernetes features—they are the founda
 In my K3s rack setup, they allow a mix of Raspberry Pi nodes, a dedicated dev machine, and containerized services to behave like one unified system. Whether it’s AI workloads, CI/CD pipelines, or my Bible app backend, everything stays connected through simple service names instead of fragile infrastructure wiring.
 
 As the system continues to grow, this layer will remain one of the most important pieces keeping the architecture stable, scalable, and easy to evolve.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

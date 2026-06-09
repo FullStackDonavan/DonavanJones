@@ -21,6 +21,8 @@ This combination creates a unique challenge: low-power ARM devices sitting next 
 
 This guide covers how I approached cooling and power distribution to keep the rack stable, quiet enough for a home environment, and scalable for future expansion.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Cooling Strategy
@@ -49,6 +51,10 @@ I rely on system-level monitoring across nodes:
 - Alerts for sustained temperature spikes
 
 This ensures I catch thermal issues before they become stability problems in Kubernetes workloads.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
@@ -101,3 +107,7 @@ A homelab rack is an ecosystem, not just a stack of machines. Cooling and power 
 In my setup, separating compute tiers—low-power Kubernetes nodes on Raspberry Pis and high-power AI workloads on a dedicated GPU machine—makes everything more predictable and easier to manage. Combined with structured airflow, UPS-backed power, and monitoring, the system stays reliable even as I continue building out more services and experiments.
 
 The goal moving forward is simple: keep the infrastructure boring. If cooling and power are done right, everything else—AI agents, deployments, and experiments—can run freely on top of it.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -19,6 +19,8 @@ Networking is one of the most important foundational skills in modern infrastruc
 
 Instead of simply studying concepts like DNS, subnets, routing, or NAT, I learned them through real-world debugging: pods not communicating across nodes, services failing due to incorrect cluster networking, and SSH access issues across machines in my rack. This hands-on environment made networking feel less like an abstract subject and more like the backbone of everything I build.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Core Networking Foundations
@@ -70,6 +72,10 @@ Each issue required breaking the system down layer by layer—starting from the 
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Integration with CI/CD and Infrastructure
 
 Networking is also tightly connected to my CI/CD workflows.
@@ -91,3 +97,7 @@ Networking has become one of the most critical skills in my infrastructure journ
 My homelab rack—built around a Raspberry Pi K3s cluster and connected services—continues to serve as a hands-on environment where I refine these skills daily. Every misconfiguration, outage, or deployment issue reinforces a deeper understanding of how modern distributed systems communicate.
 
 Rather than treating networking as a theoretical subject, I now see it as the invisible structure holding every system together. It is the layer that makes everything else—from CI/CD pipelines to AI services—actually work.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

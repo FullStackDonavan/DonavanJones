@@ -18,6 +18,8 @@ Article 03 covered the mechanics of tool calling — the API, tool definitions, 
 
 The distinction matters. A model that calls tools mechanically — retrieving exactly what was asked for, nothing more — is less valuable than a model that uses tools as part of an active reasoning process: forming a hypothesis, retrieving evidence, evaluating it, refining the hypothesis, retrieving more targeted evidence, and synthesizing a grounded answer. The difference between these behaviors is partly model capability, but it is significantly shaped by how tools are defined and how reasoning is prompted.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## Why Pure In-Context Reasoning Fails on Knowledge Tasks
 
 A model without tools reasons purely from its training data and the current context window. For general knowledge this is often adequate. For specific, precise, or time-sensitive knowledge it breaks down.
@@ -149,6 +151,12 @@ Similarly, return value framing influences how results are incorporated into rea
 
 The enriched return value actively guides the model's next reasoning step. The model reads it and often follows the suggestion — not because it is forced to, but because the note makes the follow-up search obviously the right next action.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Chain-of-Thought Before Tool Calls
 
 Explicit reasoning before tool calls produces better tool call arguments. A model that thinks through what it needs before invoking retrieval constructs more targeted queries than one that calls tools reactively.
@@ -250,3 +258,7 @@ A highly capable model with no tools, asked about a specific verse, produces an 
 This reframes the engineering problem. Instead of asking "how do I get a better model?" the right question is often "how do I give the model better evidence, and how do I prompt it to reason about that evidence more carefully?" The first question is expensive and outside your control. The second is solvable with good tool design and thoughtful prompting.
 
 The next article covers retrieval systems for theological content specifically — how the evidence gathering half of this equation is designed for the domain.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

@@ -22,6 +22,8 @@ In my rack setup—which includes multiple Raspberry Pi nodes running K3s alongs
 
 This setup focuses on balancing simplicity and practicality while leaving room for scaling later.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Storage Goals
@@ -76,6 +78,10 @@ Typical path on nodes:
 
 
 This approach keeps everything lightweight and avoids needing external storage systems like NFS or Ceph.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
@@ -172,3 +178,7 @@ A few key lessons from running this setup:
 This storage setup is intentionally lightweight, reflecting the constraints and goals of a Raspberry Pi–based K3s homelab. Instead of introducing heavy distributed storage systems too early, the focus is on clarity, maintainability, and integration with real workloads like my Bible app, CI/CD pipelines, and AI services running across my rack.
 
 As the system evolves, this foundation allows me to layer in more advanced storage solutions without needing to redesign everything from scratch. For now, local-path storage combined with disciplined backups provides a stable and practical base for development and experimentation.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

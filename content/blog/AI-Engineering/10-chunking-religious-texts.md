@@ -20,6 +20,8 @@ Generic chunking advice — "use 512 tokens with 64-token overlap" — works ade
 
 This article covers the structural properties of each content type on this platform, the chunking strategy designed for each, and the evaluation process that reveals whether a chunking decision is working.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## Why Chunking Matters More Than It Seems
 
 Embedding models convert text to a vector that represents the aggregate meaning of the entire input. A long chunk has a diffuse representation — the vector captures the average semantic content, which means any single idea within the chunk is represented at reduced fidelity. A short chunk has a sharp, specific representation — but may lack enough context for the model to understand what the chunk is about.
@@ -156,6 +158,12 @@ interface PatristicChunk {
 
 When a query touches on a specific topic, the filter on `topics` supplements semantic search with targeted retrieval of patristic material that explicitly addresses that topic. This gives the retrieval system a second signal beyond embedding similarity.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Reformation and Historical Commentary
 
 The Reformation commentators (Calvin, Luther, Owen, Turretin, Baxter) wrote more structured prose than the Church Fathers — closer to modern commentary in form, but often long-form with extensive catechetical structure (question-and-answer sections, numbered propositions, explicit syllogisms).
@@ -232,3 +240,7 @@ I evaluate chunking against the same 300-query ground truth set used for retriev
 Content utilization is measured by asking a lightweight model to score which sentences from each retrieved chunk directly support the response. This is an approximation — the model's scoring is imperfect — but it surfaces systematic chunking failures: consistently low utilization scores on a specific content type signal that chunks from that type are too large or structured incorrectly.
 
 Chunking is one of those infrastructure concerns that feels secondary until the retrieval evaluation scores plateau and no amount of model improvement or prompt tuning moves them. At that point, revisiting the chunking strategy usually unlocks the next significant quality improvement. The structure of the content is the structure of the retrieval — get the chunking right and everything downstream improves.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

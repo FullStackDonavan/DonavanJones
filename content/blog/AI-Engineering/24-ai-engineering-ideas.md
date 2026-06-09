@@ -18,6 +18,8 @@ This is the final article in the AI Engineering series, and I want to use it dif
 
 The series documented building something I actually use and care about. That changes the engineering in ways I did not fully anticipate when I started. This article is my attempt to be honest about what the experience was like — which problems were harder than expected, which turned out to be solved by things I had not originally planned, and what I would do differently if I were starting over.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What the Two Series Actually Built
 
 The Backend Engineering series and the AI Engineering series are one system described from two angles. The Backend series covers the infrastructure: how data is stored, services communicate, embeddings are generated, queues are processed, GPUs are allocated. The AI series covers the intelligence: how retrieval works, how generation is constrained, how memory persists, how quality is evaluated.
@@ -56,6 +58,12 @@ I have not solved this. What I have done is make the failures visible (through c
 
 **Take moderation more seriously from the start.** The moderation article describes a thoughtful system. It was not thoughtful from day one. The pastoral detection, manipulation pattern recognition, and heterodox content checks were all added in response to actual failure cases observed in testing. A few of those failures were uncomfortable. They would have been better handled by a system designed for them than by the reactive additions the system now has. Moderation for theological AI is not standard content filtering — it requires domain-specific thinking that I should have done earlier.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## What Is Still Unsolved
 
 **Fine-tuned embeddings.** The embedding strategies article mentions fine-tuning as "the next logical step." It still is. The theological vocabulary normalization and instruction prefixes improve retrieval quality, but a model fine-tuned on theological query-passage pairs would represent the semantic relationships in this domain more accurately than any general-purpose model. Building the training set — thousands of annotated query-passage pairs with positive and hard negative examples — is the blocking work. It is substantial but finite, and retrieval quality gains from a domain-fine-tuned model would cascade through every RAG-dependent feature on the platform.
@@ -81,3 +89,7 @@ The series is not a definitive reference for building theological AI. It is one 
 What I hope the series conveys is the shape of the problem: how many layers there are, how each layer creates constraints and opportunities for the layers above it, and how domain knowledge — about scripture, about how people study, about what theological accuracy means — has to permeate the system design rather than being left to the model. The model is capable. It needs to be given the right context, the right constraints, and the right evidence to work from. Building all of that is the engineering.
 
 There is more to build. There will always be more to build. That is not a complaint — it is the condition of working on something that matters.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

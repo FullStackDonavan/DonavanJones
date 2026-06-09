@@ -19,6 +19,8 @@ In a homelab environment built around a Raspberry Pi-based K3s cluster and a ded
 
 My goal is to create a storage strategy that supports multiple workloads: Kubernetes deployments, CI/CD pipelines with Gitea runners, AI workloads running in Docker containers, and long-term data storage for applications like my Bible app, logs, and user-generated content. This system needs to stay flexible enough to evolve as I expand the rack while remaining simple enough to debug and maintain.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 ## Core Principles
@@ -109,6 +111,10 @@ This prevents the Kubernetes cluster from being overloaded with workloads it was
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Backup Strategy
 
 A key part of this system is redundancy.
@@ -160,3 +166,5 @@ This storage strategy is designed around the reality of a hybrid homelab: lightw
 The end goal is not just storage that works today, but a foundation that can scale with my infrastructure—from a Raspberry Pi cluster into a full multi-node AI and application platform powering my Bible app, CI/CD pipelines, and future services.
 
 ---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -20,6 +20,8 @@ Consistency in theological AI has two dimensions. The first is internal: across 
 
 Both dimensions require engineering — they do not emerge from a capable model alone.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## Why Models Are Inconsistent by Default
 
 Language models generate tokens probabilistically. Each generation is a draw from a distribution conditioned on the context. Run the same prompt twice and you get similar but not identical outputs. Run the same prompt in two different context windows — separated by a week of conversation — and the context has changed enough that the outputs can diverge substantially.
@@ -108,6 +110,12 @@ that you are doing so and why.
 ```
 
 The instruction "if departing from the prior position, note explicitly" is important. The model will occasionally produce a different reading because the context has shifted (different retrieved commentary, different conversational framing). When it does, the system should surface that departure rather than pretending the prior conversation did not happen.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## Consistency Layer 3: Intra-Response Coherence Checking
 
@@ -271,3 +279,7 @@ Theological consistency is not primarily an engineering problem. It is a reflect
 A person who studies the Bible seriously over years develops a coherent theological framework — not necessarily one that resolves all tensions, but one that holds positions consciously, knows where the debates are, and can articulate why they read contested passages the way they do. The platform should model that kind of coherent engagement rather than the stateless confidence of a model that is always encountering every question for the first time.
 
 Engineering consistency — position memory, tradition profiles, intra-response coherence checking, trajectory tracking — is the technical work of making that vision concrete. The vision is what makes the technical work worth doing.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

@@ -21,6 +21,8 @@ Tool calling changes this. It is the mechanism by which a model steps outside th
 
 This article covers how tool calling works at the API level, how to design tools that models use reliably, the failure modes specific to tool-based systems, and how the tool layer is structured on this platform.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## How Tool Calling Works
 
 Tool calling is a feature of the model API, not a framework or library. The model is given a list of tool definitions alongside the conversation. Each definition describes a function: its name, what it does, and what parameters it accepts. The model decides whether to call a tool, which tool to call, and with what arguments. The application executes the call and returns the result. The model continues.
@@ -179,6 +181,12 @@ The `input_schema` is JSON Schema. Full validation applies: `required` fields, `
 
 A `content` field with `minLength: 10` prevents the model from saving an empty string or a one-word note. This is application logic expressed as a schema constraint — the model sees it and self-corrects before making the call.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## The Tool Execution Layer
 
 Tool definitions live in the model's prompt. Tool implementations live in the application. The boundary between them is where most tool calling bugs originate.
@@ -313,3 +321,7 @@ The right mental model for tools is that they are the agent's senses and actuato
 The quality of an agent's behavior is bounded by the quality of its tools. A well-designed tool makes a capability reliably available. A poorly-designed tool creates a capability that works intermittently, fails silently, or leads the model to incorrect conclusions. Investing in tool definitions — clear descriptions, constrained schemas, explicit negative instructions, well-formatted return values — pays dividends across every interaction that uses them.
 
 The next article covers agent orchestration: how to compose multiple tools and multiple model calls into coherent multi-step reasoning processes.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

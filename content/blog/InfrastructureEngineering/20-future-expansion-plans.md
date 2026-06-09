@@ -30,6 +30,8 @@ Right now, my setup is split into a few key layers:
 
 This separation allows me to iterate quickly while still maintaining a production-like environment in the cluster.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Short-Term Expansion Plans
 
 In the near term, I want to improve reliability and automation:
@@ -50,6 +52,12 @@ The next stage is scaling functionality and compute efficiency:
 - Introduce workload scheduling between local cluster and GPU machine depending on task type
 - Begin separating services into more independent, scalable microservices
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Long-Term Vision
 
 Long term, this system becomes a fully self-hosted AI and application platform:
@@ -63,3 +71,7 @@ Long term, this system becomes a fully self-hosted AI and application platform:
 ## Conclusion
 
 The goal of my homelab is no longer just experimentation—it is becoming a production-grade ecosystem that supports real users, real applications, and real AI workloads. By combining lightweight Kubernetes on Raspberry Pi hardware with a powerful GPU-backed development machine and a growing CI/CD and AI tooling stack, I am building a system that can evolve with my Bible app, AI agents, and future projects. The focus now is refinement: making everything more automated, resilient, and scalable while keeping full control of the stack.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

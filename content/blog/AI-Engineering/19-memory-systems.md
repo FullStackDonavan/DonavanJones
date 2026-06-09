@@ -19,6 +19,8 @@ The first article in this series introduced the four memory types on this platfo
 
 The central tension in memory system design is between completeness and precision. A memory system that stores everything is noisy — relevant facts are buried in the accumulated record of every session. A memory system that stores only what it is confident about is sparse — it misses nuance and gradual shifts that no single extraction event captures cleanly. The engineering work is finding the operating point between these extremes that serves actual users in actual study sessions.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Four Memory Layers
 
 Each memory type stores different things and is retrieved under different conditions.
@@ -192,6 +194,12 @@ async function retrieveEpisodicContext(
 ```
 
 The score threshold of 0.72 is deliberately high for episodic retrieval. The purpose is to surface prior sessions that are genuinely relevant to the current question — not everything adjacent. A lower threshold produces episodic context that distracts the model with loosely related history; a higher threshold produces the focused prior-session grounding that actually helps.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## Semantic Memory
 
@@ -450,3 +458,7 @@ These metrics are evaluated quarterly against a cohort of active users. The eval
 Memory is the layer that transforms the platform from a capable theological tool into something closer to a study companion. The capability to answer questions well is table stakes. The ability to remember what you have studied, where you have arrived, and what questions you are still working through — that is what makes the tool feel like it knows you.
 
 Building it well is months of unglamorous work: extraction pipelines, schema design, retrieval tuning, privacy infrastructure, evaluation. None of it is visible to the user directly. But users who study with a system that has good memory versus one that does not feel the difference immediately.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

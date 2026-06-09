@@ -17,6 +17,8 @@ When I started building out my rack with K3s, I assumed scheduling would be simp
 
 Control plane taints are one of the small Kubernetes features that can save you from big problems later. A taint tells the scheduler that a node should repel certain pods unless those pods explicitly tolerate the taint. On control plane nodes, this usually exists by default so critical cluster components are not competing with regular application workloads.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## What Is a Control Plane Taint?
 
 In Kubernetes, the control plane is responsible for managing the cluster. It runs the components that keep everything else alive, such as:
@@ -85,6 +87,12 @@ After that, pods may schedule onto the node like any other worker.
 
 This is practical in early rack builds, but it is usually better to keep the control plane dedicated if you can.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Using a Toleration Instead
 
 A safer option is to leave the taint in place and add a toleration only to the workloads that truly need it.
@@ -128,3 +136,7 @@ It also helped me think more clearly about architecture. Core infrastructure bel
 Control plane taints are a small Kubernetes detail with a big impact. They help protect the node that runs the heart of the cluster, and they force you to think carefully about where workloads should live. In a homelab rack, that lesson shows up fast because resources are limited and every node matters.
 
 If you are building with K3s, self-hosting services, or running mixed workloads across a few machines, learning taints and tolerations early will save time and confusion later. It is one of those basics that quietly makes everything else work better.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

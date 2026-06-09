@@ -21,6 +21,8 @@ Relational joins can express some of this, but recursive CTEs and multi-hop join
 
 This article covers installing AGE, configuring it, and verifying it works. Articles 18 and 19 cover using it.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What Apache AGE Is
 
 AGE is a Postgres extension that adds:
@@ -169,6 +171,12 @@ services:
 volumes:
   postgres_data:
 ```
+
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
 
 ## Configuration
 
@@ -351,3 +359,7 @@ With this setup, `docker compose up` gives a fully initialized Postgres instance
 ## What Comes Next
 
 AGE is now installed, the graph is created, and the extension is verified. The next article covers how to write Cypher queries in Postgres — creating vertices and edges for Biblical entities, querying relationships, and the syntax differences between standard Cypher and AGE's SQL wrapper. Article 19 covers how to combine graph traversal with relational SQL queries in a single statement, which is where AGE's integration with Postgres becomes genuinely powerful.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

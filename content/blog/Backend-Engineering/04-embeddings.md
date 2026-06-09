@@ -20,6 +20,8 @@ Embeddings fix this. They convert text into a vector — a list of numbers — t
 
 This article covers what embeddings are, how the embedding service is designed, what gets embedded and when, and the operational decisions that keep it fast and affordable.
 
+*Part of the [Backend Engineering series](/categories/backend-engineering).*
+
 ## What an Embedding Actually Is
 
 An embedding model takes a piece of text and outputs a fixed-length array of floating-point numbers — typically 768 to 3072 dimensions depending on the model. This vector represents the text's meaning in a high-dimensional space where semantic similarity corresponds to geometric proximity.
@@ -131,6 +133,12 @@ Job complete → Notify
 
 The pipeline is idempotent. If a worker crashes mid-job, restarting it from the last completed batch produces the same result as if it had never crashed. This is enforced by writing the batch offset to the jobs table before processing each batch, not after.
 
+---
+
+*Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
+
+---
+
 ## Chunking Strategy
 
 Embedding a 10,000-word commentary chapter as a single vector loses information. The vector represents the average meaning of the whole document, which is too diffuse to be useful for retrieval. Texts above a certain length need to be chunked before embedding.
@@ -159,3 +167,7 @@ Embeddings are not search — they are the input to search. The next article cov
 The boundary is intentional. The embedding service knows nothing about where vectors end up. The search service knows nothing about how vectors are produced. Either can be swapped or upgraded without touching the other, as long as the vector dimensions and model version metadata stay consistent across the handoff.
 
 Keeping them separate is what makes a model upgrade tractable: you run the new embedding model, populate a new vector store collection, switch the search service to point at the new collection, and tear down the old one — all without touching the embedding service's API or the search service's query logic.
+
+---
+
+*[← Back to Backend Engineering series](/categories/backend-engineering)*

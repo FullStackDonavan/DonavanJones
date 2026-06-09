@@ -18,6 +18,8 @@ The previous two articles built up a picture of what agent orchestration and sta
 
 Microsoft AutoGen is one of the most widely used frameworks for multi-agent AI systems. It takes a different philosophy: instead of defining explicit pipelines, agents communicate by conversing. They send messages to each other, respond to requests, and the collective dialogue produces the result. Understanding AutoGen — what it is, what it is good at, and where its model breaks down — is useful context for anyone building AI systems, even those who end up building custom rather than using the framework.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What AutoGen Is
 
 AutoGen is an open-source Python framework from Microsoft Research that models multi-agent workflows as conversations between agents. Each agent is an entity with a name, a system prompt, and optionally a set of callable functions (tools). Agents communicate by passing messages in a shared conversation thread.
@@ -107,6 +109,12 @@ This is elegant and flexible. The researcher gathers information, passes it to t
 
 **Research and experimentation.** AutoGen originated in a research context (Microsoft Research) and it shows — it has rich tooling for logging conversations, replaying them, introspecting agent behavior, and experimenting with different configurations. For studying multi-agent behavior or evaluating different orchestration strategies, AutoGen provides a good experimental platform.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Where the Conversation Model Creates Friction
 
 For production AI features with predictable behavior requirements, the conversation model introduces friction that custom pipelines avoid.
@@ -195,3 +203,7 @@ AutoGen's conversation model — where all context accumulates in a shared threa
 AutoGen's termination condition complexity — agents needing to signal completion through message content — made explicit the value of explicit completion semantics. In custom pipelines, a stage is complete when its function returns. No ambiguity.
 
 Frameworks are most valuable when their assumptions match your problem. AutoGen's assumptions match conversational, open-ended, research-oriented tasks. This platform's tasks — structured output, predictable pipelines, tight cost control, TypeScript stack — match a custom orchestration approach more closely. The framework still informed the design by illustrating which problems it was solving and which ones it was introducing.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

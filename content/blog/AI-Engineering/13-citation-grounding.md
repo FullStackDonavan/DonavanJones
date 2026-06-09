@@ -20,6 +20,8 @@ Citation grounding is the practice of ensuring AI responses include verifiable r
 
 This article covers how citation grounding is implemented — eliciting citations from the model, verifying them against retrieved sources, presenting them usefully to users, and handling the cases where citation breaks down.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## The Three Levels of Citation Failure
 
 Understanding what can go wrong clarifies what good citation grounding needs to prevent:
@@ -114,6 +116,12 @@ function verifyPresence(
 A citation not in the retrieved context means the model invented it — drawing on training data rather than provided passages. This is a Level 1 failure. The citation is flagged and not displayed to the user without a warning.
 
 If the citation is not in context but is a valid reference (exists in the database), there are two interpretations: the model retrieved from training memory correctly but outside the provided context, or the retrieval pipeline failed to surface a relevant passage. Either way, the citation should be marked "from model knowledge, not retrieved context" and the user should be told the full verse text has been fetched separately.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ### Support Checking
 
@@ -289,3 +297,7 @@ In many AI applications, citation grounding is a nice-to-have — it improves tr
 Scripture is treated as authoritative by the people using this platform. A response that misrepresents what scripture says — whether through a fabricated citation, an out-of-context reference, or an unsupported claim dressed up as biblical teaching — does real harm. It forms false beliefs about what the text says. It may lead someone to a theological position they would not hold if they read the actual passage. It undermines trust in the platform when the user eventually checks the reference themselves.
 
 Citation grounding is not primarily a technical constraint on this platform — it is an ethical one. The model should not speak for scripture. It should surface scripture and help the user understand it. Verified, transparent citations are how the system stays in that role.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

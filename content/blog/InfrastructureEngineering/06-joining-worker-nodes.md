@@ -15,6 +15,8 @@ author: Donavan Jones
 
 In a distributed Kubernetes setup like a K3s cluster running on a Raspberry Pi-based homelab rack, worker nodes are what give your system real scale and flexibility. In your setup, where ARM64 devices handle lightweight workloads alongside more powerful nodes in your rack, adding workers is a key step in expanding capacity without overcomplicating the control plane. This guide walks through how to safely and cleanly join additional worker nodes to your existing K3s cluster so they can immediately begin running workloads, pods, and services.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ## Joining Worker Nodes
 
 How to join worker nodes to the K3s control plane.
@@ -33,6 +35,16 @@ kubectl get nodes
 ```
 At that point, the new worker becomes part of your homelab compute pool, ready to run workloads from your CI/CD pipelines, Gitea runners, or any of your AI and infrastructure services deployed across the rack.
 
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 ## Conclusion
 
 Adding worker nodes to your K3s cluster is one of the simplest yet most powerful ways to scale your homelab without introducing unnecessary complexity. In your rack setup, this pattern lets you grow compute capacity incrementally—whether you're distributing AI workloads, running CI/CD jobs through Gitea, or hosting backend services across multiple Raspberry Pis. With each new node, your cluster becomes more resilient, more flexible, and better suited for the kind of modular infrastructure you're building.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

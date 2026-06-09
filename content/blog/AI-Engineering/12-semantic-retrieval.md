@@ -18,6 +18,8 @@ Semantic retrieval is the process of finding content that means what a query mea
 
 Earlier articles covered the infrastructure of semantic retrieval (vector databases, embedding services) and the domain-specific design of retrieval systems for theology. This article focuses on the techniques themselves: how semantic retrieval works at the query-document matching level, where it succeeds and where it predictably fails for theological content, and the practical methods used to compensate for its failures.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## What Semantic Retrieval Is Actually Measuring
 
 Semantic retrieval measures cosine similarity between two vectors in a high-dimensional space. High similarity means the query and the document are close together in the space the embedding model learned to represent meaning.
@@ -130,6 +132,12 @@ The top-N reranked candidates are assembled into the context block passed to the
 **Ordering within context**: primary text first, then cross-references, then commentary. Research on LLM attention suggests earlier context gets more weight; primary text should be first.
 
 **Snippet extraction**: for long chunks (commentary excerpts), extract the 150-token window most relevant to the query rather than passing the full 600-token chunk. Relevance of specific sentences is scored by the reranker's attention weights when available.
+
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
 
 ## Where Semantic Retrieval Fails for Theology
 
@@ -246,3 +254,7 @@ The continuous evaluation loop:
 The evaluation set grows from 300 to 500 to 1000 annotated examples over successive quarters. The larger set makes improvements more detectable and regressions more apparent. It is the connective tissue between retrieval engineering effort and measurable user experience improvement.
 
 Semantic retrieval feels solved once the infrastructure is in place. It is not — it is a continuous engineering discipline of finding where retrieval fails for your specific content and users, fixing those failures, and not breaking what works. The infrastructure makes iteration cheap; the evaluation set makes it measurable.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

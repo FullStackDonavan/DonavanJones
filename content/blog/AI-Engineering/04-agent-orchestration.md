@@ -21,6 +21,8 @@ The distinction matters. Tool calling is about depth: one model, reasoning throu
 
 This article covers orchestration patterns — how to structure multi-agent workflows, how agents communicate, how to decompose complex tasks, and how to maintain coherence across multiple model calls.
 
+*Part of the [AI Engineering series](/categories/ai-engineering).*
+
 ## Why Single-Agent Calls Have Limits
 
 A single model call has three practical limits that orchestration addresses:
@@ -147,6 +149,12 @@ The critic is not a general editor — it is scoped to theological accuracy. It 
 
 The iteration count limit is essential. A critic that always finds something to critique and a writer that cannot satisfy it will loop forever without this bound.
 
+---
+
+*Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
+
+---
+
 ## Agent Communication: How Agents Pass Information
 
 Agents communicate through shared state, not direct function calls between model instances. Each agent takes structured input, produces structured output, and the orchestrator routes information between them.
@@ -262,3 +270,7 @@ Orchestration is appropriate when:
 - Parallelism across independent subtasks would meaningfully reduce latency
 
 If none of these apply, a single well-prompted agent call is the better choice. Simpler, cheaper, faster, and easier to debug.
+
+---
+
+*[← Back to AI Engineering](/categories/ai-engineering)*

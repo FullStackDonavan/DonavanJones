@@ -21,6 +21,8 @@ Because K3s is designed to be lightweight, it abstracts a lot of networking comp
 
 This article covers the most common networking issues I’ve run into (and seen others hit), along with practical debugging approaches that actually work in a real homelab environment.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 # Common Networking Issues in Kubernetes
@@ -88,6 +90,12 @@ kubectl describe svc <service-name>
 ```
 
 If you're running a Pi-based rack, make sure your switch and router are not isolating VLANs unintentionally.
+
+---
+
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
 
 ## 4. Node Network Instability (Common in Raspberry Pi Clusters)
 In Raspberry Pi clusters like mine, intermittent network drops are usually caused by:
@@ -165,3 +173,7 @@ Networking issues in Kubernetes are rarely caused by a single point of failure�
 The key takeaway is to always separate the problem into layers: physical network, node network, pod network, and service network. Once you consistently debug in that order, most issues become much easier to isolate and fix.
 
 As your rack grows—with CI/CD runners, Gitea, AI workloads, and additional services—the networking layer becomes the most critical part of the entire system. Keeping it clean and predictable will save you a lot of time long-term.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

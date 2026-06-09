@@ -21,6 +21,8 @@ In a homelab setup like your own rack—built around Raspberry Pi nodes and ARM6
 
 Lightweight Kubernetes is not just about saving resources. It’s about enabling experimentation, faster iteration, and bringing cloud-native patterns into environments that would otherwise be too constrained for them.
 
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
 ---
 
 # What Makes Kubernetes “Lightweight”?
@@ -82,6 +84,10 @@ While stable, lightweight distributions may not perfectly mirror large-scale pro
 
 ---
 
+*Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+
+---
+
 # Real Value in Your Architecture
 
 In your current setup, lightweight Kubernetes is acting as the glue between multiple layers:
@@ -121,3 +127,7 @@ Lightweight Kubernetes matters because it lowers the barrier between learning in
 In your case, it becomes more than just a cluster—it becomes the backbone of your entire development ecosystem. From CI/CD automation with Gitea to deploying services for your Bible app and experimenting with AI workloads, K3s gives you the structure needed to scale ideas without waiting for enterprise hardware.
 
 The real advantage is not just efficiency—it’s control. You’re building a system where every layer is intentional, observable, and yours to evolve.
+
+---
+
+*[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*
