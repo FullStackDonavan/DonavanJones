@@ -189,7 +189,7 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             and a fully async processing pipeline.
           </p>
 
-          <!-- Socials -->
+          <!-- Socials + Resume -->
           <div class="mt-6 flex flex-wrap gap-3">
             <a
               v-for="s in socials"
@@ -207,6 +207,18 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
               <Icon :name="s.icon" class="text-base" />
               {{ s.label }}
             </a>
+            <NuxtLink
+              to="/resume"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/60
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:file-account-outline" class="text-base" />
+              Resume
+            </NuxtLink>
           </div>
         </div>
 
