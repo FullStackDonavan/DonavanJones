@@ -183,7 +183,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
     <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6 py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
 
         <div class="grid lg:grid-cols-[1fr_380px] gap-12 lg:gap-16 items-center">
 
@@ -322,7 +322,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── WHAT I FOCUS ON ────────────────────────────────────────────────── -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
@@ -373,7 +373,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── CURRENTLY BUILDING ─────────────────────────────────────────────── -->
     <section class="bg-white dark:bg-slate-900/30 py-12 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <NuxtLink
           to="/projects/bible-verse"
@@ -419,7 +419,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── SYSTEMS ────────────────────────────────────────────────────────── -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="flex items-center justify-between mb-8">
           <div>
@@ -494,7 +494,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── RECENT PROJECTS ────────────────────────────────────────────────── -->
     <section v-if="recentProjects?.length" class="bg-white dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="flex items-center justify-between mb-8">
           <div>
@@ -565,7 +565,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── RECENT WRITING ─────────────────────────────────────────────────── -->
     <section v-if="recentPosts?.length" class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="flex items-center justify-between mb-8">
           <div>
@@ -632,7 +632,7 @@ function formatDate(dateStr: string): string {
 
     <!-- ── CONTACT CTA ────────────────────────────────────────────────────── -->
     <section id="contact" class="bg-white dark:bg-slate-950 py-16">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-12 text-center">
 

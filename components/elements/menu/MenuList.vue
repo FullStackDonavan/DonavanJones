@@ -140,6 +140,13 @@
         </span>
       </NuxtLink>
 
+      <!-- Resume -->
+      <NuxtLink to="/resume" class="relative group">
+        <span :class="navClass(isActive('/resume'))">
+          Resume
+        </span>
+      </NuxtLink>
+
     </div>
   </nav>
 </template>

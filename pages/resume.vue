@@ -148,7 +148,7 @@ const projectSystems = [
 
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
     <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 print:border-0">
-      <div class="max-w-5xl mx-auto px-6 py-14 sm:py-20">
+      <div class="max-w-7xl mx-auto px-6 py-14 sm:py-20">
 
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
 
@@ -217,7 +217,7 @@ const projectSystems = [
 
     <!-- ── BODY ──────────────────────────────────────────────────────────── -->
     <div class="bg-slate-50 dark:bg-slate-950 py-10 print:bg-white print:py-4">
-      <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-6">
 
         <div class="grid lg:grid-cols-[280px_1fr] gap-8">
 
