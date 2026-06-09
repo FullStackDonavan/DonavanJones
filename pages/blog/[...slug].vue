@@ -3,10 +3,10 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 
-// Fetch frontmatter only (no body) for SSR SEO head tags
+// Fetch full document (body included) — used for both SEO meta and ContentRenderer
 const { data: seoDoc } = await useAsyncData(
-  `blog-seo-${route.path}`,
-  () => queryContent(route.path).without(['body']).findOne()
+  `blog-doc-${route.path}`,
+  () => queryContent(route.path).findOne()
 )
 
 const pageImage = computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`)
@@ -278,7 +278,7 @@ function isoDate(d: string | undefined) {
           <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
 
           <!-- Article body -->
-          <ContentDoc v-slot="{ doc: contentDoc }">
+          <div v-if="seoDoc">
             <div>
               <div class="max-w-8xl">
                 <ContentRenderer
@@ -288,7 +288,7 @@ function isoDate(d: string | undefined) {
                          [&_h3]:text-3xl [&_h3]:font-bold
                          [&_h4]:text-2xl [&_h4]:font-semibold
                          [&_h5]:text-xl  [&_h5]:font-semibold"
-                  :value="contentDoc"
+                  :value="seoDoc"
                 />
               </div>
 
@@ -302,125 +302,178 @@ function isoDate(d: string | undefined) {
               <!-- CASE STUDY -->
               <BibleVerseCaseStudy />
 
-              <!-- AUTHOR BOX -->
-              <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
-                <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">Written by</p>
 
-                <div class="flex flex-col sm:flex-row gap-5">
+<!-- AUTHOR BOX -->
+<div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
+  <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">
+    Written by
+  </p>
 
-                  <!-- Avatar -->
-                  <div class="flex-shrink-0">
-                    <a href="/about" rel="author" aria-label="About Donavan Jones — author bio">
-                      <img
-                        src="/images/donavan.jpg"
-                        alt="Donavan Jones — Full-Stack Engineer & Systems Architect"
-                        width="72"
-                        height="72"
-                        class="w-[72px] h-[72px] rounded-full border-2 border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
-                      />
-                    </a>
-                  </div>
+  <div class="flex flex-col sm:flex-row gap-5">
 
-                  <!-- Details -->
-                  <div class="flex-1 min-w-0">
-                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
-                      <a
-                        href="/about"
-                        rel="author"
-                        class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
-                      >
-                        Donavan Jones
-                      </a>
-                      <span class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium">
-                        Full-Stack Engineer &amp; Systems Architect
-                      </span>
-                    </div>
+    <!-- Avatar -->
+    <div class="flex-shrink-0">
+      <NuxtLink
+        to="/"
+        rel="author"
+        aria-label="Donavan Jones — Full-Stack Engineer & Platform Builder"
+      >
+        <img
+          src="/images/donavan.jpg"
+          alt="Donavan Jones — Full-Stack Engineer & Platform Builder"
+          width="72"
+          height="72"
+          class="w-[72px] h-[72px] rounded-full border-2 border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
+        />
+      </NuxtLink>
+    </div>
 
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                      5+ years building production systems · AI, Backend &amp; Infrastructure · Founder of Bible Logic
-                    </p>
+    <!-- Details -->
+    <div class="flex-1 min-w-0">
 
-                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                      Full-stack engineer with 5+ years of hands-on experience designing and shipping production systems — from
-                      Nuxt 3 frontends and Nitro APIs to self-hosted Kubernetes clusters, RAG pipelines, and real-time AI applications.
-                      Everything I write comes from systems I've designed, deployed, and operated in production.
-                    </p>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
 
-                    <!-- Credentials row -->
-                    <div class="flex flex-wrap gap-2 mb-4">
-                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">
-                        <Icon name="mdi:check-decagram" class="text-sm" />
-                        5+ Years Experience
-                      </span>
-                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-purple-500/5 border-purple-500/20 text-purple-500 dark:text-purple-400 font-medium">
-                        <Icon name="mdi:brain" class="text-sm" />
-                        AI Systems Specialist
-                      </span>
-                      <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-sky-500/5 border-sky-500/20 text-sky-500 dark:text-sky-400 font-medium">
-                        <Icon name="mdi:server-network" class="text-sm" />
-                        Kubernetes &amp; Infrastructure
-                      </span>
-                    </div>
+        <NuxtLink
+          to="/"
+          rel="author"
+          class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
+        >
+          Donavan Jones
+        </NuxtLink>
 
-                    <!-- Expertise pills -->
-                    <div class="flex flex-wrap gap-1.5 mb-4">
-                      <span
-                        v-for="tag in ['Nuxt 3', 'TypeScript', 'PostgreSQL', 'Kubernetes', 'RAG / LLM', 'WebRTC', 'AWS IVS', 'Redis']"
-                        :key="tag"
-                        class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700/50"
-                      >{{ tag }}</span>
-                    </div>
+        <NuxtLink
+          to="/"
+          class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium hover:bg-sky-500/20 transition-colors"
+        >
+          Full-Stack Engineer &amp; Platform Builder
+        </NuxtLink>
 
-                    <!-- Authority links -->
-                    <div class="flex flex-wrap gap-3">
-                      <a
-                        href="/about"
-                        rel="author"
-                        class="inline-flex items-center gap-1.5 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
-                      >
-                        <Icon name="mdi:account-circle-outline" class="text-base" />
-                        Full Author Bio
-                      </a>
-                      <a
-                        href="https://github.com/FullStackDonavan"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
-                      >
-                        <Icon name="mdi:github" class="text-base" />
-                        GitHub
-                      </a>
-                      <a
-                        href="https://linkedin.com/in/donavanjones"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-                      >
-                        <Icon name="mdi:linkedin" class="text-base" />
-                        LinkedIn
-                      </a>
-                      <NuxtLink
-                        to="/resume"
-                        class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
-                      >
-                        <Icon name="mdi:file-account-outline" class="text-base" />
-                        Resume
-                      </NuxtLink>
-                      <NuxtLink
-                        to="/system-overview"
-                        class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
-                      >
-                        <Icon name="mdi:server-network" class="text-base" />
-                        Systems
-                      </NuxtLink>
-                    </div>
-                  </div>
+      </div>
 
-                </div>
-              </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
+        5+ years building production systems · AI Engineering · Backend Infrastructure · Founder of Bible Logic
+      </p>
+
+      <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+        Donavan Jones is a Full-Stack Engineer, Systems Architect, and Platform Builder with
+        5+ years of experience designing, deploying, and operating production software systems.
+        His work spans AI applications, RAG pipelines, Kubernetes infrastructure, real-time
+        communication platforms, and modern SaaS architecture.
+      </p>
+
+      <!-- Homepage Internal Link -->
+      <p class="text-sm mb-4">
+        <NuxtLink
+          to="/"
+          class="font-medium text-sky-500 hover:text-sky-400 transition-colors"
+        >
+          Explore more engineering articles, AI systems, and production case studies →
+        </NuxtLink>
+      </p>
+
+      <!-- Credentials -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">
+          <Icon name="mdi:check-decagram" class="text-sm" />
+          5+ Years Experience
+        </span>
+
+        <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-purple-500/5 border-purple-500/20 text-purple-500 dark:text-purple-400 font-medium">
+          <Icon name="mdi:brain" class="text-sm" />
+          AI Systems Specialist
+        </span>
+
+        <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-lg border bg-sky-500/5 border-sky-500/20 text-sky-500 dark:text-sky-400 font-medium">
+          <Icon name="mdi:server-network" class="text-sm" />
+          Kubernetes &amp; Infrastructure
+        </span>
+      </div>
+
+      <!-- Expertise -->
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        <span
+          v-for="tag in [
+            'Nuxt 3',
+            'TypeScript',
+            'PostgreSQL',
+            'Kubernetes',
+            'RAG / LLM',
+            'WebRTC',
+            'Redis',
+            'System Design'
+          ]"
+          :key="tag"
+          class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700/50"
+        >
+          {{ tag }}
+        </span>
+      </div>
+
+      <!-- Authority Links -->
+      <div class="flex flex-wrap gap-3">
+
+        <NuxtLink
+          to="/about"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
+        >
+          <Icon name="mdi:account-circle-outline" class="text-base" />
+          Full Author Bio
+        </NuxtLink>
+
+        <NuxtLink
+          to="/"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors"
+        >
+          <Icon name="mdi:home-outline" class="text-base" />
+          Homepage
+        </NuxtLink>
+
+        <a
+          href="https://github.com/FullStackDonavan"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
+        >
+          <Icon name="mdi:github" class="text-base" />
+          GitHub
+        </a>
+
+        <a
+          href="https://linkedin.com/in/donavanjones"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+        >
+          <Icon name="mdi:linkedin" class="text-base" />
+          LinkedIn
+        </a>
+
+        <NuxtLink
+          to="/resume"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
+        >
+          <Icon name="mdi:file-account-outline" class="text-base" />
+          Resume
+        </NuxtLink>
+
+        <NuxtLink
+          to="/system-overview"
+          class="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-colors"
+        >
+          <Icon name="mdi:server-network" class="text-base" />
+          Systems
+        </NuxtLink>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 
             </div>
-          </ContentDoc>
+          </div>
         </div>
       </main>
     </div>
