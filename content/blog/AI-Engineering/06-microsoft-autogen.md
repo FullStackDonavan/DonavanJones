@@ -2,6 +2,7 @@
 title: "Microsoft AutoGen"
 description: "Introduction to Microsoft AutoGen for local agent systems."
 date: 2026-05-01
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

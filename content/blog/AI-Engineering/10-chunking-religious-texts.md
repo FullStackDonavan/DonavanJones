@@ -2,6 +2,7 @@
 title: "Chunking Religious Texts"
 description: "Strategies for chunking religious texts for AI retrieval."
 date: 2026-05-17
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

@@ -2,6 +2,7 @@
 title: "Embeddings"
 description: "Embedding services in AI backend architectures."
 date: 2026-03-05
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - embeddings

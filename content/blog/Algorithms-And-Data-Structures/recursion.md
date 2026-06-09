@@ -2,6 +2,7 @@
 title: "Recursion"
 description: "How recursion works in JavaScript — base cases, the call stack, helper method vs pure recursion, and practical problem-solving examples with time complexity analysis."
 date: 2025-08-28
+lastUpdated: "2026-06-09"
 category: "algorithms"
 tags:
   - javascript

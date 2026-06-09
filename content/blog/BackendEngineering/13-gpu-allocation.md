@@ -2,6 +2,7 @@
 title: "GPU Allocation"
 description: "Strategies for GPU allocation in AI backend systems."
 date: 2026-03-30
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - gpu

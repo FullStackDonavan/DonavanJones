@@ -2,6 +2,7 @@
 title: "Why I Built a Homelab"
 description: "Why I built a personal homelab — learning production infrastructure hands-on, reducing cloud costs, and running AI workloads with full control."
 date: 2026-01-25
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - homelab

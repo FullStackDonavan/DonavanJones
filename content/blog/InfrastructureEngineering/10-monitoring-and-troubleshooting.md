@@ -2,6 +2,7 @@
 title: "Monitoring and Troubleshooting"
 description: "How to monitor and troubleshoot a Raspberry Pi Kubernetes cluster using Prometheus, Grafana, and kubectl debugging for production issues."
 date: 2025-10-18
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - monitoring

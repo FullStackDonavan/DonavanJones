@@ -2,6 +2,7 @@
 title: "OCR for Manuscripts"
 description: "Using OCR for digitizing and analyzing religious manuscripts."
 date: 2026-07-12
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

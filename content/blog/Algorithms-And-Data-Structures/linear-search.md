@@ -2,6 +2,7 @@
 title: "Linear Search"
 description: "How Linear Search works in JavaScript — iterating through arrays element by element, time complexity analysis, and when to use it over binary search."
 date: 2025-08-07
+lastUpdated: "2026-06-09"
 category: "algorithms"
 tags:
   - javascript

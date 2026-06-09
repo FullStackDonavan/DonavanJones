@@ -2,6 +2,7 @@
 title: "Vector Databases"
 description: "Role of vector databases in AI agent memory and retrieval."
 date: 2026-04-23
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

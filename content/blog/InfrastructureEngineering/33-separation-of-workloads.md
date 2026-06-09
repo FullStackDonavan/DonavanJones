@@ -2,6 +2,7 @@
 title: "Separation of Workloads"
 description: "How I separate workloads in my homelab Kubernetes cluster using namespaces, taints, and node affinity to improve reliability and resource isolation."
 date: 2026-01-10
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - workloads

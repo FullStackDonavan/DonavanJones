@@ -2,6 +2,7 @@
 title: "Retrieval Systems for Theology"
 description: "AI retrieval systems for theological texts and arguments."
 date: 2026-05-08
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

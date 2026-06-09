@@ -2,6 +2,7 @@
 title: "Cypher Queries in Postgres"
 description: "Using Cypher queries with PostgreSQL and Apache AGE."
 date: 2026-04-15
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - postgres

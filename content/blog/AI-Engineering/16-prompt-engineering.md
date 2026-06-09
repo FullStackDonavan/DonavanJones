@@ -2,6 +2,7 @@
 title: "Prompt Engineering"
 description: "Prompt engineering for retrieval-augmented generation in theology."
 date: 2026-06-06
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

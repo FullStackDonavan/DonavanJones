@@ -2,6 +2,7 @@
 title: "Notifications"
 description: "Notification services in distributed backend systems."
 date: 2026-03-15
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - notifications

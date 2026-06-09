@@ -2,6 +2,7 @@
 title: "Sliding Window"
 description: "Understanding the Sliding Window pattern in JavaScript — how it solves subarray and substring problems in O(n) with contiguous data structure examples."
 date: 2025-09-06
+lastUpdated: "2026-06-09"
 category: "algorithms"
 tags:
   - javascript

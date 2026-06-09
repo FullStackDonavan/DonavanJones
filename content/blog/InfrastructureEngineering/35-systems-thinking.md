@@ -2,6 +2,7 @@
 title: "Systems Thinking"
 description: "How systems thinking applies to infrastructure design — understanding failure modes, feedback loops, and building homelabs for long-term reliability."
 date: 2026-01-14
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - systems

@@ -2,6 +2,7 @@
 title: "Multiple Pointers"
 description: "Understanding the Multiple Pointers pattern in JavaScript — how two-pointer techniques reduce O(n squared) to O(n) with practical sorted array examples."
 date: 2025-07-30
+lastUpdated: "2026-06-09"
 category: "algorithms"
 tags:
   - javascript

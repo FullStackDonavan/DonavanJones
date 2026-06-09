@@ -2,6 +2,7 @@
 title: "Streaming"
 description: "Streaming services and their use in backend systems."
 date: 2026-03-10
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - streaming

@@ -88,14 +88,20 @@ useHead({
       innerHTML: computed(() => {
         const doc = seoDoc.value
         if (!doc) return '{}'
+        const items: object[] = [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog/overview` },
+        ]
+        if (doc.category) {
+          items.push({ '@type': 'ListItem', position: 3, name: doc.category, item: `${SITE}/categories/${doc.category}` })
+          items.push({ '@type': 'ListItem', position: 4, name: doc.title, item: pageUrl.value })
+        } else {
+          items.push({ '@type': 'ListItem', position: 3, name: doc.title, item: pageUrl.value })
+        }
         return JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home',  item: SITE },
-            { '@type': 'ListItem', position: 2, name: 'Blog',  item: `${SITE}/blog/overview` },
-            { '@type': 'ListItem', position: 3, name: doc.title, item: pageUrl.value },
-          ],
+          itemListElement: items,
         })
       }),
     },
@@ -184,6 +190,8 @@ function isoDate(d: string | undefined) {
             <Breadcrumbs
               parentTitle="Blog"
               parentUrl="/blog/overview"
+              :midTitle="seoDoc.category ? seoDoc.category.charAt(0).toUpperCase() + seoDoc.category.slice(1) : undefined"
+              :midUrl="seoDoc.category ? `/categories/${seoDoc.category}` : undefined"
               :currentPageTitle="seoDoc.title"
             />
 

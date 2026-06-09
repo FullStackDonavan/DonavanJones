@@ -2,6 +2,7 @@
 title: "Cooling and Power Setup"
 description: "How I handle cooling and power for my home server rack — passive airflow, power draw per node, UPS planning, and keeping temperatures under control."
 date: 2025-11-05
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - cooling

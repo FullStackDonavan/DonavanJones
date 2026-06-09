@@ -2,6 +2,7 @@
 title: "Why Lightweight Kubernetes Matters"
 description: "Why lightweight Kubernetes distributions like K3s matter — lower resource overhead, faster startup, ARM64 compatibility, and easier homelab management."
 date: 2026-02-03
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - kubernetes

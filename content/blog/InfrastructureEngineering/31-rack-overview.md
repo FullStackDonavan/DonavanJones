@@ -2,6 +2,7 @@
 title: "Rack Overview"
 description: "Full overview of my homelab server rack — the nodes, networking gear, storage devices, power setup, and how everything fits together physically."
 date: 2025-12-22
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - homelab

@@ -75,32 +75,18 @@ watch(
           class="hidden md:flex justify-between space-x-10 align-bottom mt-14"
         >
           <div class="hidden md:flex space-x-10 align-bottom">
-            <nuxt-link to="/subscribe">
+            <nuxt-link to="/blog/overview">
               <span
                 class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
               >
-                Pro Membership
+                Blog
               </span>
             </nuxt-link>
-            <nuxt-link to="/topics">
+            <nuxt-link to="/projects/overview">
               <span
                 class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
               >
-                Videos
-              </span>
-            </nuxt-link>
-            <nuxt-link to="/tutorials/overview">
-              <span
-                class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
-              >
-                Tutorials
-              </span>
-            </nuxt-link>
-            <nuxt-link to="/dashboard/search">
-              <span
-                class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
-              >
-                Ask Donavan
+                Projects
               </span>
             </nuxt-link>
             <nuxt-link to="/about">
@@ -110,15 +96,13 @@ watch(
                 About
               </span>
             </nuxt-link>
-            <span class="">
-              <nuxt-link to="/topics/news">
-                <span
-                  class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
-                >
-                  News
-                </span>
-              </nuxt-link>
-            </span>
+            <nuxt-link to="/resume">
+              <span
+                class="text-base font-medium text-gray-500 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300"
+              >
+                Resume
+              </span>
+            </nuxt-link>
           </div>
         </nav>
 
@@ -343,89 +327,25 @@ watch(
           </NuxtLink>
           <li>
             <NuxtLink
-              to="/topics/news"
+              to="/blog/overview"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 text-gray-500 dark:text-gray-200 transition duration-75 group-hover:text-gray-900 dark:hover:text-gray-300 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg aria-hidden="true" class="w-6 h-6 text-gray-500 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                 <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
               </svg>
-              <span class="ml-3">News</span>
+              <span class="ml-3">Blog</span>
             </NuxtLink>
           </li>
           <li>
             <NuxtLink
-              to="/subscribe"
+              to="/projects/overview"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             >
-              <svg
-                aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-500 dark:text-gray-200 transition duration-75 group-hover:text-gray-900 dark:hover:text-gray-300 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                ></path>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
               </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">Pro Membership</span>
-              <span
-                class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300"
-                >Pro</span
-              >
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/topics"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
-                />
-              </svg>
-
-              <span class="flex-1 ml-3 whitespace-nowrap">Video</span>
-              <!-- <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">3</span> -->
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/tutorials/overview"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"
-                />
-              </svg>
-
-              <span class="flex-1 ml-3 whitespace-nowrap">Tutorials</span>
+              <span class="flex-1 ml-3 whitespace-nowrap">Projects</span>
             </NuxtLink>
           </li>
           <li>

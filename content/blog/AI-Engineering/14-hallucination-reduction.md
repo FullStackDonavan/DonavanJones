@@ -2,6 +2,7 @@
 title: "Hallucination Reduction"
 description: "Techniques for reducing hallucinations in theological AI retrieval."
 date: 2026-05-30
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

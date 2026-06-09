@@ -12,108 +12,37 @@
       <!-- Systems Dropdown -->
       <div class="relative group">
 
-        <!-- Systems Dropdown -->
-<div class="relative group">
-
-  <!-- CLICKABLE SYSTEMS LINK -->
-  <NuxtLink
-    to="/system-overview"
-    :class="[
-      'text-base font-medium relative transition-colors duration-300 px-3 py-1 rounded-md inline-flex items-center gap-1',
-      isSystemsActive
-        ? 'text-gray-900 dark:text-gray-300 bg-gray-200 dark:bg-gray-500'
-        : 'text-gray-500 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-300'
-    ]"
-  >
-    Systems
-
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 9l-7 7-7-7"
-      />
-    </svg>
-  </NuxtLink>
-
-  <!-- Dropdown -->
-  <div
-    class="absolute left-0 top-full mt-4 w-64 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50"
-  >
-    <div class="p-2 flex flex-col">
-
-      <NuxtLink to="/systems/ai" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <div class="font-medium">AI Systems</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">RAG, agents, semantic retrieval, inference</div>
-      </NuxtLink>
-
-      <NuxtLink to="/systems/backend" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <div class="font-medium">Backend Systems</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">APIs, async systems, services, databases</div>
-      </NuxtLink>
-
-      <NuxtLink to="/systems/infrastructure" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <div class="font-medium">Infrastructure Systems</div>
-        <div class="text-sm text-gray-500 dark:text-gray-400">Kubernetes, ARM64, homelab, GPU nodes</div>
-      </NuxtLink>
-
-    </div>
-  </div>
-
-</div>
+        <!-- CLICKABLE SYSTEMS LINK -->
+        <NuxtLink
+          to="/system-overview"
+          :class="[
+            'text-base font-medium relative transition-colors duration-300 px-3 py-1 rounded-md inline-flex items-center gap-1',
+            isSystemsActive
+              ? 'text-gray-900 dark:text-gray-300 bg-gray-200 dark:bg-gray-500'
+              : 'text-gray-500 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-300'
+          ]"
+        >
+          Systems
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </NuxtLink>
 
         <!-- Dropdown -->
-        <div
-          class="absolute left-0 top-full mt-4 w-64 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50"
-        >
+        <div class="absolute left-0 top-full mt-4 w-64 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
           <div class="p-2 flex flex-col">
-
-            <!-- AI Systems -->
-            <NuxtLink
-              to="/systems/ai"
-              class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              <div class="font-medium text-gray-900 dark:text-gray-100">
-                AI Systems
-              </div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
-                RAG, agents, semantic retrieval, inference
-              </div>
+            <NuxtLink to="/systems/ai" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">AI Systems</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">RAG, agents, semantic retrieval, inference</div>
             </NuxtLink>
-
-            <!-- Backend Systems -->
-            <NuxtLink
-              to="/systems/backend"
-              class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              <div class="font-medium text-gray-900 dark:text-gray-100">
-                Backend Systems
-              </div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
-                APIs, async systems, services, databases
-              </div>
+            <NuxtLink to="/systems/backend" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Backend Systems</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">APIs, async systems, services, databases</div>
             </NuxtLink>
-
-            <!-- Infrastructure Systems -->
-            <NuxtLink
-              to="/systems/infrastructure"
-              class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-              <div class="font-medium text-gray-900 dark:text-gray-100">
-                Infrastructure Systems
-              </div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
-                Kubernetes, ARM64, homelab, GPU nodes
-              </div>
+            <NuxtLink to="/systems/infrastructure" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Infrastructure Systems</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Kubernetes, ARM64, homelab, GPU nodes</div>
             </NuxtLink>
-
           </div>
         </div>
 

@@ -2,6 +2,7 @@
 title: "AI Engineering Ideas"
 description: "Brainstormed AI engineering topics and a draft planning note for new content."
 date: 2026-07-16
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

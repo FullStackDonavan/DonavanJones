@@ -2,6 +2,7 @@
 title: "Tool-Based Reasoning"
 description: "Tool-based reasoning approaches in AI agent frameworks."
 date: 2026-05-06
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

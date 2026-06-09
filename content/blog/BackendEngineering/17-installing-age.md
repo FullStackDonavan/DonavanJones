@@ -2,6 +2,7 @@
 title: "Installing AGE"
 description: "Guide to installing Apache AGE for PostgreSQL."
 date: 2026-04-11
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - postgres

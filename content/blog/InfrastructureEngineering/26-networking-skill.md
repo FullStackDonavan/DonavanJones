@@ -2,6 +2,7 @@
 title: "Networking (Skill)"
 description: "Networking skills I built through running a homelab — subnetting, DNS, VLANs, ingress routing, and diagnosing production cluster network issues."
 date: 2025-11-30
+lastUpdated: "2026-06-09"
 category: "infrastructure-engineering"
 tags:
   - networking

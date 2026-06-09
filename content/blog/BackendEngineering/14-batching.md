@@ -2,6 +2,7 @@
 title: "Batching"
 description: "Batching strategies for AI inference and backend services."
 date: 2026-04-03
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - batching

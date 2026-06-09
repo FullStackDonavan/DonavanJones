@@ -2,6 +2,7 @@
 title: "AI Services"
 description: "Overview of AI services in a microservices backend."
 date: 2026-02-27
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - ai

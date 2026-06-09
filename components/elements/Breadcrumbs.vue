@@ -23,26 +23,18 @@
         </li>
         <li v-if="parentTitle">
           <div class="flex items-center">
-            <svg
-              class="w-3 h-3 text-indigo-400 mx-1"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 6 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 9 4-4-4-4"
-              />
+            <svg class="w-3 h-3 text-indigo-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
             </svg>
-            <NuxtLink
-              :to="parentUrl"
-              class="ml-1 text-sm font-medium text-indigo-600 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
-              >{{ parentTitle }}</NuxtLink
-            >
+            <NuxtLink :to="parentUrl" class="ml-1 text-sm font-medium text-indigo-600 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ parentTitle }}</NuxtLink>
+          </div>
+        </li>
+        <li v-if="midTitle && midUrl">
+          <div class="flex items-center">
+            <svg class="w-3 h-3 text-indigo-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+            </svg>
+            <NuxtLink :to="midUrl" class="ml-1 text-sm font-medium text-indigo-600 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ midTitle }}</NuxtLink>
           </div>
         </li>
         <li aria-current="page">
@@ -79,6 +71,8 @@ import { computed } from "vue";
 const props = defineProps({
   parentTitle: String,
   parentUrl: String,
+  midTitle: String,
+  midUrl: String,
   currentPageTitle: {
     type: String,
     required: true,
@@ -88,47 +82,23 @@ const props = defineProps({
 const route = useRoute();
 const config = useRuntimeConfig();
 
-const siteUrl =
-  config.public.siteUrl || "https://donavanjones.com";
+const siteUrl = config.public.siteUrl || "https://donavanjones.com";
 
 const breadcrumbSchema = computed(() => {
-  const items = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: siteUrl,
-    },
-  ];
+  const items: object[] = [
+    { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+  ]
 
+  let pos = 2
   if (props.parentTitle && props.parentUrl) {
-    items.push({
-      "@type": "ListItem",
-      position: 2,
-      name: props.parentTitle,
-      item: `${siteUrl}${props.parentUrl}`,
-    });
-
-    items.push({
-      "@type": "ListItem",
-      position: 3,
-      name: props.currentPageTitle,
-      item: `${siteUrl}${route.path}`,
-    });
-  } else {
-    items.push({
-      "@type": "ListItem",
-      position: 2,
-      name: props.currentPageTitle,
-      item: `${siteUrl}${route.path}`,
-    });
+    items.push({ "@type": "ListItem", position: pos++, name: props.parentTitle, item: `${siteUrl}${props.parentUrl}` })
   }
+  if (props.midTitle && props.midUrl) {
+    items.push({ "@type": "ListItem", position: pos++, name: props.midTitle, item: `${siteUrl}${props.midUrl}` })
+  }
+  items.push({ "@type": "ListItem", position: pos, name: props.currentPageTitle, item: `${siteUrl}${route.path}` })
 
-  return {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items,
-  };
+  return { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: items }
 });
 
 useHead({

@@ -2,6 +2,7 @@
 title: "Monolith vs Microservices"
 description: "Tradeoffs and reasoning behind splitting monoliths into microservices."
 date: 2026-02-20
+lastUpdated: "2026-06-09"
 category: "backend-engineering"
 tags:
   - architecture

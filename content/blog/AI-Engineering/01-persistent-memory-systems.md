@@ -2,6 +2,7 @@
 title: "Persistent Memory Systems"
 description: "Overview of persistent memory systems in local AI agents."
 date: 2026-04-20
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

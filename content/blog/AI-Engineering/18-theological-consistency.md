@@ -2,6 +2,7 @@
 title: "Theological Consistency"
 description: "Ensuring theological consistency in AI-generated responses."
 date: 2026-06-21
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering

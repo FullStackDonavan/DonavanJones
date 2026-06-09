@@ -2,6 +2,7 @@
 title: "AI Pipelines for Bible Study"
 description: "Designing AI pipelines for Bible study and theological research."
 date: 2026-06-03
+lastUpdated: "2026-06-09"
 category: "ai-engineering"
 tags:
   - ai-engineering
