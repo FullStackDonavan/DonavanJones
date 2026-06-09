@@ -7,7 +7,7 @@ tags:
   - ai-engineering
   - ocr
   - manuscripts
-draft: false
+draft: true
 slug: ocr-for-manuscripts
 author: Donavan Jones
 ---

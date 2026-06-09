@@ -7,7 +7,7 @@ tags:
   - ai-engineering
   - voice
   - pipelines
-draft: false
+draft: true
 slug: voice-narration-pipelines
 author: Donavan Jones
 ---

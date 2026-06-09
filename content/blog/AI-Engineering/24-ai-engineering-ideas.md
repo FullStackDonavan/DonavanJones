@@ -7,7 +7,7 @@ tags:
   - ai-engineering
   - ideas
   - planning
-draft: false
+draft: true
 slug: ai-engineering-ideas
 author: Donavan Jones
 ---
