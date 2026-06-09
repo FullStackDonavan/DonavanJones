@@ -14,28 +14,28 @@
         </nuxt-link>
       </div> -->
 
-      <ContentDoc v-slot="{ doc }">
+      <div v-if="seoDoc">
 
         <!-- HERO (FULL WIDTH) -->
         <ArticleHero
-          :title="doc.title"
-          :description="doc.description"
-          :highlight="doc.highlight || ''"
-          :badge="doc.category"
+          :title="seoDoc.title"
+          :description="seoDoc.description"
+          :highlight="seoDoc.highlight || ''"
+          :badge="seoDoc.category"
           :badge-icon="'mdi:bible'"
 
-          :frontend="doc.frontend || []"
-          :backend="doc.backend || []"
-          :cloud="doc.cloud || []"
-          :ai="doc.ai || []"
+          :frontend="seoDoc.frontend || []"
+          :backend="seoDoc.backend || []"
+          :cloud="seoDoc.cloud || []"
+          :ai="seoDoc.ai || []"
 
-          :project-scope="doc.projectScope || []"
+          :project-scope="seoDoc.projectScope || []"
 
-          :use-case="doc.useCase || []"
+          :use-case="seoDoc.useCase || []"
 
-          :overview-description="doc.overviewDescription || ''"
-          :overview-steps="doc.overviewSteps || []"
-          :overview-summary="doc.overviewSummary || ''"
+          :overview-description="seoDoc.overviewDescription || ''"
+          :overview-steps="seoDoc.overviewSteps || []"
+          :overview-summary="seoDoc.overviewSummary || ''"
         >
 
           
@@ -43,31 +43,30 @@
             <template #default>
               
               <div class="text-sm text-slate-500">
-                by {{ doc.author }}, {{ doc.date }}
+                by {{ seoDoc.author }}, {{ seoDoc.date }}
               </div>
-
 
                <!-- Category, Tags, and Project Info section -->
             <div
               class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center"
             >
-              <span v-if="doc.category" class="mr-4">
+              <span v-if="seoDoc.category" class="mr-4">
                 <strong>Category: </strong>
                 <NuxtLink
                   :to="{
-                    path: `/categories/${doc.category}`,
+                    path: `/categories/${seoDoc.category}`,
                     query: { from: route.fullPath },
                   }"
                   class="text-blue-500 hover:underline"
                 >
-                  {{ doc.category }}
+                  {{ seoDoc.category }}
                 </NuxtLink>
               </span>
 
-              <span v-if="doc.tags && doc.tags.length" class="mr-4">
+              <span v-if="seoDoc.tags && seoDoc.tags.length" class="mr-4">
                 <strong>Tags: </strong>
                 <ul class="inline-flex gap-x-2">
-                  <li v-for="(tag, index) in doc.tags" :key="index">
+                  <li v-for="(tag, index) in seoDoc.tags" :key="index">
                     <NuxtLink
                       :to="{
                         path: `/tags/${tag}`,
@@ -81,15 +80,15 @@
                 </ul>
               </span>
 
-              <span v-if="doc.projectType" class="mr-4">
+              <span v-if="seoDoc.projectType" class="mr-4">
                 <strong>Project Type:</strong>
-                  <span v-if="doc.projectType">
-                    {{ doc.projectType }}
-                  </span> 
-                <span v-if="doc.projectType === 'freelance'"> Freelance </span>
-                <span v-if="doc.projectType === 'employment'">
+                  <span v-if="seoDoc.projectType">
+                    {{ seoDoc.projectType }}
+                  </span>
+                <span v-if="seoDoc.projectType === 'freelance'"> Freelance </span>
+                <span v-if="seoDoc.projectType === 'employment'">
                   <a
-                    :href="doc.employmentLink"
+                    :href="seoDoc.employmentLink"
                     class="text-blue-500 hover:underline ml-2"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -99,12 +98,10 @@
               </span>
             </div>
 
-
-
               <div class="mt-4 flex gap-3 flex-wrap">
                 <a
-                  v-if="doc.github"
-                  :href="doc.github"
+                  v-if="seoDoc.github"
+                  :href="seoDoc.github"
                   target="_blank"
                   class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                 >
@@ -112,15 +109,13 @@
                 </a>
 
                 <a
-                  v-if="doc.liveSite"
-                  :href="doc.liveSite"
+                  v-if="seoDoc.liveSite"
+                  :href="seoDoc.liveSite"
                   target="_blank"
                   class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 >
                   Live Site
                 </a>
-
-                
               </div>
             </template>
 
@@ -162,12 +157,12 @@
           <!-- CONTENT -->
           <ContentRenderer
             class="prose lg:prose-xl dark:prose-invert max-w-none"
-            :value="doc"
+            :value="seoDoc"
           />
 
         </div>
 
-      </ContentDoc>
+      </div>
 
     </div>
 
@@ -185,7 +180,7 @@ const backLink = ref('/projects/overview')
 
 // Fetch doc server-side for SEO head tags
 const { data: seoDoc } = await useAsyncData(
-  `project-seo-${route.path}`,
+  `project-doc-${route.path}`,
   () => queryContent(route.path).findOne()
 )
 

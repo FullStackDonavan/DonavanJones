@@ -290,9 +290,9 @@ useHead({
         </div>
       </section>
 
-      <FaqSection title="Frequently Asked Questions" :faqs="faqs" />
+      <!-- <FaqSection title="Frequently Asked Questions" :faqs="faqs" />
       <BibleVerseCaseStudy />
-      <ClusterArticles cluster="ai-engineering" />
+      <ClusterArticles cluster="ai-engineering" /> -->
 
     </div>
   </PatternSection>

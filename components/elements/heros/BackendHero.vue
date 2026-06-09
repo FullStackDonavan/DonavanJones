@@ -175,15 +175,7 @@
           </div>
         </div>
 
-        <!-- IMAGES -->
-        <div class="mt-10 grid md:grid-cols-4 gap-4">
 
-          <img src="https://placehold.co/600x400?text=API+Gateway" class="rounded-xl border border-slate-700" alt="API Gateway diagram" />
-          <img src="https://placehold.co/600x400?text=Microservices" class="rounded-xl border border-slate-700" alt="Microservices architecture diagram" />
-          <img src="https://placehold.co/600x400?text=PostgreSQL+DB" class="rounded-xl border border-slate-700" alt="PostgreSQL database diagram" />
-          <img src="https://placehold.co/600x400?text=Queue+System" class="rounded-xl border border-slate-700" alt="Queue System diagram" />
-
-        </div>
 
         <!-- STACK -->
         <div class="mt-10 pt-8 border-t border-slate-800">

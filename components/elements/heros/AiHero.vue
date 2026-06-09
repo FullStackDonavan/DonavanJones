@@ -180,15 +180,7 @@
           </div>
         </div>
 
-        <!-- IMAGE GRID -->
-        <div class="mt-10 grid md:grid-cols-4 gap-4">
 
-          <img src="https://placehold.co/600x400?text=RAG+Pipeline" class="rounded-xl border border-slate-700" alt="RAG Pipeline diagram" />
-          <img src="https://placehold.co/600x400?text=Agent+System" class="rounded-xl border border-slate-700" alt="Agent System diagram" />
-          <img src="https://placehold.co/600x400?text=Vector+DB" class="rounded-xl border border-slate-700" alt="Vector Database diagram" />
-          <img src="https://placehold.co/600x400?text=LLM+Inference" class="rounded-xl border border-slate-700" alt="LLM Inference diagram" />
-
-        </div>
 
         <!-- STACK -->
         <div class="mt-10 pt-8 border-t border-slate-800">
