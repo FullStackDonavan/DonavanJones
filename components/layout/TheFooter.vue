@@ -15,7 +15,7 @@
           </h2>
 
           <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            Full-stack web developer building SaaS apps, AI tools, and scalable web systems.
+            Full-Stack Engineer &amp; Platform Builder — AI systems, SaaS platforms, and self-hosted infrastructure.
           </p>
 
           <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -31,9 +31,10 @@
 
           <ul class="mt-4 space-y-2 text-sm">
             <li><NuxtLink to="/" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Home</NuxtLink></li>
+            <li><NuxtLink to="/about" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</NuxtLink></li>
             <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
             <li><NuxtLink to="/blog/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
-            <!-- <li><NuxtLink to="/contact" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Contact</NuxtLink></li> -->
+            <li><NuxtLink to="/resume" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Resume</NuxtLink></li>
           </ul>
         </div>
 
@@ -49,6 +50,7 @@
               <a
                 href="https://github.com/FullStackDonavan"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
               >
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -92,6 +94,7 @@
               <a
                 href="https://www.linkedin.com/in/donavanjones/"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
               >
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

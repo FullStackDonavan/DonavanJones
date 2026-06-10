@@ -170,9 +170,16 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             About Me
           </div>
 
-          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-            Donavan Jones
-          </h1>
+          <div class="flex items-center gap-5 mb-4">
+            <img
+              src="/images/donavan.jpg"
+              alt="Donavan Jones"
+              class="w-20 h-20 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-700 flex-shrink-0"
+            />
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Donavan Jones
+            </h1>
+          </div>
           <p class="mt-2 text-lg font-medium text-sky-500 dark:text-sky-400">
             Full-Stack Engineer &amp; Systems Architect
           </p>
@@ -243,7 +250,7 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
                 <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Self-Hosted</div>
               </div>
               <div class="rounded-xl p-4 bg-amber-500/5 border border-amber-500/20 text-center">
-                <div class="text-2xl font-extrabold text-amber-400">5+</div>
+                <div class="text-2xl font-extrabold text-amber-400">20+</div>
                 <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Years Building</div>
               </div>
             </div>

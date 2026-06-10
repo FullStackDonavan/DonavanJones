@@ -46,13 +46,14 @@ const experience = [
     company: 'Amerus Financial Group',
     title: 'Web Developer',
     location: 'Lakeland, FL',
+    caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
-      'Built a production insurance enrollment SaaS platform using Nuxt and PostgreSQL',
-      'Designed multi-role system with employee, employer, and admin dashboards',
-      'Implemented secure onboarding flow using company-code based registration',
-      'Integrated AWS S3 for file storage and asset management',
-      'Developed backend logic for business enrollment workflows and user provisioning',
-      'Worked directly with stakeholders to translate business requirements into production features',
+      'Sole full-stack developer and architect — owned all decisions from database schema and API design to AWS infrastructure and deployment',
+      'Built and launched Business Benefit Alliance, a production group insurance enrollment SaaS that has onboarded 92 businesses, processed hundreds of employee applications, and handles dozens of daily active users',
+      'Designed and enforced a multi-step enrollment state machine covering application submission, digital signature capture, PDF generation, payment authorization, and admin fulfillment',
+      'Architected a three-role system (business owner, employee, app admin) with role-scoped data access enforced at the service layer — not just route guards',
+      'Designed and managed all AWS infrastructure including S3 object storage for signed PDFs and insurance card delivery',
+      'Collaborated directly with business stakeholders — gathered requirements, asked clarifying questions, translated workflows into production features, and iterated based on real user feedback',
     ],
   },
   {
@@ -153,7 +154,13 @@ const projectSystems = [
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
 
           <!-- Name + title -->
-          <div>
+          <div class="flex items-start gap-5">
+            <img
+              src="/images/donavan.jpg"
+              alt="Donavan Jones"
+              class="w-20 h-20 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-700 flex-shrink-0 print:hidden"
+            />
+            <div>
             <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
               Donavan Jones
             </h1>
@@ -164,12 +171,13 @@ const projectSystems = [
               <Icon name="mdi:map-marker-outline" class="text-base" />
               Lakeland, FL &nbsp;·&nbsp; 20+ years software development experience
             </p>
+            </div>
           </div>
 
           <!-- Download + Print buttons -->
           <div class="print:hidden self-start flex items-center gap-2">
             <a
-              href="/pdf/Donavan-Jones-Resusme-2026.pdf"
+              href="/pdf/Donavan-Jones-Resume-2026.pdf"
               download
               class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
                      bg-sky-500 hover:bg-sky-600 text-white transition-colors duration-200"
@@ -347,6 +355,14 @@ const projectSystems = [
                       {{ point }}
                     </li>
                   </ul>
+                  <NuxtLink
+                    v-if="job.caseStudy"
+                    :to="job.caseStudy.to"
+                    class="inline-flex items-center gap-1 mt-3 text-xs font-medium text-sky-500 hover:text-sky-400 transition-colors print:hidden"
+                  >
+                    {{ job.caseStudy.label }}
+                    <Icon name="mdi:arrow-right" class="text-sm" />
+                  </NuxtLink>
                 </div>
               </div>
             </div>
@@ -370,6 +386,37 @@ const projectSystems = [
                     {{ point }}
                   </li>
                 </ul>
+              </div>
+            </div>
+
+            <!-- Self-Taught Background -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none">
+              <div class="px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-amber-500 flex items-center gap-2">
+                  <Icon name="mdi:book-open-page-variant" class="text-base" />
+                  Education &amp; Self-Directed Learning
+                </h2>
+              </div>
+              <div class="px-6 py-5 space-y-4">
+                <div>
+                  <h3 class="text-base font-semibold text-slate-900 dark:text-white">Self-Taught Engineer</h3>
+                  <p class="text-sm font-medium text-amber-500 mt-0.5">20+ Years of Continuous Learning</p>
+                  <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Built my entire technical foundation through self-directed study — books, documentation, open-source projects, and two decades of building real production systems. Every skill listed on this resume was learned and applied hands-on, not in a classroom.
+                  </p>
+                  <ul class="mt-3 space-y-1.5">
+                    <li v-for="point in [
+                      'Deep expertise in modern JavaScript ecosystem — from early jQuery to Nuxt 3 and full TypeScript',
+                      'Developed AI/ML engineering skills through independent research and building production RAG systems',
+                      'Kubernetes and distributed systems knowledge built from hands-on homelab experimentation',
+                      'Algorithm and data structure study through dedicated practice and technical writing',
+                      'Consistent technical writing — 100+ published articles documenting engineering decisions and system design',
+                    ]" :key="point" class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                      <Icon name="mdi:circle-small" class="text-amber-400 text-lg flex-shrink-0 mt-0.5" />
+                      {{ point }}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
