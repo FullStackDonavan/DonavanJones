@@ -11,7 +11,7 @@ const tagName = computed(() => route.params.name as string);
 const { data: totalArticlesCount } = await useAsyncData(
   `tag-count-${tagName.value}`,
   () =>
-    queryContent("blog")
+    queryContent()
       .where({ tags: { $contains: tagName.value }, draft: { $ne: true } })
       .count()
 );
@@ -39,7 +39,7 @@ const currentPage = computed(() => parseInt(route.query.page as string) || 1);
 const fetchArticles = async () => {
   pending.value = true;
   try {
-    articles.value = await queryContent("blog")
+    articles.value = await queryContent()
       .where({ tags: { $contains: tagName.value }, draft: { $ne: true } })
       .skip((currentPage.value - 1) * limit.value)
       .limit(limit.value)

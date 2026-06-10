@@ -22,7 +22,7 @@
           :description="seoDoc.description"
           :highlight="seoDoc.highlight || ''"
           :badge="seoDoc.category"
-          :badge-icon="'mdi:bible'"
+          :badge-icon="seoDoc.badgeIcon || 'mdi:layers'"
 
           :frontend="seoDoc.frontend || []"
           :backend="seoDoc.backend || []"
@@ -41,70 +41,46 @@
           
             <!-- optional extra content inside hero -->
             <template #default>
-              
-              <div class="text-sm text-slate-500">
-                by {{ seoDoc.author }}, {{ seoDoc.date }}
+
+              <!-- Author + date -->
+              <div class="text-sm text-slate-500 dark:text-slate-400">
+                by {{ seoDoc.author }} · {{ seoDoc.date }}
               </div>
 
-               <!-- Category, Tags, and Project Info section -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center"
-            >
-              <span v-if="seoDoc.category" class="mr-4">
-                <strong>Category: </strong>
+              <!-- Meta row: category, project type, links -->
+              <div class="mt-3 flex flex-wrap items-center gap-2">
+
                 <NuxtLink
-                  :to="{
-                    path: `/categories/${seoDoc.category}`,
-                    query: { from: route.fullPath },
-                  }"
-                  class="text-blue-500 hover:underline"
+                  v-if="seoDoc.category"
+                  :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                         bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400
+                         hover:bg-sky-500/20 transition-colors"
                 >
+                  <Icon name="mdi:tag-outline" class="text-xs" />
                   {{ seoDoc.category }}
                 </NuxtLink>
-              </span>
 
-              <span v-if="seoDoc.tags && seoDoc.tags.length" class="mr-4">
-                <strong>Tags: </strong>
-                <ul class="inline-flex gap-x-2">
-                  <li v-for="(tag, index) in seoDoc.tags" :key="index">
-                    <NuxtLink
-                      :to="{
-                        path: `/tags/${tag}`,
-                        query: { from: route.fullPath },
-                      }"
-                      class="text-blue-500 hover:underline"
-                    >
-                      {{ tag }}
-                    </NuxtLink>
-                  </li>
-                </ul>
-              </span>
-
-              <span v-if="seoDoc.projectType" class="mr-4">
-                <strong>Project Type:</strong>
-                  <span v-if="seoDoc.projectType">
-                    {{ seoDoc.projectType }}
-                  </span>
-                <span v-if="seoDoc.projectType === 'freelance'"> Freelance </span>
-                <span v-if="seoDoc.projectType === 'employment'">
-                  <a
-                    :href="seoDoc.employmentLink"
-                    class="text-blue-500 hover:underline ml-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Employment</a
-                  >
+                <span
+                  v-if="seoDoc.projectType"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                         bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50
+                         text-slate-600 dark:text-slate-400"
+                >
+                  <Icon name="mdi:briefcase-outline" class="text-xs" />
+                  {{ seoDoc.projectType }}
                 </span>
-              </span>
-            </div>
 
-              <div class="mt-4 flex gap-3 flex-wrap">
                 <a
                   v-if="seoDoc.github"
                   :href="seoDoc.github"
                   target="_blank"
-                  class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                         bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50
+                         text-slate-600 dark:text-slate-300 hover:border-sky-500/40 hover:text-sky-400 transition-colors"
                 >
+                  <Icon name="mdi:github" class="text-sm" />
                   GitHub
                 </a>
 
@@ -112,40 +88,55 @@
                   v-if="seoDoc.liveSite"
                   :href="seoDoc.liveSite"
                   target="_blank"
-                  class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                         bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400
+                         hover:bg-emerald-500/20 transition-colors"
                 >
+                  <Icon name="mdi:open-in-new" class="text-xs" />
                   Live Site
                 </a>
+
               </div>
+
+              <!-- Tags -->
+              <div v-if="seoDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
+                <NuxtLink
+                  v-for="tag in seoDoc.tags"
+                  :key="tag"
+                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                  class="text-[11px] px-2 py-0.5 rounded-md
+                         bg-slate-100 dark:bg-slate-800
+                         text-slate-500 dark:text-slate-400
+                         border border-slate-200 dark:border-slate-700/50
+                         hover:border-sky-500/40 hover:text-sky-400 transition-colors"
+                >
+                  #{{ tag }}
+                </NuxtLink>
+              </div>
+
             </template>
 
             <!-- RIGHT SIDE CARDS -->
             <template #right>
-              <div class="hero-stat">
-                <Icon name="mdi:book-open-page-variant" class="text-sky-400 text-4xl" />
-                <div class="mt-2 text-xl font-bold">Bible</div>
-                <div class="text-xs text-slate-400">Core Engine</div>
+              <div
+                v-for="(stat, i) in seoDoc.heroStats"
+                :key="i"
+                class="hero-stat"
+              >
+                <Icon
+                  :name="stat.icon"
+                  class="text-4xl"
+                  :class="{
+                    'text-sky-400':     i % 4 === 0,
+                    'text-purple-400':  i % 4 === 1,
+                    'text-emerald-400': i % 4 === 2,
+                    'text-amber-400':   i % 4 === 3,
+                  }"
+                />
+                <div class="mt-2 text-xl font-bold">{{ stat.value }}</div>
+                <div class="text-xs text-slate-400">{{ stat.label }}</div>
               </div>
-
-              <div class="hero-stat">
-                <Icon name="mdi:brain" class="text-purple-400 text-4xl" />
-                <div class="mt-2 text-xl font-bold">AI</div>
-                <div class="text-xs text-slate-400">Bible Logic</div>
-              </div>
-
-              <div class="hero-stat">
-                <Icon name="mdi:video" class="text-emerald-400 text-4xl" />
-                <div class="mt-2 text-xl font-bold">Live</div>
-                <div class="text-xs text-slate-400">Streaming</div>
-              </div>
-
-              <div class="hero-stat">
-                <Icon name="mdi:account-group" class="text-amber-400 text-4xl" />
-                <div class="mt-2 text-xl font-bold">Social</div>
-                <div class="text-xs text-slate-400">Community</div>
-              </div>
-
-              
             </template>
           </ArticleHero>
 

@@ -14,18 +14,35 @@
       </div>
     </div>
 
-    <!-- DIAGRAM -->
     <div v-show="!isLoading">
+
+      <!-- VIEW TABS -->
+      <div class="flex gap-2 mb-4 flex-wrap">
+        <button
+          v-for="v in views"
+          :key="v.id"
+          @click="activeView = v.id"
+          class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+          :class="activeView === v.id
+            ? 'bg-sky-500/20 text-sky-400 border border-sky-500/40'
+            : 'bg-slate-100 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40 hover:text-slate-700 dark:hover:text-slate-200'"
+        >
+          {{ v.label }}
+        </button>
+      </div>
+
+      <!-- DIAGRAM -->
       <div
         v-if="vueFlowReady"
-        class="w-full h-[580px] rounded-lg overflow-hidden
+        class="w-full h-[520px] rounded-lg overflow-hidden
                border border-slate-200 dark:border-slate-700/40
                bg-white dark:bg-slate-900/50"
       >
         <component
+          :key="activeView"
           :is="VueFlowComponent"
-          :nodes="nodes"
-          :edges="edges"
+          :nodes="currentNodes"
+          :edges="currentEdges"
           :nodeTypes="nodeTypes"
           :nodes-draggable="false"
           :nodes-connectable="false"
@@ -54,44 +71,29 @@
                border border-slate-200 dark:border-slate-700/40
                text-xs text-slate-500 dark:text-slate-400"
       >
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 h-px bg-sky-400 inline-block" style="height:2px" />
-          Client request
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 inline-block" style="height:2px;background:#10b981" />
-          Data ops
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 inline-block" style="height:2px;background:#f97316" />
-          Queue dispatch
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 inline-block" style="height:2px;background:#06b6d4" />
-          Real-time
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 inline-block" style="height:2px;background:#a855f7" />
-          AI pipeline
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-5 inline-block" style="height:2px;background:#3b82f6" />
-          Storage
+        <div v-for="item in currentLegend" :key="item.label" class="flex items-center gap-1.5">
+          <span
+            class="w-5 inline-block"
+            :style="{ height: '2px', background: item.color, opacity: item.dashed ? 0.6 : 1 }"
+          />
+          {{ item.label }}
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, defineComponent, h, resolveComponent } from 'vue'
+import { ref, computed, onMounted, defineComponent, h, resolveComponent } from 'vue'
 
-const isLoading   = ref(true)
+const isLoading        = ref(true)
 const VueFlowComponent = ref(null)
-const vueFlowReady = ref(false)
-const nodeTypes   = ref({})
+const vueFlowReady     = ref(false)
+const nodeTypes        = ref({})
+const activeView       = ref('system-overview')
 
-// ── Colour palette (inline styles – avoids Tailwind purge issues) ──────────
+// ── Colour palette ─────────────────────────────────────────────────────────
 const palette = {
   sky:    { bg: 'rgba(14,165,233,0.10)',  border: 'rgba(14,165,233,0.30)',  icon: '#38bdf8' },
   slate:  { bg: 'rgba(100,116,139,0.10)', border: 'rgba(100,116,139,0.30)', icon: '#94a3b8' },
@@ -105,134 +107,243 @@ const palette = {
   green:  { bg: 'rgba(34,197,94,0.10)',   border: 'rgba(34,197,94,0.30)',   icon: '#4ade80' },
 }
 
-// ── Nodes ──────────────────────────────────────────────────────────────────
-//
-//  Layout (avoids edge crossings):
-//
-//  ai-orch(280,10) ─────────────────────── weaviate(560,185)
-//       │(vertical)                              ↕ bidirectional
-//  client(0,270) → nitro(280,270) → postgres(560,20)
-//                                  → redis(560,350)   → websocket(840,270)
-//                                  → bullmq(560,475)  → ffmpeg(840,475) → minio(1120,475)
-//
-//  AI chain (exits ai-orch right, clears col-3 by routing above postgres):
-//  ai-orch → llama(1120,5)  / openai(1120,145)
-//
-const nodes = ref([
+// ── Views ──────────────────────────────────────────────────────────────────
+const views = [
+  { id: 'system-overview', label: 'System Overview'  },
+  { id: 'ai-study',        label: 'AI Study Request' },
+  { id: 'livestream',      label: 'Livestream'       },
+]
 
-  // ── Client ───────────────────────────────────────────────────────────────
-  { id: 'client', type: 'arch', position: { x: 0, y: 270 },
-    data: { label: 'Nuxt 3 Client', icon: 'logos:nuxt-icon', color: 'sky',
-            lines: ['Vue 3 + TypeScript', 'SSR / SPA hybrid', 'Composable data layer'] } },
+// ── Nodes per view ─────────────────────────────────────────────────────────
+const allNodes = {
 
-  // ── API gateway (nitro + ai-orch share same x column) ────────────────────
-  { id: 'nitro', type: 'arch', position: { x: 280, y: 270 },
-    data: { label: 'Nitro Server', icon: 'logos:nodejs-icon', color: 'slate',
-            lines: ['REST API endpoints', 'Domain orchestration', 'Job + event dispatch'] } },
+  // ── System overview — original full architecture ───────────────────────
+  'system-overview': [
+    { id: 'client',    type: 'arch', position: { x: 0,    y: 270 },
+      data: { label: 'Nuxt 3 Client',      icon: 'logos:nuxt-icon',          color: 'sky',
+              lines: ['Vue 3 + TypeScript', 'SSR / SPA hybrid', 'Composable data layer'] } },
+    { id: 'nitro',     type: 'arch', position: { x: 280,  y: 270 },
+      data: { label: 'Nitro Server',        icon: 'logos:nodejs-icon',        color: 'slate',
+              lines: ['REST API endpoints', 'Domain orchestration', 'Job + event dispatch'] } },
+    { id: 'ai-orch',   type: 'arch', position: { x: 280,  y: 10  },
+      data: { label: 'AI Orchestration',    icon: 'mdi:brain',                color: 'violet',
+              lines: ['Prompt construction', 'Complexity routing', 'Context window mgmt', 'SSE streaming'] } },
+    { id: 'postgres',  type: 'arch', position: { x: 560,  y: -120 },
+      data: { label: 'PostgreSQL',          icon: 'logos:postgresql',         color: 'emerald',
+              lines: ['Prisma ORM', 'Users, content, progress', 'Relational schema'] } },
+    { id: 'weaviate',  type: 'arch', position: { x: 560,  y: 185 },
+      data: { label: 'Weaviate',            icon: 'mdi:vector-polyline',      color: 'purple',
+              lines: ['Scripture vector index', 'RAG retrieval', 'Cross-corpus search'] } },
+    { id: 'redis',     type: 'arch', position: { x: 560,  y: 350 },
+      data: { label: 'Redis',               icon: 'logos:redis',              color: 'amber',
+              lines: ['Session + rate-limit cache', 'Cross-instance pub/sub'] } },
+    { id: 'bullmq',    type: 'arch', position: { x: 560,  y: 475 },
+      data: { label: 'BullMQ',              icon: 'mdi:layers-triple',        color: 'orange',
+              lines: ['Audio transcoding queue', 'Notification dispatch', 'AI inference batching'] } },
+    { id: 'websocket', type: 'arch', position: { x: 840,  y: 270 },
+      data: { label: 'WebSocket + WebRTC',  icon: 'simple-icons:socketdotio', color: 'cyan',
+              lines: ['Chat + reaction sync', 'Livestream signaling', 'Redis-backed broadcast'] } },
+    { id: 'ffmpeg',    type: 'arch', position: { x: 840,  y: 475 },
+      data: { label: 'FFmpeg Worker',       icon: 'simple-icons:ffmpeg',      color: 'blue',
+              lines: ['Format transcoding', 'Audio extraction', 'Resolution scaling'] } },
+    { id: 'llama',     type: 'arch', position: { x: 1120, y: 5   },
+      data: { label: 'Llama 3.2 8B',        icon: 'logos:meta-icon',          color: 'violet',
+              lines: ['Primary inference', 'Local execution', 'Cost-optimised path'] } },
+    { id: 'openai',    type: 'arch', position: { x: 1120, y: 145 },
+      data: { label: 'OpenAI API',          icon: 'simple-icons:openai',      color: 'green',
+              lines: ['Fallback inference', 'High-complexity routing', 'Confidence threshold'] } },
+    { id: 'minio',     type: 'arch', position: { x: 1120, y: 475 },
+      data: { label: 'MinIO',               icon: 'simple-icons:minio',       color: 'blue',
+              lines: ['Object storage', 'Signed URL delivery', 'Raw + processed assets'] } },
+  ],
 
-  // ai-orch sits directly above nitro → edge goes straight up, zero crossings
-  { id: 'ai-orch', type: 'arch', position: { x: 280, y: 10 },
-    data: { label: 'AI Orchestration', icon: 'mdi:brain', color: 'violet',
-            lines: ['Prompt construction', 'Complexity routing', 'Context window mgmt', 'SSE streaming'] } },
+  // ── AI study request ───────────────────────────────────────────────────
+  //
+  //  client(0,300) ──→── nitro(280,160) ──→── weaviate(560,20)
+  //      ↑ SSE                  ↓                    ↓
+  //      └── (diagonal)    orch(560,220) ──→── llama(840,20)
+  //                                      ──→── openai(840,220)
+  //
+  'ai-study': [
+    { id: 'client',   type: 'arch', position: { x: 0,   y: 300 },
+      data: { label: 'Nuxt 3 Client',     icon: 'logos:nuxt-icon',       color: 'sky',
+              lines: ['Submits study query', 'Awaits SSE token stream', 'Renders streamed response'] } },
+    { id: 'nitro',    type: 'arch', position: { x: 280, y: 160 },
+      data: { label: 'Nitro API',         icon: 'logos:nodejs-icon',     color: 'slate',
+              lines: ['Validates request', 'Triggers RAG pipeline', 'Emits SSE token stream'] } },
+    { id: 'weaviate', type: 'arch', position: { x: 560, y: 20  },
+      data: { label: 'Weaviate',          icon: 'mdi:vector-polyline',   color: 'purple',
+              lines: ['Vector similarity search', 'Top-K scripture retrieval', 'Bible + Quran corpus'] } },
+    { id: 'orch',     type: 'arch', position: { x: 560, y: 220 },
+      data: { label: 'AI Orchestrator',   icon: 'mdi:brain',             color: 'violet',
+              lines: ['Assembles prompt with passages', 'Classifies query complexity', 'Routes to inference model'] } },
+    { id: 'llama',    type: 'arch', position: { x: 840, y: 20  },
+      data: { label: 'Llama 3.2 8B',     icon: 'logos:meta-icon',       color: 'violet',
+              lines: ['Primary inference', 'Local RTX 3090', 'Cost-optimised path'] } },
+    { id: 'openai',   type: 'arch', position: { x: 840, y: 220 },
+      data: { label: 'OpenAI API',        icon: 'simple-icons:openai',   color: 'green',
+              lines: ['Fallback inference', 'High-complexity threshold', 'Confidence-based routing'] } },
+  ],
 
-  // ── Data column (col 3, x=560) ───────────────────────────────────────────
-  { id: 'postgres', type: 'arch', position: { x: 560, y: -120 },
-    data: { label: 'PostgreSQL', icon: 'logos:postgresql', color: 'emerald',
-            lines: ['Prisma ORM', 'Users, content, progress', 'Relational schema'] } },
+  // ── Livestream session ─────────────────────────────────────────────────
+  //
+  //  broadcaster(0,100) ──→── nitro(300,240) ──→── peer(620,80)
+  //  viewer(0,400)      ──→──      ↕               ↓ P2P video
+  //                           redis(620,420) ──→── viewer
+  //
+  'livestream': [
+    { id: 'broadcaster', type: 'arch', position: { x: 0,   y: 80  },
+      data: { label: 'Broadcaster',        icon: 'mdi:video-account',      color: 'sky',
+              lines: ['Initiates livestream', 'Sends WebRTC SDP offer', 'Publishes chat + reactions'] } },
+    { id: 'viewer',      type: 'arch', position: { x: 0,   y: 380 },
+      data: { label: 'Viewers',            icon: 'mdi:account-group',      color: 'purple',
+              lines: ['Joins livestream session', 'Receives SDP answer', 'Gets chat + reactions via WS'] } },
+    { id: 'nitro',       type: 'arch', position: { x: 300, y: 230 },
+      data: { label: 'Nitro + WebSocket',  icon: 'logos:nodejs-icon',      color: 'slate',
+              lines: ['Relays WebRTC SDP + ICE', 'Manages signaling state', 'WebSocket event dispatcher'] } },
+    { id: 'peer',        type: 'arch', position: { x: 620, y: 60  },
+      data: { label: 'WebRTC P2P',         icon: 'mdi:access-point',       color: 'cyan',
+              lines: ['Peer connection established', 'Direct low-latency stream', 'After SDP negotiation'] } },
+    { id: 'redis',       type: 'arch', position: { x: 620, y: 400 },
+      data: { label: 'Redis Pub/Sub',      icon: 'logos:redis',            color: 'amber',
+              lines: ['Chat + reaction channels', 'Cross-instance event routing', 'Syncs all server nodes'] } },
+  ],
+}
 
-  { id: 'weaviate', type: 'arch', position: { x: 560, y: 185 },
-    data: { label: 'Weaviate', icon: 'mdi:vector-polyline', color: 'purple',
-            lines: ['Scripture vector index', 'RAG retrieval', 'Cross-corpus search'] } },
+// ── Edges per view ─────────────────────────────────────────────────────────
+const allEdges = {
 
-  { id: 'redis', type: 'arch', position: { x: 560, y: 350 },
-    data: { label: 'Redis', icon: 'logos:redis', color: 'amber',
-            lines: ['Session + rate-limit cache', 'Cross-instance pub/sub'] } },
+  'system-overview': [
+    { id: 'e1',  source: 'client',    target: 'nitro',
+      animated: true, type: 'smoothstep', class: 'e-primary',
+      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
+    { id: 'e2',  source: 'nitro',     target: 'postgres',
+      type: 'smoothstep', class: 'e-data',
+      markerEnd: { type: 'arrowclosed', color: '#10b981' } },
+    { id: 'e3',  source: 'nitro',     target: 'redis',
+      type: 'smoothstep', class: 'e-data',
+      markerEnd: { type: 'arrowclosed', color: '#f59e0b' } },
+    { id: 'e4',  source: 'nitro',     target: 'bullmq',
+      type: 'smoothstep', class: 'e-queue',
+      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
+    { id: 'e5',  source: 'nitro',     target: 'websocket',
+      animated: true, type: 'smoothstep', class: 'e-realtime',
+      markerStart: { type: 'arrowclosed', color: '#06b6d4' },
+      markerEnd:   { type: 'arrowclosed', color: '#06b6d4' } },
+    { id: 'e6',  source: 'redis',     target: 'websocket',
+      type: 'smoothstep', class: 'e-realtime',
+      markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
+    { id: 'e7',  source: 'nitro',     target: 'ai-orch',
+      type: 'smoothstep', class: 'e-ai',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    { id: 'e8',  source: 'ai-orch',   target: 'weaviate',
+      type: 'smoothstep', class: 'e-ai',
+      markerStart: { type: 'arrowclosed', color: '#a855f7' },
+      markerEnd:   { type: 'arrowclosed', color: '#a855f7' } },
+    { id: 'e9',  source: 'ai-orch',   target: 'llama',
+      type: 'smoothstep', class: 'e-ai',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    { id: 'e10', source: 'ai-orch',   target: 'openai',
+      type: 'smoothstep', class: 'e-ai', label: 'fallback',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    { id: 'e11', source: 'bullmq',    target: 'ffmpeg',
+      type: 'smoothstep', class: 'e-queue',
+      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
+    { id: 'e12', source: 'ffmpeg',    target: 'minio',
+      type: 'smoothstep', class: 'e-storage',
+      markerEnd: { type: 'arrowclosed', color: '#3b82f6' } },
+  ],
 
-  { id: 'bullmq', type: 'arch', position: { x: 560, y: 475 },
-    data: { label: 'BullMQ', icon: 'mdi:layers-triple', color: 'orange',
-            lines: ['Audio transcoding queue', 'Notification dispatch', 'AI inference batching'] } },
+  'ai-study': [
+    // Client → Nitro (query)
+    { id: 'e1', source: 'client',   target: 'nitro',
+      animated: true, type: 'smoothstep', class: 'e-primary',
+      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
+    // Nitro → Weaviate (vector retrieval)
+    { id: 'e2', source: 'nitro',    target: 'weaviate',
+      type: 'smoothstep', class: 'e-ai',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    // Weaviate ↔ Orch (retrieved passages injected into prompt)
+    { id: 'e3', source: 'weaviate', target: 'orch',
+      type: 'smoothstep', class: 'e-ai',
+      markerStart: { type: 'arrowclosed', color: '#a855f7' },
+      markerEnd:   { type: 'arrowclosed', color: '#a855f7' } },
+    // Nitro → Orch (triggers prompt construction)
+    { id: 'e4', source: 'nitro',    target: 'orch',
+      type: 'smoothstep', class: 'e-ai',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    // Orch → Llama (primary inference)
+    { id: 'e5', source: 'orch',     target: 'llama',
+      type: 'smoothstep', class: 'e-ai',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    // Orch → OpenAI (fallback)
+    { id: 'e6', source: 'orch',     target: 'openai',
+      type: 'smoothstep', class: 'e-ai', label: 'fallback',
+      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
+    // Nitro → Client (SSE stream — diagonal back, clearly the return path)
+    { id: 'e7', source: 'nitro',    target: 'client',
+      animated: true, type: 'smoothstep', class: 'e-realtime',
+      markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
+  ],
 
-  // ── Col 4: real-time + media ─────────────────────────────────────────────
-  { id: 'websocket', type: 'arch', position: { x: 840, y: 270 },
-    data: { label: 'WebSocket + WebRTC', icon: 'simple-icons:socketdotio', color: 'cyan',
-            lines: ['Chat + reaction sync', 'Livestream signaling', 'Redis-backed broadcast'] } },
+  'livestream': [
+    // Broadcaster ↔ Nitro (WebRTC SDP offer + ICE + events)
+    { id: 'e1', source: 'broadcaster', target: 'nitro',
+      animated: true, type: 'smoothstep', class: 'e-primary',
+      markerStart: { type: 'arrowclosed', color: '#0ea5e9' },
+      markerEnd:   { type: 'arrowclosed', color: '#0ea5e9' } },
+    // Viewer ↔ Nitro (SDP answer + ICE + WebSocket events)
+    { id: 'e2', source: 'viewer',       target: 'nitro',
+      animated: true, type: 'smoothstep', class: 'e-realtime',
+      markerStart: { type: 'arrowclosed', color: '#06b6d4' },
+      markerEnd:   { type: 'arrowclosed', color: '#06b6d4' } },
+    // Nitro → Peer (signaling complete → P2P established)
+    { id: 'e3', source: 'nitro',        target: 'peer',
+      type: 'smoothstep', class: 'e-realtime',
+      markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
+    // Peer → Viewer (direct low-latency P2P video stream)
+    { id: 'e4', source: 'peer',         target: 'viewer',
+      animated: true, type: 'smoothstep', class: 'e-realtime',
+      markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
+    // Nitro ↔ Redis (publish chat/reactions + subscribe broadcast)
+    { id: 'e5', source: 'nitro',        target: 'redis',
+      animated: true, type: 'smoothstep', class: 'e-queue',
+      markerStart: { type: 'arrowclosed', color: '#f97316' },
+      markerEnd:   { type: 'arrowclosed', color: '#f97316' } },
+    // Redis → Viewer (WebSocket broadcast of chat + reactions)
+    { id: 'e6', source: 'redis',        target: 'viewer',
+      type: 'smoothstep', class: 'e-queue',
+      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
+  ],
+}
 
-  { id: 'ffmpeg', type: 'arch', position: { x: 840, y: 475 },
-    data: { label: 'FFmpeg Worker', icon: 'simple-icons:ffmpeg', color: 'blue',
-            lines: ['Format transcoding', 'Audio extraction', 'Resolution scaling'] } },
+// ── Legends per view ───────────────────────────────────────────────────────
+const legends = {
+  'system-overview': [
+    { color: '#0ea5e9', label: 'Client request' },
+    { color: '#10b981', label: 'Data ops' },
+    { color: '#f97316', label: 'Queue dispatch' },
+    { color: '#06b6d4', label: 'Real-time' },
+    { color: '#a855f7', label: 'AI pipeline' },
+    { color: '#3b82f6', label: 'Storage' },
+  ],
+  'ai-study': [
+    { color: '#0ea5e9', label: 'Client query' },
+    { color: '#a855f7', label: 'AI pipeline' },
+    { color: '#06b6d4', label: 'SSE stream' },
+  ],
+  'livestream': [
+    { color: '#0ea5e9', label: 'WebRTC signaling' },
+    { color: '#06b6d4', label: 'Real-time / P2P' },
+    { color: '#f97316', label: 'Pub/sub events' },
+  ],
+}
 
-  // ── Col 5: AI models + storage ───────────────────────────────────────────
-  { id: 'llama', type: 'arch', position: { x: 1120, y: 5 },
-    data: { label: 'Llama 3.2 8B', icon: 'logos:meta-icon', color: 'violet',
-            lines: ['Primary inference', 'Local execution', 'Cost-optimised path'] } },
+const currentNodes  = computed(() => allNodes[activeView.value]  ?? [])
+const currentEdges  = computed(() => allEdges[activeView.value]  ?? [])
+const currentLegend = computed(() => legends[activeView.value]   ?? [])
 
-  { id: 'openai', type: 'arch', position: { x: 1120, y: 145 },
-    data: { label: 'OpenAI API', icon: 'simple-icons:openai', color: 'green',
-            lines: ['Fallback inference', 'High-complexity routing', 'Confidence threshold'] } },
-
-  { id: 'minio', type: 'arch', position: { x: 1120, y: 475 },
-    data: { label: 'MinIO', icon: 'simple-icons:minio', color: 'blue',
-            lines: ['Object storage', 'Signed URL delivery', 'Raw + processed assets'] } },
-])
-
-// ── Edges ──────────────────────────────────────────────────────────────────
-const edges = ref([
-  // Client ↔ Nitro  (animated, bidirectional)
-  { id: 'e1', source: 'client', target: 'nitro',
-    animated: true, type: 'smoothstep', class: 'e-primary',
-    markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-
-  // Nitro → data services
-  { id: 'e2', source: 'nitro', target: 'postgres',
-    type: 'smoothstep', class: 'e-data',
-    markerEnd: { type: 'arrowclosed', color: '#10b981' } },
-  { id: 'e3', source: 'nitro', target: 'redis',
-    type: 'smoothstep', class: 'e-data',
-    markerEnd: { type: 'arrowclosed', color: '#f59e0b' } },
-  { id: 'e4', source: 'nitro', target: 'bullmq',
-    type: 'smoothstep', class: 'e-queue',
-    markerEnd: { type: 'arrowclosed', color: '#f97316' } },
-
-  // Nitro ↔ WebSocket  (animated, bidirectional)
-  { id: 'e5', source: 'nitro', target: 'websocket',
-    animated: true, type: 'smoothstep', class: 'e-realtime',
-    markerStart: { type: 'arrowclosed', color: '#06b6d4' },
-    markerEnd:   { type: 'arrowclosed', color: '#06b6d4' } },
-
-  // Redis → WebSocket  (pub/sub broadcast)
-  { id: 'e6', source: 'redis', target: 'websocket',
-    type: 'smoothstep', class: 'e-realtime',
-    markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
-
-  // Nitro → AI Orchestration
-  { id: 'e7', source: 'nitro', target: 'ai-orch',
-    type: 'smoothstep', class: 'e-ai',
-    markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
-
-  // AI Orch ↔ Weaviate  (RAG retrieval, bidirectional)
-  { id: 'e8', source: 'ai-orch', target: 'weaviate',
-    type: 'smoothstep', class: 'e-ai',
-    markerStart: { type: 'arrowclosed', color: '#a855f7' },
-    markerEnd:   { type: 'arrowclosed', color: '#a855f7' } },
-
-  // AI Orch → models
-  { id: 'e9',  source: 'ai-orch', target: 'llama',
-    type: 'smoothstep', class: 'e-ai',
-    markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
-  { id: 'e10', source: 'ai-orch', target: 'openai',
-    type: 'smoothstep', class: 'e-ai', label: 'fallback',
-    markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
-
-  // Media pipeline: BullMQ → FFmpeg → MinIO
-  { id: 'e11', source: 'bullmq', target: 'ffmpeg',
-    type: 'smoothstep', class: 'e-queue',
-    markerEnd: { type: 'arrowclosed', color: '#f97316' } },
-  { id: 'e12', source: 'ffmpeg', target: 'minio',
-    type: 'smoothstep', class: 'e-storage',
-    markerEnd: { type: 'arrowclosed', color: '#3b82f6' } },
-])
-
-// ── Custom node renderer ───────────────────────────────────────────────────
+// ── Mount VueFlow ──────────────────────────────────────────────────────────
 onMounted(async () => {
   try {
     const mod = await import('@vue-flow/core')
@@ -262,7 +373,6 @@ onMounted(async () => {
                     props.data.lines.map(l => h('li', l)))
                 : null,
             ]),
-            // Invisible handles for edge routing only
             h(Handle, { type: 'target', position: Position.Left,   class: 'bva-handle' }),
             h(Handle, { type: 'source', position: Position.Right,  class: 'bva-handle' }),
             h(Handle, { id: 'top',    type: 'target', position: Position.Top,    class: 'bva-handle' }),
@@ -283,7 +393,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* ── Node card ────────────────────────────────────────────────────────────── */
 :deep(.bva-node) {
   border: 1px solid;
   border-radius: 10px;
@@ -346,7 +455,6 @@ onMounted(async () => {
   @apply dark:text-slate-500;
 }
 
-/* ── Handles — invisible, edge-routing only ───────────────────────────────── */
 :deep(.bva-handle) {
   width: 6px !important;
   height: 6px !important;
@@ -357,7 +465,6 @@ onMounted(async () => {
   opacity: 0 !important;
 }
 
-/* ── VueFlow canvas ───────────────────────────────────────────────────────── */
 :deep(.vue-flow__pane)        { cursor: grab; }
 :deep(.vue-flow__pane:active) { cursor: grabbing; }
 
@@ -367,21 +474,18 @@ onMounted(async () => {
   box-shadow: none !important;
 }
 
-/* ── Edges ────────────────────────────────────────────────────────────────── */
-:deep(.vue-flow__edge.e-primary .vue-flow__edge-path) { stroke: #0ea5e9; stroke-width: 1.8px; }
-:deep(.vue-flow__edge.e-data    .vue-flow__edge-path) { stroke: #10b981; stroke-width: 1.6px; }
-:deep(.vue-flow__edge.e-queue   .vue-flow__edge-path) { stroke: #f97316; stroke-width: 1.6px; }
-:deep(.vue-flow__edge.e-realtime.vue-flow__edge-path) { stroke: #06b6d4; stroke-width: 1.6px; }
-:deep(.vue-flow__edge.e-ai      .vue-flow__edge-path) { stroke: #a855f7; stroke-width: 1.6px; }
-:deep(.vue-flow__edge.e-storage .vue-flow__edge-path) { stroke: #3b82f6; stroke-width: 1.6px; }
+:deep(.vue-flow__edge.e-primary  .vue-flow__edge-path) { stroke: #0ea5e9; stroke-width: 1.8px; }
+:deep(.vue-flow__edge.e-data     .vue-flow__edge-path) { stroke: #10b981; stroke-width: 1.6px; }
+:deep(.vue-flow__edge.e-queue    .vue-flow__edge-path) { stroke: #f97316; stroke-width: 1.6px; }
+:deep(.vue-flow__edge.e-realtime .vue-flow__edge-path) { stroke: #06b6d4; stroke-width: 1.6px; }
+:deep(.vue-flow__edge.e-ai       .vue-flow__edge-path) { stroke: #a855f7; stroke-width: 1.6px; }
+:deep(.vue-flow__edge.e-storage  .vue-flow__edge-path) { stroke: #3b82f6; stroke-width: 1.6px; }
 
-/* fallback label */
 :deep(.vue-flow__edge-label) {
   font-size: 10px;
   fill: #94a3b8;
 }
 
-/* dot grid background */
 :deep(.vue-flow__background) {
   color: rgba(100,116,139,0.12);
 }
