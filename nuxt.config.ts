@@ -18,6 +18,13 @@ export default defineNuxtConfig({
       ],
       script: [
         {
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-22YRGGHBGE',
+          async: true,
+        },
+        {
+          innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-22YRGGHBGE');`,
+        },
+        {
           type: 'application/ld+json',
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
