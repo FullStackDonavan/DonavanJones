@@ -125,4 +125,31 @@ As the system continues to grow, this layer will remain one of the most importan
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Domain Name System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Domain_Name_System"
+    type: "wikipedia"
+    description: "According to this overview, DNS translates human-readable names to IP addresses — the protocol that Kubernetes CoreDNS extends to provide service name resolution within the cluster."
+  - label: "Service Discovery — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Service_discovery"
+    type: "wikipedia"
+    description: "Overview of service discovery — the mechanism Kubernetes uses to automatically register services at predictable internal hostnames, allowing microservices to find each other without hardcoded IP addresses."
+  - label: "CoreDNS — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/CoreDNS"
+    type: "wikipedia"
+    description: "According to this overview, CoreDNS is the default DNS server in Kubernetes — the cluster DNS that resolves *.svc.cluster.local names and whose health is critical to pod-to-pod communication."
+  - label: "Kubernetes Networking — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Networking"
+    type: "wikipedia"
+    description: "Overview of Kubernetes networking principles — the model that underlies service discovery, with every service getting a stable cluster IP and DNS name regardless of which nodes its pods run on."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

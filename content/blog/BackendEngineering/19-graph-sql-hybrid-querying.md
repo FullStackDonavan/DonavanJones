@@ -388,4 +388,31 @@ That combination — graph traversal for relationship-shaped questions, relation
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Graph Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graph_database"
+    type: "wikipedia"
+    description: "According to this overview, graph databases model entities and relationships natively — the half of the hybrid architecture that handles multi-hop Biblical cross-references and entity relationships."
+  - label: "SQL — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/SQL"
+    type: "wikipedia"
+    description: "Overview of SQL and relational databases — the complementary half of the hybrid architecture that handles content storage, user data, and the joins that graph traversal alone cannot express."
+  - label: "Apache AGE — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Apache_AGE"
+    type: "wikipedia"
+    description: "According to this overview, Apache AGE integrates graph and relational capabilities within PostgreSQL — enabling the hybrid CTE patterns that join Cypher traversal results with relational verse text and user data."
+  - label: "Common Table Expression — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Hierarchical_and_recursive_queries_in_SQL"
+    type: "wikipedia"
+    description: "Overview of CTEs as a SQL structuring tool — the pattern used throughout this article to compose multi-step hybrid queries cleanly, separating graph traversal from relational enrichment."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

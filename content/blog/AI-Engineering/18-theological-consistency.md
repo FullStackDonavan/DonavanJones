@@ -283,4 +283,31 @@ Engineering consistency — position memory, tradition profiles, intra-response 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Systematic Theology — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Systematic_theology"
+    type: "wikipedia"
+    description: "According to this overview, systematic theology is the organized, internally coherent presentation of theological doctrine — the standard the AI system attempts to mirror across sessions."
+  - label: "Biblical Hermeneutics — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Biblical_hermeneutics"
+    type: "wikipedia"
+    description: "The discipline of principled scriptural interpretation — the framework within which theological consistency has defined, accountable meaning."
+  - label: "Consistency (Database Systems) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Consistency_(database_systems)"
+    type: "wikipedia"
+    description: "Formal model for data consistency — the engineering analogy applied to maintaining stable theological positions across distributed session state."
+  - label: "Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2304.03442"
+    type: "doi"
+    description: "Research showing that agents with memory and reflection produce more consistent, coherent behavior over time — the precedent for longitudinal theological consistency."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

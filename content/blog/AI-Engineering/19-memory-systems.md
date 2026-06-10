@@ -461,4 +461,31 @@ Building it well is months of unglamorous work: extraction pipelines, schema des
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Episodic Memory — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Episodic_memory"
+    type: "wikipedia"
+    description: "Cognitive science definition of episodic memory — the model for event-based storage that the implementation tracks at the database level."
+  - label: "Semantic Memory — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Semantic_memory"
+    type: "wikipedia"
+    description: "According to this overview, semantic memory stores stable facts about the world — the cognitive model for the user profile extraction pipeline."
+  - label: "MemGPT: Towards LLMs as Operating Systems (Packer et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2310.08560"
+    type: "doi"
+    description: "Research on managing LLM memory using OS-inspired paging — the most direct technical precedent for hierarchical memory tiers in production AI agents."
+  - label: "Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2304.03442"
+    type: "doi"
+    description: "Stanford research on agents with episodic memory and reflection pipelines — the architecture that the memory formation and extraction design is modeled on."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

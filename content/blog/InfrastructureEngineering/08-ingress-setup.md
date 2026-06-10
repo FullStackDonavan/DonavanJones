@@ -164,4 +164,31 @@ Once it is stable, you stop thinking in terms of individual nodes and start thin
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Nginx — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Nginx"
+    type: "wikipedia"
+    description: "According to this overview, nginx is a high-performance web server and reverse proxy — the software used as the Kubernetes ingress controller routing external traffic to cluster services."
+  - label: "Reverse Proxy — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Reverse_proxy"
+    type: "wikipedia"
+    description: "Overview of reverse proxy architecture — the pattern that ingress controllers implement: a single entry point that routes incoming requests to the correct backend service based on hostname and path rules."
+  - label: "Transport Layer Security — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Transport_Layer_Security"
+    type: "wikipedia"
+    description: "According to this overview, TLS encrypts network traffic between clients and servers — the protocol configured via cert-manager for services exposed through the cluster ingress."
+  - label: "Domain Name System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Domain_Name_System"
+    type: "wikipedia"
+    description: "Overview of DNS — the resolution layer that maps hostnames like app.local to the ingress IP, enabling browser access to cluster services by name rather than raw IP address."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

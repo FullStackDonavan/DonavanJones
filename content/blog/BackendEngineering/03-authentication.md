@@ -154,4 +154,31 @@ Build it once, build it right, and let every other service trust it.
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "JSON Web Token — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/JSON_Web_Token"
+    type: "wikipedia"
+    description: "According to this overview, JWTs are compact, signed tokens for conveying claims between parties — the token format used for access tokens in this auth system."
+  - label: "OAuth 2.0 — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/OAuth"
+    type: "wikipedia"
+    description: "Overview of the OAuth authorization framework — the standard the Google social login flow implements, including PKCE for the authorization code exchange."
+  - label: "Bcrypt — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Bcrypt"
+    type: "wikipedia"
+    description: "According to this overview, bcrypt is an adaptive password hashing function — the algorithm used at cost factor 12 to protect stored credentials against brute-force attacks."
+  - label: "Cross-Site Scripting — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cross-site_scripting"
+    type: "wikipedia"
+    description: "Definition of XSS — the attack vector that motivated moving refresh tokens from localStorage to HttpOnly cookies."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

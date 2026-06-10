@@ -207,4 +207,27 @@ Frameworks are most valuable when their assumptions match your problem. AutoGen'
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation (Wu et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2308.08155"
+    type: "doi"
+    description: "Original Microsoft Research paper introducing AutoGen — covers the conversational agent model and GroupChat coordination pattern."
+  - label: "Multi-Agent System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Multi-agent_system"
+    type: "wikipedia"
+    description: "Background on multi-agent architectures — the broader category AutoGen implements through conversational message passing."
+  - label: "Software Agent — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Software_agent"
+    type: "wikipedia"
+    description: "Formal definition of a software agent and its properties — the conceptual unit AutoGen's AssistantAgent and UserProxyAgent instantiate."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

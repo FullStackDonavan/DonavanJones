@@ -92,4 +92,31 @@ It also creates a strong foundation for future expansion, such as AI-driven CI a
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "CI/CD — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/CI/CD"
+    type: "wikipedia"
+    description: "According to this overview, CI/CD automates building, testing, and deploying software — the workflow the Gitea runner pipeline implements inside the homelab cluster."
+  - label: "Gitea — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Gitea"
+    type: "wikipedia"
+    description: "Overview of Gitea as a self-hosted Git service — the source control platform acting as the central orchestration layer that triggers builds, deployments, and infrastructure updates across the cluster."
+  - label: "DevOps — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/DevOps"
+    type: "wikipedia"
+    description: "According to this overview, DevOps integrates development and operations through automation — the practice the Gitea runner pipeline embodies, turning code commits into automated cluster deployments."
+  - label: "Continuous Delivery — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Continuous_delivery"
+    type: "wikipedia"
+    description: "Overview of continuous delivery — the pipeline model where software is always in a deployable state, enabling the push-to-deploy workflow described for Kubernetes workloads in this article."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

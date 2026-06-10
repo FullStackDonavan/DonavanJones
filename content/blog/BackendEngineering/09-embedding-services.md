@@ -247,4 +247,31 @@ The patterns that matter most in practice: write-through consistency with a back
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Word Embedding — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Word_embedding"
+    type: "wikipedia"
+    description: "Overview of embedding model architecture — the technology the embedding service wraps with batching, caching, rate limiting, and consistency auditing."
+  - label: "MTEB: Massive Text Embedding Benchmark (Muennighoff et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2210.07316"
+    type: "doi"
+    description: "According to this benchmark, embedding model performance varies significantly by task — the basis for model selection decisions and evaluation methodology described in this article."
+  - label: "Eventual Consistency — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Eventual_consistency"
+    type: "wikipedia"
+    description: "The consistency model used between Postgres and the vector store — understanding eventual consistency clarifies why a background auditor rather than two-phase commit is the right architecture."
+  - label: "Rate Limiting — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Rate_limiting"
+    type: "wikipedia"
+    description: "According to this overview, rate limiting controls throughput to prevent exceeding API quotas — the proactive throttling strategy used to avoid 429 errors from the embedding API."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

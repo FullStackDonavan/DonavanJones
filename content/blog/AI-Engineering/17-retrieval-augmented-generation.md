@@ -206,4 +206,31 @@ RAG is not a feature or a product — it is a system discipline. Every component
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "Overview of the RAG pattern, its components, and its role in grounding generative AI responses in external knowledge."
+  - label: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Lewis et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2005.11401"
+    type: "doi"
+    description: "The original RAG paper from Meta AI — introduced the retrieve-then-generate architecture and demonstrated its advantages over purely parametric models."
+  - label: "Dense Passage Retrieval for Open-Domain QA (Karpukhin et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2004.04906"
+    type: "doi"
+    description: "According to this research, dense retrieval is the component that makes RAG work — showing bi-encoder retrieval outperforms BM25 for open-domain questions."
+  - label: "Information Retrieval — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Information_retrieval"
+    type: "wikipedia"
+    description: "Foundational discipline covering document indexing, ranking, and relevance — the theoretical underpinning of the retrieval side of RAG."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

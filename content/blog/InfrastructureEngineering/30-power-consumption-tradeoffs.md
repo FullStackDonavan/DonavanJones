@@ -130,4 +130,31 @@ A well-designed homelab isn’t just powerful. It’s intentionally powered.
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Power Consumption — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Electric_power"
+    type: "wikipedia"
+    description: "According to this overview, power consumption is the rate at which electrical energy is used — the metric that differentiates the ~5W Raspberry Pi cluster nodes from the ~350W RTX 3090 development machine in the homelab budget."
+  - label: "Raspberry Pi — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi"
+    type: "wikipedia"
+    description: "Overview of Raspberry Pi hardware — the low-power ARM single-board computers whose combined idle draw of under 30W makes them the energy-efficient backbone of the always-on cluster layer."
+  - label: "GPU Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units"
+    type: "wikipedia"
+    description: "According to this overview, GPU computing provides parallel processing for AI workloads — the high-draw hardware whose power profile justifies running AI inference only on demand rather than continuously."
+  - label: "Energy Efficiency — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Energy_efficiency_in_computing"
+    type: "wikipedia"
+    description: "Overview of energy efficiency in computing — the dimension that motivates the hybrid homelab architecture: lightweight Pi nodes for continuous services and GPU compute only when inference or training requires it."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

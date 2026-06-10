@@ -258,4 +258,31 @@ Semantic retrieval feels solved once the infrastructure is in place. It is not �
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Semantic Similarity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Semantic_similarity"
+    type: "wikipedia"
+    description: "Defines the semantic similarity concept that embedding-based retrieval operationalizes — and its limits as a proxy for relevance."
+  - label: "Okapi BM25 — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Okapi_BM25"
+    type: "wikipedia"
+    description: "According to this overview, BM25 is the sparse keyword retrieval baseline that dense semantic search is benchmarked against — and often combined with via hybrid search."
+  - label: "Cosine Similarity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cosine_similarity"
+    type: "wikipedia"
+    description: "The distance metric used in semantic retrieval — understanding it clarifies why topically related but lexically distant content is found or missed."
+  - label: "Dense Passage Retrieval for Open-Domain QA (Karpukhin et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2004.04906"
+    type: "doi"
+    description: "Established that dense retrieval outperforms BM25 for natural language questions — the evidence base for semantic retrieval over keyword search."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

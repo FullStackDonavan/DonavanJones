@@ -101,4 +101,31 @@ Rather than treating networking as a theoretical subject, I now see it as the in
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "OSI Model — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/OSI_model"
+    type: "wikipedia"
+    description: "According to this overview, the OSI model provides a layered framework for understanding network communication — the mental model used to systematically debug issues across physical, IP, transport, and application layers."
+  - label: "Computer Network — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_network"
+    type: "wikipedia"
+    description: "Overview of computer networking — the foundational discipline whose practical mastery is the subject of this article, developed through hands-on management of the homelab rack's physical and virtual networking."
+  - label: "Distributed Systems — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "According to this overview, distributed systems communicate over networks with no shared memory — the context in which networking skill matters most, since every inter-service call depends on the network being correct and predictable."
+  - label: "Kubernetes Networking — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Networking"
+    type: "wikipedia"
+    description: "Overview of Kubernetes networking — the virtual network layer that application networking skill must understand to configure services, ingress, and CNI correctly across a multi-node cluster."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

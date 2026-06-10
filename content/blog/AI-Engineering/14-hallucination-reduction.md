@@ -269,4 +269,31 @@ The platform's ultimate responsibility is not to produce right answers — it is
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Hallucination (Artificial Intelligence) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)"
+    type: "wikipedia"
+    description: "According to this overview, AI hallucination is the generation of plausible-sounding but factually incorrect content — the core problem this article addresses."
+  - label: "TruthfulQA: Measuring How Models Mimic Human Falsehoods (Lin et al., 2021)"
+    url: "https://doi.org/10.48550/arXiv.2109.07958"
+    type: "doi"
+    description: "Research establishing a benchmark for measuring model truthfulness — shows that larger models are not automatically more truthful."
+  - label: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Lewis et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2005.11401"
+    type: "doi"
+    description: "The original RAG paper — established that retrieval-grounded generation reduces factual errors compared to parametric-only generation."
+  - label: "FActScoring: Fine-Grained Atomic Evaluation of Factual Precision (Min et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2305.14251"
+    type: "doi"
+    description: "Methodology for measuring hallucination at the atomic claim level — the evaluation approach applied to detect doctrinal and textual errors."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

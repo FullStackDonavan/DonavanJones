@@ -130,4 +130,31 @@ ARM64 has become an important part of modern self-hosted infrastructure because 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "ARM Architecture Family — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/ARM_architecture_family"
+    type: "wikipedia"
+    description: "According to this overview, ARM is a RISC instruction set architecture — the CPU design used by Raspberry Pi hardware that determines compatibility, image requirements, and performance characteristics for K3s workloads."
+  - label: "Cross Compilation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cross_compiler"
+    type: "wikipedia"
+    description: "Overview of cross-compilation — the process of building software on one architecture (x86) for execution on another (ARM64), relevant when developing on a desktop machine and deploying to Raspberry Pi nodes."
+  - label: "Multi-Architecture Container Images — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Docker_(software)"
+    type: "wikipedia"
+    description: "According to this overview, Docker Buildx enables multi-architecture image builds — the tool used to produce containers that run identically on both ARM64 cluster nodes and x86 development machines."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "Overview of edge computing — the deployment context in which ARM64 advantages (low power, small form factor, affordable scaling) are most compelling for always-on homelab infrastructure."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

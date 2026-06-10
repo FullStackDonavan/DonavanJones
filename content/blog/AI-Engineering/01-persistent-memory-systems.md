@@ -214,4 +214,39 @@ That specificity is what persistent memory makes possible. It is what makes an A
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Authoritative Sources"
+links:
+  - label: "Episodic Memory — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Episodic_memory"
+    type: "wikipedia"
+    description: "Foundational cognitive science definition of episodic memory — the basis for event-based AI memory design."
+  - label: "Semantic Memory — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Semantic_memory"
+    type: "wikipedia"
+    description: "Cognitive science background on semantic memory — the model for persistent user-profile knowledge in AI agents."
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "Overview of RAG architecture — the retrieval pattern underlying semantic memory injection at inference time."
+  - label: "Vector Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Vector_database"
+    type: "wikipedia"
+    description: "Explains vector similarity search, which powers semantic memory retrieval in embedding-based architectures."
+  - label: "Attention Is All You Need (Vaswani et al., 2017)"
+    url: "https://doi.org/10.48550/arXiv.1706.03762"
+    type: "doi"
+    description: "Original transformer paper — foundational to understanding context window constraints that motivate external memory."
+  - label: "Generative Agents: Interactive Simulacra of Human Behavior"
+    url: "https://doi.org/10.48550/arXiv.2304.03442"
+    type: "doi"
+    description: "Stanford research on AI agents with persistent memory, reflection, and planning — direct academic precedent for memory architecture patterns."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

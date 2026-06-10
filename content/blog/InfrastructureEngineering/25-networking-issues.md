@@ -177,4 +177,31 @@ As your rack grows—with CI/CD runners, Gitea, AI workloads, and additional ser
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Computer Network — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_network"
+    type: "wikipedia"
+    description: "According to this overview, a computer network connects devices through shared communication protocols — understanding the layered network model is essential for systematic debugging of the Kubernetes networking issues described in this article."
+  - label: "CoreDNS — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/CoreDNS"
+    type: "wikipedia"
+    description: "Overview of CoreDNS — the Kubernetes cluster DNS whose crash or misconfiguration is one of the most common causes of pod networking failures, particularly in homelab environments using Pi-hole or custom upstream resolvers."
+  - label: "Container Network Interface — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Container_Network_Interface"
+    type: "wikipedia"
+    description: "According to this overview, CNI plugins implement pod networking in Kubernetes — Flannel and Calico are the most common CNI implementations whose misconfiguration causes the inter-pod communication failures described in this article."
+  - label: "Flannel — GitHub"
+    url: "https://github.com/flannel-io/flannel"
+    type: "edu"
+    description: "Flannel is the default CNI networking layer in K3s clusters — the software responsible for VXLAN overlay networking whose VXLAN port requirements and subnet configuration are common sources of networking issues."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

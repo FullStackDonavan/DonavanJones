@@ -123,4 +123,31 @@ Over time, this architecture will evolve into a more production-like environment
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Raspberry Pi — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi"
+    type: "wikipedia"
+    description: "According to this overview, Raspberry Pi is a low-cost single-board computer — the primary cluster node hardware used across the homelab rack described in this article."
+  - label: "Single-Board Computer — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Single-board_computer"
+    type: "wikipedia"
+    description: "Overview of single-board computers — the hardware category that makes distributed ARM64 clusters affordable compared to enterprise server equipment."
+  - label: "Graphics Processing Unit — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graphics_processing_unit"
+    type: "wikipedia"
+    description: "According to this overview, GPUs provide massively parallel compute — the role of the RTX 3090 development machine in the rack's AI inference and experimentation layer."
+  - label: "Server Rack — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/19-inch_rack"
+    type: "wikipedia"
+    description: "Overview of server rack standards — the physical organization format used to mount and manage cluster nodes, networking equipment, and power systems in the homelab."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

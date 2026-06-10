@@ -91,4 +91,31 @@ K3s is one of the easiest ways to get a reliable Kubernetes control plane runnin
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "K3s — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/K3s"
+    type: "wikipedia"
+    description: "According to this overview, K3s is a lightweight, certified Kubernetes distribution — the software installed on the Raspberry Pi control plane node described in this article."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes and its control plane components — understanding the upstream project helps clarify why K3s bundles etcd, the API server, and the scheduler into a single binary."
+  - label: "Systemd — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Systemd"
+    type: "wikipedia"
+    description: "According to this overview, systemd is the init system that manages Linux services — K3s registers as a systemd service so the control plane starts automatically on boot and restarts on failure."
+  - label: "Container Orchestration — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Architecture"
+    type: "wikipedia"
+    description: "Overview of container orchestration architecture — the scheduling, health-checking, and API-serving roles handled by the control plane node that this article installs."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

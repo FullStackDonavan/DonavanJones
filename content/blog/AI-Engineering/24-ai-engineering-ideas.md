@@ -93,4 +93,31 @@ There is more to build. There will always be more to build. That is not a compla
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Artificial Intelligence — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Artificial_intelligence"
+    type: "wikipedia"
+    description: "According to this overview, AI is the simulation of human intelligence in machines — the field that the entire Bible study platform architecture draws from."
+  - label: "Software Engineering — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Software_engineering"
+    type: "wikipedia"
+    description: "The discipline of designing and building reliable software systems — the foundational practice the AI Engineering series applies to intelligent system construction."
+  - label: "Machine Learning — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Machine_learning"
+    type: "wikipedia"
+    description: "Overview of machine learning — the subfield of AI that all the platform's inference, retrieval, and embedding components are built on."
+  - label: "Retrieval-Augmented Generation (Lewis et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2005.11401"
+    type: "doi"
+    description: "The foundational paper for the platform's core architecture — a direct reference point for the retrospective on what worked and why."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

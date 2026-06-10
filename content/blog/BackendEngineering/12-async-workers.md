@@ -278,4 +278,31 @@ Async workers are invisible when they work and highly visible when they do not. 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Message Queue — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Message_queue"
+    type: "wikipedia"
+    description: "According to this overview, message queues decouple producers from consumers in asynchronous processing — the conceptual foundation for the Postgres-backed job queue described in this article."
+  - label: "Job Queue — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Job_queue"
+    type: "wikipedia"
+    description: "Overview of job queue patterns — the model for scheduling, claiming, and processing background work used across embedding, inference, OCR, and notification workers."
+  - label: "Idempotence — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Idempotence"
+    type: "wikipedia"
+    description: "According to this overview, an idempotent operation produces the same result regardless of repetition — the property required for safe job retries when at-least-once delivery is guaranteed."
+  - label: "Concurrency (Computer Science) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Concurrency_(computer_science)"
+    type: "wikipedia"
+    description: "Overview of concurrent execution — the model behind worker concurrency settings and FOR UPDATE SKIP LOCKED, which allow multiple worker processes to claim jobs without coordination."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

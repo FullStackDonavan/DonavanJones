@@ -246,4 +246,31 @@ If you are learning algorithms and data structures, this is one of the first opt
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Hash Table — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Hash_table"
+    type: "wikipedia"
+    description: "According to this overview, hash tables provide O(1) average-case lookup — the data structure that makes frequency counter patterns faster than nested loops."
+  - label: "Time Complexity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Time_complexity"
+    type: "wikipedia"
+    description: "Formal definition of time complexity — the framework for understanding why O(n) with a frequency counter outperforms O(n²) with nested loops."
+  - label: "Anagram — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Anagram"
+    type: "wikipedia"
+    description: "Definition of an anagram — the canonical problem used to demonstrate the frequency counter pattern in practice."
+  - label: "Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Algorithm"
+    type: "wikipedia"
+    description: "According to this overview, an algorithm is a finite sequence of instructions for solving a problem — the broader category the frequency counter pattern belongs to."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

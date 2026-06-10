@@ -112,6 +112,33 @@ Learning this pattern will help you better understand advanced algorithms, impro
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Divide-and-Conquer Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm"
+    type: "wikipedia"
+    description: "According to this overview, divide and conquer recursively breaks problems into subproblems until they are trivially solvable — the formal model the pattern implements."
+  - label: "Master Theorem (Analysis of Algorithms) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)"
+    type: "wikipedia"
+    description: "The theorem used to derive time complexity for divide-and-conquer recurrences — explains how O(n log n) emerges from splitting and merging."
+  - label: "Merge Sort — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Merge_sort"
+    type: "wikipedia"
+    description: "The canonical divide-and-conquer sorting algorithm — a concrete application of the pattern with well-documented O(n log n) complexity analysis."
+  - label: "Big O Notation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Big_O_notation"
+    type: "wikipedia"
+    description: "The formal notation for expressing algorithm complexity — required for analyzing the performance gains divide-and-conquer provides over brute-force approaches."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*
 
 

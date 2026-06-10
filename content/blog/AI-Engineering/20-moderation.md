@@ -330,4 +330,31 @@ Moderation is not a feature you build once. It is a process you operate continuo
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Content Moderation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Content_moderation"
+    type: "wikipedia"
+    description: "Overview of content moderation approaches and harm taxonomies — the baseline framework that theological moderation extends for domain-specific risks."
+  - label: "AI Safety — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/AI_safety"
+    type: "wikipedia"
+    description: "According to this overview, AI safety is the field concerned with preventing unintended or harmful model behavior — the broader discipline that platform moderation falls under."
+  - label: "Constitutional AI: Harmlessness from AI Feedback (Bai et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2212.08073"
+    type: "doi"
+    description: "Anthropic research on encoding behavioral principles directly into model responses — the approach adapted for doctrinal guardrails and pastoral sensitivity."
+  - label: "Pastoral Care — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Pastoral_care"
+    type: "wikipedia"
+    description: "Definition of pastoral care — the human support practice the moderation system must recognize and redirect to, rather than simulate."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

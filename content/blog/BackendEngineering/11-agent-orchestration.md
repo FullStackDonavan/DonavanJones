@@ -223,4 +223,31 @@ The next article covers async workers more broadly — the infrastructure layer 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Multi-Agent System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Multi-agent_system"
+    type: "wikipedia"
+    description: "According to this overview, a multi-agent system coordinates multiple AI agents to accomplish goals — the architecture underlying the agent orchestration framework described in this article."
+  - label: "Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)"
+    url: "https://doi.org/10.1145/3586183.3606763"
+    type: "doi"
+    description: "Seminal paper on multi-step agent architectures — the research that established durable state, tool use, and observable execution traces as key agent design principles."
+  - label: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation (Wu et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2308.08155"
+    type: "doi"
+    description: "According to this paper, AutoGen demonstrates that multi-agent conversation with explicit task graphs significantly improves complex task completion — the inspiration for the task graph orchestration model."
+  - label: "Workflow — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Workflow"
+    type: "wikipedia"
+    description: "Overview of workflow systems — the conceptual model behind the task graph: explicit steps, dependencies, and state transitions that define how multi-step agent jobs execute."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

@@ -156,4 +156,31 @@ As the cluster evolves, pod layout will continue to be one of the most important
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes schedules pods across nodes based on resource requests, affinity rules, and taints — the mechanisms that implement the pod layout strategy described in this article."
+  - label: "Scheduling (Computing) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Scheduling_(computing)"
+    type: "wikipedia"
+    description: "Overview of scheduling — the process Kubernetes uses to match pods to nodes, informed by resource availability, node selectors, and affinity rules that control where stateful and stateless workloads land."
+  - label: "Separation of Concerns — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Separation_of_concerns"
+    type: "wikipedia"
+    description: "According to this overview, separation of concerns reduces coupling by giving each system component a single clear responsibility — the design principle behind separating stateful database pods from stateless API pods across cluster nodes."
+  - label: "Container (Virtualization) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Containerization_(computing)"
+    type: "wikipedia"
+    description: "Overview of containerization — the packaging model that makes pod layout decisions meaningful, since containers encapsulate resource requirements that the scheduler must fit within node capacity."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

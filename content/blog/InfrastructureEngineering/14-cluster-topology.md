@@ -236,5 +236,32 @@ For my homelab, the focus is on building a practical infrastructure platform tha
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Network Topology — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_topology"
+    type: "wikipedia"
+    description: "According to this overview, network topology describes the arrangement of nodes and links in a network — the design principle applied to separating control plane, worker, and GPU nodes in the homelab cluster."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes node types and scheduling — understanding the platform's scheduling model clarifies why topology decisions (which workloads land on which nodes) directly affect performance and stability."
+  - label: "High Availability — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/High_availability"
+    type: "wikipedia"
+    description: "According to this overview, high availability minimizes downtime by eliminating single points of failure — the topology principle motivating control plane isolation and modular growth planning."
+  - label: "ARM Architecture Family — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/ARM_architecture_family"
+    type: "wikipedia"
+    description: "Overview of ARM architecture — the hardware platform of the Raspberry Pi worker nodes, whose power and compute constraints directly inform the topology decisions described in this article."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*
 

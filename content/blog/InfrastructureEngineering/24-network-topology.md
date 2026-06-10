@@ -76,4 +76,31 @@ As the infrastructure evolves, the next steps include deeper network segmentatio
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Network Topology — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_topology"
+    type: "wikipedia"
+    description: "According to this overview, network topology describes the physical and logical arrangement of network nodes — the design concept underlying the homelab's switch, uplink, and internal cluster traffic layout."
+  - label: "Virtual LAN — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/VLAN"
+    type: "wikipedia"
+    description: "Overview of VLANs — the network segmentation technology planned for future expansion to isolate cluster traffic, storage replication, and ingress flows from each other."
+  - label: "Kubernetes Networking — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Networking"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes networking gives every pod a unique IP and provides service-level DNS — the virtual network layer overlaid on the physical switch topology described in this article."
+  - label: "Network Switch — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_switch"
+    type: "wikipedia"
+    description: "Overview of network switches — the central switching hardware connecting all Raspberry Pi nodes, the GPU development machine, and the router uplink into a single internal cluster network."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

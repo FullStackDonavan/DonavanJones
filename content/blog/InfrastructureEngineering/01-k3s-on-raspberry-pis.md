@@ -99,4 +99,31 @@ My Raspberry Pi K3s cluster forms the foundation of my homelab rack, giving me a
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "K3s — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/K3s"
+    type: "wikipedia"
+    description: "According to this overview, K3s is a lightweight, certified Kubernetes distribution designed for resource-constrained environments — the orchestration layer running across the Raspberry Pi cluster described in this article."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes as a container orchestration system — the upstream project that K3s packages for ARM64 homelab and edge environments."
+  - label: "Raspberry Pi — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi"
+    type: "wikipedia"
+    description: "According to this overview, Raspberry Pi is a low-cost single-board computer — the ARM64 hardware forming the physical compute layer of the homelab cluster."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "Overview of edge computing — the architectural model that motivates running Kubernetes locally on low-power hardware rather than delegating all compute to cloud providers."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

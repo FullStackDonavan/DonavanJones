@@ -212,4 +212,31 @@ Notifications are infrastructure that users rarely notice when it works and imme
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Push Technology — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Push_technology"
+    type: "wikipedia"
+    description: "According to this overview, push technology delivers content to users without a request — the model for all three notification channels: WebSocket, push, and email."
+  - label: "WebSocket — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/WebSocket"
+    type: "wikipedia"
+    description: "Overview of WebSocket — the persistent bidirectional connection used for real-time in-app notification delivery."
+  - label: "Firebase Cloud Messaging — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Firebase_Cloud_Messaging"
+    type: "wikipedia"
+    description: "Overview of FCM — the Android push notification service used alongside APNs for cross-platform device delivery."
+  - label: "Idempotence — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Idempotence"
+    type: "wikipedia"
+    description: "According to this overview, an idempotent operation produces the same result regardless of how many times it is applied — the property enforced via notification IDs to prevent duplicate deliveries."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

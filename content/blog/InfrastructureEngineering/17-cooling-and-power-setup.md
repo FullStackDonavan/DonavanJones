@@ -111,4 +111,31 @@ The goal moving forward is simple: keep the infrastructure boring. If cooling an
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Thermal Management (Electronics) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Thermal_management_(electronics)"
+    type: "wikipedia"
+    description: "According to this overview, thermal management prevents electronic components from overheating — the concern that motivates structured airflow and heat sink selection for Raspberry Pi nodes running continuous workloads."
+  - label: "Uninterruptible Power Supply — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Uninterruptible_power_supply"
+    type: "wikipedia"
+    description: "Overview of UPS systems — the power protection used to keep the K3s control plane alive during outages and enable graceful shutdown before data corruption occurs in PostgreSQL and vector databases."
+  - label: "Power Management — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Power_management"
+    type: "wikipedia"
+    description: "According to this overview, power management controls energy consumption in computing systems — the practice of distributing workloads between low-power Pi nodes and the high-draw GPU machine to prevent circuit overloads."
+  - label: "Data Center Cooling — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_cooling"
+    type: "wikipedia"
+    description: "Overview of computer cooling principles — understanding airflow patterns and thermal zones informs the homelab rack's physical layout, separating heat-generating GPU hardware from the always-on Pi cluster."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

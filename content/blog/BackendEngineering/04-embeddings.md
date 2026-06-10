@@ -171,4 +171,31 @@ Keeping them separate is what makes a model upgrade tractable: you run the new e
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Word Embedding — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Word_embedding"
+    type: "wikipedia"
+    description: "Overview of embedding models — the technology that converts text into dense vectors for semantic search and retrieval."
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "According to this overview, RAG uses embedding-based retrieval to inject relevant context at inference time — the use case this embedding service was built to serve."
+  - label: "Sentence-BERT: Sentence Embeddings Using Siamese BERT-Networks (Reimers & Gurevych, 2019)"
+    url: "https://doi.org/10.48550/arXiv.1908.10084"
+    type: "doi"
+    description: "Introduced bi-encoder sentence embeddings for semantic similarity — the architecture class that OpenAI's text-embedding models build on."
+  - label: "Redis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Redis"
+    type: "wikipedia"
+    description: "Overview of Redis as an in-memory data store — the caching layer that reduces repeated embedding API calls for static content like Bible verses to near-zero cost."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

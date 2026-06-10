@@ -131,4 +131,31 @@ The real advantage is not just efficiency—it’s control. You’re building a 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "K3s — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/K3s"
+    type: "wikipedia"
+    description: "According to this overview, K3s is a certified Kubernetes distribution designed for resource-constrained environments — the lightweight distribution that makes real Kubernetes feasible on Raspberry Pi hardware without sacrificing compatibility."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of full Kubernetes — understanding what upstream Kubernetes includes helps clarify what K3s removes (external dependencies, heavy control plane) and why those removals matter for homelab deployments."
+  - label: "ARM Architecture Family — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/ARM_architecture_family"
+    type: "wikipedia"
+    description: "According to this overview, ARM processors provide energy-efficient compute — the hardware that K3s targets specifically, with native ARM64 binaries that allow Raspberry Pi clusters to run real Kubernetes workloads."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "Overview of edge computing — the deployment model that lightweight Kubernetes serves, enabling orchestration at the network edge on constrained hardware without the overhead of full Kubernetes or cloud dependencies."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

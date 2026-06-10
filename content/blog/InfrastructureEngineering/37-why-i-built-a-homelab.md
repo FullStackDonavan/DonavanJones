@@ -121,4 +121,31 @@ And as my Bible app, AI systems, and game ecosystem grow, this homelab grows wit
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Homelab — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Home_server"
+    type: "wikipedia"
+    description: "According to this overview, home servers and homelabs provide personal computing infrastructure for learning and self-hosting — the environment that motivated building a Kubernetes rack rather than depending on cloud platforms."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes — the orchestration platform that only makes practical sense once you deploy real workloads, making the homelab the most effective environment for actually learning how it works."
+  - label: "Self-Hosting — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Self-hosting_(web_services)"
+    type: "wikipedia"
+    description: "According to this overview, self-hosting runs services on infrastructure you control rather than third-party platforms — the philosophy behind building the homelab rack instead of renting cloud compute."
+  - label: "Infrastructure as Code — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Infrastructure_as_code"
+    type: "wikipedia"
+    description: "Overview of infrastructure as code — the practice that transforms a homelab from manual configuration into a reproducible, version-controlled system that mirrors real production engineering workflows."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

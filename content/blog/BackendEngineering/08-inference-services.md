@@ -244,4 +244,31 @@ Build the service like any other — clean boundaries, explicit contracts, obser
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Large Language Model — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Large_language_model"
+    type: "wikipedia"
+    description: "Overview of large language models — the probabilistic text generators that the inference service wraps with validation, routing, and cost controls."
+  - label: "Prompt Caching — Anthropic Documentation"
+    url: "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
+    type: "edu"
+    description: "According to Anthropic's documentation, prompt caching reduces input token costs by reusing static prompt prefixes — the technique achieving 40–60% cost reduction on repeated inference requests."
+  - label: "Circuit Breaker Pattern — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern"
+    type: "wikipedia"
+    description: "The design pattern used for the daily spend circuit breaker — preventing runaway cost by degrading or queuing non-critical requests when budget thresholds are reached."
+  - label: "Retrieval-Augmented Generation (Lewis et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2005.11401"
+    type: "doi"
+    description: "The original RAG paper — the architecture that makes inference quality dependent on retrieval quality, motivating the context budget management described in this article."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

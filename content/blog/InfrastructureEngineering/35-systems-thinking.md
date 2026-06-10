@@ -100,4 +100,31 @@ The goal is no longer just to “deploy things,” but to design a system that c
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Systems Thinking — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Systems_thinking"
+    type: "wikipedia"
+    description: "According to this overview, systems thinking analyzes how a system's parts interrelate and work over time — the discipline applied to homelab infrastructure design, where every architectural decision has downstream effects on other components."
+  - label: "Distributed Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "Overview of distributed computing — the paradigm in which systems thinking becomes essential, since failures in one service propagate through the network to dependent services in non-obvious ways."
+  - label: "Observability (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Observability_(software)"
+    type: "wikipedia"
+    description: "According to this overview, observability measures how well system state can be inferred from external outputs — the first-class design concern described as essential for understanding bottlenecks and failures in a distributed homelab."
+  - label: "Infrastructure as Code — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Infrastructure_as_code"
+    type: "wikipedia"
+    description: "Overview of infrastructure as code — the practice that operationalizes systems thinking, making infrastructure declarative and reproducible so every component's intended state is version-controlled and auditable."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

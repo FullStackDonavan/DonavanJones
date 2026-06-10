@@ -274,4 +274,31 @@ If none of these apply, a single well-prompted agent call is the better choice. 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Multi-Agent System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Multi-agent_system"
+    type: "wikipedia"
+    description: "Overview of multi-agent system architecture, communication patterns, and coordination mechanisms."
+  - label: "Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2304.03442"
+    type: "doi"
+    description: "Stanford research demonstrating how multiple coordinated AI agents produce coherent emergent behavior — foundational orchestration precedent."
+  - label: "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation (Wu et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2308.08155"
+    type: "doi"
+    description: "Microsoft Research paper introducing the AutoGen multi-agent conversation framework for complex task orchestration."
+  - label: "Workflow — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Workflow"
+    type: "wikipedia"
+    description: "General principles of workflow design and task sequencing — the conceptual model behind agent pipeline orchestration."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

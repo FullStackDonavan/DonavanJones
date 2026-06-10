@@ -129,4 +129,31 @@ As my rack continues to evolve, self-hosted Git remains one of the foundational 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Gitea — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Gitea"
+    type: "wikipedia"
+    description: "According to this overview, Gitea is a lightweight self-hosted Git service — the platform running inside the K3s cluster as the central coordination layer for source control, CI/CD triggers, and infrastructure-as-code."
+  - label: "Version Control — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Version_control"
+    type: "wikipedia"
+    description: "Overview of version control — the foundational practice that Git implements, enabling the infrastructure-as-code workflow where Kubernetes manifests, Helm charts, and CI pipeline definitions are tracked alongside application code."
+  - label: "DevOps — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/DevOps"
+    type: "wikipedia"
+    description: "According to this overview, DevOps bridges development and operations through shared tooling and automation — the philosophy that self-hosted Git enables by making version control an active part of deployment infrastructure."
+  - label: "Self-Hosting — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Self-hosting_(web_services)"
+    type: "wikipedia"
+    description: "Overview of self-hosting web services — the practice that keeps the Git server under full control, enabling custom webhook triggers, AI-assisted CI pipelines, and infrastructure-as-code workflows impossible on SaaS platforms."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

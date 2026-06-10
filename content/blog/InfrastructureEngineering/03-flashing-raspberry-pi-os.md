@@ -85,4 +85,31 @@ Flashing Raspberry Pi OS is more than just imaging an SD card—it is the first 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Raspberry Pi OS — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi_OS"
+    type: "wikipedia"
+    description: "According to this overview, Raspberry Pi OS is the official Debian-based operating system for Raspberry Pi hardware — the foundation flashed onto each cluster node before K3s installation."
+  - label: "Disk Image — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Disk_image"
+    type: "wikipedia"
+    description: "Overview of disk imaging — the process used to write OS images to SD cards and SSDs, enabling reproducible node setup across the homelab cluster."
+  - label: "Secure Shell — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Secure_Shell"
+    type: "wikipedia"
+    description: "According to this overview, SSH provides encrypted remote shell access — the protocol used to configure and manage each Raspberry Pi node after flashing, enabling headless operation."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "Overview of edge computing — the deployment model motivating reproducible, standardized node setup so each Pi becomes an interchangeable compute unit in the distributed cluster."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

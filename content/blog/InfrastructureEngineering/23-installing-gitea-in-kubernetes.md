@@ -179,4 +179,31 @@ Installing Gitea in Kubernetes is a solid fit for a homelab rack because it keep
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Gitea — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Gitea"
+    type: "wikipedia"
+    description: "According to this overview, Gitea is a lightweight self-hosted Git service — the application installed in Kubernetes to provide source control, CI/CD triggers, and repository management inside the homelab cluster."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes Deployments, Services, and Ingress — the three resource types combined to install, expose, and route traffic to Gitea inside the cluster."
+  - label: "Persistent Volume — Kubernetes Documentation"
+    url: "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+    type: "edu"
+    description: "According to Kubernetes documentation, PersistentVolumes and PersistentVolumeClaims provide durable storage for pods — the mechanism used to persist Gitea repository data across pod restarts and redeployments."
+  - label: "Ingress — Kubernetes Documentation"
+    url: "https://kubernetes.io/docs/concepts/services-networking/ingress/"
+    type: "edu"
+    description: "Overview of Kubernetes Ingress — the resource that routes external HTTP traffic to Gitea's internal service by hostname, making the Git UI reachable from the local network."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

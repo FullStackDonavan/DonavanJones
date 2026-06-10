@@ -365,4 +365,31 @@ The combination of user feedback and automated metrics keeps the narration quali
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Text-to-Speech — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Text-to-speech"
+    type: "wikipedia"
+    description: "According to this overview, text-to-speech synthesis converts written text to spoken audio — the core technology the voice narration pipeline is built on."
+  - label: "Speech Synthesis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Speech_synthesis"
+    type: "wikipedia"
+    description: "Technical overview of speech synthesis methods — covering the neural TTS architectures that modern narration systems like ElevenLabs use."
+  - label: "Lectio Divina — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Lectio_divina"
+    type: "wikipedia"
+    description: "The ancient Christian practice of slow, meditative oral scripture reading — the tradition that audio Bible narration is designed to support in a modern context."
+  - label: "Natural Language Processing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Natural_language_processing"
+    type: "wikipedia"
+    description: "Foundational field covering text normalization, tokenization, and linguistic processing — the preprocessing layer that prepares theological text for TTS rendering."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

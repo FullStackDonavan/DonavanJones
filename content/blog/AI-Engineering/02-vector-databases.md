@@ -212,4 +212,35 @@ This architecture means the vector store can be treated as a cache with rebuild 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Vector Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Vector_database"
+    type: "wikipedia"
+    description: "Overview of vector database architecture, approximate nearest neighbor search, and use cases in AI systems."
+  - label: "Nearest Neighbor Search — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Nearest_neighbor_search"
+    type: "wikipedia"
+    description: "Foundational explanation of ANN search — the core operation all vector similarity retrieval is built on."
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "Overview of RAG architecture — the retrieval pattern this collection design directly supports."
+  - label: "Dense Passage Retrieval for Open-Domain QA (Karpukhin et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2004.04906"
+    type: "doi"
+    description: "Facebook AI research establishing dense vector retrieval as superior to sparse BM25 for open-domain question answering — foundational precedent for embedding-based knowledge retrieval."
+  - label: "Approximate Nearest Neighbors Oh Yeah (ANNOY) — GitHub"
+    url: "https://doi.org/10.48550/arXiv.1603.09320"
+    type: "doi"
+    description: "Influential work on approximate nearest neighbor indexing strategies that underpin modern vector store ANN engines."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

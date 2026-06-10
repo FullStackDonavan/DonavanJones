@@ -296,4 +296,31 @@ Every constraint in the system prompt on this platform exists because a version 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Prompt Engineering — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Prompt_engineering"
+    type: "wikipedia"
+    description: "According to this overview, prompt engineering is the practice of structuring inputs to elicit specific, reliable model behaviors — the discipline this article applies to theological AI."
+  - label: "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2201.11903"
+    type: "doi"
+    description: "Foundational research establishing that step-by-step reasoning instructions improve model performance on complex tasks — the evidence behind structured prompting."
+  - label: "Few-Shot Learning — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Few-shot_learning_(natural_language_processing)"
+    type: "wikipedia"
+    description: "Overview of few-shot in-context learning — the technique of providing examples in the prompt to guide model output format and behavior."
+  - label: "Constitutional AI: Harmlessness from AI Feedback (Bai et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2212.08073"
+    type: "doi"
+    description: "Anthropic research on using explicit principles in prompts to constrain model behavior — the approach adapted for theological epistemic constraints."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

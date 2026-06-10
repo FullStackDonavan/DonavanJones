@@ -48,4 +48,31 @@ Adding worker nodes to your K3s cluster is one of the simplest yet most powerful
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "K3s — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/K3s"
+    type: "wikipedia"
+    description: "According to this overview, K3s uses a token-based join mechanism to add agent nodes to an existing cluster — the installation pattern described in this article."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes node architecture — understanding control plane vs. worker node separation clarifies why agent nodes join the cluster rather than running their own API server."
+  - label: "Cluster Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_cluster"
+    type: "wikipedia"
+    description: "According to this overview, a computer cluster provides distributed compute by coordinating multiple nodes — the model that makes adding Raspberry Pi workers an effective way to expand homelab capacity."
+  - label: "ARM Architecture — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/ARM_architecture_family"
+    type: "wikipedia"
+    description: "Overview of ARM architecture — the instruction set used by Raspberry Pi hardware, which K3s natively supports with ARM64 binaries for both control plane and worker node roles."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

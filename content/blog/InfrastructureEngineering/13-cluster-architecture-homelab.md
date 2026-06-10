@@ -247,4 +247,31 @@ By combining self-hosted services, GPU-powered AI workloads, and automated deplo
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes provides container orchestration across clusters of nodes — the platform at the center of the homelab architecture coordinating all services and workloads."
+  - label: "Distributed Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "Overview of distributed computing — the paradigm the homelab cluster implements by spreading workloads across Raspberry Pi nodes and a dedicated GPU development machine."
+  - label: "Continuous Integration and Delivery — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/CI/CD"
+    type: "wikipedia"
+    description: "According to this overview, CI/CD automates building, testing, and deploying software — the Gitea runner pipeline described as a core layer of the homelab architecture."
+  - label: "GPU Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units"
+    type: "wikipedia"
+    description: "Overview of GPU computing — the capability the RTX 3090 development machine adds to the architecture for local AI inference, embedding generation, and model experimentation."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

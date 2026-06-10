@@ -281,4 +281,31 @@ Answer those correctly and the recursion will work.
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Recursion (Computer Science) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Recursion_(computer_science)"
+    type: "wikipedia"
+    description: "According to this overview, recursion is a method where the solution depends on solutions to smaller instances of the same problem — the formal definition the base case / recursive case pattern implements."
+  - label: "Call Stack — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Call_stack"
+    type: "wikipedia"
+    description: "Technical overview of the call stack — the runtime mechanism that manages recursive function frames and determines when a stack overflow occurs."
+  - label: "Tree Traversal — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Tree_traversal"
+    type: "wikipedia"
+    description: "Overview of recursive tree traversal algorithms — one of the most natural and common applications of recursive thinking in computer science."
+  - label: "Dynamic Programming — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Dynamic_programming"
+    type: "wikipedia"
+    description: "According to this overview, dynamic programming extends recursion with memoization to avoid redundant calls — the optimization applied to problems like Fibonacci with O(2ⁿ) naive recursion."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

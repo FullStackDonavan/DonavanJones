@@ -148,4 +148,31 @@ Once you understand Binary Search, it becomes easier to learn more advanced sear
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Binary Search Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Binary_search_algorithm"
+    type: "wikipedia"
+    description: "According to this overview, binary search achieves O(log n) by halving the search space on each comparison — the formal definition the implementation is based on."
+  - label: "Big O Notation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Big_O_notation"
+    type: "wikipedia"
+    description: "The formal notation for describing algorithm time and space complexity — the framework used to analyze binary search's logarithmic performance."
+  - label: "Search Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Search_algorithm"
+    type: "wikipedia"
+    description: "Overview of search algorithm categories — places binary search relative to linear and hash-based alternatives."
+  - label: "Sorted Array — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Sorted_array"
+    type: "wikipedia"
+    description: "According to this overview, a sorted array is the prerequisite data structure for binary search — the property that enables logarithmic lookup."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

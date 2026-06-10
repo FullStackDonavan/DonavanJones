@@ -96,4 +96,31 @@ Over time, this approach has made my cluster more predictable and easier to scal
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Observability (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Observability_(software)"
+    type: "wikipedia"
+    description: "According to this overview, observability is the ability to understand internal system state from external outputs — the property that kubectl logs, metrics, and health checks provide for the homelab cluster."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes operations and debugging — understanding the platform's resource model is essential for interpreting kubectl output and diagnosing pod, node, and network failures."
+  - label: "Log Management — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Log_management"
+    type: "wikipedia"
+    description: "According to this overview, log management involves collecting and analyzing system event records — the practice used with journalctl and kubectl logs to trace failures across Raspberry Pi cluster nodes."
+  - label: "Root Cause Analysis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Root_cause_analysis"
+    type: "wikipedia"
+    description: "Overview of root cause analysis — the structured debugging methodology applied to cluster failures, guiding diagnosis from symptoms through pod status, node health, and physical networking."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

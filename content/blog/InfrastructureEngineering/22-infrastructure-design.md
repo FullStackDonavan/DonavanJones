@@ -122,4 +122,31 @@ The real value is not in the hardware itself, but in the workflow it enables: ra
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Infrastructure as Code — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Infrastructure_as_code"
+    type: "wikipedia"
+    description: "According to this overview, infrastructure as code manages infrastructure through machine-readable configuration files — the practice of storing Kubernetes manifests and CI/CD definitions in Gitea repositories."
+  - label: "Microservices — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Microservices"
+    type: "wikipedia"
+    description: "Overview of microservices architecture — the design pattern the homelab infrastructure is built around, with each application component deployed as an independent containerized service."
+  - label: "DevOps — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/DevOps"
+    type: "wikipedia"
+    description: "According to this overview, DevOps bridges development and operations through shared tooling and automation — the philosophy behind designing for observability, reproducibility, and automation-first deployments."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes as an infrastructure platform — the orchestration layer that makes the modular, microservices-based design possible by handling scheduling, health checks, and service discovery automatically."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

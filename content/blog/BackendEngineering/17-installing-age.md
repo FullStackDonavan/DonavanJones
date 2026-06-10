@@ -363,4 +363,31 @@ AGE is now installed, the graph is created, and the extension is verified. The n
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Apache AGE — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Apache_AGE"
+    type: "wikipedia"
+    description: "According to this overview, Apache AGE is an extension that adds graph database capabilities to PostgreSQL — the foundation for the Biblical relationship graph described across this article series."
+  - label: "Graph Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graph_database"
+    type: "wikipedia"
+    description: "Overview of graph databases — the data model that natively represents entities and relationships as vertices and edges, enabling multi-hop traversal queries that relational joins handle poorly."
+  - label: "PostgreSQL — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/PostgreSQL"
+    type: "wikipedia"
+    description: "According to this overview, PostgreSQL is an extensible open-source relational database — the host system that AGE extends, allowing graph and relational data to coexist in a single database process."
+  - label: "Cypher (Query Language) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cypher_(query_language)"
+    type: "wikipedia"
+    description: "Overview of Cypher — the declarative graph query language that AGE implements inside Postgres, used for creating and traversing the Biblical entity graph described in subsequent articles."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

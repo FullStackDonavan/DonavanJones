@@ -248,4 +248,31 @@ The next article covers notifications — the other side of server-to-client com
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Server-Sent Events — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Server-sent_events"
+    type: "wikipedia"
+    description: "According to this overview, SSE is a standard for server-to-client push over HTTP — the protocol used to stream LLM token output to the browser in real time."
+  - label: "Chunked Transfer Encoding — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Chunked_transfer_encoding"
+    type: "wikipedia"
+    description: "The HTTP mechanism that enables streaming responses of unknown length — required for passing SSE streams through proxies like nginx."
+  - label: "WebSocket — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/WebSocket"
+    type: "wikipedia"
+    description: "The full-duplex alternative to SSE — understanding both protocols clarifies why SSE is the right choice for unidirectional token streaming."
+  - label: "Nginx — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Nginx"
+    type: "wikipedia"
+    description: "Overview of nginx as a reverse proxy — the layer that must be explicitly configured with proxy_buffering off to pass SSE streams through without buffering."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

@@ -180,4 +180,31 @@ OCR pipelines are not glamorous infrastructure. Nobody writes blog posts about t
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Optical Character Recognition — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Optical_character_recognition"
+    type: "wikipedia"
+    description: "According to this overview, OCR converts images of typed or handwritten text into machine-readable text — the core operation this pipeline implements for theological manuscripts."
+  - label: "Tesseract (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Tesseract_(software)"
+    type: "wikipedia"
+    description: "Overview of the Tesseract OCR engine — the open-source baseline for multi-script recognition in the manuscript processing pipeline."
+  - label: "Digital Humanities — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Digital_humanities"
+    type: "wikipedia"
+    description: "According to this overview, digital humanities applies computational tools to humanistic texts — the discipline that motivates digitizing physical theological manuscripts for AI-powered study."
+  - label: "Unicode Standard — Unicode Consortium"
+    url: "https://www.unicode.org/standard/standard.html"
+    type: "edu"
+    description: "The authoritative reference for character encoding — the standard that normalization and post-processing pipelines must conform to when handling mixed-script theological documents."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

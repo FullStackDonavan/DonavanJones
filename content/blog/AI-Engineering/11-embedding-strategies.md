@@ -269,4 +269,31 @@ Every embedding strategy decision in this article — HyDE, query rewriting, tit
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Word Embedding — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Word_embedding"
+    type: "wikipedia"
+    description: "Overview of word embedding models — the foundation of modern semantic retrieval and the starting point for sentence-level embeddings."
+  - label: "Sentence-BERT: Sentence Embeddings Using Siamese BERT-Networks (Reimers & Gurevych, 2019)"
+    url: "https://doi.org/10.48550/arXiv.1908.10084"
+    type: "doi"
+    description: "Introduced sentence-level bi-encoder embeddings for semantic similarity — the architecture class that all modern retrieval embeddings build on."
+  - label: "MTEB: Massive Text Embedding Benchmark (Muennighoff et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2210.07316"
+    type: "doi"
+    description: "According to this benchmark, embedding model performance varies significantly by task type — the basis for domain-specific model selection decisions."
+  - label: "Cosine Similarity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cosine_similarity"
+    type: "wikipedia"
+    description: "The distance metric underlying most embedding retrieval — understanding it is necessary to reason about why certain queries fail to retrieve relevant content."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

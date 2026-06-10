@@ -75,4 +75,31 @@ The goal of my homelab is no longer just experimentation—it is becoming a prod
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "High Availability — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/High_availability"
+    type: "wikipedia"
+    description: "According to this overview, high availability minimizes service disruption through redundancy and failover — the design goal driving plans for multi-node control planes and replicated services in the expanded cluster."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes scalability — understanding how the platform handles cluster growth informs the planned additions of GPU nodes, distributed storage, and expanded service mesh capabilities."
+  - label: "GPU Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units"
+    type: "wikipedia"
+    description: "According to this overview, GPU computing enables parallel processing for AI workloads — the capability planned for direct Kubernetes cluster integration, moving AI inference from a Docker-only node into the orchestrated stack."
+  - label: "Distributed Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "Overview of distributed computing — the architectural paradigm the expanded homelab is moving toward, with multi-node redundancy, distributed storage, and horizontally scaled services replacing the current single-control-plane design."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

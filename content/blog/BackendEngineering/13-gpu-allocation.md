@@ -177,4 +177,31 @@ This cost-versus-latency analysis is the right framework for GPU allocation deci
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Graphics Processing Unit — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graphics_processing_unit"
+    type: "wikipedia"
+    description: "According to this overview, GPUs provide massively parallel compute — the hardware characteristic that makes them orders of magnitude faster than CPUs for neural network inference workloads."
+  - label: "CUDA — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/CUDA"
+    type: "wikipedia"
+    description: "Overview of CUDA — NVIDIA's parallel computing platform and the runtime environment for GPU inference, kernel compilation, and VRAM management described in this article."
+  - label: "Multi-Instance GPU — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Multi-instance_GPU"
+    type: "wikipedia"
+    description: "According to this overview, MIG partitions a GPU into isolated slices with dedicated VRAM and compute — the technique used to share a single A10G GPU across multiple small local models."
+  - label: "Video RAM — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Video_RAM_(dual-ported_DRAM)"
+    type: "wikipedia"
+    description: "Background on GPU memory — understanding VRAM constraints and activation memory overhead is central to the MIG slice sizing decisions described in this article."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

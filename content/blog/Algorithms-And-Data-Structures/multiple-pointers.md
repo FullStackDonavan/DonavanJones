@@ -124,4 +124,31 @@ Learning this pattern will help build a stronger foundation in data structures, 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Two-Pointer Technique — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Two-pointer_technique"
+    type: "wikipedia"
+    description: "According to this overview, the two-pointer technique uses two index positions that move through a data structure to reduce nested loop complexity to O(n)."
+  - label: "Time Complexity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Time_complexity"
+    type: "wikipedia"
+    description: "Formal definition of time complexity — the framework for quantifying why eliminating nested loops with pointer movement reduces O(n²) to O(n)."
+  - label: "Sorted Array — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Sorted_array"
+    type: "wikipedia"
+    description: "Overview of sorted arrays — the data structure property that allows multiple pointer techniques to make directional moves with guaranteed correctness."
+  - label: "Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Algorithm"
+    type: "wikipedia"
+    description: "Foundational overview of algorithms — the broader context for understanding the multiple pointers pattern as a general-purpose optimization strategy."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

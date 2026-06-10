@@ -254,4 +254,31 @@ Batching is a tool for a specific problem. When the problem is there, it is one 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Batch Processing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Batch_processing"
+    type: "wikipedia"
+    description: "According to this overview, batch processing groups multiple units of work to amortize fixed overhead — the core principle behind the adaptive batch windows used for embedding, GPU inference, and vector store writes."
+  - label: "Throughput — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Throughput"
+    type: "wikipedia"
+    description: "Overview of throughput as a system metric — the dimension that batching optimizes by maximizing the number of items processed per unit of fixed overhead."
+  - label: "Amortized Analysis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Amortized_analysis"
+    type: "wikipedia"
+    description: "According to this overview, amortized analysis measures average cost per operation across a sequence — the theoretical basis for why batching reduces per-item cost when fixed overhead dominates variable cost."
+  - label: "Latency (Engineering) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Latency_(engineering)"
+    type: "wikipedia"
+    description: "Overview of latency as a system property — the dimension that batching trades against throughput, motivating the hybrid size-or-time batch window strategy described in this article."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

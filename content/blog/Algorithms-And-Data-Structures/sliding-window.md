@@ -203,4 +203,31 @@ Mastering this pattern will help you write more efficient and scalable JavaScrip
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Sliding Window Protocol — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Sliding_window_protocol"
+    type: "wikipedia"
+    description: "According to this overview, the sliding window concept originates in networking — managing a moving range of data without reprocessing the full set on each step."
+  - label: "Substring — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Substring"
+    type: "wikipedia"
+    description: "Definition of a substring — the core data structure that dynamic sliding window problems operate over when finding longest or shortest matching sequences."
+  - label: "Time Complexity — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Time_complexity"
+    type: "wikipedia"
+    description: "Formal definition of time complexity — the framework for explaining how the sliding window reduces O(n²) subarray iteration to O(n) by reusing prior computation."
+  - label: "Dynamic Programming — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Dynamic_programming"
+    type: "wikipedia"
+    description: "The algorithmic paradigm that shares the sliding window's core insight: avoid redundant work by reusing previously computed results."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

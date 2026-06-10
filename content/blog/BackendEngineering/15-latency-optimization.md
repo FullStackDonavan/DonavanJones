@@ -224,4 +224,31 @@ Latency optimization is never done — the system grows, new bottlenecks emerge,
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Latency (Engineering) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Latency_(engineering)"
+    type: "wikipedia"
+    description: "According to this overview, latency is the delay between a stimulus and a response — the system property this article systematically reduces through caching, parallelization, and connection pooling."
+  - label: "Cache (Computing) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cache_(computing)"
+    type: "wikipedia"
+    description: "Overview of caching as a latency strategy — the highest-leverage optimization category described in this article, spanning embedding caches, query caches, and HTTP response caches."
+  - label: "Connection Pool — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Connection_pool"
+    type: "wikipedia"
+    description: "According to this overview, connection pooling reuses existing database connections to avoid repeated establishment overhead — essential for keeping database latency below 5ms per query."
+  - label: "Distributed Tracing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Tracing_(software)"
+    type: "wikipedia"
+    description: "Overview of distributed tracing — the observability technique recommended as the first step before any latency optimization, to identify actual bottlenecks rather than guessing."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

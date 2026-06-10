@@ -294,4 +294,31 @@ The next two articles go deeper into two components of this pipeline: chunking s
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Biblical Hermeneutics — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Biblical_hermeneutics"
+    type: "wikipedia"
+    description: "According to this overview, hermeneutics is the discipline of interpreting scripture — the domain that theological retrieval systems must serve accurately."
+  - label: "Information Retrieval — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Information_retrieval"
+    type: "wikipedia"
+    description: "Foundational field covering relevance, precision, and recall — the metrics that define retrieval quality in theological AI systems."
+  - label: "Dense Passage Retrieval for Open-Domain QA (Karpukhin et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2004.04906"
+    type: "doi"
+    description: "Facebook AI research establishing dense vector retrieval as superior to sparse keyword matching for open-domain question answering."
+  - label: "Lexical Semantics — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Lexical_semantics"
+    type: "wikipedia"
+    description: "The study of word meaning — directly relevant to theological retrieval where single Greek or Hebrew terms carry dense, contested meaning."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

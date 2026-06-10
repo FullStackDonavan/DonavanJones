@@ -161,4 +161,31 @@ AI services are not special — they are just services with unusual performance 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "According to this overview, RAG retrieves relevant context before generation — the architectural pattern the inference service implements for grounded responses."
+  - label: "Software as a Service — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Software_as_a_service"
+    type: "wikipedia"
+    description: "Overview of service-oriented architecture — the model for designing AI inference as a standalone service with clear boundaries and observable internals."
+  - label: "Rate Limiting — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Rate_limiting"
+    type: "wikipedia"
+    description: "According to this overview, rate limiting controls resource consumption — essential for AI services where a single misbehaving request can generate significant unexpected cost."
+  - label: "Hallucination (Artificial Intelligence) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)"
+    type: "wikipedia"
+    description: "Definition of AI hallucination — the failure mode that output validation and citation grounding in the inference service are designed to detect and prevent."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

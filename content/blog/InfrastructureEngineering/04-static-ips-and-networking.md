@@ -181,4 +181,31 @@ This is one of those “invisible” infrastructure decisions that quietly deter
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Dynamic Host Configuration Protocol — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol"
+    type: "wikipedia"
+    description: "According to this overview, DHCP automatically assigns IP addresses to network devices — understanding DHCP reservations is the foundation for the router-based static IP strategy described in this article."
+  - label: "IP Address — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/IP_address"
+    type: "wikipedia"
+    description: "Overview of IP addressing — the network identity that must remain stable for each Kubernetes node to maintain cluster connectivity, API server URLs, and CNI routing."
+  - label: "Domain Name System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Domain_Name_System"
+    type: "wikipedia"
+    description: "According to this overview, DNS translates human-readable names to IP addresses — the resolution layer configured via /etc/hosts and router DNS so node hostnames resolve reliably within the cluster."
+  - label: "Computer Network — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_network"
+    type: "wikipedia"
+    description: "Overview of computer networking concepts — the foundational knowledge underlying IP planning, subnet design, and the networking decisions that determine whether a Kubernetes cluster stays stable across reboots."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

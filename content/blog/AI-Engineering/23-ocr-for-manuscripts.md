@@ -448,4 +448,31 @@ The manuscript OCR pipeline is slow and expensive relative to processing clean d
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Optical Character Recognition — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Optical_character_recognition"
+    type: "wikipedia"
+    description: "Overview of OCR technology, methods, and challenges — the foundation for understanding why manuscript digitization requires specialized post-processing."
+  - label: "Digital Humanities — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Digital_humanities"
+    type: "wikipedia"
+    description: "According to this overview, digital humanities is the field applying computational tools to humanistic texts — the discipline that manuscript OCR pipelines serve."
+  - label: "Tesseract (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Tesseract_(software)"
+    type: "wikipedia"
+    description: "Overview of the Tesseract OCR engine — the open-source baseline used for multi-script recognition in the manuscript processing pipeline."
+  - label: "Unicode Standard — Unicode Consortium"
+    url: "https://www.unicode.org/standard/standard.html"
+    type: "edu"
+    description: "The authoritative reference for character encoding — the standard that normalization pipelines must conform to when processing multi-script theological manuscripts."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

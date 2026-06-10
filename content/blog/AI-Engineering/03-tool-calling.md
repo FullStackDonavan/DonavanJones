@@ -325,4 +325,31 @@ The next article covers agent orchestration: how to compose multiple tools and m
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "ReAct: Synergizing Reasoning and Acting in Language Models (Yao et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2210.03629"
+    type: "doi"
+    description: "Foundational paper on ReAct — the reasoning + tool-use loop pattern that underpins modern agentic tool calling."
+  - label: "Toolformer: Language Models Can Teach Themselves to Use Tools (Schick et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2302.04761"
+    type: "doi"
+    description: "Meta AI research showing how models learn when and how to call external tools through self-supervised training."
+  - label: "Function (computer programming) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Function_(computer_programming)"
+    type: "wikipedia"
+    description: "Background on the function abstraction that tool definitions mirror — tools are callable function signatures exposed to the model."
+  - label: "Software Agent — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Software_agent"
+    type: "wikipedia"
+    description: "Overview of software agent concepts — the broader category that tool-calling AI agents belong to."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

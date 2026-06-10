@@ -121,4 +121,31 @@ Do not split prematurely. Distributed systems are hard. Make the complexity earn
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Microservices — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Microservices"
+    type: "wikipedia"
+    description: "According to this overview, microservices is an architectural style that structures an application as a collection of independently deployable services."
+  - label: "Monolithic Application — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Monolithic_application"
+    type: "wikipedia"
+    description: "Definition of a monolithic application — the starting architecture that microservice extraction splits apart when scaling demands justify it."
+  - label: "Distributed Systems — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "Overview of distributed computing principles — the complexity tradeoffs that make microservice architecture harder to operate than a monolith."
+  - label: "Saga Pattern (Distributed Transactions) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Long-running_transaction"
+    type: "wikipedia"
+    description: "According to this overview, sagas manage long-running distributed transactions with compensating actions — the pattern used when database-level atomicity is not available across services."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

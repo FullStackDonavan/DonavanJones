@@ -105,4 +105,31 @@ As the infrastructure continues to grow, especially with more services and autom
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Debugging — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Debugging"
+    type: "wikipedia"
+    description: "According to this overview, debugging is the process of finding and resolving defects in software — the foundational skill extended in this article to infrastructure: finding and resolving failures across nodes, pods, and networks."
+  - label: "Root Cause Analysis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Root_cause_analysis"
+    type: "wikipedia"
+    description: "Overview of root cause analysis — the structured problem-solving methodology applied to homelab failures, progressing from symptoms through layers (application → container → network → physical) to find the actual cause."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes exposes system state through pod status, node conditions, and event logs — the observability surface that kubectl commands interrogate during cluster troubleshooting."
+  - label: "Distributed Systems — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Distributed_computing"
+    type: "wikipedia"
+    description: "Overview of distributed systems — the context in which troubleshooting becomes significantly harder, since failures can originate in any layer and propagate across services in ways that obscure the root cause."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -198,4 +198,31 @@ Its limitation is that it does not scale. For large sorted collections where sea
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Linear Search — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Linear_search"
+    type: "wikipedia"
+    description: "According to this overview, linear search sequentially checks each element until a match is found — the formal O(n) algorithm the implementation follows."
+  - label: "Search Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Search_algorithm"
+    type: "wikipedia"
+    description: "Overview of search algorithms — places linear search within the broader taxonomy and explains when sequential search is the correct choice."
+  - label: "Big O Notation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Big_O_notation"
+    type: "wikipedia"
+    description: "The formal notation for algorithm complexity — the basis for understanding why O(n) linear search is outperformed by O(log n) binary search on sorted data."
+  - label: "Binary Search Algorithm — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Binary_search_algorithm"
+    type: "wikipedia"
+    description: "The sorted-data alternative to linear search — understanding binary search makes the tradeoffs of linear search concrete and measurable."
+---
+::
+
+---
+
 *[← Back to Algorithms & Data Structures](/categories/algorithms)*

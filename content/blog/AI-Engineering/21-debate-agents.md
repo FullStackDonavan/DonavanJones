@@ -354,4 +354,31 @@ The debate pipeline is not a general architecture — it is a specialized tool f
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Dialectic — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Dialectic"
+    type: "wikipedia"
+    description: "According to this overview, dialectic is the method of examining opposing arguments to arrive at truth — the centuries-old practice that debate agent architecture operationalizes."
+  - label: "Socratic Method — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Socratic_method"
+    type: "wikipedia"
+    description: "The structured questioning method for examining claims and exposing contradictions — the pedagogical model for surfacing interpretive complexity in theological questions."
+  - label: "Improving Factuality and Reasoning via Multiagent Debate (Du et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2305.14325"
+    type: "doi"
+    description: "Research showing that structured debate between multiple model instances improves factuality and reasoning quality over single-agent generation."
+  - label: "Multi-Agent System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Multi-agent_system"
+    type: "wikipedia"
+    description: "Foundational overview of multi-agent architectures — the technical model that debate agent orchestration builds on."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

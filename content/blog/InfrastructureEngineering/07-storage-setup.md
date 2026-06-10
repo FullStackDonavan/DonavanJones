@@ -182,4 +182,31 @@ As the system evolves, this foundation allows me to layer in more advanced stora
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes Persistent Volumes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Storage"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes persistent volumes abstract storage from pod lifecycle — the mechanism used to give stateful workloads like PostgreSQL and Gitea durable storage across pod restarts."
+  - label: "Network File System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_File_System"
+    type: "wikipedia"
+    description: "Overview of NFS — the network storage protocol used for shared volumes accessible across multiple cluster nodes, enabling cross-node storage without distributed storage complexity."
+  - label: "Solid-State Drive — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Solid-state_drive"
+    type: "wikipedia"
+    description: "According to this overview, SSDs provide significantly faster read/write speeds than SD cards — the storage medium preferred for database and Gitea workloads to avoid the write-endurance failures common with SD cards."
+  - label: "Backup — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Backup"
+    type: "wikipedia"
+    description: "Overview of backup strategies — essential for local-path storage on Raspberry Pi nodes where there is no built-in redundancy, requiring nightly volume snapshots and database dumps."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

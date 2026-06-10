@@ -140,4 +140,31 @@ By integrating Kubernetes, Gitea, and a dedicated GPU workstation, the system al
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Server Rack — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/19-inch_rack"
+    type: "wikipedia"
+    description: "According to this overview, server racks provide standardized mounting for computing and networking hardware — the physical framework that organizes the homelab's Raspberry Pi cluster, switch, and development machine."
+  - label: "Raspberry Pi — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi"
+    type: "wikipedia"
+    description: "Overview of Raspberry Pi as a single-board computer — the ARM64 hardware forming the K3s cluster nodes that handle lightweight orchestration, CI/CD, and infrastructure services in the rack."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes orchestrates containerized workloads across nodes — the software stack that turns the physical rack of Pi nodes into a functional distributed compute platform."
+  - label: "Graphics Processing Unit — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graphics_processing_unit"
+    type: "wikipedia"
+    description: "Overview of GPU hardware — the RTX 3090 development machine attached to the rack provides AI inference capability that the ARM nodes cannot, creating the hybrid compute architecture described in this overview."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

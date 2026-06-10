@@ -136,4 +136,31 @@ The result is a system that behaves like a small-scale production environment, b
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Separation of Concerns — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Separation_of_concerns"
+    type: "wikipedia"
+    description: "According to this overview, separation of concerns divides a system into parts with distinct responsibilities — the architectural principle that motivates isolating Kubernetes cluster services from GPU compute workloads."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes namespaces, taints, and network policies — the mechanisms that enforce workload separation within the cluster, preventing experimental services from affecting production-like infrastructure."
+  - label: "Microservices — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Microservices"
+    type: "wikipedia"
+    description: "According to this overview, microservices architecture deploys each system component independently — the design model that makes workload separation tractable by giving each service a well-defined boundary."
+  - label: "Container (Virtualization) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Containerization_(computing)"
+    type: "wikipedia"
+    description: "Overview of containerization — the isolation layer that makes workload separation practical, ensuring each service runs in its own environment with controlled resource limits and network access."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

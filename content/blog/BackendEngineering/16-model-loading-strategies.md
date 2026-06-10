@@ -247,4 +247,31 @@ The strategies in this article are appropriate for the model sizes I actually de
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Machine Learning Model — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Machine_learning#Models"
+    type: "wikipedia"
+    description: "According to this overview, ML models are artifacts produced by training on data — the objects being loaded, cached, validated, and versioned in the startup and deployment strategies described in this article."
+  - label: "Blue-Green Deployment — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Blue%E2%80%93green_deployment"
+    type: "wikipedia"
+    description: "Overview of blue-green deployment — the zero-downtime release strategy used for large model updates where rolling deployment would create an extended reduced-capacity window."
+  - label: "Docker (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Docker_(software)"
+    type: "wikipedia"
+    description: "According to this overview, Docker packages applications into portable containers — the deployment unit used for model-serving services, where image size tradeoffs determine whether models are baked in or fetched at startup."
+  - label: "Singleton Pattern — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Singleton_pattern"
+    type: "wikipedia"
+    description: "Overview of the singleton pattern — the design principle behind treating loaded models as process-level singletons initialized once at startup rather than per-request."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

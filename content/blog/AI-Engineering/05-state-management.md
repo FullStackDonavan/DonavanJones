@@ -276,4 +276,31 @@ Each of these is avoidable with explicit state management: clear ownership of ea
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Finite-State Machine — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Finite-state_machine"
+    type: "wikipedia"
+    description: "Foundational model for explicit state representation — the pattern used to manage agent workflow and conversation state."
+  - label: "Redis — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Redis"
+    type: "wikipedia"
+    description: "Overview of Redis as an in-memory data structure store — the backing technology for working memory and session state."
+  - label: "Session (Computer Science) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Session_(computer_science)"
+    type: "wikipedia"
+    description: "Definition and scope of a computing session — the boundary that determines working memory lifetime in agent systems."
+  - label: "MemGPT: Towards LLMs as Operating Systems (Packer et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2310.08560"
+    type: "doi"
+    description: "Research on managing context and state across LLM calls using OS-inspired paging and memory hierarchies."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

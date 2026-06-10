@@ -96,4 +96,31 @@ Over time, I’ve found that the goal isn’t to eliminate tradeoffs, but to und
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Total Cost of Ownership — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Total_cost_of_ownership"
+    type: "wikipedia"
+    description: "According to this overview, total cost of ownership accounts for acquisition, operation, and maintenance costs — the framework for comparing homelab hardware costs against cloud spend over time."
+  - label: "Computer Performance — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Computer_performance"
+    type: "wikipedia"
+    description: "Overview of computer performance metrics — the dimension traded against cost in every homelab hardware decision, from choosing Pi nodes for lightweight services to deploying an RTX 3090 for AI inference."
+  - label: "Cloud Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cloud_computing"
+    type: "wikipedia"
+    description: "According to this overview, cloud computing provides on-demand infrastructure as a service — the alternative to homelab hardware whose per-usage pricing makes it expensive for continuous, experimentally-driven workloads."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "Overview of Kubernetes as an orchestration layer — understanding how K3s adds operational complexity helps frame the cost-versus-benefit decision of self-hosting versus managed Kubernetes services."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

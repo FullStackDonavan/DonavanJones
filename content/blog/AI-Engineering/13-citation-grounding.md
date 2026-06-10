@@ -301,4 +301,31 @@ Citation grounding is not primarily a technical constraint on this platform — 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Citation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Citation"
+    type: "wikipedia"
+    description: "According to this overview, citation is a formal reference to a source — the standard the AI system's grounding practice is modeled on."
+  - label: "Fact-Checking — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Fact-checking"
+    type: "wikipedia"
+    description: "The journalistic and research practice of verifying claims against sources — the domain that citation grounding adapts for AI-generated theological content."
+  - label: "Natural Language Inference — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Natural_language_inference"
+    type: "wikipedia"
+    description: "The task of determining whether a hypothesis is entailed by a premise — the formal basis for checking whether a model's claim is supported by retrieved text."
+  - label: "FActScoring: Fine-Grained Atomic Evaluation of Factual Precision (Min et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2305.14251"
+    type: "doi"
+    description: "Research on atomic claim-level factuality evaluation — the methodology underlying citation verification in production AI systems."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

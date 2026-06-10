@@ -164,4 +164,31 @@ Ultimately, the rack is not just hardware—it is the foundation that everything
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Server Rack — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/19-inch_rack"
+    type: "wikipedia"
+    description: "According to this overview, server racks provide standardized mounting for network and computing hardware — the physical framework used to organize Raspberry Pi nodes, switches, and power equipment in the homelab."
+  - label: "Cable Management — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cable_management"
+    type: "wikipedia"
+    description: "Overview of cable management — the practice of labeling and organizing cables by function, directly reducing the time to trace and debug physical connectivity issues in a growing rack."
+  - label: "Network Switch — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_switch"
+    type: "wikipedia"
+    description: "According to this overview, network switches interconnect devices within a local area network — the central switching equipment whose port layout and labeling the physical organization strategy is built around."
+  - label: "Data Center Design — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Data_center"
+    type: "wikipedia"
+    description: "Overview of data center design principles — the enterprise practices (airflow planning, power distribution, structured cabling) scaled down and applied to homelab rack organization described in this article."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

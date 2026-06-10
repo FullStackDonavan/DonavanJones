@@ -140,4 +140,31 @@ If you are building with K3s, self-hosting services, or running mixed workloads 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes uses taints and tolerations to control pod scheduling — the mechanism that protects the control plane node from being overloaded by user workloads."
+  - label: "Scheduling (Computing) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Scheduling_(computing)"
+    type: "wikipedia"
+    description: "Overview of scheduling in computing — the process Kubernetes uses to decide which node runs each pod, informed by taints, tolerations, resource requests, and node affinity rules."
+  - label: "Taint and Toleration — Kubernetes Documentation"
+    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+    type: "edu"
+    description: "According to Kubernetes documentation, taints repel pods from nodes unless the pod has a matching toleration — the authoritative reference for the control plane isolation technique described in this article."
+  - label: "High Availability — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/High_availability"
+    type: "wikipedia"
+    description: "Overview of high availability — the reliability goal that motivates keeping the control plane free from user workloads, ensuring the cluster's API server and scheduler remain stable under load."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

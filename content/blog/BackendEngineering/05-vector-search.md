@@ -223,4 +223,31 @@ The next article covers streaming — getting responses from the inference servi
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Vector Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Vector_database"
+    type: "wikipedia"
+    description: "Overview of vector database architecture and approximate nearest neighbor search — the infrastructure this vector search service is built on."
+  - label: "Hierarchical Navigable Small World (HNSW) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world"
+    type: "wikipedia"
+    description: "According to this overview, HNSW is the graph-based ANN algorithm that enables sub-10ms similarity search across hundreds of thousands of vectors."
+  - label: "Okapi BM25 — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Okapi_BM25"
+    type: "wikipedia"
+    description: "The sparse keyword retrieval function combined with vector similarity in hybrid search — the BM25 component that handles exact reference lookups like 'Romans 8:28'."
+  - label: "Dense Passage Retrieval for Open-Domain QA (Karpukhin et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2004.04906"
+    type: "doi"
+    description: "According to this research, bi-encoder dense retrieval outperforms BM25 for natural language questions — the foundational evidence for the semantic-weighted hybrid search strategy."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

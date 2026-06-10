@@ -315,4 +315,31 @@ Total: roughly 44,000 vertices and 1,035,000 edges. At this scale, AGE handles q
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Cypher (Query Language) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Cypher_(query_language)"
+    type: "wikipedia"
+    description: "According to this overview, Cypher is a declarative graph query language using ASCII-art pattern syntax — the language used to create and traverse Biblical entities like persons, places, and cross-references."
+  - label: "Property Graph — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Property_graph"
+    type: "wikipedia"
+    description: "Overview of the property graph model — the data structure that AGE implements, where vertices and edges carry key-value properties matching the Biblical entity schema described in this article."
+  - label: "openCypher — openCypher Project"
+    url: "https://opencypher.org/"
+    type: "edu"
+    description: "According to the openCypher specification, the label and relationship conventions used (PascalCase labels, SCREAMING_SNAKE_CASE relationship types) are the standard Cypher style — the conventions adopted throughout this article."
+  - label: "Apache AGE — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Apache_AGE"
+    type: "wikipedia"
+    description: "Overview of Apache AGE — the PostgreSQL extension that executes these Cypher queries, adding graph traversal capability to the same Postgres instance that holds relational study data."
+---
+::
+
+---
+
 *[← Back to Backend Engineering series](/categories/backend-engineering)*

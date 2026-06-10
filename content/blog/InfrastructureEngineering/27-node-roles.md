@@ -94,4 +94,31 @@ By clearly defining control plane, worker, and specialized nodes, I can scale in
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes assigns distinct responsibilities to control plane and worker nodes — the node role separation described in this article for organizing the homelab Raspberry Pi cluster."
+  - label: "ARM Architecture Family — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/ARM_architecture_family"
+    type: "wikipedia"
+    description: "Overview of ARM architecture — the instruction set used by Raspberry Pi worker and control plane nodes, whose power-efficiency advantages make them suitable for infrastructure roles that run continuously."
+  - label: "Separation of Concerns — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Separation_of_concerns"
+    type: "wikipedia"
+    description: "According to this overview, separation of concerns reduces coupling by giving each part of a system a well-defined responsibility — the design principle underlying node role assignment in the homelab cluster."
+  - label: "Container Orchestration — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes#Architecture"
+    type: "wikipedia"
+    description: "Overview of container orchestration architecture — the scheduling and health management system that uses node roles (control plane vs. worker) to distribute Kubernetes components and workloads correctly."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

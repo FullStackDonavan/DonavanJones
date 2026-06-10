@@ -418,4 +418,31 @@ The pipeline structure on this platform grew from a single-call prototype that w
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Retrieval-Augmented Generation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    type: "wikipedia"
+    description: "Overview of RAG architecture — the pattern that the Bible study pipeline is built around for grounded, evidenced response generation."
+  - label: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Lewis et al., 2020)"
+    url: "https://doi.org/10.48550/arXiv.2005.11401"
+    type: "doi"
+    description: "According to this paper, RAG outperforms parametric generation on knowledge-intensive tasks by separating knowledge storage from reasoning."
+  - label: "Pipeline (Computing) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Pipeline_(computing)"
+    type: "wikipedia"
+    description: "Foundational concept of a processing pipeline — the architectural pattern that multi-step AI workflows implement."
+  - label: "Bible — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Bible"
+    type: "wikipedia"
+    description: "Overview of the Biblical canon, translations, and textual structure — the source corpus the study pipeline is designed to index and retrieve."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

@@ -113,4 +113,31 @@ Consumer hardware has become powerful enough to support serious development, inf
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Raspberry Pi — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Raspberry_Pi"
+    type: "wikipedia"
+    description: "According to this overview, Raspberry Pi is a low-cost single-board computer — the consumer hardware running K3s cluster services across the homelab rack described in this article."
+  - label: "Graphics Processing Unit — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graphics_processing_unit"
+    type: "wikipedia"
+    description: "Overview of GPU hardware — the RTX 3090 consumer GPU provides VRAM and parallel compute for local AI inference, embedding generation, and model experimentation described in this article."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "According to this overview, edge computing places compute closer to data sources — the architectural model consumer hardware like Raspberry Pis enables at a fraction of enterprise infrastructure cost."
+  - label: "Server Hardware — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Server_(computing)"
+    type: "wikipedia"
+    description: "Overview of server hardware — understanding enterprise server design helps clarify what tradeoffs consumer hardware makes: lower cost and power at the expense of ECC memory, hot-swap drives, and redundant power."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

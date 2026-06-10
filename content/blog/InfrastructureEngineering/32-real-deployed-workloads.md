@@ -197,4 +197,31 @@ As the system evolves, the focus is shifting toward tighter AI integration, impr
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes orchestrates containerized applications across clusters — the platform managing all deployed workloads described in this article, from APIs to databases to CI/CD pipelines."
+  - label: "Microservices — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Microservices"
+    type: "wikipedia"
+    description: "Overview of microservices architecture — the pattern used to structure deployed workloads as independent containerized services communicating through APIs rather than a single monolithic application."
+  - label: "Docker (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Docker_(software)"
+    type: "wikipedia"
+    description: "According to this overview, Docker packages applications into portable containers — the deployment unit used for AI inference workloads on the GPU machine and services deployed through Kubernetes manifests."
+  - label: "Vector Database — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Vector_database"
+    type: "wikipedia"
+    description: "Overview of vector databases — the semantic search infrastructure deployed as a real workload for the Bible app's AI retrieval system, running alongside PostgreSQL and Redis in the cluster."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

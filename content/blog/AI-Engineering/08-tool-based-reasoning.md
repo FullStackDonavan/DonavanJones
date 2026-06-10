@@ -262,4 +262,31 @@ The next article covers retrieval systems for theological content specifically �
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "ReAct: Synergizing Reasoning and Acting in Language Models (Yao et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2210.03629"
+    type: "doi"
+    description: "The paper that formalized reasoning-then-acting as a distinct pattern — the framework underpinning tool-based reasoning loops."
+  - label: "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2022)"
+    url: "https://doi.org/10.48550/arXiv.2201.11903"
+    type: "doi"
+    description: "Foundational research showing that intermediate reasoning steps improve model performance on knowledge-intensive tasks."
+  - label: "Reasoning — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Reasoning"
+    type: "wikipedia"
+    description: "Overview of formal and informal reasoning — the cognitive process that tool-based reasoning systems attempt to replicate and extend."
+  - label: "Knowledge Retrieval — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Information_retrieval"
+    type: "wikipedia"
+    description: "According to information retrieval research, evidence-based lookup is more reliable than memory-based generation for factual claims."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

@@ -154,4 +154,31 @@ As the cluster grows, this storage layer becomes the backbone for everything els
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes separates pod lifecycle from storage lifecycle through PersistentVolumes and PersistentVolumeClaims — the abstractions that allow stateful workloads to survive pod restarts and rescheduling."
+  - label: "Solid-State Drive — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Solid-state_drive"
+    type: "wikipedia"
+    description: "Overview of SSD storage — the medium preferred for Kubernetes persistent volumes on Raspberry Pi nodes, avoiding the write-endurance failures common with SD cards under heavy database workloads."
+  - label: "Backup — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Backup"
+    type: "wikipedia"
+    description: "According to this overview, backups protect data from loss when hardware fails — essential for local-path persistent volumes on homelab hardware where there is no built-in redundancy."
+  - label: "Node Affinity — Kubernetes Documentation"
+    url: "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+    type: "edu"
+    description: "According to Kubernetes documentation, node affinity rules control which nodes pods are scheduled on — the mechanism used to pin stateful workloads to specific nodes with the correct persistent volume mounts."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

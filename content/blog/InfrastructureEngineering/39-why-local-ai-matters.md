@@ -107,4 +107,31 @@ It’s not just about independence from cloud providers—it’s about learning 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Edge AI — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing#Artificial_intelligence"
+    type: "wikipedia"
+    description: "According to this overview, edge AI runs inference on local hardware rather than sending data to cloud services — the model that motivates running language models on the RTX 3090 machine rather than paying per API call."
+  - label: "On-Device Machine Learning — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/On-device_machine_learning"
+    type: "wikipedia"
+    description: "Overview of on-device machine learning — the practice of running inference locally for privacy, latency, and cost benefits, directly applicable to the local AI infrastructure described in this article."
+  - label: "Graphics Processing Unit — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Graphics_processing_unit"
+    type: "wikipedia"
+    description: "According to this overview, GPUs provide parallel compute for AI workloads — the RTX 3090's VRAM and CUDA cores are what make running local language models and embedding generation practical."
+  - label: "Docker (Software) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Docker_(software)"
+    type: "wikipedia"
+    description: "Overview of Docker containerization — the deployment model used to isolate AI model services on the GPU development machine, enabling rapid iteration on inference pipelines without affecting cluster stability."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

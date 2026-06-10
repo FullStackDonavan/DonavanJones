@@ -168,4 +168,31 @@ The end goal is not just storage that works today, but a foundation that can sca
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Network-Attached Storage — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network-attached_storage"
+    type: "wikipedia"
+    description: "According to this overview, NAS provides centralized file storage accessible over a network — the future storage tier planned for the homelab as the cluster grows beyond local-disk-per-node storage."
+  - label: "Network File System — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Network_File_System"
+    type: "wikipedia"
+    description: "Overview of NFS — the network storage protocol used for shared persistent volumes accessible across multiple cluster nodes, enabling cross-node data access without a full distributed storage system."
+  - label: "Kubernetes — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Kubernetes"
+    type: "wikipedia"
+    description: "According to this overview, Kubernetes separates pod lifecycle from storage through PersistentVolumes — the abstraction that makes the ephemeral/persistent workload split possible without changing application code."
+  - label: "Backup — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Backup"
+    type: "wikipedia"
+    description: "Overview of backup strategies — the data protection layer described as a first-class system concern, with nightly snapshots, database dumps, and off-node copies ensuring recovery when homelab hardware fails."
+---
+::
+
+---
+
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

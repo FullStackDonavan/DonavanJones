@@ -273,4 +273,31 @@ The frontier/local quality gap will narrow over time. Models are getting smaller
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Large Language Model — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Large_language_model"
+    type: "wikipedia"
+    description: "Overview of large language models — the class of models that local inference systems like Ollama and llama.cpp run on-device."
+  - label: "Edge Computing — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Edge_computing"
+    type: "wikipedia"
+    description: "Definition of edge computing — the deployment model that on-device AI inference belongs to."
+  - label: "Llama (Language Model) — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Llama_(language_model)"
+    type: "wikipedia"
+    description: "Background on the Llama model family — the open-weight models most commonly used in local agent systems."
+  - label: "Privacy-Preserving Machine Learning — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Privacy-preserving_machine_learning"
+    type: "wikipedia"
+    description: "According to this overview, on-device inference is a primary privacy-preserving deployment strategy for sensitive workloads."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*

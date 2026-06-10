@@ -244,4 +244,31 @@ Chunking is one of those infrastructure concerns that feels secondary until the 
 
 ---
 
+## Further Reading
+
+::AuthoritativeLinks
+---
+title: "Sources"
+links:
+  - label: "Text Segmentation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Text_segmentation"
+    type: "wikipedia"
+    description: "Overview of text segmentation methods — the foundational problem that chunking strategies solve for retrieval systems."
+  - label: "Sentence Boundary Disambiguation — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Sentence_boundary_disambiguation"
+    type: "wikipedia"
+    description: "According to this overview, sentence boundary detection is the first decision point in any structural chunking pipeline."
+  - label: "Lost in the Middle: How Language Models Use Long Contexts (Liu et al., 2023)"
+    url: "https://doi.org/10.48550/arXiv.2307.03172"
+    type: "doi"
+    description: "Research showing that chunk position in context affects how well models use retrieved content — motivates careful chunk ordering."
+  - label: "Information Retrieval — Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Information_retrieval"
+    type: "wikipedia"
+    description: "Foundational field whose precision and recall metrics define whether a chunking strategy is actually working for its retrieval use case."
+---
+::
+
+---
+
 *[← Back to AI Engineering](/categories/ai-engineering)*
