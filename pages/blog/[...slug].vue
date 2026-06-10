@@ -322,7 +322,7 @@ function isoDate(d: string | undefined) {
     <!-- Avatar -->
     <div class="flex-shrink-0">
       <NuxtLink
-        to="/"
+        to="/about"
         rel="author"
         aria-label="Donavan Jones — Full-Stack Engineer & Platform Builder"
       >
@@ -342,7 +342,7 @@ function isoDate(d: string | undefined) {
       <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
 
         <NuxtLink
-          to="/"
+          to="/about"
           rel="author"
           class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors"
         >
