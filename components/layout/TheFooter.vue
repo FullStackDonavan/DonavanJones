@@ -34,6 +34,7 @@
             <li><NuxtLink to="/about" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</NuxtLink></li>
             <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
             <li><NuxtLink to="/blog/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
+            <li><NuxtLink to="/insights/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Insights</NuxtLink></li>
             <li><NuxtLink to="/resume" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Resume</NuxtLink></li>
           </ul>
         </div>

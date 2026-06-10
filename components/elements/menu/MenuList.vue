@@ -55,6 +55,13 @@
         </span>
       </NuxtLink>
 
+      <!-- Insights -->
+      <NuxtLink to="/insights/overview" class="relative group">
+        <span :class="navClass(isInsightsActive)">
+          Insights
+        </span>
+      </NuxtLink>
+
       <!-- Projects -->
       <NuxtLink to="/projects/overview" class="relative group">
         <span :class="navClass(isProjectsActive)">
@@ -119,4 +126,7 @@ const isBlogActive = computed(() => {
     route.path.startsWith('/tags')
   )
 })
+
+// Insights
+const isInsightsActive = computed(() => route.path.startsWith('/insights'))
 </script>

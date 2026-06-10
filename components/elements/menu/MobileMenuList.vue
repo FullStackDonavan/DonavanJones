@@ -77,6 +77,20 @@ watch(
           <span class="flex-1 ml-3 whitespace-nowrap">Projects</span>
         </NuxtLink>
       </li>
+
+      <li>
+        <NuxtLink
+          to="/insights/overview"
+          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <Icon
+            name="mdi:lightbulb-outline"
+            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            size="50"
+          />
+          <span class="flex-1 ml-3 whitespace-nowrap">Insights</span>
+        </NuxtLink>
+      </li>
       <!-- <li>
         <NuxtLink
           to="/portfolio/overview"
