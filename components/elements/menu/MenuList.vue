@@ -1,6 +1,6 @@
 <template>
-  <nav class="hidden md:flex justify-between space-x-10 align-bottom mt-14">
-    <div class="hidden md:flex space-x-10 align-bottom items-center">
+  <nav class="hidden lg:flex justify-between items-center">
+    <div class="hidden lg:flex space-x-1 xl:space-x-3 items-center">
 
       <!-- Home -->
       <NuxtLink to="/" class="relative group">
@@ -120,13 +120,20 @@ const isProjectsActive = computed(() => {
 
 // Blog / Knowledge system
 const isBlogActive = computed(() => {
+  const fromInsights = route.query.from?.startsWith?.('/insights')
   return (
     route.path.startsWith('/blog') ||
-    route.path.startsWith('/categories') ||
-    route.path.startsWith('/tags')
+    (route.path.startsWith('/categories') && !fromInsights) ||
+    (route.path.startsWith('/tags') && !fromInsights)
   )
 })
 
 // Insights
-const isInsightsActive = computed(() => route.path.startsWith('/insights'))
+const isInsightsActive = computed(() => {
+  const fromInsights = route.query.from?.startsWith?.('/insights')
+  return (
+    route.path.startsWith('/insights') ||
+    ((route.path.startsWith('/tags') || route.path.startsWith('/categories')) && fromInsights)
+  )
+})
 </script>

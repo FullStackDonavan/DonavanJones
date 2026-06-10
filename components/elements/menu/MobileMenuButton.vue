@@ -13,7 +13,7 @@ router.afterEach(() => {
 });
 </script>
 <template>
-  <div class="md:hidden mt-4">
+  <div class="lg:hidden">
     <button
       @click="showSideDrawer = true"
       type="button"

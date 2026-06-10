@@ -39,7 +39,7 @@ watch(
 </script>
 
 <template>
-  <div class="hidden md:flex justify-between space-x-10 align-bottom mt-14">
+  <div class="hidden lg:flex justify-between space-x-6 items-center">
     <NuxtLink to="tel:+1863-339-9964" class="">
       <svg
         class="dark:text-gray-50 h-6 w-6 lg:block transition-colors duration-300 ease-in-out hover:dark:text-blue-400 hover:text-blue-400"

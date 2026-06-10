@@ -19,76 +19,77 @@ watch(
 );
 </script>
 <template>
-  <div class="py-4 overflow-y-auto my-12">
-    <ul class="space-y-2">
+  <div class="py-2 overflow-y-auto">
+    <ul class="space-y-1 px-2">
       <MenuIconList />
 
       <li>
         <NuxtLink
           to="/"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Icon
-            name="material-symbols:house"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="ml-3">Home</span>
+          <Icon name="material-symbols:house" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Home</span>
         </NuxtLink>
       </li>
 
       <li>
         <NuxtLink
           to="/about"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Icon
-            name="fluent:people-community-48-filled"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="flex-1 ml-3 whitespace-nowrap">About Us</span>
+          <Icon name="fluent:people-community-48-filled" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>About</span>
         </NuxtLink>
       </li>
 
       <li>
         <NuxtLink
           to="/resume"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Icon
-            name="mdi:file-account-outline"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="flex-1 ml-3 whitespace-nowrap">Resume</span>
+          <Icon name="mdi:file-account-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Resume</span>
         </NuxtLink>
       </li>
+
       <li>
         <NuxtLink
           to="/projects/overview"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Icon
-            name="mdi:folder-multiple-outline"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="flex-1 ml-3 whitespace-nowrap">Projects</span>
+          <Icon name="mdi:folder-multiple-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Projects</span>
+        </NuxtLink>
+      </li>
+
+      <li>
+        <NuxtLink
+          to="/system-overview"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:server-network" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Systems</span>
+        </NuxtLink>
+      </li>
+
+      <li>
+        <NuxtLink
+          to="/blog/overview"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:book-open-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Knowledge</span>
         </NuxtLink>
       </li>
 
       <li>
         <NuxtLink
           to="/insights/overview"
-          class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <Icon
-            name="mdi:lightbulb-outline"
-            class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            size="50"
-          />
-          <span class="flex-1 ml-3 whitespace-nowrap">Insights</span>
+          <Icon name="mdi:lightbulb-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Insights</span>
         </NuxtLink>
       </li>
       <!-- <li>
