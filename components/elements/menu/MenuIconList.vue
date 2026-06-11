@@ -58,19 +58,6 @@ watch(
       </svg>
     </NuxtLink> -->
 
-    <NuxtLink to="tel:+1863-339-9964">
-      <svg
-        class="dark:text-gray-50 h-6 w-6 lg:block hover:dark:text-blue-400 hover:text-blue-400"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          d="M6 22v-7h1v3.5h10v-13H7V9H6V2h12v20zm4-6.692l-.708-.708l2.089-2.1H2.5v-1h8.88L9.293 9.4L10 8.692L13.308 12z"
-        ></path>
-      </svg>
-    </NuxtLink>
-
     <NuxtLink to="/dashboard" v-if="isLoggedIn">
       <svg
         class="dark:text-gray-50 h-6 w-6 lg:block hover:dark:text-blue-400 hover:text-blue-400"
@@ -84,6 +71,16 @@ watch(
           d="M9 21H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2m6 0h4c1.1 0 2-.9 2-2v-5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v5c0 1.1.9 2 2 2m6-13V5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2"
         />
       </svg>
+    </NuxtLink>
+
+    <NuxtLink
+      to="/hire-me"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
+             bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-200
+             shadow shadow-sky-500/20"
+    >
+      <Icon name="mdi:briefcase-outline" class="text-sm" />
+      Hire Me
     </NuxtLink>
 
     <span

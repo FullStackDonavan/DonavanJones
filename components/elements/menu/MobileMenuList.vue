@@ -25,6 +25,18 @@ watch(
 
       <li>
         <NuxtLink
+          to="/hire-me"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-lg
+                 bg-sky-500/10 border border-sky-500/20 text-sky-500
+                 hover:bg-sky-500/20 transition-colors"
+        >
+          <Icon name="mdi:briefcase-outline" class="w-5 h-5 flex-shrink-0" />
+          <span>Hire Me</span>
+        </NuxtLink>
+      </li>
+
+      <li>
+        <NuxtLink
           to="/"
           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >

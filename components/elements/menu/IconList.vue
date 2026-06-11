@@ -40,17 +40,14 @@ watch(
 
 <template>
   <div class="hidden lg:flex justify-between space-x-6 items-center">
-    <NuxtLink to="tel:+1863-339-9964" class="">
-      <svg
-        class="dark:text-gray-50 h-6 w-6 lg:block transition-colors duration-300 ease-in-out hover:dark:text-blue-400 hover:text-blue-400"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          d="M6 22v-7h1v3.5h10v-13H7V9H6V2h12v20zm4-6.692l-.708-.708l2.089-2.1H2.5v-1h8.88L9.293 9.4L10 8.692L13.308 12z"
-        ></path>
-      </svg>
+    <NuxtLink
+      to="/hire-me"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
+             bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-200
+             shadow shadow-sky-500/20"
+    >
+      <Icon name="mdi:briefcase-outline" class="text-sm" />
+      Hire Me
     </NuxtLink>
 
     <span
