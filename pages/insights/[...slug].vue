@@ -144,7 +144,7 @@ function isoDate(d: string | undefined) {
             <RecentInsights :current-path="route.path" />
 
             <!-- CASE STUDY -->
-            <BibleVerseCaseStudy />
+            <BusinessBenefitCaseStudy />
 
             <!-- Author box -->
             <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
