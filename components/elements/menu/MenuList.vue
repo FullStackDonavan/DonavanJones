@@ -94,6 +94,10 @@
               <div class="font-medium text-gray-900 dark:text-gray-100">Resume</div>
               <div class="text-sm text-gray-500 dark:text-gray-400">Experience, skills, and tech stack</div>
             </NuxtLink>
+            <NuxtLink to="/newsletter" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Newsletter</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Writing on software, SaaS, and tools</div>
+            </NuxtLink>
           </div>
         </div>
 
@@ -146,7 +150,7 @@ const isBlogActive = computed(() => {
 
 // About + Resume
 const isAboutActive = computed(() => {
-  return route.path === '/about' || route.path === '/resume'
+  return route.path === '/about' || route.path === '/resume' || route.path === '/newsletter'
 })
 
 // Insights
