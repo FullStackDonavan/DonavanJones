@@ -1,8 +1,8 @@
 ---
 title: "AI Opportunities for Small Businesses in Lakeland"
 description: "AI is not just for large companies with large budgets. Here are the practical, affordable AI opportunities that small businesses in Lakeland should be paying attention to right now."
-date: 2026-06-10
-lastUpdated: "2026-05-24"
+date: 2026-05-02
+lastUpdated: "2026-05-02"
 category: "insights"
 tags:
   - ai

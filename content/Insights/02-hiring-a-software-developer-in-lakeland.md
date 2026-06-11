@@ -1,7 +1,7 @@
 ---
 title: "Hiring a Software Developer in Lakeland: What to Look For"
 description: "Before you post a job or sign a contract with an agency, here is what Lakeland business owners should know about hiring a software developer — and the questions that will separate the right candidate from the wrong one."
-date: 2026-06-10
+date: 2026-03-02
 lastUpdated: "2026-03-02"
 category: "insights"
 tags:

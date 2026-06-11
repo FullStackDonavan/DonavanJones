@@ -1,8 +1,8 @@
 ---
 title: "Building Custom Business Software in Central Florida"
 description: "Off-the-shelf software solves general problems. Custom software solves your problems. Here is what Central Florida business owners need to know before starting a custom build."
-date: 2026-06-10
-lastUpdated: "2026-04-14"
+date: 2026-04-21
+lastUpdated: "2026-04-21"
 category: "insights"
 tags:
   - custom-software

@@ -1,8 +1,8 @@
 ---
 title: "Why Lakeland Startups Should Consider AI Automation"
 description: "AI automation is no longer a tool reserved for tech giants. Here is why Lakeland startups should be building it into their operations now — before their competitors do."
-date: 2026-06-10
-lastUpdated: "2026-02-10"
+date: 2026-02-17
+lastUpdated: "2026-02-17"
 category: "insights"
 tags:
   - ai-automation
