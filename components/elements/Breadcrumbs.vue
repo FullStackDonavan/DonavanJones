@@ -1,5 +1,5 @@
 <template>
-  <BasicSection class="mx-auto px-8 pt-12 pb-12">
+  <BasicSection class="mx-auto py-12">
     <nav class="flex" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-3">
         <li class="inline-flex items-center">

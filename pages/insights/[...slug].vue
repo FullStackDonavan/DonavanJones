@@ -140,6 +140,12 @@ function isoDate(d: string | undefined) {
               />
             </div>
 
+            <!-- Recent Insights -->
+            <RecentInsights :current-path="route.path" />
+
+            <!-- CASE STUDY -->
+            <BibleVerseCaseStudy />
+
             <!-- Author box -->
             <div class="mt-12 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8">
               <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4">
@@ -285,6 +291,8 @@ function isoDate(d: string | undefined) {
                 </div>
               </div>
             </div>
+
+
 
             <!-- Back to insights -->
             <div class="mt-8">
