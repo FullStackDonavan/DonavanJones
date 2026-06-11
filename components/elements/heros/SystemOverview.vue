@@ -22,12 +22,12 @@
             <div>
 
                 <div
-                class="bg-sky-100 dark:bg-sky-500/10
-                border border-sky-200 dark:border-sky-500/20
-                text-sky-700 dark:text-sky-300"
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4
+                         bg-sky-500/10 border border-sky-500/20
+                         text-sky-700 dark:text-sky-300 text-sm font-medium"
                 >
-                <Icon name="mdi:kubernetes" />
-                Self-Hosted Kubernetes Infrastructure
+                  <Icon name="mdi:kubernetes" />
+                  Self-Hosted Kubernetes Infrastructure
                 </div>
 
                 <h1
