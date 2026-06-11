@@ -233,82 +233,72 @@ const projectSystems = [
           <aside class="space-y-6">
 
             <!-- Summary -->
-            <div class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none print:shadow-none">
-              <h2 class="text-sm font-semibold uppercase tracking-wider text-sky-500 mb-3">Summary</h2>
-              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Full-stack engineer with 20+ years of development experience building web applications, SaaS platforms, CMS systems, and modern JavaScript-based systems.
-              </p>
-              <p class="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Strong background in system architecture, API design, database modeling, AI systems, and multi-role SaaS applications. Comfortable working across frontend, backend, data, and infrastructure layers.
-              </p>
-              <p class="mt-3 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Experienced in building AI-integrated applications, self-hosted infrastructure, and distributed system prototypes using modern cloud and local environments.
-              </p>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none print:shadow-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">profile.md</span>
+              </div>
+              <div class="p-5 space-y-3">
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  Full-stack engineer with 20+ years of development experience building web applications, SaaS platforms, CMS systems, and modern JavaScript-based systems.
+                </p>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  Strong background in system architecture, API design, database modeling, AI systems, and multi-role SaaS applications. Comfortable working across frontend, backend, data, and infrastructure layers.
+                </p>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  Experienced in building AI-integrated applications, self-hosted infrastructure, and distributed system prototypes using modern cloud and local environments.
+                </p>
+              </div>
             </div>
 
             <!-- Skills -->
-            <div class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none">
-              <h2 class="text-sm font-semibold uppercase tracking-wider text-sky-500 mb-4">Core Skills</h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">skills.config</span>
+              </div>
+              <div class="p-3 space-y-0.5">
 
-              <div class="space-y-5">
-
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="w-5 h-5 rounded flex items-center justify-center bg-sky-500/10 border border-sky-500/20">
-                      <Icon name="mdi:monitor" class="text-sky-400 text-[11px]" />
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Frontend</span>
-                  </div>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-sky-500/10 dark:hover:bg-sky-500/8 group/sky">
+                  <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Frontend</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="s in skills.frontend" :key="s" class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">{{ s }}</span>
+                    <span v-for="s in skills.frontend" :key="s" class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">{{ s }}</span>
                   </div>
                 </div>
 
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="w-5 h-5 rounded flex items-center justify-center bg-emerald-500/10 border border-emerald-500/20">
-                      <Icon name="mdi:server" class="text-emerald-400 text-[11px]" />
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Backend</span>
-                  </div>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/8 group/emerald">
+                  <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/emerald:text-emerald-600 dark:group-hover/emerald:text-emerald-400">Backend</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="s in skills.backend" :key="s" class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">{{ s }}</span>
+                    <span v-for="s in skills.backend" :key="s" class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">{{ s }}</span>
                   </div>
                 </div>
 
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="w-5 h-5 rounded flex items-center justify-center bg-purple-500/10 border border-purple-500/20">
-                      <Icon name="mdi:brain" class="text-purple-400 text-[11px]" />
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Data / AI / Search</span>
-                  </div>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-purple-500/10 dark:hover:bg-purple-500/8 group/purple">
+                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/purple:text-purple-600 dark:group-hover/purple:text-purple-400">Data / AI / Search</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="s in skills.dataAi" :key="s" class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">{{ s }}</span>
+                    <span v-for="s in skills.dataAi" :key="s" class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">{{ s }}</span>
                   </div>
                 </div>
 
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="w-5 h-5 rounded flex items-center justify-center bg-amber-500/10 border border-amber-500/20">
-                      <Icon name="mdi:cloud-outline" class="text-amber-400 text-[11px]" />
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Cloud / DevOps</span>
-                  </div>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-amber-500/10 dark:hover:bg-amber-500/8 group/amber">
+                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/amber:text-amber-600 dark:group-hover/amber:text-amber-400">Cloud / DevOps</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="s in skills.cloud" :key="s" class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">{{ s }}</span>
+                    <span v-for="s in skills.cloud" :key="s" class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">{{ s }}</span>
                   </div>
                 </div>
 
-                <div>
-                  <div class="flex items-center gap-2 mb-2">
-                    <div class="w-5 h-5 rounded flex items-center justify-center bg-rose-500/10 border border-rose-500/20">
-                      <Icon name="mdi:sitemap-outline" class="text-rose-400 text-[11px]" />
-                    </div>
-                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">System Design</span>
-                  </div>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-rose-500/10 dark:hover:bg-rose-500/8 group/rose">
+                  <p class="text-[10px] uppercase tracking-widest text-rose-500 font-semibold mb-2 transition-colors duration-200 group-hover/rose:text-rose-600 dark:group-hover/rose:text-rose-400">System Design</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="s in skills.systemDesign" :key="s" class="text-[11px] px-2 py-0.5 rounded-md border bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">{{ s }}</span>
+                    <span v-for="s in skills.systemDesign" :key="s" class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-rose-500/10 hover:border-rose-500/40 hover:text-rose-600 dark:hover:text-rose-400">{{ s }}</span>
                   </div>
                 </div>
 
@@ -321,12 +311,14 @@ const projectSystems = [
           <main class="space-y-6 min-w-0">
 
             <!-- Professional Experience -->
-            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
-              <div class="px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-                <h2 class="text-sm font-semibold uppercase tracking-wider text-sky-500 flex items-center gap-2">
-                  <Icon name="mdi:briefcase-outline" class="text-base" />
-                  Professional Experience
-                </h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">experience.log</span>
               </div>
 
               <div class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -368,12 +360,14 @@ const projectSystems = [
             </div>
 
             <!-- Infrastructure / Homelab -->
-            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none">
-              <div class="px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-                <h2 class="text-sm font-semibold uppercase tracking-wider text-emerald-500 flex items-center gap-2">
-                  <Icon name="mdi:raspberry-pi" class="text-base" />
-                  Infrastructure / Homelab
-                </h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">homelab.config</span>
               </div>
               <div class="px-6 py-5">
                 <ul class="space-y-1.5">
@@ -390,12 +384,14 @@ const projectSystems = [
             </div>
 
             <!-- Self-Taught Background -->
-            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none">
-              <div class="px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-                <h2 class="text-sm font-semibold uppercase tracking-wider text-amber-500 flex items-center gap-2">
-                  <Icon name="mdi:book-open-page-variant" class="text-base" />
-                  Education &amp; Self-Directed Learning
-                </h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">education.md</span>
               </div>
               <div class="px-6 py-5 space-y-4">
                 <div>
@@ -421,12 +417,14 @@ const projectSystems = [
             </div>
 
             <!-- Selected Projects -->
-            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 print:border-slate-300 print:rounded-none">
-              <div class="px-6 pt-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-                <h2 class="text-sm font-semibold uppercase tracking-wider text-purple-500 flex items-center gap-2">
-                  <Icon name="mdi:code-braces" class="text-base" />
-                  Selected Projects
-                </h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden print:border-slate-300 print:rounded-none">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">projects.config</span>
               </div>
 
               <div class="px-6 py-5">

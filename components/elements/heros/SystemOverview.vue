@@ -50,255 +50,170 @@
                 and self-hosted backend services.
                 </p>
 
-                <!-- Lifecycle -->
-            <!-- REQUEST LIFECYCLE -->
+                <!-- REQUEST LIFECYCLE -->
         <div class="mt-10">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
 
-            <div class="flex items-center gap-3 mb-5">
-            <div class="w-8 h-px bg-sky-500/50"></div>
-
-            <div
-                class="flex items-center gap-2 text-xs uppercase tracking-[0.25em]
-                    text-slate-400"
-            >
-                <Icon name="mdi:source-branch" class="text-sky-400" />
-                Request Lifecycle
-            </div>
-            </div>
-
-            <div
-            class="rounded-2xl border
-       border-slate-200 dark:border-slate-800
-       bg-white/70 dark:bg-slate-950/40
-       backdrop-blur-sm p-5"
-            >
-            <div
-                class="flex flex-wrap items-center
-                    gap-2 lg:gap-3"
-            >
-
-                <div class="flow-node">
-                <Icon name="mdi:account" class="text-sky-400 text-xl" />
-                <span>User</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:router-network"
-                    class="text-cyan-400 text-xl"
-                />
-                <span>Ingress</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:api"
-                    class="text-blue-400 text-xl"
-                />
-                <span>FastAPI</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:database"
-                    class="text-emerald-400 text-xl"
-                />
-                <span>Redis / PostgreSQL</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:brain"
-                    class="text-purple-400 text-xl"
-                />
-                <span>AI Layer</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:harddisk"
-                    class="text-amber-400 text-xl"
-                />
-                <span>MinIO</span>
-                </div>
-
-                <Icon
-                name="mdi:chevron-right"
-                class="text-slate-600 hidden sm:block"
-                />
-
-                <div class="flow-node">
-                <Icon
-                    name="mdi:reply"
-                    class="text-sky-400 text-xl"
-                />
-                <span>Response</span>
-                </div>
-
+            <!-- Card header -->
+            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+              <div class="flex gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+              </div>
+              <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">request.lifecycle</span>
             </div>
 
-            <div
-                class="mt-4 text-xs text-slate-500
-                    border-t border-slate-800 pt-4"
-            >
+            <!-- Flow -->
+            <div class="px-5 py-4">
+              <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-4">Request Lifecycle</p>
+              <div class="flex flex-wrap items-center gap-2">
+
+                <div class="flow-node">
+                  <Icon name="mdi:account" class="text-sky-400 text-xl" />
+                  <span>User</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:router-network" class="text-cyan-400 text-xl" />
+                  <span>Ingress</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:api" class="text-blue-400 text-xl" />
+                  <span>FastAPI</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:database" class="text-emerald-400 text-xl" />
+                  <span>Redis / PostgreSQL</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:brain" class="text-purple-400 text-xl" />
+                  <span>AI Layer</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:harddisk" class="text-amber-400 text-xl" />
+                  <span>MinIO</span>
+                </div>
+                <Icon name="mdi:chevron-right" class="text-slate-400 dark:text-slate-600 hidden sm:block" />
+
+                <div class="flow-node">
+                  <Icon name="mdi:reply" class="text-sky-400 text-xl" />
+                  <span>Response</span>
+                </div>
+
+              </div>
+
+              <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                 Requests enter through Kubernetes ingress, pass through FastAPI services,
                 leverage Redis/PostgreSQL data stores, invoke AI workloads, persist artifacts
                 to MinIO, and return results to the client.
-            </div>
+              </div>
             </div>
 
+          </div>
         </div>
 
             </div>
 <!-- RIGHT -->
-<div
-  class="grid grid-cols-2 gap-4 p-4 rounded-2xl
-         border border-slate-300 dark:border-slate-800/60
-         bg-slate-50/80 dark:bg-slate-950/30
-         backdrop-blur-sm"
->
+<div class="grid grid-cols-2 gap-4">
 
-  <!-- CARD -->
-  <div class="group rounded-xl p-4
-              border border-slate-300 dark:border-slate-800
-              bg-slate-100 dark:bg-slate-900/40
-              hover:border-sky-400 dark:hover:border-sky-500/30
-              transition-all duration-200">
-
-    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
-
-      <Icon
-        name="mdi:server-network"
-        class="text-sky-400 text-5xl shrink-0"
-      />
-
-      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
-        Cluster
-      </span>
-
-    </div>
-
-    <div class="mt-4">
-      <div class="text-4xl font-bold text-slate-900 dark:text-white leading-none">
-        8
+  <!-- CARD: Cluster -->
+  <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 group/sky">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+      <div class="flex gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
       </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-        Kubernetes Nodes
+      <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">cluster.nodes</span>
+    </div>
+    <div class="px-4 py-3">
+      <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Cluster</p>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">8</div>
+      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Kubernetes Nodes</div>
+      <div class="flex flex-wrap gap-1.5">
+        <span v-for="t in ['k3s', 'Kubernetes', 'ARM64']" :key="t"
+          class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
+          {{ t }}
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- CARD -->
-  <div class="group rounded-xl p-4
-              border border-slate-300 dark:border-slate-800
-              bg-slate-100 dark:bg-slate-900/40
-              hover:border-sky-400 dark:hover:border-sky-500/30
-              transition-all duration-200">
-
-    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
-
-      <Icon
-        name="mdi:cpu-64-bit"
-        class="text-purple-400 text-5xl shrink-0"
-      />
-
-      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
-        Compute
-      </span>
-
-    </div>
-
-    <div class="mt-4">
-      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none">
-        ARM64
+  <!-- CARD: Compute -->
+  <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5 group/purple">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+      <div class="flex gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
       </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-        Raspberry Pi 5 Cluster
+      <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">compute.config</span>
+    </div>
+    <div class="px-4 py-3">
+      <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/purple:text-purple-600 dark:group-hover/purple:text-purple-400">Compute</p>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">ARM64</div>
+      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Raspberry Pi 5 Cluster</div>
+      <div class="flex flex-wrap gap-1.5">
+        <span v-for="t in ['Pi 5', '8 Nodes', 'ARM64']" :key="t"
+          class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
+          {{ t }}
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- CARD -->
-  <div class="group rounded-xl p-4
-              border border-slate-300 dark:border-slate-800
-              bg-slate-100 dark:bg-slate-900/40
-              hover:border-sky-400 dark:hover:border-sky-500/30
-              transition-all duration-200">
-
-    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
-
-      <Icon
-        name="mdi:brain"
-        class="text-emerald-400 text-5xl shrink-0"
-      />
-
-      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
-        Intelligence
-      </span>
-
-    </div>
-
-    <div class="mt-4">
-      <div class="text-4xl font-bold text-slate-900 dark:text-white leading-none">
-        AI
+  <!-- CARD: Intelligence -->
+  <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5 group/emerald">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+      <div class="flex gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
       </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-        Inference + RAG + Embeddings
+      <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">ai.inference</span>
+    </div>
+    <div class="px-4 py-3">
+      <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/emerald:text-emerald-600 dark:group-hover/emerald:text-emerald-400">Intelligence</p>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">AI</div>
+      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Inference + RAG + Embeddings</div>
+      <div class="flex flex-wrap gap-1.5">
+        <span v-for="t in ['Llama 3.2', 'Weaviate', 'RAG']" :key="t"
+          class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">
+          {{ t }}
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- CARD -->
-  <div class="group rounded-xl p-4
-              border border-slate-300 dark:border-slate-800
-              bg-slate-100 dark:bg-slate-900/40
-              hover:border-sky-400 dark:hover:border-sky-500/30
-              transition-all duration-200">
-
-    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800/60">
-
-      <Icon
-        name="mdi:source-branch"
-        class="text-amber-400 text-5xl shrink-0"
-      />
-
-      <span class="text-xs font-semibold uppercase tracking-widest text-slate-700 dark:text-slate-300 text-right">
-        Delivery
-      </span>
-
-    </div>
-
-    <div class="mt-4">
-      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none">
-        CI/CD
+  <!-- CARD: Delivery -->
+  <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5 group/amber">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+      <div class="flex gap-1.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
       </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 mt-1">
-        Automated Deployments
+      <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">ci.pipeline</span>
+    </div>
+    <div class="px-4 py-3">
+      <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/amber:text-amber-600 dark:group-hover/amber:text-amber-400">Delivery</p>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">CI/CD</div>
+      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Automated Deployments</div>
+      <div class="flex flex-wrap gap-1.5">
+        <span v-for="t in ['Gitea', 'Runners', 'Prometheus']" :key="t"
+          class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">
+          {{ t }}
+        </span>
       </div>
     </div>
   </div>

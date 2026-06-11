@@ -1,161 +1,156 @@
-<template>
-  <PatternSection>
-    <div class="flex justify-center gap-x-12">
-      <main
-        class="container text-white lg:flex justify-center overflow-hidden dark:text-white py-16 px-4"
-      >
-        <div>
-          <nuxt-link
-            class="block cursor-pointer max-w-2xl mb-4"
-            :href="backLink"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="inline h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M11 17l-5-5m0 0l5-5m-5 5h12"
-              />
-            </svg>
-            Back
-          </nuxt-link>
-
-          <ContentDoc v-slot="{ doc }">
-            <h2 class="text-4xl font-semibold text-black dark:text-white">
-              {{ doc.title }}
-            </h2>
-            <p class="text-gray-500 dark:text-white">
-              by {{ doc.author }}, {{ doc.date }}
-            </p>
-
-            <!-- Category, Tags, and Project Info section -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-2 flex flex-wrap items-center"
-            >
-              <span v-if="doc.category" class="mr-4">
-                <strong>Category: </strong>
-                <NuxtLink
-                  :to="{
-                    path: `/categories/${doc.category}`,
-                    query: { from: route.fullPath },
-                  }"
-                  class="text-blue-500 hover:underline"
-                >
-                  {{ doc.category }}
-                </NuxtLink>
-              </span>
-
-              <span v-if="doc.tags && doc.tags.length" class="mr-4">
-                <strong>Tags: </strong>
-                <ul class="inline-flex gap-x-2">
-                  <li v-for="(tag, index) in doc.tags" :key="index">
-                    <NuxtLink
-                      :to="{
-                        path: `/tags/${tag}`,
-                        query: { from: route.fullPath },
-                      }"
-                      class="text-blue-500 hover:underline"
-                    >
-                      {{ tag }}
-                    </NuxtLink>
-                  </li>
-                </ul>
-              </span>
-
-              <span v-if="doc.projectType" class="mr-4">
-                <strong>Project Type:</strong>
-                <span v-if="doc.projectType === 'personal'">
-                  Personal Project
-                </span>
-                <span v-if="doc.projectType === 'freelance'"> Freelance </span>
-                <span v-if="doc.projectType === 'employment'">
-                  <a
-                    :href="doc.employmentLink"
-                    class="text-blue-500 hover:underline ml-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Employment</a
-                  >
-                </span>
-              </span>
-            </div>
-
-            <!-- GitHub and Live Site Buttons -->
-            <div
-              class="text-gray-500 dark:text-gray-400 mt-4 flex gap-x-4 items-center"
-            >
-              <span v-if="doc.github">
-                <a
-                  :href="doc.github"
-                  class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  GitHub
-                </a>
-              </span>
-
-              <span v-if="doc.liveSite">
-                <a
-                  :href="doc.liveSite"
-                  class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Live Site
-                </a>
-              </span>
-            </div>
-            <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
-
-            <div class="max-w-8xl">
-              <ContentRenderer
-                class="mt-4 max-w-none prose lg:prose-xl dark:prose-invert"
-                :value="doc"
-              />
-            </div>
-          </ContentDoc>
-        </div>
-      </main></div
-  ></PatternSection>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "#app";
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from '#app'
 
-const route = useRoute();
-const backLink = ref("/articles/overview");
-const doc = ref<any>({});
+const route = useRoute()
+const config = useRuntimeConfig()
+const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
+const backLink = ref('/portfolio/overview')
 
-// Set the back link based on the query parameter
+const { data: doc } = await useAsyncData(
+  `portfolio-doc-${route.path}`,
+  () => queryContent(route.path).findOne()
+)
+
+const pageTitle = computed(() =>
+  doc.value?.title ? `${doc.value.title} — Donavan Jones` : 'Donavan Jones'
+)
+const pageDescription = computed(() => doc.value?.description || '')
+
+useSeoMeta({
+  title: pageTitle,
+  ogTitle: pageTitle,
+  description: pageDescription,
+  ogDescription: pageDescription,
+  ogType: 'website',
+  ogImage: computed(() => doc.value?.excerptImage || `${SITE}/img/logo.png`),
+  ogUrl: () => `${SITE}${route.path}`,
+  twitterCard: 'summary_large_image',
+  twitterTitle: pageTitle,
+  twitterDescription: pageDescription,
+  canonical: () => `${SITE}${route.path}`,
+})
+
+function formatDate(d: string | undefined) {
+  if (!d) return ''
+  return new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 onMounted(() => {
   if (route.query.from) {
-    backLink.value = route.query.from as string;
+    backLink.value = route.query.from as string
   }
-  // Load the doc data
-  // Assume you load doc data here
-});
-
-const liveSiteHostname = computed(() => {
-  if (doc.value.liveSite) {
-    try {
-      return new URL(doc.value.liveSite).hostname;
-    } catch (e) {
-      console.error("Invalid live site URL:", e);
-      return "";
-    }
-  }
-  return "";
-});
+})
 </script>
 
-<style scoped>
-/* Optional: Add additional custom styles here */
-</style>
+<template>
+  <PatternSection>
+    <div class="min-h-screen">
+      <div v-if="doc">
+
+        <!-- Header card -->
+        <div class="max-w-7xl mx-auto px-4 pt-10 pb-4">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden mb-8">
+
+            <!-- Chrome header -->
+            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">portfolio.meta</span>
+              </div>
+              <NuxtLink
+                v-if="doc.category"
+                :to="{ path: `/categories/${doc.category}`, query: { from: route.fullPath } }"
+                class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
+              >
+                {{ doc.category }} →
+              </NuxtLink>
+            </div>
+
+            <!-- Body -->
+            <div class="px-6 py-5">
+              <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-4">
+                {{ doc.title }}
+              </h2>
+
+              <!-- Author + date -->
+              <div class="text-sm text-slate-500 dark:text-slate-400 mb-3">
+                by {{ doc.author || 'Donavan Jones' }} · {{ formatDate(doc.date) }}
+              </div>
+
+              <!-- Meta row -->
+              <div class="flex flex-wrap items-center gap-1.5 mb-3">
+                <span
+                  v-if="doc.projectType"
+                  class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                         bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                         border-slate-200 dark:border-slate-700/50"
+                >
+                  <Icon name="mdi:briefcase-outline" class="text-xs" />
+                  {{ doc.projectType }}
+                </span>
+
+                <a
+                  v-if="doc.github"
+                  :href="doc.github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                         bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                         border-slate-200 dark:border-slate-700/50
+                         transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                >
+                  <Icon name="mdi:github" class="text-sm" />
+                  GitHub
+                </a>
+
+                <a
+                  v-if="doc.liveSite"
+                  :href="doc.liveSite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                         bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                         border-slate-200 dark:border-slate-700/50
+                         transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400"
+                >
+                  <Icon name="mdi:open-in-new" class="text-xs" />
+                  Live Site
+                </a>
+              </div>
+
+              <!-- Tags -->
+              <div v-if="doc.tags?.length" class="flex flex-wrap gap-1.5">
+                <NuxtLink
+                  v-for="tag in doc.tags"
+                  :key="tag"
+                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                  class="text-[11px] px-2 py-0.5 rounded border
+                         bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                         border-slate-200 dark:border-slate-700/50
+                         transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                >
+                  #{{ tag }}
+                </NuxtLink>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 pb-16">
+          <ContentRenderer
+            class="prose lg:prose-xl dark:prose-invert max-w-none"
+            :value="doc"
+          />
+        </div>
+
+      </div>
+    </div>
+  </PatternSection>
+</template>

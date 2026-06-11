@@ -67,27 +67,18 @@ const statusColor: Record<string, string> = {
       <!-- ── HERO ───────────────────────────────────────────────────── -->
       <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
         <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
-          <!-- Label -->
-          <div
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
-                   bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium"
-          >
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
+                      bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium">
             <Icon name="mdi:folder-multiple-outline" class="text-sm" />
             Portfolio
           </div>
-
-          <!-- Heading -->
           <h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
             Projects
           </h1>
-
-          <!-- Subtext -->
           <p class="mt-5 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Full-stack systems, AI integrations, and engineering experiments —
             built with production architecture and real-world constraints in mind.
           </p>
-
-          <!-- Stats row -->
           <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-500 dark:text-slate-400">
             <span class="flex items-center gap-1.5">
               <Icon name="mdi:code-braces" class="text-sky-400" />

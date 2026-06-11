@@ -320,43 +320,43 @@ function formatDate(dateStr: string): string {
               </div>
 
               <!-- Stack groups -->
-              <div class="p-5 space-y-5">
+              <div class="p-5 space-y-1">
 
-                <div>
-                  <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2">Frontend</p>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-sky-500/10 dark:hover:bg-sky-500/8 group/sky">
+                  <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Cluster</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['Nuxt 3', 'Vue 3', 'TypeScript', 'Tailwind CSS', 'React']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">
+                    <span v-for="t in ['k3s', 'Kubernetes', 'ARM64', 'Raspberry Pi 5', '8 Nodes']" :key="t"
+                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
                       {{ t }}
                     </span>
                   </div>
                 </div>
 
-                <div>
-                  <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2">Backend</p>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-purple-500/10 dark:hover:bg-purple-500/8 group/purple">
+                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/purple:text-purple-600 dark:group-hover/purple:text-purple-400">AI & ML</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['Node.js', 'PostgreSQL', 'Redis', 'BullMQ', 'Prisma', 'FastAPI']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">
+                    <span v-for="t in ['Llama 3.2', 'Weaviate', 'RAG', 'Embeddings', 'LLMs']" :key="t"
+                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
                       {{ t }}
                     </span>
                   </div>
                 </div>
 
-                <div>
-                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2">AI & Data</p>
+                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/8 group/emerald">
+                  <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/emerald:text-emerald-600 dark:group-hover/emerald:text-emerald-400">Data Layer</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['RAG Pipelines', 'Weaviate', 'Llama 3.2', 'Embeddings', 'MinIO']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">
+                    <span v-for="t in ['PostgreSQL', 'Redis', 'Apache AGE', 'MinIO']" :key="t"
+                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">
                       {{ t }}
                     </span>
                   </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
-                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2">Infrastructure</p>
+                <div class="rounded-xl px-3 py-3 border-t border-slate-200 dark:border-slate-800 transition-all duration-200 hover:bg-amber-500/10 dark:hover:bg-amber-500/8 group/amber">
+                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/amber:text-amber-600 dark:group-hover/amber:text-amber-400">Platform</p>
                   <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['k3s', 'ARM64', 'Docker', 'Gitea', 'Prometheus']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50">
+                    <span v-for="t in ['FastAPI', 'Gitea', 'Actions Runners', 'Prometheus', 'Grafana']" :key="t"
+                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">
                       {{ t }}
                     </span>
                   </div>

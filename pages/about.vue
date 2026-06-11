@@ -231,29 +231,100 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
 
         <!-- Stats card -->
         <div class="lg:col-span-2">
-          <div class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
-                      bg-white dark:bg-slate-900/60">
-            <h2 class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-5">
-              By the Numbers
-            </h2>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="rounded-xl p-4 bg-purple-500/5 border border-purple-500/20 text-center">
-                <div class="text-2xl font-extrabold text-purple-400">37K+</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Verses Indexed</div>
+          <div class="grid grid-cols-2 gap-4">
+
+            <!-- CARD: Verses -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5 group/verses">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">verses.indexed</span>
               </div>
-              <div class="rounded-xl p-4 bg-sky-500/5 border border-sky-500/20 text-center">
-                <div class="text-2xl font-extrabold text-sky-400">5</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">AI Models</div>
-              </div>
-              <div class="rounded-xl p-4 bg-emerald-500/5 border border-emerald-500/20 text-center">
-                <div class="text-2xl font-extrabold text-emerald-400">K8s</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Self-Hosted</div>
-              </div>
-              <div class="rounded-xl p-4 bg-amber-500/5 border border-amber-500/20 text-center">
-                <div class="text-2xl font-extrabold text-amber-400">20+</div>
-                <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Years Building</div>
+              <div class="px-4 py-3">
+                <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/verses:text-purple-600 dark:group-hover/verses:text-purple-400">Bible Logic</p>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">37K+</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Verses Indexed</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span v-for="t in ['RAG', 'Weaviate', 'Search']" :key="t"
+                    class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
+                    {{ t }}
+                  </span>
+                </div>
               </div>
             </div>
+
+            <!-- CARD: AI Models -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 group/models">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">ai.models</span>
+              </div>
+              <div class="px-4 py-3">
+                <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/models:text-sky-600 dark:group-hover/models:text-sky-400">AI Models</p>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">5</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">In Production</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span v-for="t in ['Llama', 'OpenAI', 'Whisper']" :key="t"
+                    class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
+                    {{ t }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD: Kubernetes -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5 group/k8s">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">cluster.config</span>
+              </div>
+              <div class="px-4 py-3">
+                <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/k8s:text-emerald-600 dark:group-hover/k8s:text-emerald-400">Cluster</p>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">K8s</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Self-Hosted</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span v-for="t in ['k3s', 'ARM64', 'Pi 5']" :key="t"
+                    class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">
+                    {{ t }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD: Experience -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200 hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5 group/exp">
+              <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">experience.years</span>
+              </div>
+              <div class="px-4 py-3">
+                <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/exp:text-amber-600 dark:group-hover/exp:text-amber-400">Experience</p>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">20+</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Years Building</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span v-for="t in ['Full-Stack', 'SaaS', 'Remote']" :key="t"
+                    class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">
+                    {{ t }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -54,59 +54,77 @@ function isoDate(d: string | undefined) {
               :currentPageTitle="doc.title"
             />
 
-            <h2 class="text-4xl font-semibold text-black dark:text-white">
-              {{ doc.title }}
-            </h2>
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden mb-8">
 
-            <!-- Meta -->
-            <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-              <NuxtLink
-                to="/about"
-                rel="author"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-              >
-                <Icon name="mdi:account-circle-outline" class="text-base" />
-                {{ doc.author || 'Donavan Jones' }}
-              </NuxtLink>
+              <!-- Chrome header -->
+              <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="flex gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  </div>
+                  <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">insights.post</span>
+                </div>
+                <NuxtLink
+                  v-if="doc.category"
+                  :to="{ path: `/categories/${doc.category}`, query: { from: route.fullPath } }"
+                  class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
+                >
+                  {{ doc.category }} →
+                </NuxtLink>
+              </div>
 
-              <time
-                v-if="doc.date"
-                :datetime="isoDate(doc.date)"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
-              >
-                <Icon name="mdi:calendar-outline" class="text-base" />
-                {{ formatDate(doc.date) }}
-              </time>
+              <!-- Body -->
+              <div class="px-6 py-5">
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-4">
+                  {{ doc.title }}
+                </h2>
 
-              <NuxtLink
-                v-if="doc.category"
-                :to="{ path: `/categories/${doc.category}`, query: { from: route.fullPath } }"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-              >
-                <Icon name="mdi:folder-outline" class="text-base" />
-                {{ doc.category }}
-              </NuxtLink>
-            </div>
+                <!-- Meta: author + date -->
+                <div class="flex flex-wrap items-center gap-1.5 mb-3">
+                  <NuxtLink
+                    to="/about"
+                    rel="author"
+                    class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                           bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                           border-slate-200 dark:border-slate-700/50
+                           transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                  >
+                    <Icon name="mdi:account-circle-outline" class="text-xs" />
+                    {{ doc.author || 'Donavan Jones' }}
+                  </NuxtLink>
+                  <time
+                    v-if="doc.date"
+                    :datetime="isoDate(doc.date)"
+                    class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                           bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                           border-slate-200 dark:border-slate-700/50"
+                  >
+                    <Icon name="mdi:calendar-outline" class="text-xs" />
+                    {{ formatDate(doc.date) }}
+                  </time>
+                </div>
 
-            <!-- Tags -->
-            <div v-if="doc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
-              <NuxtLink
-                v-for="(tag, i) in doc.tags"
-                :key="i"
-                :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
-                class="text-xs px-2.5 py-1 rounded-lg border
-                       bg-slate-100 dark:bg-slate-800
-                       text-slate-500 dark:text-slate-400
-                       border-slate-200 dark:border-slate-700/50
-                       hover:border-sky-500/40 hover:text-sky-500 transition-colors"
-              >
-                #{{ tag }}
-              </NuxtLink>
+                <!-- Tags -->
+                <div v-if="doc.tags?.length" class="flex flex-wrap gap-1.5">
+                  <NuxtLink
+                    v-for="(tag, i) in doc.tags"
+                    :key="i"
+                    :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                    class="text-[11px] px-2 py-0.5 rounded border
+                           bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                           border-slate-200 dark:border-slate-700/50
+                           transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                  >
+                    #{{ tag }}
+                  </NuxtLink>
+                </div>
+              </div>
+
             </div>
 
           </div>
-
-          <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
 
           <!-- Body -->
           <div v-if="doc">

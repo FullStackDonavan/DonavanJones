@@ -38,81 +38,98 @@
           :overview-summary="seoDoc.overviewSummary || ''"
         >
 
-          
+
             <!-- optional extra content inside hero -->
             <template #default>
 
-              <!-- Author + date -->
-              <div class="text-sm text-slate-500 dark:text-slate-400">
-                by {{ seoDoc.author }} · {{ seoDoc.date }}
-              </div>
+              <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
 
-              <!-- Meta row: category, project type, links -->
-              <div class="mt-3 flex flex-wrap items-center gap-2">
+                <!-- Chrome header -->
+                <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <div class="flex gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                      <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">project.meta</span>
+                  </div>
+                  <NuxtLink
+                    v-if="seoDoc.category"
+                    :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
+                    class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
+                  >
+                    {{ seoDoc.category }} →
+                  </NuxtLink>
+                </div>
 
-                <NuxtLink
-                  v-if="seoDoc.category"
-                  :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
-                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
-                         bg-sky-500/10 border border-sky-500/20 text-sky-600 dark:text-sky-400
-                         hover:bg-sky-500/20 transition-colors"
-                >
-                  <Icon name="mdi:tag-outline" class="text-xs" />
-                  {{ seoDoc.category }}
-                </NuxtLink>
+                <!-- Body -->
+                <div class="px-6 py-5">
 
-                <span
-                  v-if="seoDoc.projectType"
-                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
-                         bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50
-                         text-slate-600 dark:text-slate-400"
-                >
-                  <Icon name="mdi:briefcase-outline" class="text-xs" />
-                  {{ seoDoc.projectType }}
-                </span>
+                  <!-- Author + date -->
+                  <div class="text-sm text-slate-500 dark:text-slate-400 mb-3">
+                    by {{ seoDoc.author }} · {{ seoDoc.date }}
+                  </div>
 
-                <a
-                  v-if="seoDoc.github"
-                  :href="seoDoc.github"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
-                         bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50
-                         text-slate-600 dark:text-slate-300 hover:border-sky-500/40 hover:text-sky-400 transition-colors"
-                >
-                  <Icon name="mdi:github" class="text-sm" />
-                  GitHub
-                </a>
+                  <!-- Meta row: project type, links -->
+                  <div class="flex flex-wrap items-center gap-1.5 mb-3">
 
-                <a
-                  v-if="seoDoc.liveSite"
-                  :href="seoDoc.liveSite"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
-                         bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400
-                         hover:bg-emerald-500/20 transition-colors"
-                >
-                  <Icon name="mdi:open-in-new" class="text-xs" />
-                  Live Site
-                </a>
+                    <span
+                      v-if="seoDoc.projectType"
+                      class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                             bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                             border-slate-200 dark:border-slate-700/50"
+                    >
+                      <Icon name="mdi:briefcase-outline" class="text-xs" />
+                      {{ seoDoc.projectType }}
+                    </span>
 
-              </div>
+                    <a
+                      v-if="seoDoc.github"
+                      :href="seoDoc.github"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                             bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                             border-slate-200 dark:border-slate-700/50
+                             transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                    >
+                      <Icon name="mdi:github" class="text-sm" />
+                      GitHub
+                    </a>
 
-              <!-- Tags -->
-              <div v-if="seoDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
-                <NuxtLink
-                  v-for="tag in seoDoc.tags"
-                  :key="tag"
-                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
-                  class="text-[11px] px-2 py-0.5 rounded-md
-                         bg-slate-100 dark:bg-slate-800
-                         text-slate-500 dark:text-slate-400
-                         border border-slate-200 dark:border-slate-700/50
-                         hover:border-sky-500/40 hover:text-sky-400 transition-colors"
-                >
-                  #{{ tag }}
-                </NuxtLink>
+                    <a
+                      v-if="seoDoc.liveSite"
+                      :href="seoDoc.liveSite"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
+                             bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                             border-slate-200 dark:border-slate-700/50
+                             transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400"
+                    >
+                      <Icon name="mdi:open-in-new" class="text-xs" />
+                      Live Site
+                    </a>
+
+                  </div>
+
+                  <!-- Tags -->
+                  <div v-if="seoDoc.tags?.length" class="flex flex-wrap gap-1.5">
+                    <NuxtLink
+                      v-for="tag in seoDoc.tags"
+                      :key="tag"
+                      :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                      class="text-[11px] px-2 py-0.5 rounded border
+                             bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
+                             border-slate-200 dark:border-slate-700/50
+                             transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                    >
+                      #{{ tag }}
+                    </NuxtLink>
+                  </div>
+
+                </div>
               </div>
 
             </template>
@@ -122,20 +139,48 @@
               <div
                 v-for="(stat, i) in seoDoc.heroStats"
                 :key="i"
-                class="hero-stat"
+                class="hero-stat rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden transition-all duration-200"
+                :class="{
+                  'hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5':     i % 4 === 0,
+                  'hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5': i % 4 === 1,
+                  'hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5': i % 4 === 2,
+                  'hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5':  i % 4 === 3,
+                }"
               >
-                <Icon
-                  :name="stat.icon"
-                  class="text-4xl"
-                  :class="{
-                    'text-sky-400':     i % 4 === 0,
-                    'text-purple-400':  i % 4 === 1,
-                    'text-emerald-400': i % 4 === 2,
-                    'text-amber-400':   i % 4 === 3,
-                  }"
-                />
-                <div class="mt-2 text-xl font-bold">{{ stat.value }}</div>
-                <div class="text-xs text-slate-400">{{ stat.label }}</div>
+                <!-- Chrome header -->
+                <div class="px-3 py-2 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5">
+                  <div class="flex gap-1">
+                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  </div>
+                  <span class="text-[9px] text-slate-400 dark:text-slate-500 ml-0.5 truncate">
+                    {{ stat.label.toLowerCase().replace(/\s+/g, '.') }}
+                  </span>
+                </div>
+                <!-- Body -->
+                <div class="px-3 py-3 text-center">
+                  <Icon
+                    :name="stat.icon"
+                    class="text-3xl mb-2"
+                    :class="{
+                      'text-sky-400':     i % 4 === 0,
+                      'text-purple-400':  i % 4 === 1,
+                      'text-emerald-400': i % 4 === 2,
+                      'text-amber-400':   i % 4 === 3,
+                    }"
+                  />
+                  <div class="text-2xl font-bold text-slate-900 dark:text-white leading-none mb-1">{{ stat.value }}</div>
+                  <p
+                    class="text-[9px] uppercase tracking-widest font-semibold"
+                    :class="{
+                      'text-sky-500':     i % 4 === 0,
+                      'text-purple-500':  i % 4 === 1,
+                      'text-emerald-500': i % 4 === 2,
+                      'text-amber-500':   i % 4 === 3,
+                    }"
+                  >{{ stat.label }}</p>
+                </div>
               </div>
             </template>
           </ArticleHero>

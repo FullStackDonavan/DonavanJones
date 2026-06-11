@@ -195,95 +195,100 @@ function isoDate(d: string | undefined) {
               :currentPageTitle="seoDoc.title"
             />
 
-            <h2 class="text-4xl font-semibold text-black dark:text-white">
-              {{ seoDoc.title }}
-            </h2>
+            <!-- Article header card -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden mb-8">
 
-            <!-- Publication meta -->
-            <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <!-- Chrome header -->
+              <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <div class="flex gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  </div>
+                  <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">blog.post</span>
+                </div>
+                <NuxtLink
+                  v-if="seoDoc.category"
+                  :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
+                  class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
+                >
+                  {{ seoDoc.category }} →
+                </NuxtLink>
+              </div>
 
-              <!-- Author -->
-              <NuxtLink
-                to="/about"
-                rel="author"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-              >
-                <Icon name="mdi:account-circle-outline" class="text-base" />
-                {{ seoDoc.author || 'Donavan Jones' }}
-              </NuxtLink>
+              <!-- Content -->
+              <div class="px-6 py-5">
 
-              <!-- Published date -->
-              <time
-                v-if="seoDoc.date"
-                :datetime="isoDate(seoDoc.date)"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
-              >
-                <Icon name="mdi:calendar-outline" class="text-base" />
-                Published {{ formatDate(seoDoc.date) }}
-              </time>
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white leading-tight">
+                  {{ seoDoc.title }}
+                </h2>
 
-              <!-- Last updated -->
-              <time
-                v-if="seoDoc.lastUpdated"
-                :datetime="isoDate(seoDoc.lastUpdated)"
-                class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
-              >
-                <Icon name="mdi:update" class="text-base" />
-                Updated {{ formatDate(seoDoc.lastUpdated) }}
-              </time>
+                <!-- Publication meta -->
+                <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <NuxtLink
+                    to="/about"
+                    rel="author"
+                    class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
+                  >
+                    <Icon name="mdi:account-circle-outline" class="text-base" />
+                    {{ seoDoc.author || 'Donavan Jones' }}
+                  </NuxtLink>
+                  <time
+                    v-if="seoDoc.date"
+                    :datetime="isoDate(seoDoc.date)"
+                    class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400"
+                  >
+                    <Icon name="mdi:calendar-outline" class="text-base" />
+                    {{ formatDate(seoDoc.date) }}
+                  </time>
+                  <time
+                    v-if="seoDoc.lastUpdated"
+                    :datetime="isoDate(seoDoc.lastUpdated)"
+                    class="inline-flex items-center gap-1.5 text-sm text-sky-500 dark:text-sky-400"
+                  >
+                    <Icon name="mdi:update" class="text-base" />
+                    Updated {{ formatDate(seoDoc.lastUpdated) }}
+                  </time>
+                </div>
 
-              <!-- Category -->
-              <NuxtLink
-                v-if="seoDoc.category"
-                :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
-                class="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-500 transition-colors"
-              >
-                <Icon name="mdi:folder-outline" class="text-base" />
-                {{ seoDoc.category }}
-              </NuxtLink>
+                <!-- Tags -->
+                <div v-if="seoDoc.tags?.length" class="mt-4 flex flex-wrap gap-1.5">
+                  <NuxtLink
+                    v-for="(tag, index) in seoDoc.tags"
+                    :key="index"
+                    :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                    class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
+                  >
+                    #{{ tag }}
+                  </NuxtLink>
+                </div>
 
-            </div>
+                <!-- GitHub / Live Site -->
+                <div v-if="seoDoc.github || seoDoc.liveSite" class="mt-4 flex flex-wrap gap-2">
+                  <a
+                    v-if="seoDoc.github"
+                    :href="seoDoc.github"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-[11px] px-3 py-1 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 transition-all duration-150 hover:bg-slate-900 hover:border-slate-700 hover:text-white"
+                  >
+                    <Icon name="mdi:github" class="text-sm" /> GitHub
+                  </a>
+                  <a
+                    v-if="seoDoc.liveSite"
+                    :href="seoDoc.liveSite"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-[11px] px-3 py-1 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400"
+                  >
+                    <Icon name="mdi:open-in-new" class="text-sm" /> Live Site
+                  </a>
+                </div>
 
-            <!-- Tags -->
-            <div v-if="seoDoc.tags?.length" class="mt-3 flex flex-wrap gap-1.5">
-              <NuxtLink
-                v-for="(tag, index) in seoDoc.tags"
-                :key="index"
-                :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
-                class="text-xs px-2.5 py-1 rounded-lg border
-                       bg-slate-100 dark:bg-slate-800
-                       text-slate-500 dark:text-slate-400
-                       border-slate-200 dark:border-slate-700/50
-                       hover:border-sky-500/40 hover:text-sky-500 transition-colors"
-              >
-                #{{ tag }}
-              </NuxtLink>
-            </div>
-
-            <!-- GitHub / Live Site -->
-            <div v-if="seoDoc.github || seoDoc.liveSite" class="mt-4 flex gap-x-4 items-center">
-              <a
-                v-if="seoDoc.github"
-                :href="seoDoc.github"
-                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub
-              </a>
-              <a
-                v-if="seoDoc.liveSite"
-                :href="seoDoc.liveSite"
-                class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Live Site
-              </a>
+              </div>
             </div>
           </div>
-
-          <hr class="border-t-2 border-gray-300 my-4 shadow-md" />
 
           <!-- Article body -->
           <div v-if="seoDoc">
