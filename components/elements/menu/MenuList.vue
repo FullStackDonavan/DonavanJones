@@ -69,19 +69,35 @@
         </span>
       </NuxtLink>
 
-      <!-- About -->
-      <NuxtLink to="/about" class="relative group">
-        <span :class="navClass(isActive('/about'))">
-          About
-        </span>
-      </NuxtLink>
+      <!-- About Dropdown -->
+      <div class="relative group">
 
-      <!-- Resume -->
-      <NuxtLink to="/resume" class="relative group">
-        <span :class="navClass(isActive('/resume'))">
-          Resume
-        </span>
-      </NuxtLink>
+        <NuxtLink
+          to="/about"
+          :class="[
+            'text-base font-medium relative transition-colors duration-300 px-3 py-1 rounded-md inline-flex items-center gap-1',
+            isAboutActive
+              ? 'text-gray-900 dark:text-gray-300 bg-gray-200 dark:bg-gray-500'
+              : 'text-gray-500 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-gray-300'
+          ]"
+        >
+          About
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </NuxtLink>
+
+        <!-- Dropdown -->
+        <div class="absolute right-0 top-full mt-4 w-52 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
+          <div class="p-2 flex flex-col">
+            <NuxtLink to="/resume" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Resume</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Experience, skills, and tech stack</div>
+            </NuxtLink>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </nav>
@@ -126,6 +142,11 @@ const isBlogActive = computed(() => {
     (route.path.startsWith('/categories') && !fromInsights) ||
     (route.path.startsWith('/tags') && !fromInsights)
   )
+})
+
+// About + Resume
+const isAboutActive = computed(() => {
+  return route.path === '/about' || route.path === '/resume'
 })
 
 // Insights

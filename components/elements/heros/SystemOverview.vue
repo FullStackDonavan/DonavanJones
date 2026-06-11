@@ -223,32 +223,28 @@
             </div>
 
             <!-- STACK -->
-            <div
-            class="mt-10 pt-8 border-t border-slate-800"
-            >
+            <div class="mt-10 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
 
-            <div
-                class="flex items-center gap-2 mb-4 text-xs uppercase tracking-widest text-slate-500"
-            >
-                Technology Stack
-            </div>
+              <!-- Chrome header -->
+              <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+                </div>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">stack.config</span>
+              </div>
 
-            <div class="flex flex-wrap gap-2">
-
-                <span class="tech-badge">Kubernetes</span>
-                <span class="tech-badge">k3s</span>
-                <span class="tech-badge">Raspberry Pi 5</span>
-                <span class="tech-badge">FastAPI</span>
-                <span class="tech-badge">Redis</span>
-                <span class="tech-badge">PostgreSQL</span>
-                <span class="tech-badge">Apache AGE</span>
-                <span class="tech-badge">Weaviate</span>
-                <span class="tech-badge">MinIO</span>
-                <span class="tech-badge">Gitea</span>
-                <span class="tech-badge">Actions Runners</span>
-                <span class="tech-badge">LLMs</span>
-
-            </div>
+              <!-- Body -->
+              <div class="px-5 py-4">
+                <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-3">Technology Stack</p>
+                <div class="flex flex-wrap gap-1.5">
+                  <span v-for="t in ['Kubernetes', 'k3s', 'Raspberry Pi 5', 'FastAPI', 'Redis', 'PostgreSQL', 'Apache AGE', 'Weaviate', 'MinIO', 'Gitea', 'Actions Runners', 'LLMs']" :key="t"
+                    class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
+                    {{ t }}
+                  </span>
+                </div>
+              </div>
 
             </div>
 
