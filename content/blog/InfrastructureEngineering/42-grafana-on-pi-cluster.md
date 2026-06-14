@@ -2,7 +2,7 @@
 title: "Grafana on a Pi K3s Cluster"
 description: "Deploying Grafana as a Kubernetes pod on an ARM64 Raspberry Pi k3s cluster with auto-provisioned Prometheus and Loki datasources."
 date: 2026-06-13
-lastUpdated: "2026-06-13"
+lastUpdated: "2026-06-23"
 category: "infrastructure-engineering"
 tags:
   - grafana
@@ -12,7 +12,7 @@ tags:
   - arm64
   - raspberry-pi
   - k3s
-draft: false
+draft: true
 cluster: "infrastructure-engineering"
 slug: grafana-on-pi-cluster
 author: Donavan Jones
