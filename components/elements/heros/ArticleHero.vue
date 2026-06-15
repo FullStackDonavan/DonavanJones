@@ -20,16 +20,34 @@
           <!-- ── LEFT COLUMN ──────────────────────────────────────── -->
           <div class="flex flex-col">
 
-            <!-- Badge -->
-            <div
-              v-if="badge"
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-md mb-5
-                     bg-sky-100 dark:bg-sky-500/10
-                     border border-sky-200 dark:border-sky-500/20
-                     text-sky-700 dark:text-sky-300 text-xs font-medium self-start"
-            >
-              <Icon v-if="badgeIcon" :name="badgeIcon" class="text-sm" />
-              {{ badge }}
+            <!-- Badge + Live Site -->
+            <div class="flex items-center gap-3 mb-5 flex-wrap">
+              <div
+                v-if="badge"
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-md
+                       bg-sky-100 dark:bg-sky-500/10
+                       border border-sky-200 dark:border-sky-500/20
+                       text-sky-700 dark:text-sky-300 text-xs font-medium"
+              >
+                <Icon v-if="badgeIcon" :name="badgeIcon" class="text-sm" />
+                {{ badge }}
+              </div>
+
+              <a
+                v-if="liveSite"
+                :href="liveSite"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium
+                       bg-emerald-50 dark:bg-emerald-500/10
+                       border border-emerald-200 dark:border-emerald-500/25
+                       text-emerald-700 dark:text-emerald-400
+                       hover:bg-emerald-100 dark:hover:bg-emerald-500/20
+                       transition-colors duration-150"
+              >
+                <Icon name="mdi:open-in-new" class="text-sm" />
+                Live Site
+              </a>
             </div>
 
             <!-- Title -->
@@ -232,6 +250,7 @@ defineProps({
   description:         String,
   badge:               String,
   badgeIcon:           String,
+  liveSite:            String,
   overviewDescription: String,
   overviewSummary:     String,
   overviewSteps:       { type: Array, default: () => [] },

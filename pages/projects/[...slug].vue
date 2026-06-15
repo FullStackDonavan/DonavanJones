@@ -23,6 +23,7 @@
           :highlight="seoDoc.highlight || ''"
           :badge="seoDoc.category"
           :badge-icon="seoDoc.badgeIcon || 'mdi:layers'"
+          :live-site="seoDoc.liveSite"
 
           :frontend="seoDoc.frontend || []"
           :backend="seoDoc.backend || []"
@@ -96,20 +97,6 @@
                     >
                       <Icon name="mdi:github" class="text-sm" />
                       GitHub
-                    </a>
-
-                    <a
-                      v-if="seoDoc.liveSite"
-                      :href="seoDoc.liveSite"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1.5 text-[11px] px-2 py-0.5 rounded border
-                             bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
-                             border-slate-200 dark:border-slate-700/50
-                             transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400"
-                    >
-                      <Icon name="mdi:open-in-new" class="text-xs" />
-                      Live Site
                     </a>
 
                   </div>
