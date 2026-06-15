@@ -191,11 +191,25 @@ const statusColor: Record<string, string> = {
                   <span class="text-xs font-medium text-slate-400 dark:text-slate-500">
                     {{ project.projectType || 'Personal Project' }}
                   </span>
-                  <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
-                               group-hover:translate-x-1 transition-transform duration-200">
-                    View Project
-                    <Icon name="mdi:arrow-right" class="text-base" />
-                  </span>
+                  <div class="flex items-center gap-3">
+                    <a
+                      v-if="project.liveSite"
+                      :href="project.liveSite"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      @click.stop
+                      class="inline-flex items-center gap-1 text-xs font-medium text-emerald-500
+                             hover:text-emerald-400 transition-colors duration-150"
+                    >
+                      <Icon name="mdi:open-in-new" class="text-sm" />
+                      Live Site
+                    </a>
+                    <span class="inline-flex items-center gap-1 text-sm font-medium text-sky-500
+                                 group-hover:translate-x-1 transition-transform duration-200">
+                      View Project
+                      <Icon name="mdi:arrow-right" class="text-base" />
+                    </span>
+                  </div>
                 </div>
 
               </div>
