@@ -22,6 +22,14 @@ This article covers how AI services fit into a distributed backend, what makes t
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The AI Service Landscape
 
 In my platform, "AI services" refers to three distinct concerns, each running as its own deployable:
@@ -118,6 +126,14 @@ AI services communicate with the rest of the backend in two ways depending on wh
 
 **Async message queue** for anything that does not need to be in the critical path. After a response is sent, the inference service publishes a `completion.finished` event. Downstream consumers (logging, analytics, note-saving, narration triggers) process it independently. If one of them fails, it does not affect the response the user already received.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -151,6 +167,14 @@ AI services need specialized observability on top of standard metrics. Beyond la
 
 Without this instrumentation, you cannot tell whether the system is working well or just working. A 99% success rate on inference sounds good until you realize 1% of responses are grounded hallucinations that passed validation.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your AI Services"
+supportingCopy: "Designing inference, embedding, or moderation services of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What I Would Do Differently
 
 If I were starting over, I would introduce the **embedding service earlier**. I built it after the inference service and had to retrofit semantic retrieval into prompts that were already in production. The retrieval quality improvement was significant enough that I should have treated it as foundational from day one.
@@ -158,6 +182,32 @@ If I were starting over, I would introduce the **embedding service earlier**. I 
 I would also set up cost monitoring on day one rather than week four. The first month of development had several experiments that generated significant API spend that I only noticed after the fact. A daily budget alert with a hard cutoff would have caught it immediately.
 
 AI services are not special — they are just services with unusual performance characteristics. Design them like any other service: clear boundaries, explicit contracts, graceful degradation, and observable internals. The model is an implementation detail inside the service, not something the rest of the system should know about.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Authentication"
+  supportingCopy: "Continue with \"Authentication\" to see how the Auth Service referenced throughout this article actually handles identity and sessions."
+  destinationUrl: "/blog/backendengineering/03-authentication"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

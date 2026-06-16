@@ -18,6 +18,14 @@ Recursion is a technique where a function solves a problem by calling itself wit
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 Recursion appears throughout computer science: tree traversal, file system exploration, merge sort, quicksort, depth-first graph search, and backtracking algorithms all rely on it. Understanding recursion is foundational to understanding how those more complex algorithms work.
 
 ## The Two Parts of Every Recursive Function
@@ -93,6 +101,14 @@ countdown(3)  ← bottom (first call)
 ```
 
 When `countdown(0)` hits the base case and returns, each frame pops off in reverse order. A deep recursion without a reachable base case causes a **stack overflow** — JavaScript's call stack has a finite size, typically around 10,000–15,000 frames.
+
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
 
 ---
 
@@ -278,6 +294,32 @@ The three questions to ask when writing any recursive solution:
 - Does every code path return a value?
 
 Answer those correctly and the recursion will work.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Divide and Conquer Pattern"
+  supportingCopy: "Continue with \"Divide and Conquer,\" the pattern most recursive algorithms like merge sort and binary search are built on."
+  destinationUrl: "/blog/algorithms-and-data-structures/divide-and-conquer-pattern"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

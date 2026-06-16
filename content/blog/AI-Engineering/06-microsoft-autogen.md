@@ -21,6 +21,14 @@ Microsoft AutoGen is one of the most widely used frameworks for multi-agent AI s
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What AutoGen Is
 
 AutoGen is an open-source Python framework from Microsoft Research that models multi-agent workflows as conversations between agents. Each agent is an entity with a name, a system prompt, and optionally a set of callable functions (tools). Agents communicate by passing messages in a shared conversation thread.
@@ -110,6 +118,14 @@ This is elegant and flexible. The researcher gathers information, passes it to t
 
 **Research and experimentation.** AutoGen originated in a research context (Microsoft Research) and it shows — it has rich tooling for logging conversations, replaying them, introspecting agent behavior, and experimenting with different configurations. For studying multi-agent behavior or evaluating different orchestration strategies, AutoGen provides a good experimental platform.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -193,6 +209,14 @@ AutoGen is a poor fit when:
 
 - **The system is already in TypeScript/Node.js.** Introducing Python for AutoGen in a Node.js stack adds deployment complexity, a new language runtime, and a process-boundary for inter-service communication.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## What AutoGen Taught Me About Custom Design
 
 Even without using AutoGen in production, studying it clarified some principles that shaped the custom pipeline design:
@@ -204,6 +228,32 @@ AutoGen's conversation model — where all context accumulates in a shared threa
 AutoGen's termination condition complexity — agents needing to signal completion through message content — made explicit the value of explicit completion semantics. In custom pipelines, a stage is complete when its function returns. No ambiguity.
 
 Frameworks are most valuable when their assumptions match your problem. AutoGen's assumptions match conversational, open-ended, research-oriented tasks. This platform's tasks — structured output, predictable pipelines, tight cost control, TypeScript stack — match a custom orchestration approach more closely. The framework still informed the design by illustrating which problems it was solving and which ones it was introducing.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Local Agent Systems"
+  supportingCopy: "Continue with \"Local Agent Systems\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/07-local-agent-systems"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -23,6 +23,14 @@ This article covers what local agent systems are, when they make sense over clou
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What "Local" Means
 
 "Local" in this context means inference happens on hardware under your control — your development machine, a server in your infrastructure, a device the user owns — rather than on a cloud provider's hardware reached over the internet.
@@ -62,6 +70,14 @@ The offline mode does not need to match the quality of the connected experience 
 Cloud API pricing is per token. At high volume — millions of inference calls per day — the per-token cost compounds to significant infrastructure spend. A local model with a fixed hardware cost amortizes that cost across unlimited inference calls. At sufficient volume, local becomes cheaper than cloud.
 
 The break-even depends on the model size (larger models need more expensive hardware), the hardware utilization rate (an underutilized GPU is expensive), and the cloud API pricing for equivalent quality. For most early-stage products, cloud APIs are cheaper because utilization is low. At scale, the math changes.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -258,6 +274,14 @@ The routing policy considers: task type, privacy classification, user tier (offl
 
 This abstraction also enables graceful degradation: if the cloud API is rate-limited or unavailable, the router falls back to local for tasks the local model can handle adequately. The fallback is not invisible — quality may drop — but the system stays functional rather than failing completely.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## What Local Cannot Replace (Yet)
 
 Local models are practical for constrained, well-defined tasks. They are not practical substitutes for frontier models on the tasks that require frontier-level capability:
@@ -270,6 +294,32 @@ Local models are practical for constrained, well-defined tasks. They are not pra
 For these, the quality difference between a local 7B–13B model and claude-opus-4-8 is significant and user-visible. The platform uses local where local is good enough and cloud where quality is the primary constraint.
 
 The frontier/local quality gap will narrow over time. Models are getting smaller without proportional quality loss. Tasks that require cloud today may be tractable locally in 18–24 months. The abstraction layer is designed to accommodate that shift — adding a new capable local model is a routing policy update, not an application change.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Tool-Based Reasoning"
+  supportingCopy: "Continue with \"Tool-Based Reasoning\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/08-tool-based-reasoning"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

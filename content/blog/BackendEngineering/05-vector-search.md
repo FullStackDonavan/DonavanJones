@@ -21,6 +21,14 @@ Vector search is deceptively simple on the surface — "find the nearest neighbo
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What Vector Search Is Solving
 
 Traditional search is keyword-based. It matches documents that contain the words in the query. This breaks down in two ways for a Bible study platform:
@@ -155,6 +163,14 @@ I use a lightweight cross-encoder model running locally. The reranker narrows 20
 Query → Embed → ANN search (top-20) → Rerank → Top-5 context passages
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -213,6 +229,14 @@ Callers use `relevance_tier` to decide whether results are good enough to surfac
 
 **Monitoring recall quality.** I run a weekly evaluation using a fixed set of 200 ground-truth query/result pairs built from user feedback and manual annotation. If recall drops below 90% on this set, it triggers a review of index parameters or chunking strategy. This is the only reliable way to catch silent degradation — latency and error metrics will not tell you when the right answer drops from position 1 to position 5.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Search Pipeline"
+supportingCopy: "Building hybrid search or reranking for your own retrieval system? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Search Makes Possible
 
 Vector search is the retrieval backbone of the entire platform. Every RAG-powered response, every "related passages" suggestion, every personal note search runs through this service. The quality of retrieval directly determines the quality of everything the inference service produces — garbage in, garbage out.
@@ -220,6 +244,32 @@ Vector search is the retrieval backbone of the entire platform. Every RAG-powere
 The patterns here — hybrid search, two-stage retrieval with reranking, metadata filtering, calibrated relevance tiers — are not specific to Bible study. They apply to any system where users need to find information by meaning rather than by exact terms. The infrastructure is generic; the value is in how you tune it for your specific content and users.
 
 The next article covers streaming — getting responses from the inference service back to users in real time, which is the other half of making AI features feel fast and responsive.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Streaming"
+  supportingCopy: "Continue with \"Streaming\" to see how these retrieved results get turned into a real-time response back to the user."
+  destinationUrl: "/blog/backendengineering/06-streaming"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

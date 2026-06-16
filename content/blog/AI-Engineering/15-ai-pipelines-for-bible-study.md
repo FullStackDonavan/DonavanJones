@@ -28,6 +28,14 @@ Pipeline design is mostly the engineering work of making sure the model has the 
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Core Bible Study Pipeline
 
 The platform's primary Bible study flow runs through four sequential stages with two parallel fan-out operations embedded in the first stage.
@@ -306,6 +314,14 @@ Return a JSON object with: { passages: [], topics: [], preferences: [] }`,
 
 Memory extraction runs entirely in the background — the user's response is not delayed. But the extracted information is available immediately for subsequent questions in the same session and persists to future sessions.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -366,6 +382,14 @@ When a user wants to follow a theme through the Bible, the pipeline expands outw
 
 The graph traversal in step 2 can return dozens of cross-references. The thematic clustering in step 3 prevents the synthesis step from receiving an undifferentiated flood of loosely related passages — it groups them so the model can see structure rather than a list.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Observability in the Pipeline
 
 Each pipeline stage emits structured events that are captured in distributed tracing. A complete pipeline trace shows:
@@ -415,6 +439,32 @@ Seven patterns that emerged from building and operating this pipeline:
 **Log everything.** Each stage should emit structured events. The trace is the only reliable way to understand pipeline behavior under production load conditions — you cannot diagnose a 2-second response without knowing which of the four stages consumed that 2 seconds.
 
 The pipeline structure on this platform grew from a single-call prototype that worked well for simple questions and poorly for everything else. Each stage was added when the previous version hit a quality ceiling: retrieval when generation from memory was too unreliable, memory when retrieval alone missed user context, classification when one prompt served all intents poorly, post-processing when citation failures were invisible. The final pipeline is not a designed-upfront architecture — it is the accumulated response to observed failures, one stage at a time.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Prompt Engineering"
+  supportingCopy: "Continue with \"Prompt Engineering\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/16-prompt-engineering"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

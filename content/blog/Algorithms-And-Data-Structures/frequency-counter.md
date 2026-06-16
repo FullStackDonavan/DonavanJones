@@ -29,6 +29,14 @@ This pattern is especially useful for:
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 ---
 
 # Why Use the Frequency Counter Pattern?
@@ -185,6 +193,14 @@ console.log(same([1, 2, 2], [1, 4, 4])); // true
 console.log(same([1, 2, 3], [1, 9])); // false
 ```
 
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
+
 ---
 
 *Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
@@ -243,6 +259,32 @@ Mastering this pattern also helps prepare you for:
 - Efficient frontend state comparisons
 
 If you are learning algorithms and data structures, this is one of the first optimization techniques worth mastering.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Multiple Pointers"
+  supportingCopy: "Continue with \"Multiple Pointers,\" another core pattern for optimizing away nested loops."
+  destinationUrl: "/blog/algorithms-and-data-structures/multiple-pointers"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

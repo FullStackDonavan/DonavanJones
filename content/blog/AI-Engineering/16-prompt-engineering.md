@@ -21,6 +21,14 @@ This article is about how prompts are built on this platform: the system prompt 
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The System Prompt is Architecture
 
 The system prompt is not a greeting or a role assignment. It is the structural contract that governs every response the model produces. Getting it wrong means every response is wrong in the same systematic way — and systematic failures are the hardest kind to notice because they look like the model's personality rather than a design error.
@@ -189,6 +197,14 @@ When addressing personal application:
 
 The "ground application in what the text actually says, not what would be most comforting" instruction pushes against a specific model tendency: models fine-tuned for helpfulness drift toward responses that validate and comfort the user's framing. For devotional content, some of that is appropriate. But when the text says something challenging, the prompt needs to explicitly prevent the model from softening it.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -268,6 +284,14 @@ Scope your response to what is directly supported by the above.
 
 This signals to the model how much evidence it has to work with. A model that knows it has only moderate-confidence retrieval on a topic will hedge accordingly. A model with no signal about retrieval quality will generate with equal confidence regardless of evidence depth.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Testing Prompts
 
 A prompt is not finished when it produces a good response to the query it was written for. It is finished when it produces acceptable responses across the full distribution of queries it will receive in production — including the edge cases.
@@ -293,6 +317,32 @@ The most useful framing I have found for prompt engineering in this domain: prom
 That probabilistic enforcement is why prompt engineering requires an evaluation set. You cannot know whether your specification is working by reading it — you can only know by running it against the full range of inputs it will encounter and observing whether the outputs are within the acceptable distribution. The evaluation set is what makes prompt engineering engineering rather than guesswork.
 
 Every constraint in the system prompt on this platform exists because a version without it produced a systematic failure on a real query. The specification grew from the failures. That is the only reliable way to build it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Retrieval Augmented Generation"
+  supportingCopy: "Continue with \"Retrieval Augmented Generation\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/17-retrieval-augmented-generation"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -23,6 +23,14 @@ This article covers the structural properties of each content type on this platf
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## Why Chunking Matters More Than It Seems
 
 Embedding models convert text to a vector that represents the aggregate meaning of the entire input. A long chunk has a diffuse representation — the vector captures the average semantic content, which means any single idea within the chunk is represented at reduced fidelity. A short chunk has a sharp, specific representation — but may lack enough context for the model to understand what the chunk is about.
@@ -159,6 +167,14 @@ interface PatristicChunk {
 
 When a query touches on a specific topic, the filter on `topics` supplements semantic search with targeted retrieval of patristic material that explicitly addresses that topic. This gives the retrieval system a second signal beyond embedding similarity.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -216,6 +232,14 @@ function detectRegisterShift(sentence: string, prevSentence: string): boolean {
 
 Register-split chunks retrieve more precisely: a query about "Second Temple Jewish background for Romans 3:21" surfaces the historical background chunk; a query about "Greek syntax of *dikaiosynē* in Romans 3:21" surfaces the grammatical analysis chunk.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## User Study Notes: Minimal Chunking
 
 User notes are personal, variable-length, and structurally unpredictable. They range from a single sentence ("The word 'propitiation' here = satisfying God's wrath") to multi-paragraph reflections. Chunking strategy:
@@ -241,6 +265,32 @@ I evaluate chunking against the same 300-query ground truth set used for retriev
 Content utilization is measured by asking a lightweight model to score which sentences from each retrieved chunk directly support the response. This is an approximation — the model's scoring is imperfect — but it surfaces systematic chunking failures: consistently low utilization scores on a specific content type signal that chunks from that type are too large or structured incorrectly.
 
 Chunking is one of those infrastructure concerns that feels secondary until the retrieval evaluation scores plateau and no amount of model improvement or prompt tuning moves them. At that point, revisiting the chunking strategy usually unlocks the next significant quality improvement. The structure of the content is the structure of the retrieval — get the chunking right and everything downstream improves.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Embedding Strategies"
+  supportingCopy: "Continue with \"Embedding Strategies\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/11-embedding-strategies"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

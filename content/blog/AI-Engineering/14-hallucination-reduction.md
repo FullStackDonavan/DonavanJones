@@ -24,6 +24,14 @@ The engineering response to this is not to find a model that never hallucinates 
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Taxonomy of Hallucinations in Theological AI
 
 Not all hallucinations are the same problem. Categorizing them reveals which interventions apply where.
@@ -213,6 +221,14 @@ function checkPositionAttribution(
 
 This is a coarse check — theological traditions have nuance that a flat list cannot capture. But it catches the most common misattributions: "Calvinists believe salvation can be lost" (inconsistent), "Arminians deny grace entirely" (inconsistent).
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -255,6 +271,14 @@ This confidence level is shown to users as a visual indicator:
 
 Low-confidence responses include an explicit header: "This response is based primarily on the model's training knowledge rather than retrieved scripture. Please verify claims against the original text."
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## The Honest Acknowledgment of Limits
 
 Hallucination reduction is a continuous engineering problem with no complete solution. Every measure described here reduces hallucinations; none eliminates them. The right engineering posture is:
@@ -266,6 +290,32 @@ Hallucination reduction is a continuous engineering problem with no complete sol
 **Be honest with users about uncertainty.** The most hallucination-resistant thing an AI theological tool can do is model intellectual humility. "The text does not directly address this question" and "theologians disagree on this point" are correct, useful responses that prevent the user from leaving with false confidence. A model that always produces an answer, however uncertain its evidence, is more dangerous than one that regularly says "I am not sure — here is what the text says, and you should draw your own conclusion."
 
 The platform's ultimate responsibility is not to produce right answers — it is to help users engage with the actual text. Hallucination reduction in service of that goal is not primarily a technical concern. It is a form of respect for the text and for the people trying to understand it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: AI Pipelines for Bible Study"
+  supportingCopy: "Continue with \"AI Pipelines for Bible Study\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/15-ai-pipelines-for-bible-study"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -28,6 +28,14 @@ Using a sliding window can often reduce a brute-force solution from O(n²) to O(
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 ## Basic Idea
 
 A “window” represents a range of elements inside an array or string.
@@ -138,6 +146,14 @@ Time complexity:
 O(n)
 ```
 
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
+
 ---
 
 *Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
@@ -200,6 +216,32 @@ The pattern is useful when:
 The Sliding Window pattern is one of the most important optimization techniques in algorithm design. It appears frequently in coding interviews, competitive programming, and real-world applications involving streams, arrays, and strings.
 
 Mastering this pattern will help you write more efficient and scalable JavaScript solutions.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Multiple Pointers"
+  supportingCopy: "Continue with \"Multiple Pointers,\" another two-pointer-style technique for optimizing over arrays without nested loops."
+  destinationUrl: "/blog/algorithms-and-data-structures/multiple-pointers"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

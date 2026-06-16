@@ -23,6 +23,14 @@ This article covers what embeddings are, how the embedding service is designed, 
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What an Embedding Actually Is
 
 An embedding model takes a piece of text and outputs a fixed-length array of floating-point numbers — typically 768 to 3072 dimensions depending on the model. This vector represents the text's meaning in a high-dimensional space where semantic similarity corresponds to geometric proximity.
@@ -134,6 +142,14 @@ Job complete → Notify
 
 The pipeline is idempotent. If a worker crashes mid-job, restarting it from the last completed batch produces the same result as if it had never crashed. This is enforced by writing the batch offset to the jobs table before processing each batch, not after.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -161,6 +177,14 @@ The overlap matters. Without it, a chunk boundary can split a sentence mid-thoug
 
 **Monitor embedding drift.** If the distribution of incoming queries shifts significantly from the distribution of indexed content, retrieval quality degrades. I log a sample of query embeddings and their top-k retrieval results weekly and manually review a subset. This is manual and lightweight; at larger scale it would be automated with an evaluation pipeline.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Embedding Pipeline"
+supportingCopy: "Building semantic search or RAG retrieval of your own? Let's talk through the embedding architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## The Relationship to Search
 
 Embeddings are not search — they are the input to search. The next article covers the vector search service that stores these embeddings and answers similarity queries. The embedding service produces the vectors; the search service indexes and queries them.
@@ -168,6 +192,32 @@ Embeddings are not search — they are the input to search. The next article cov
 The boundary is intentional. The embedding service knows nothing about where vectors end up. The search service knows nothing about how vectors are produced. Either can be swapped or upgraded without touching the other, as long as the vector dimensions and model version metadata stay consistent across the handoff.
 
 Keeping them separate is what makes a model upgrade tractable: you run the new embedding model, populate a new vector store collection, switch the search service to point at the new collection, and tear down the old one — all without touching the embedding service's API or the search service's query logic.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Vector Search"
+  supportingCopy: "Continue with \"Vector Search\" to see how these embeddings get indexed and queried for similarity at scale."
+  destinationUrl: "/blog/backendengineering/05-vector-search"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

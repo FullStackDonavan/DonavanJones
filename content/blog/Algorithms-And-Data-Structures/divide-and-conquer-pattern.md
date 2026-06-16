@@ -21,6 +21,14 @@ This pattern is commonly used in efficient algorithms like binary search, merge 
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 ## When To Use Divide And Conquer
 
 Use this pattern when:
@@ -88,6 +96,14 @@ because the search space is divided in half during each step.
 - Can be harder to understand at first
 - Recursive implementations may use more memory
 
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
+
 ---
 
 *Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
@@ -109,6 +125,32 @@ Divide And Conquer is heavily used in:
 The Divide And Conquer pattern is one of the most important algorithmic strategies in software engineering. By repeatedly splitting problems into smaller pieces, developers can build solutions that are significantly faster and more scalable than brute-force approaches.
 
 Learning this pattern will help you better understand advanced algorithms, improve coding interview performance, and write more optimized JavaScript applications.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Recursion"
+  supportingCopy: "Continue with \"Recursion\" to see the technique most divide-and-conquer algorithms are built on."
+  destinationUrl: "/blog/algorithms-and-data-structures/recursion"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

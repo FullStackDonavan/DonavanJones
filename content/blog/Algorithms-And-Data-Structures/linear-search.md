@@ -18,6 +18,14 @@ Linear Search is the simplest searching algorithm. It examines each element in a
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 That simplicity is both its strength and its limitation. Linear Search works on any array, sorted or unsorted, and on any data type with an equality check. But for large datasets, checking every element is slow. Understanding when linear search is the right tool — and when something faster like Binary Search is worth the overhead — is an important part of writing efficient code.
 
 ## How Linear Search Works
@@ -86,6 +94,14 @@ Linear Search is O(n) because in the worst case it must examine every element. D
 | Iterative | O(1) |
 
 Linear Search requires no additional data structures. It uses a fixed number of variables regardless of input size.
+
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
 
 ---
 
@@ -195,6 +211,32 @@ The objects are not sorted by any natural key, so linear search is the straightf
 Linear Search is the algorithm you already knew before you started studying algorithms. Every time you have scanned a list looking for a value, you were doing linear search. It is simple, universal, and completely correct for small or unsorted datasets.
 
 Its limitation is that it does not scale. For large sorted collections where search performance matters, Binary Search is dramatically faster. Learning linear search and its constraints gives you the baseline against which every more efficient searching algorithm is measured.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Binary Search"
+  supportingCopy: "Continue with \"Binary Search\" to see the O(log n) algorithm Linear Search gets compared against."
+  destinationUrl: "/blog/algorithms-and-data-structures/binary-search"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

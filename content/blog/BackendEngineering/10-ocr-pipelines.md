@@ -22,6 +22,14 @@ This article covers how the OCR pipeline is designed, what makes it reliable, ho
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The Pipeline Overview
 
 OCR is not a single operation — it is a sequence of steps, each of which can fail or produce degraded output that compounds errors downstream:
@@ -104,6 +112,14 @@ function pageConfidence(words: OcrWord[]): number {
 
 Length-weighting ensures that a single low-confidence short word does not drag down the score for an otherwise clean page. Pages below 0.75 confidence are flagged for user review before being indexed — the user sees a side-by-side of the original image and the extracted text and can correct errors before they propagate into search.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -162,6 +178,14 @@ I surface four outcome states to users after an OCR job:
 
 The "needs review" state is the most important one to get right. Silently indexing low-quality OCR output poisons search results with noise — the user searches for a passage and gets garbage results because a poorly-OCR'd page happened to contain similar-looking character sequences. Making the user confirm before indexing keeps the quality bar high.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your OCR Pipeline"
+supportingCopy: "Building document ingestion or OCR pipelines of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Performance
 
 OCR is CPU-intensive and slower than most other pipeline stages. Target times per page:
@@ -177,6 +201,32 @@ A 20-page PDF takes 40–120 seconds end-to-end with pages processed in parallel
 Workers scale horizontally. During bulk upload events (a user uploading a stack of scanned commentaries), the worker pool expands automatically. Peak load is bounded by the Google Cloud Vision API rate limit, not by local compute.
 
 OCR pipelines are not glamorous infrastructure. Nobody writes blog posts about the adaptive thresholding step. But for a platform where significant user content lives in physical form, it is the difference between a product that meets users where they are and one that requires them to change how they study to use it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Agent Orchestration"
+  supportingCopy: "Continue with \"Agent Orchestration\" to see how individual services like this one are coordinated into multi-step AI workflows."
+  destinationUrl: "/blog/backendengineering/11-agent-orchestration"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

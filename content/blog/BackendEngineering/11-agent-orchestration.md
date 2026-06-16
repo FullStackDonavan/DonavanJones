@@ -22,6 +22,14 @@ That coordination is agent orchestration. This article covers how it is implemen
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What an Agent Is (in This Context)
 
 The word "agent" carries a lot of baggage. In the context of this backend, an agent is a specific, bounded thing: a process that executes a predefined task graph, makes LLM calls at decision points, uses a set of registered tools, and produces a structured output.
@@ -131,6 +139,14 @@ async function callTool(tool: RegisteredTool, rawArgs: unknown): Promise<ToolOut
 
 Validation failures are returned to the model as a tool error with a description of what went wrong. The model can then retry the tool call with corrected inputs. This retry loop is bounded — a tool that fails validation three times in a row causes the step to fail rather than letting the model spin in a correction loop indefinitely.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -213,6 +229,14 @@ Multi-step agents can be expensive. A full study guide generation costs $0.08–
 
 I track cost at the job level, not just the service level. Each LLM step records its token consumption, the cost is computed at step completion, and the job total is available immediately on completion. This feeds the same spend dashboards used for the inference service, and the same circuit breakers apply — if an agent job would push daily spend over budget, it is queued for execution during off-peak hours rather than running immediately.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Agent Workflows"
+supportingCopy: "Designing multi-step agent orchestration or task graphs of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Makes Agents Harder Than Inference
 
 Single-call inference is a request/response: send a prompt, get a completion, validate, return. Agents are stateful, multi-step processes that run for minutes rather than seconds, consume multiple services, and produce partial state that needs to be handled gracefully when things go wrong.
@@ -220,6 +244,32 @@ Single-call inference is a request/response: send a prompt, get a completion, va
 The patterns that make agents tractable in production are not unique to agents — they are the same patterns that make any complex async process manageable: durable state, explicit failure modes, observable execution, and bounded resource consumption. The model is just one component inside a larger system. Building it as a system, not as a series of model calls with some glue code, is what makes it reliable.
 
 The next article covers async workers more broadly — the infrastructure layer that underlies agent execution, job queues, and every other async process in the backend.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Async Workers"
+  supportingCopy: "Continue with \"Async Workers\" to see the infrastructure layer that underlies agent execution and every other async process in the backend."
+  destinationUrl: "/blog/backendengineering/12-async-workers"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

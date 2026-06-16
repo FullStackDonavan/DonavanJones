@@ -23,6 +23,14 @@ This article covers the specific techniques I use across the stack to hit those 
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## Measuring Before Optimizing
 
 The first rule of latency optimization is measure before you change anything. Intuitions about where time is spent are wrong more often than right. The database query you were sure was the bottleneck turns out to take 4ms. The SDK initialization you never thought about takes 40ms on every cold request.
@@ -172,6 +180,14 @@ This means the optimization goal for LLM requests is not "reduce total generatio
 
 For my platform, the dominant TTFT driver is prompt length — specifically, the length of the retrieved context prepended before the user's question. A full context window of retrieved passages can add 500–800ms to TTFT compared to a minimal prompt. I cap retrieved context aggressively for real-time queries and allow larger context for async jobs where TTFT does not matter.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -206,6 +222,14 @@ Not every latency optimization pans out. Things I tried that did not move the ne
 
 These dead ends are worth tracking. Revisiting them without memory of having tried them wastes time. The answer to "did we try X?" should be in the engineering notes, not in someone's memory.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Latency Budget"
+supportingCopy: "Chasing down latency in your own backend or AI service? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## The Practical Priority Order
 
 If I were starting fresh and needed to get to good latency quickly:
@@ -221,6 +245,32 @@ If I were starting fresh and needed to get to good latency quickly:
 Steps 1–4 together typically move p50 by 30–50% in a system that has not been latency-optimized before. Steps 5–7 get the remaining gains. Everything after that is long-tail work that delivers diminishing returns.
 
 Latency optimization is never done — the system grows, new bottlenecks emerge, and user expectations rise. But hitting the initial targets with a disciplined approach leaves a system that is fast enough that the work after this is maintenance, not crisis.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Model Loading Strategies"
+  supportingCopy: "Continue with \"Model Loading Strategies\" to see how cold-start and warm-up latency are managed for self-hosted models."
+  destinationUrl: "/blog/backendengineering/16-model-loading-strategies"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

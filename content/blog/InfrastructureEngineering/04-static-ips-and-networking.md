@@ -24,6 +24,14 @@ This guide walks through how I structured static IPs and networking so my cluste
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 # Why Static IPs Matter in a Kubernetes Homelab
@@ -117,6 +125,14 @@ sudo systemctl restart dhcpcd
 
 This method is useful when devices need to remain stable even if moved between networks.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -171,6 +187,14 @@ In my rack, I also isolate cluster traffic from general LAN traffic where possib
 
 A structured IP plan is just as important as the cluster itself.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Network Design"
+supportingCopy: "Planning static IPs and networking for your own cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Static IP networking is one of the foundational layers that makes a Raspberry Pi Kubernetes cluster stable and scalable. In my rack setup, it is what allows everything—from the K3s control plane to CI/CD runners and GPU-backed development machines—to behave like a unified system instead of a collection of loosely connected devices.
@@ -178,6 +202,32 @@ Static IP networking is one of the foundational layers that makes a Raspberry Pi
 Once static IPs are in place, everything else in the stack becomes easier: Kubernetes stops breaking on reboot, services become predictable, and the entire homelab starts to feel like a real production-like environment rather than a hobby cluster.
 
 This is one of those “invisible” infrastructure decisions that quietly determines whether your system feels fragile or solid.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Installing K3s Control Plane"
+  supportingCopy: "Continue with \"Installing K3s Control Plane\" now that every node has a stable, predictable address."
+  destinationUrl: "/blog/infrastructureengineering/05-installing-k3s-control-plane"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

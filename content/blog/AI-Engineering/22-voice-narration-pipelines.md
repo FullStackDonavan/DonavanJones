@@ -21,6 +21,14 @@ Voice narration on this platform serves two distinct use cases. The first is aud
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Core TTS Pipeline
 
 Both use cases share a common text-to-speech foundation. The platform uses ElevenLabs for primary narration, with Amazon Polly as a fallback for lower-priority content and cost management.
@@ -192,6 +200,14 @@ Scripture narration runs at 90% of normal TTS speed. The measured pace matches h
 
 Emphasis tags are applied to direct speech (quotation marks) throughout both scripture and commentary. In scripture, this highlights the words of Jesus, prophets, and characters. In commentary, it marks direct quotes from the text being discussed.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -316,6 +332,14 @@ async function getOrGenerateAudio(
 
 Scripture verses are pre-generated at ingest time for the most common voice configuration. The 31,000+ verse corpus produces a large audio library, but the request-time experience is instant — the user presses play and the audio is already in the CDN. AI-generated study responses are generated on demand and cached for 30 days.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Streaming for Long Content
 
 For long-form content (full chapter narrations, extended study guides), audio is streamed rather than delivered as a complete file. This gets the first chunk of audio to the user in under two seconds while the rest is still generating:
@@ -362,6 +386,32 @@ Audio quality issues that escape the automated pipeline surface through user fee
 **Quality metrics**: the audio generation pipeline emits metrics to the monitoring system: generation latency, API error rate, chunk count per request, post-processing duration. Elevated error rates (ElevenLabs API errors, post-processing failures) trigger alerts.
 
 The combination of user feedback and automated metrics keeps the narration quality at a level where users actually use the feature. Voice narration that mispronounces "Gethsemane" or "propitiation" will be trusted less than audio that gets these right — and trust, once lost, is not easily regained. Getting the preprocessing and pronunciation right is the work that makes the feature usable for the users it is built to serve.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: OCR For Manuscripts"
+  supportingCopy: "Continue with \"OCR For Manuscripts\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/23-ocr-for-manuscripts"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

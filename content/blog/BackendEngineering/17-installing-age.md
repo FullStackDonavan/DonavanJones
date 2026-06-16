@@ -24,6 +24,14 @@ This article covers installing AGE, configuring it, and verifying it works. Arti
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What Apache AGE Is
 
 AGE is a Postgres extension that adds:
@@ -172,6 +180,14 @@ services:
 volumes:
   postgres_data:
 ```
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
 
 ---
 
@@ -357,9 +373,43 @@ services:
 
 With this setup, `docker compose up` gives a fully initialized Postgres instance with AGE and the `bible` graph ready to use. New developers on the project get a working graph environment without any manual installation steps.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Graph Data"
+supportingCopy: "Modeling relationship-heavy data or evaluating Apache AGE for your own Postgres setup? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Comes Next
 
 AGE is now installed, the graph is created, and the extension is verified. The next article covers how to write Cypher queries in Postgres — creating vertices and edges for Biblical entities, querying relationships, and the syntax differences between standard Cypher and AGE's SQL wrapper. Article 19 covers how to combine graph traversal with relational SQL queries in a single statement, which is where AGE's integration with Postgres becomes genuinely powerful.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Cypher Queries in Postgres"
+  supportingCopy: "Continue with \"Cypher Queries in Postgres\" to start creating vertices and edges for Biblical entities with AGE now installed."
+  destinationUrl: "/blog/backendengineering/18-cypher-queries-in-postgres"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

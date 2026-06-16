@@ -24,6 +24,14 @@ This article covers what vector databases are, why they are the right tool for A
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What a Vector Database Actually Does
 
 A vector database stores vectors — arrays of floating-point numbers — alongside metadata payloads. Its primary operation is approximate nearest neighbor (ANN) search: given a query vector, return the K vectors in the database that are geometrically closest to it.
@@ -77,6 +85,14 @@ Retrieval: "find commentary that is semantically relevant to this passage and th
 Retrieval: "find this user's past notes that are relevant to what they are currently studying."
 
 The collection boundaries are not arbitrary. They correspond to distinct retrieval contexts with different filter requirements and different payload schemas. Merging them would require more complex filters on every query and would compromise the clarity of what each retrieval operation means.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -193,6 +209,14 @@ The weights adjust for source type: user memory is boosted (more relevant than g
 
 The `mergeAndRank` function normalizes scores across collections to a common scale, applies source weights, deduplicates (a verse may appear in both `bible_verses` and as a reference in `user_notes`), and returns the top N results.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## The Vector Database Is Not the Whole Memory System
 
 A mistake I want to name explicitly: treating the vector database as the memory system.
@@ -209,6 +233,32 @@ The vector store knows how to find things by similarity. It does not know how to
 The clean division: Postgres is the system of record; the vector store is the retrieval index. Every piece of data in the vector store also has an authoritative copy in Postgres. If the vector index is corrupted or needs rebuilding, everything can be reindexed from Postgres. If a user deletes their data, the deletion happens in Postgres first and propagates to the vector store — not the other way around.
 
 This architecture means the vector store can be treated as a cache with rebuild semantics, not as a primary store. That simplifies the operational model significantly and keeps the source of truth in a system that has decades of reliability tooling around it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Tool Calling"
+  supportingCopy: "Continue with \"Tool Calling\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/03-tool-calling"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

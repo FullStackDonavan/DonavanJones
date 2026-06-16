@@ -21,6 +21,14 @@ Earlier articles covered the infrastructure of semantic retrieval (vector databa
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What Semantic Retrieval Is Actually Measuring
 
 Semantic retrieval measures cosine similarity between two vectors in a high-dimensional space. High similarity means the query and the document are close together in the space the embedding model learned to represent meaning.
@@ -134,6 +142,14 @@ The top-N reranked candidates are assembled into the context block passed to the
 
 **Snippet extraction**: for long chunks (commentary excerpts), extract the 150-token window most relevant to the query rather than passing the full 600-token chunk. Relevance of specific sentences is scored by the reranker's attention weights when available.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -240,6 +256,14 @@ Contextual compression improves context window utilization — the model receive
 
 I use contextual compression selectively: for commentary chunks over 300 tokens when the query is specific (low complexity queries don't need it; their relevant passages are naturally short), and never for verse-level scripture chunks which are already minimal units.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Retrieval Evaluation: The Continuous Loop
 
 Semantic retrieval quality is not fixed after initial deployment. User behavior reveals gaps: queries that produce irrelevant results, searches that frustrate users into rephrasing, questions where the model's response indicates its context was unhelpful.
@@ -255,6 +279,32 @@ The continuous evaluation loop:
 The evaluation set grows from 300 to 500 to 1000 annotated examples over successive quarters. The larger set makes improvements more detectable and regressions more apparent. It is the connective tissue between retrieval engineering effort and measurable user experience improvement.
 
 Semantic retrieval feels solved once the infrastructure is in place. It is not — it is a continuous engineering discipline of finding where retrieval fails for your specific content and users, fixing those failures, and not breaking what works. The infrastructure makes iteration cheap; the evaluation set makes it measurable.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Citation Grounding"
+  supportingCopy: "Continue with \"Citation Grounding\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/13-citation-grounding"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

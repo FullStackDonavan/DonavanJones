@@ -22,6 +22,14 @@ This article covers the operational and engineering concerns that only surface o
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## API vs Self-Hosted Models
 
 The first decision when building an embedding service is where the model runs. There are two options:
@@ -120,6 +128,14 @@ class RateLimiter {
 ```
 
 The 90% threshold gives headroom. Hitting 90% of the rate limit and pausing is far better than hitting 100%, getting a 429, waiting for the retry-after window, and potentially losing the batch.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
 
 ---
 
@@ -239,11 +255,45 @@ The embedding service logs token counts tagged by source. This feeds a cost brea
 
 Without this attribution, a runaway reindex job looks identical to a sudden spike in user activity. With it, the cause is immediately obvious.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Embedding Infrastructure"
+supportingCopy: "Scaling an embedding pipeline or planning a model migration of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Running It Taught Me
 
 The embedding service looks simple from the outside — send text, get vector — but it is one of the most operationally interesting services in the backend. The statefulness of the vector index, the irreversibility of model migrations, the invisibility of quality degradation, and the long-tail cost of bulk operations all require deliberate design.
 
 The patterns that matter most in practice: write-through consistency with a background auditor, adaptive batching to maximize throughput without overwhelming rate limits, evaluation-first model migrations, and cost attribution by source. None of these are hard individually. Missing any one of them will eventually produce a problem that is harder to diagnose than it needed to be.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: OCR Pipelines"
+  supportingCopy: "Continue with \"OCR Pipelines\" to see another AI microservice with its own throughput, consistency, and evaluation challenges."
+  destinationUrl: "/blog/backendengineering/10-ocr-pipelines"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

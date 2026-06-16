@@ -23,6 +23,14 @@ Both dimensions require engineering — they do not emerge from a capable model 
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## Why Models Are Inconsistent by Default
 
 Language models generate tokens probabilistically. Each generation is a draw from a distribution conditioned on the context. Run the same prompt twice and you get similar but not identical outputs. Run the same prompt in two different context windows — separated by a week of conversation — and the context has changed enough that the outputs can diverge substantially.
@@ -111,6 +119,14 @@ that you are doing so and why.
 ```
 
 The instruction "if departing from the prior position, note explicitly" is important. The model will occasionally produce a different reading because the context has shifted (different retrieved commentary, different conversational framing). When it does, the system should surface that departure rather than pretending the prior conversation did not happen.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -217,6 +233,14 @@ The trajectory is surfaced selectively — when a user returns to a topic they h
 
 This kind of longitudinal awareness makes the system feel like a study companion rather than a stateless question-answering service. It is the difference between a human who has been walking with you through a text for months and a new conversation partner who starts from scratch every time.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Consistency Layer 5: Tradition-Sensitive Framing
 
 The same passage can be framed in multiple ways, and the framing matters for consistency. Consider Romans 9:10-13 — Jacob and Esau, God's choice before birth. A Reformed framing and an Arminian framing of the same passage are both defensible, and the platform presents both. But which one the system leads with, how it characterizes the other, and what it emphasizes as the primary exegetical question should be consistent with the user's tradition profile and consistent across sessions.
@@ -280,6 +304,32 @@ Theological consistency is not primarily an engineering problem. It is a reflect
 A person who studies the Bible seriously over years develops a coherent theological framework — not necessarily one that resolves all tensions, but one that holds positions consciously, knows where the debates are, and can articulate why they read contested passages the way they do. The platform should model that kind of coherent engagement rather than the stateless confidence of a model that is always encountering every question for the first time.
 
 Engineering consistency — position memory, tradition profiles, intra-response coherence checking, trajectory tracking — is the technical work of making that vision concrete. The vision is what makes the technical work worth doing.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Memory Systems"
+  supportingCopy: "Continue with \"Memory Systems\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/19-memory-systems"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

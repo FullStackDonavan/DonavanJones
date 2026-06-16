@@ -22,6 +22,14 @@ Theological content breaks this simplicity in instructive ways. Scripture is not
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 This article covers what makes theological retrieval distinct, the multiple retrieval strategies the platform uses, how they compose, and what the evaluation process looks like.
 
 ## What Makes Theological Retrieval Distinct
@@ -112,6 +120,14 @@ const results = await vectorStore.search("bible_verses", {
 ```
 
 **High-recall retrieval followed by reranking.** Initial semantic search retrieves top-20 candidates. A cross-encoder reranker then scores each candidate against the full query, reordering results by genuine relevance rather than embedding proximity. Reranking regularly promotes results from position 8-15 to the top 5 — the embedding captures broad semantic similarity; the reranker captures nuanced relevance.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -249,6 +265,14 @@ async function retrieveContext(
 
 The `assembleContext` function token-budgets the combined results. Scripture receives priority allocation; commentary fills remaining space after scripture. Lexical data is compact and always included when retrieved. The assembled context is ordered: primary text first, cross-references second, lexical data third, commentary last — reflecting authority levels.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Evaluation: Does Retrieval Actually Work?
 
 Retrieval quality is measured against a ground-truth evaluation set of 300 query/result pairs built from actual platform usage and manually annotated:
@@ -291,6 +315,32 @@ The quality ceiling for RAG-based theological responses is determined by retriev
 Retrieval engineering is not glamorous work. Tuning query expansion vocabulary, calibrating cross-reference boost weights, evaluating tier weighting for commentary — none of it feels like building AI. But the hours spent on retrieval quality compound directly into the quality of every answer the platform produces. It is the most leverage-rich engineering work in the system.
 
 The next two articles go deeper into two components of this pipeline: chunking strategies for religious texts (article 10) and semantic retrieval techniques (article 12).
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Chunking Religious Texts"
+  supportingCopy: "Continue with \"Chunking Religious Texts\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/10-chunking-religious-texts"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

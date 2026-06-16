@@ -24,6 +24,14 @@ This article covers how tool calling works at the API level, how to design tools
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## How Tool Calling Works
 
 Tool calling is a feature of the model API, not a framework or library. The model is given a list of tool definitions alongside the conversation. Each definition describes a function: its name, what it does, and what parameters it accepts. The model decides whether to call a tool, which tool to call, and with what arguments. The application executes the call and returns the result. The model continues.
@@ -182,6 +190,14 @@ The `input_schema` is JSON Schema. Full validation applies: `required` fields, `
 
 A `content` field with `minLength: 10` prevents the model from saving an empty string or a one-word note. This is application logic expressed as a schema constraint — the model sees it and self-corrects before making the call.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -315,6 +331,14 @@ Multiple tool calls in a single response are executed in parallel (`Promise.all`
 
 **Unauthorized action attempts**: a model that has access to a `save_study_note` tool might be manipulated by a malicious input into saving content the user did not intend. This is prompt injection via the tool surface. Fix: the context layer checks permissions before every tool execution regardless of what the model passes, and write-action tools confirm intent with the user before executing.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Tools as the Agent's Senses
 
 The right mental model for tools is that they are the agent's senses and actuators. Without tools, the model is blind to the current state of the world — it knows only what was in its training data and what has been explicitly placed in the context window. With tools, it can perceive: retrieve a verse, search for relevant passages, look up a word's Greek root, check what the user has studied before.
@@ -322,6 +346,32 @@ The right mental model for tools is that they are the agent's senses and actuato
 The quality of an agent's behavior is bounded by the quality of its tools. A well-designed tool makes a capability reliably available. A poorly-designed tool creates a capability that works intermittently, fails silently, or leads the model to incorrect conclusions. Investing in tool definitions — clear descriptions, constrained schemas, explicit negative instructions, well-formatted return values — pays dividends across every interaction that uses them.
 
 The next article covers agent orchestration: how to compose multiple tools and multiple model calls into coherent multi-step reasoning processes.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Agent Orchestration"
+  supportingCopy: "Continue with \"Agent Orchestration\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/04-agent-orchestration"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

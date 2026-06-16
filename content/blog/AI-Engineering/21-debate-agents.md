@@ -24,6 +24,14 @@ Debate agents address this by using multiple agents, each assigned to argue a di
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## When Debate Agents Are Appropriate
 
 Not every question warrants a debate pipeline. Deploying multi-agent orchestration for "What does Romans 8:28 say?" produces unnecessary overhead and a confusing response. The debate pipeline is appropriate for:
@@ -248,6 +256,14 @@ The critic runs on the stronger Sonnet model. The reasoning required — holding
 
 The critic's output is not a judgment. It is a diagnostic: "The Reformed position's strength is its exegesis of Romans 9:11-13; its vulnerability is explaining why God's choice does not render human response meaningless. The Arminian position's strength is integrating passages about genuine human responsibility; its vulnerability is the exegetical tension in Romans 9:16 where Paul explicitly denies that election depends on human will."
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -324,6 +340,14 @@ interface DebateResponse {
 
 The front end renders this as a structured comparison view — advocates side by side with their key passages, then the disagreement analysis, then the moderator summary. This visual structure makes the two-position nature of the debate immediately clear to the user; they are not reading a single coherent response but a structured comparison.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Preventing Debate Pipeline Failure Modes
 
 Three consistent failure modes in debate agents:
@@ -351,6 +375,32 @@ Compared to the standard single-agent pipeline at ~1,800ms end-to-end, the debat
 The cost difference is similar: six model calls versus one, with two of those calls on Sonnet. Debate responses are cached aggressively. The same question about Romans 9 election asked by two different users within a 24-hour window reuses the cached debate structure; only the moderator summary is personalized and regenerated.
 
 The debate pipeline is not a general architecture — it is a specialized tool for the specific cases where understanding a contested question requires hearing both sides argued from their own sources. Used in those cases, it produces responses that no single-agent approach can match: not one answer, but a structured engagement with the genuine disagreement that has animated Christian theology for centuries.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Voice Narration Pipelines"
+  supportingCopy: "Continue with \"Voice Narration Pipelines\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/22-voice-narration-pipelines"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

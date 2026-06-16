@@ -23,6 +23,14 @@ This article covers how the manuscript OCR pipeline is built, what makes theolog
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What Makes Theological Manuscripts Hard
 
 Standard OCR engines are trained primarily on modern, typeset Latin-script text. They perform well on printed books from the last century and poorly on everything else. Theological manuscripts pile up every dimension of difficulty:
@@ -238,6 +246,14 @@ async function recognizeGreek(image: ImageBuffer): Promise<RecognitionResult> {
 }
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -372,6 +388,14 @@ The low-confidence flag propagates to the knowledge base. When a chunk retrieved
 
 This transparency is important. A user doing casual commentary reading does not need to know about OCR confidence. A researcher checking a specific textual claim in a manuscript source deserves to know that the text they are reading was digitized automatically and may contain errors.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Handling Greek Manuscripts Specifically
 
 Greek manuscript OCR deserves its own section because it is the hardest problem and the most consequential for the platform.
@@ -445,6 +469,32 @@ interface OCRChunkMetadata {
 This metadata is carried through to the retrieval layer. Citation rendering uses it to mark OCR-derived passages appropriately and to link to the original scanned page when available.
 
 The manuscript OCR pipeline is slow and expensive relative to processing clean digital text. A 400-page Calvin commentary takes 2–4 hours of compute time, including preprocessing, multi-pass recognition, and post-processing. This is a batch operation run overnight, not a request-time operation. The result — the accumulated contents of theological libraries that existed only in physical form — justifies the investment. The most important scholarship on the texts the platform serves was written before the digital age. Getting it into a form that can be retrieved and reasoned over is what makes the knowledge base worth building.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: AI Engineering Ideas"
+  supportingCopy: "Continue with \"AI Engineering Ideas\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/24-ai-engineering-ideas"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

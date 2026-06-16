@@ -24,6 +24,14 @@ This article covers orchestration patterns — how to structure multi-agent work
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## Why Single-Agent Calls Have Limits
 
 A single model call has three practical limits that orchestration addresses:
@@ -150,6 +158,14 @@ The critic is not a general editor — it is scoped to theological accuracy. It 
 
 The iteration count limit is essential. A critic that always finds something to critique and a writer that cannot satisfy it will loop forever without this bound.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -252,6 +268,14 @@ Each agent that receives `userMemory` decides how to use it based on its own sys
 
 Injecting memory at the pipeline entry rather than having each agent independently retrieve it avoids duplicate memory queries and ensures all agents see the same memory snapshot for this request.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Observability Across Agent Boundaries
 
 Debugging an orchestration pipeline requires visibility across all agent calls, not just the final output. When a study guide section is wrong, the cause could be in any stage — bad retrieval, incorrect outline structure, poor writing, or a critic that missed an error.
@@ -271,6 +295,32 @@ Orchestration is appropriate when:
 - Parallelism across independent subtasks would meaningfully reduce latency
 
 If none of these apply, a single well-prompted agent call is the better choice. Simpler, cheaper, faster, and easier to debug.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: State Management"
+  supportingCopy: "Continue with \"State Management\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/05-state-management"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

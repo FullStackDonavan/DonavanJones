@@ -18,6 +18,14 @@ In a distributed Kubernetes setup like a K3s cluster running on a Raspberry Pi-b
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Joining Worker Nodes
 
 How to join worker nodes to the K3s control plane.
@@ -36,15 +44,57 @@ kubectl get nodes
 ```
 At that point, the new worker becomes part of your homelab compute pool, ready to run workloads from your CI/CD pipelines, Gitea runners, or any of your AI and infrastructure services deployed across the rack.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Scaling Your Cluster"
+supportingCopy: "Adding worker nodes to your own K3s cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Adding worker nodes to your K3s cluster is one of the simplest yet most powerful ways to scale your homelab without introducing unnecessary complexity. In your rack setup, this pattern lets you grow compute capacity incrementally—whether you're distributing AI workloads, running CI/CD jobs through Gitea, or hosting backend services across multiple Raspberry Pis. With each new node, your cluster becomes more resilient, more flexible, and better suited for the kind of modular infrastructure you're building.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Storage Setup"
+  supportingCopy: "Continue with \"Storage Setup\" to give your newly expanded cluster persistent storage for stateful workloads."
+  destinationUrl: "/blog/infrastructureengineering/07-storage-setup"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

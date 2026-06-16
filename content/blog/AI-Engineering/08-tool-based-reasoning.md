@@ -21,6 +21,14 @@ The distinction matters. A model that calls tools mechanically — retrieving ex
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## Why Pure In-Context Reasoning Fails on Knowledge Tasks
 
 A model without tools reasons purely from its training data and the current context window. For general knowledge this is often adequate. For specific, precise, or time-sensitive knowledge it breaks down.
@@ -152,6 +160,14 @@ Similarly, return value framing influences how results are incorporated into rea
 
 The enriched return value actively guides the model's next reasoning step. The model reads it and often follows the suggestion — not because it is forced to, but because the note makes the follow-up search obviously the right next action.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -250,6 +266,14 @@ When evaluating tool-based reasoning in production, several signals indicate qua
 
 Logging full reasoning traces — every thought step, tool call, and observation, not just the final answer — is the infrastructure that makes quality evaluation possible. Without it, you can see that the final answer is wrong but cannot determine whether the failure was in the retrieval, the reasoning, or the synthesis.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Tool-Based Reasoning as a Design Principle
 
 The deeper insight from working with tool-based reasoning is that the quality of an AI system's answers is not primarily determined by model capability — it is determined by the quality of the evidence the model has access to and the quality of the reasoning process by which it uses that evidence.
@@ -259,6 +283,32 @@ A highly capable model with no tools, asked about a specific verse, produces an 
 This reframes the engineering problem. Instead of asking "how do I get a better model?" the right question is often "how do I give the model better evidence, and how do I prompt it to reason about that evidence more carefully?" The first question is expensive and outside your control. The second is solvable with good tool design and thoughtful prompting.
 
 The next article covers retrieval systems for theological content specifically — how the evidence gathering half of this equation is designed for the domain.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Retrieval Systems for Theology"
+  supportingCopy: "Continue with \"Retrieval Systems for Theology\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/09-retrieval-systems-for-theology"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

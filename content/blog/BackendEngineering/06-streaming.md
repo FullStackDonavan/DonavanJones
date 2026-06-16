@@ -22,6 +22,14 @@ This article covers how streaming is implemented across the stack: from the LLM 
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The Streaming Stack
 
 There are four layers where streaming is relevant:
@@ -186,6 +194,14 @@ async function streamCompletion(prompt: string, onToken: (text: string) => void)
 
 The buffer handling is the part that catches people: chunks from `reader.read()` do not align with SSE event boundaries. A single read may contain multiple events, or a partial event that continues in the next read. The buffer accumulates incoming bytes, splits on the double-newline event delimiter, processes complete events, and holds the incomplete trailing fragment for the next iteration.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -233,6 +249,14 @@ for await (const event of stream) {
 
 The client receives a `limit_reached` event and renders a "response truncated" indicator rather than an abrupt cutoff. This is better UX than silently truncating mid-sentence and lets users know they can request a continuation if needed.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Streaming Setup"
+supportingCopy: "Wiring up real-time LLM responses or SSE infrastructure of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Streaming Changes About System Design
 
 Streaming is not just a transport detail — it changes how you think about the request lifecycle. A streaming request is not done when the server sends the last byte; it is done when the client closes the connection. This affects:
@@ -245,6 +269,32 @@ Streaming is not just a transport detail — it changes how you think about the 
 These are solvable problems. The point is to go in with eyes open: streaming changes the operational profile of a service in ways that do not show up until you are running at real load.
 
 The next article covers notifications — the other side of server-to-client communication, for events that happen outside the request lifecycle entirely.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Notifications"
+  supportingCopy: "Continue with \"Notifications\" to see how the platform handles server-to-client events outside the request lifecycle."
+  destinationUrl: "/blog/backendengineering/07-notifications"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

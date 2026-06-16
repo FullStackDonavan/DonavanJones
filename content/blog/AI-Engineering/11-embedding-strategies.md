@@ -21,6 +21,14 @@ Embedding strategies are the choices made at the interface between text and vect
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Asymmetry Problem
 
 The most important embedding strategy decision for RAG systems is often the least discussed: queries and documents are different kinds of text, and a good embedding model handles this asymmetry deliberately.
@@ -167,6 +175,14 @@ The summary is what gets embedded; the full chunk text is what gets returned whe
 
 I use summary-as-index selectively — for patristic chunks with high conceptual density and for modern commentary sections that cover multiple register shifts. For scripture (short, natural units) and user notes (personal, specific), direct embedding of the text works better.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -251,6 +267,14 @@ Late interaction models are computationally expensive at query time — scoring 
 
 The platform currently uses a cross-encoder reranker (article 09) rather than ColBERT. ColBERT is on the evaluation roadmap for theological content specifically, because the multi-topic density of patristic and Reformation-era text is exactly the use case it handles best.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Evaluating Embedding Strategy Quality
 
 Embedding strategy quality is measured the same way retrieval quality is — against the ground truth evaluation set — but with an additional diagnostic: **embedding space visualization**.
@@ -266,6 +290,32 @@ A good embedding strategy produces a space where the Psalms cluster near each ot
 This visualization is qualitative, not quantitative — it informs intuition about what the embedding space represents. Quantitative evaluation against the ground truth set provides the actionable metric; the visualization explains why the numbers are what they are.
 
 Every embedding strategy decision in this article — HyDE, query rewriting, title augmentation, glossary normalization — produces a measurable change in retrieval quality when evaluated against the ground truth set. The decisions that shipped to production are those that showed clear improvement. The ones that did not are documented as negative results so they are not re-evaluated from scratch when the strategy is revisited.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Semantic Retrieval"
+  supportingCopy: "Continue with \"Semantic Retrieval\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/12-semantic-retrieval"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

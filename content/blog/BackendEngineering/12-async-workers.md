@@ -21,6 +21,14 @@ This article covers the worker system itself: how jobs are queued and claimed, h
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## Why Async Workers
 
 The core reason to move work off the request path is that some operations are too slow, too expensive, or too unreliable to run synchronously inside an HTTP request.
@@ -237,6 +245,14 @@ Scheduled jobs are inserted at creation time with their future `run_at`. Cancell
 
 Recurring jobs are handled by having each job, on completion, insert the next occurrence with the appropriate `run_at`. A reading plan job that runs successfully schedules the next day's chapter. This is simple and observable — the next occurrence always exists in the jobs table and can be inspected or cancelled like any other job.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -262,6 +278,14 @@ This runs every 30 seconds and feeds the autoscaler decision: if `embedding` que
 
 The practical scaling limit is the downstream service's capacity, not the worker count. Adding more embedding workers does not help if the embedding API rate limit is already saturated. The rate limiter in the embedding service is the actual bottleneck, and more workers just means more workers waiting at the rate limit gate. Understanding the true bottleneck is more useful than simply adding workers when a queue backs up.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Worker Infrastructure"
+supportingCopy: "Designing job queues or async worker infrastructure of your own? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Observability
 
 The jobs table is its own observability surface. At any point I can query:
@@ -275,6 +299,32 @@ The jobs table is its own observability surface. At any point I can query:
 Beyond the table, workers emit structured logs on job start, completion, and failure. A job that takes significantly longer than its typical processing time is flagged automatically — a study guide job that runs for 10 minutes when the average is 60 seconds is either hung or encountering an unusual input.
 
 Async workers are invisible when they work and highly visible when they do not. The goal is not to make them invisible in monitoring — it is to make failures immediately obvious before users notice. A queue that is silently backing up, workers that are silently hanging, and dead jobs that are silently accumulating are all failures even if no user has complained yet. Monitoring the queue is how you find out first.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: GPU Allocation"
+  supportingCopy: "Continue with \"GPU Allocation\" to see how compute resources are managed for the workloads these workers process."
+  destinationUrl: "/blog/backendengineering/13-gpu-allocation"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

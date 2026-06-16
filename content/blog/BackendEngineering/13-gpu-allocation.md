@@ -22,6 +22,14 @@ This article covers how GPU resources are allocated and managed for the workload
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## Why GPU Allocation Is Different
 
 A CPU handles one task at a time per core. Modern CPUs have 8–128 cores, each handling a different thread. CPU allocation is well-understood: give each container a CPU share, the OS scheduler handles contention, and horizontal scaling adds more cores.
@@ -130,6 +138,14 @@ I implement priority at the queue level, not the GPU level. High-priority worklo
 
 True GPU preemption (interrupting a running kernel to process a higher-priority request) is not implemented. The latency of most GPU operations on these model sizes is under 50ms — short enough that a high-priority request waits at most one batch cycle before being served. For workloads with much longer kernel execution times (large models, large batches), preemption would matter more.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -163,6 +179,14 @@ GROUP BY model_name;
 
 A p95 latency that is much higher than p50 indicates occasional large batches or VRAM pressure causing slowdowns on some requests. A low average batch size combined with high latency indicates the batcher timeout is too aggressive — requests are being dispatched before the batch fills, wasting throughput.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your GPU Infrastructure"
+supportingCopy: "Allocating GPU resources or tuning batching for your own AI workloads? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Cost vs Performance Tradeoffs
 
 GPU instances cost more than CPU instances — often 5–10× for equivalent core count. Every GPU allocation decision has a cost dimension.
@@ -174,6 +198,32 @@ For the reranker, CPU inference on a 22M parameter model takes ~200ms per batch 
 For the historical OCR model, CPU inference takes ~4s per page; GPU takes ~0.8s. OCR is an async background job — the user is not waiting. The latency difference is real but the user experience impact is low. Whether GPU is justified depends on throughput requirements, not latency. At current OCR volume, the throughput difference does not require GPU — the CPU workers keep up. If volume doubles, GPU becomes worth it.
 
 This cost-versus-latency analysis is the right framework for GPU allocation decisions. The answer is not always GPU, and it is not always the biggest GPU available. It is the smallest allocation that meets the latency and throughput requirements for the workload, at the point in the scaling curve where the workload actually is today.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Batching"
+  supportingCopy: "Continue with \"Batching\" for a deeper look at the throughput technique that makes GPU allocation decisions like these pay off."
+  destinationUrl: "/blog/backendengineering/14-batching"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

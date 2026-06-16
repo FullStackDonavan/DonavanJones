@@ -20,6 +20,14 @@ Cypher is a declarative pattern-matching language. You describe the shape of the
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The AGE Query Wrapper
 
 Every Cypher query in AGE runs through a SQL function call:
@@ -286,11 +294,27 @@ A cleaner approach is using a dedicated AGE client library that handles type par
 
 **Transaction scope**: Cypher queries participate in Postgres transactions normally. Begin a transaction, run multiple Cypher operations, commit or rollback — it works as expected. This is one of AGE's strongest advantages over a standalone graph database.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
 
 ---
+
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Graph Queries"
+supportingCopy: "Modeling relationship traversal with Cypher and AGE in your own Postgres setup? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
 
 ## Building the Biblical Graph
 
@@ -312,6 +336,32 @@ The load order matters for edges — vertices must exist before edges that refer
 ```
 
 Total: roughly 44,000 vertices and 1,035,000 edges. At this scale, AGE handles queries in milliseconds for most traversal patterns. Index configuration matters for performance at this size — the next article covers that along with hybrid SQL/graph queries.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Graph + SQL Hybrid Querying"
+  supportingCopy: "Continue with \"Graph + SQL Hybrid Querying\" to see how graph traversal and relational SQL combine in a single query."
+  destinationUrl: "/blog/backendengineering/19-graph-sql-hybrid-querying"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

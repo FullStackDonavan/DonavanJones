@@ -20,6 +20,14 @@ Because it cuts the search area in half each step, Binary Search is much faster 
 
 *Part of the [Algorithms & Data Structures series](/categories/algorithms).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every algorithms and data structures breakdown in this series."
+destinationUrl: "/categories/algorithms"
+---
+::
+
 ## How Binary Search Works
 
 The algorithm follows these steps:
@@ -91,6 +99,14 @@ Binary Search is significantly faster than Linear Search for large sorted datase
 | Iterative      | O(1)       |
 | Recursive      | O(log n)   |
 
+::CtaPortfolio
+---
+buttonText: "See It In A Real Project"
+supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+destinationUrl: "/projects/overview"
+---
+::
+
 ---
 
 *Explore more articles in the [Algorithms & Data Structures series](/categories/algorithms).*
@@ -145,6 +161,32 @@ function recursiveBinarySearch(arr, target, left = 0, right = arr.length - 1) {
 Binary Search is one of the most important algorithms in computer science and technical interviews. Understanding how it works helps build stronger problem-solving skills and introduces the concept of divide-and-conquer algorithms.
 
 Once you understand Binary Search, it becomes easier to learn more advanced searching and tree-based algorithms.
+
+::CtaCardRow
+  :::CtaPortfolio
+  ---
+  buttonText: "See It In A Real Project"
+  supportingCopy: "See how algorithm fundamentals like this show up in real, shipped projects."
+  destinationUrl: "/projects/overview"
+  variant: "card"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Linear Search"
+  supportingCopy: "Continue with \"Linear Search\" to see the brute-force baseline Binary Search improves on."
+  destinationUrl: "/blog/algorithms-and-data-structures/linear-search"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new algorithms and data structures breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

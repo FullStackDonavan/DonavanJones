@@ -22,6 +22,14 @@ This guide walks through the process of flashing Raspberry Pi OS in a way that a
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Steps to Flash Raspberry Pi OS for Cluster Nodes
@@ -61,6 +69,14 @@ From your main machine or control node, verify the node is reachable:
 ssh pi@k3s-node-1.local
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -79,9 +95,43 @@ This keeps the system modular, where nodes are interchangeable parts of a larger
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Node Provisioning"
+supportingCopy: "Standardizing node setup for your own Pi cluster or homelab? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Flashing Raspberry Pi OS is more than just imaging an SD card—it is the first step in building a reproducible edge computing environment. In a homelab rack like mine, where Kubernetes, CI/CD automation, and local AI services all run together, consistent node setup ensures stability and scalability. Once a node is flashed and standardized, it becomes a plug-and-play unit in the cluster, ready to handle workloads, run pipelines, and participate in the larger distributed system.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Static IPs and Networking"
+  supportingCopy: "Continue with \"Static IPs and Networking\" to give each freshly flashed node a stable address on the cluster network."
+  destinationUrl: "/blog/infrastructureengineering/04-static-ips-and-networking"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

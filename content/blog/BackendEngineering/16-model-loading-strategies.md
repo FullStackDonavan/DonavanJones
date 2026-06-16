@@ -22,6 +22,14 @@ This article covers how models are loaded in each context, how loading interacts
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What Model Loading Actually Involves
 
 Loading a model from disk into a usable state has four distinct phases, each with different cost:
@@ -143,6 +151,14 @@ async function loadModel(name: string, version: string): Promise<LoadedModel> {
 
 The cache is keyed by name and version — upgrading the model version automatically fetches a new copy without manual cache invalidation. Old versions are cleaned up by a maintenance job that deletes cache entries not referenced by the current startup manifest.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -233,6 +249,14 @@ def run_inference_batch(model, inputs):
 
 Without these, VRAM usage grows slowly over time as cached tensors accumulate. The service runs fine initially and then starts getting OOM errors hours into production. This is the kind of bug that only appears under sustained load and is difficult to reproduce in testing.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Model Infrastructure"
+supportingCopy: "Deploying or updating self-hosted models in your own backend? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## What Changes When Models Get Bigger
 
 Everything in this article is tuned for models under 1GB. The strategies scale, but the tradeoffs shift as model size grows:
@@ -244,6 +268,32 @@ At 10–100GB, loading a model once and sharing it across multiple request handl
 At 100GB+, model sharding across multiple GPUs is required — the model does not fit on a single device. This is infrastructure I do not currently run; the platform uses managed APIs for workloads that need models of this size.
 
 The strategies in this article are appropriate for the model sizes I actually deploy locally. They are the right starting point for any system running small-to-medium local models, and the right mental model for reasoning about what changes as those models grow.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Installing AGE"
+  supportingCopy: "Continue with \"Installing AGE\" as the series shifts from model infrastructure to graph database capabilities inside Postgres."
+  destinationUrl: "/blog/backendengineering/17-installing-age"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

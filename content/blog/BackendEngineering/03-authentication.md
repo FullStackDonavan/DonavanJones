@@ -21,6 +21,14 @@ I built a dedicated authentication service for my Bible study platform early on.
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## Why a Dedicated Auth Service
 
 In the monolith, authentication was middleware — a few functions that ran before route handlers. Simple and fine for a prototype. As the system split into microservices, I needed every service to be able to verify identity without calling home to a central database on every request.
@@ -104,6 +112,14 @@ The platform never touches the user's Google password or Google access token bey
 
 New accounts created via OAuth do not have a password set. If a user later wants password login, they go through the password reset flow which sets a password on the existing account.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -144,6 +160,14 @@ The initial implementation was correct but naive in a few places:
 
 **Session listing was missing.** Users could not see what devices were logged in. I added a sessions table that tracks active refresh tokens with device metadata (user agent, platform, last seen). Users can view and revoke individual sessions from their account settings.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Auth System"
+supportingCopy: "Hardening login, sessions, or token handling for your own backend? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## The Bottom Line
 
 Authentication is infrastructure, not a feature. It needs to be correct from the start, observable in production, and designed with abuse in mind — not just the happy path.
@@ -151,6 +175,32 @@ Authentication is infrastructure, not a feature. It needs to be correct from the
 The patterns here — short-lived access tokens, rotating refresh tokens, local validation, JTI revocation — are not novel. They are standard practice for a reason: they compose well, they fail gracefully, and they give you meaningful controls when something goes wrong.
 
 Build it once, build it right, and let every other service trust it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Embeddings"
+  supportingCopy: "Continue with \"Embeddings\" to see how the platform turns text into the vectors that power semantic search."
+  destinationUrl: "/blog/backendengineering/04-embeddings"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

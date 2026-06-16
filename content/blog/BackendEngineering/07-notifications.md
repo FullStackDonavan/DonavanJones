@@ -22,6 +22,14 @@ Getting notifications right means solving two distinct problems: reliably detect
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## What Counts as a Notification
 
 Before designing the service, it helps to be precise about what types of events actually need to notify users on this platform:
@@ -136,6 +144,14 @@ notification_id = hash(event_id + user_id + channel)
 
 Together, these give at-least-once event processing with at-most-once notification delivery per channel.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -197,6 +213,14 @@ Matched rows are processed into notification events and delivered through the no
 
 For the daily devotional specifically — where thousands of users might have 7am configured — the query window is staggered by user ID to spread delivery load over a few minutes rather than spiking all at once at the top of the hour.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Notification System"
+supportingCopy: "Building reliable multi-channel delivery for your own backend? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Observability
 
 Notifications are easy to overlook in observability because they are asynchronous — failures are not immediately visible to the user or the engineer. I track:
@@ -209,6 +233,32 @@ Notifications are easy to overlook in observability because they are asynchronou
 A spike in push delivery failures usually means the device token store has gone stale and needs a refresh cycle. A spike in time-to-delivery usually means the queue consumer is backed up. Both are actionable from metrics alone, without needing to dig into logs.
 
 Notifications are infrastructure that users rarely notice when it works and immediately notice when it does not. The goal is to be invisible — reliable enough that users trust the platform will tell them what they need to know, at the right time, through the right channel, exactly once.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Inference Services"
+  supportingCopy: "Continue with \"Inference Services\" for a deeper look at the service that publishes the job.completed events this notification system delivers."
+  destinationUrl: "/blog/backendengineering/08-inference-services"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

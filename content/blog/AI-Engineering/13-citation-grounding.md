@@ -23,6 +23,14 @@ This article covers how citation grounding is implemented — eliciting citation
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Three Levels of Citation Failure
 
 Understanding what can go wrong clarifies what good citation grounding needs to prevent:
@@ -117,6 +125,14 @@ function verifyPresence(
 A citation not in the retrieved context means the model invented it — drawing on training data rather than provided passages. This is a Level 1 failure. The citation is flagged and not displayed to the user without a warning.
 
 If the citation is not in context but is a valid reference (exists in the database), there are two interpretations: the model retrieved from training memory correctly but outside the provided context, or the retrieval pipeline failed to surface a relevant passage. Either way, the citation should be marked "from model knowledge, not retrieved context" and the user should be told the full verse text has been fetched separately.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -232,6 +248,14 @@ John Calvin, Romans Commentary — Thematic support
 
 Users who want to verify claims can expand the panel without the citation apparatus cluttering the reading experience for users who do not.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Handling Citation Failures
 
 Not every citation attempt succeeds. The handling of failures is as important as the handling of successes.
@@ -298,6 +322,32 @@ In many AI applications, citation grounding is a nice-to-have — it improves tr
 Scripture is treated as authoritative by the people using this platform. A response that misrepresents what scripture says — whether through a fabricated citation, an out-of-context reference, or an unsupported claim dressed up as biblical teaching — does real harm. It forms false beliefs about what the text says. It may lead someone to a theological position they would not hold if they read the actual passage. It undermines trust in the platform when the user eventually checks the reference themselves.
 
 Citation grounding is not primarily a technical constraint on this platform — it is an ethical one. The model should not speak for scripture. It should surface scripture and help the user understand it. Verified, transparent citations are how the system stays in that role.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Hallucination Reduction"
+  supportingCopy: "Continue with \"Hallucination Reduction\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/14-hallucination-reduction"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

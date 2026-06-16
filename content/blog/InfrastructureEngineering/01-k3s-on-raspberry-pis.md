@@ -23,6 +23,14 @@ K3s is a lightweight Kubernetes distribution designed for edge devices and resou
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Prerequisites
 
 - Raspberry Pi 4 or newer (recommended for control plane node)
@@ -72,6 +80,14 @@ Verify from the server:
 kubectl get nodes -o wide
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -94,8 +110,42 @@ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 sudo chown $(id -u):$(id -g) ~/.kube/config
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Kubernetes Cluster"
+supportingCopy: "Setting up K3s on your own Raspberry Pi or homelab hardware? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 My Raspberry Pi K3s cluster forms the foundation of my homelab rack, giving me a lightweight distributed compute layer for running services, CI pipelines, and internal tooling with minimal power usage. As my infrastructure expands—especially with components like Gitea CI runners, AI workloads on my RTX 3090 machine, and additional microservices—I rely on this cluster as the orchestration backbone that keeps everything connected, organized, and running reliably.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Hardware List and Costs"
+  supportingCopy: "Continue with \"Hardware List and Costs\" for the full parts list and pricing behind this cluster."
+  destinationUrl: "/blog/infrastructureengineering/02-hardware-list-and-costs"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

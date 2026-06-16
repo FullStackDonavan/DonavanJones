@@ -20,6 +20,14 @@ A small Kubernetes cluster is a strong fit for a homelab, especially when it is 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Prerequisites
 
 Before you begin, make sure you have:
@@ -75,6 +83,14 @@ kubectl get nodes -o wide
 
 You should see the control plane node listed and the system pods moving into a ready state.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -85,9 +101,43 @@ You should see the control plane node listed and the system pods moving into a r
 
 If your rack grows and you want to add more Pi nodes, you can join them to the cluster as agents or additional servers. K3s makes it straightforward to expand without the overhead of a full upstream Kubernetes installation. That is one of the reasons it works so well in a homelab where simplicity matters.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Control Plane"
+supportingCopy: "Setting up a K3s control plane for your own cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 K3s is one of the easiest ways to get a reliable Kubernetes control plane running on a Raspberry Pi cluster. For a rack-based homelab, it gives you a good balance of lightweight performance and real Kubernetes functionality, which makes it a solid foundation for apps, databases, CI/CD, and other services. With the control plane in place, you can move on to deploying workloads, setting up storage, and building out the rest of your home infrastructure.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Joining Worker Nodes"
+  supportingCopy: "Continue with \"Joining Worker Nodes\" to expand the control plane into a full multi-node cluster."
+  destinationUrl: "/blog/infrastructureengineering/06-joining-worker-nodes"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

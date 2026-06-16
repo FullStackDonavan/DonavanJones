@@ -21,6 +21,14 @@ Earlier in this series I covered AI services at a high level and streaming as a 
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The Two Modes of Inference
 
 Not all inference requests are the same shape. I split inference into two modes with different handling:
@@ -134,6 +142,14 @@ async function validateStudyGuide(raw: string): Promise<StudyGuide> {
 
 **Theological consistency** is a light-touch check specific to this platform. A small set of high-confidence rules flags responses that contradict core Christian doctrinal positions (asserting Jesus did not rise from the dead, denying the existence of God, etc.). These are edge cases the model rarely hits, but when it does, the failure is significant. Flagged responses are sent to a moderation queue rather than returned to the user.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -220,6 +236,14 @@ The inference service is the only place in the system where a single misbehaving
 
 The circuit breaker is a coarse instrument and I have never needed the 100% threshold in production. But having it means a runaway job or an unexpected traffic spike cannot generate unbounded cost overnight.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Inference Pipeline"
+supportingCopy: "Designing prompt construction, model routing, or cost controls for your own AI service? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Observability
 
 The inference service emits structured logs for every request with:
@@ -241,6 +265,32 @@ Inference is the only service where the output is probabilistic. Every other ser
 This changes the operational posture. You test other services by asserting their output. You evaluate inference by measuring its output distribution against a quality baseline. You monitor other services for errors. You monitor inference for both errors and silent quality degradation.
 
 Build the service like any other — clean boundaries, explicit contracts, observable internals — but hold it to a different standard of evidence when you want to know if it is working well.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Embedding Services"
+  supportingCopy: "Continue with \"Embedding Services\" to see how the other half of the AI service landscape is designed and scaled."
+  destinationUrl: "/blog/backendengineering/09-embedding-services"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

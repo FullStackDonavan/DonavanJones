@@ -21,6 +21,14 @@ Managing this state correctly is one of the less glamorous but most consequentia
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 This article covers the distinct types of state an AI agent system manages, how each is represented and stored, and the failure modes that emerge from state mismanagement.
 
 ## The Statelessness of Models
@@ -111,6 +119,14 @@ async function compressHistoryIfNeeded(session: SessionState): Promise<SessionSt
 ```
 
 The accumulated summary is prepended to the context window as a `<prior_context>` block before the recent turns. The model sees a compressed representation of older conversation, full representation of recent turns.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -258,6 +274,14 @@ function buildContextWindow(
 
 The order within the context window is itself a state management decision. Memory comes early (giving the model the user's profile before the conversation), recent history comes later (for recency weighting), and current task context comes last (highest attention for the most immediately relevant information).
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## What Goes Wrong Without Explicit State Management
 
 The failure modes from poor state management are subtle and expensive to debug:
@@ -273,6 +297,32 @@ The failure modes from poor state management are subtle and expensive to debug:
 **Orphaned task state** — a long-running task completes but the user's session has expired. The task result is never delivered. The user returns later, checks their tasks, and finds a completed study guide — but the notification was never sent because the session state that held the delivery target was gone.
 
 Each of these is avoidable with explicit state management: clear ownership of each state type, explicit reads and writes, invariant checks before model calls, and session-independent delivery for task results. State management is not exciting work, but its absence is immediately visible in the quality of the user experience.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Microsoft AutoGen"
+  supportingCopy: "Continue with \"Microsoft AutoGen\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/06-microsoft-autogen"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

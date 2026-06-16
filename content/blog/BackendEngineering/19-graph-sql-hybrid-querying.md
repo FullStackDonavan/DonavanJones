@@ -21,6 +21,14 @@ The hybrid pattern is not a curiosity — it is the primary reason to use AGE ov
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The Fundamental Pattern
 
 A `cypher()` call returns a SQL result set. That result set can be used anywhere a SQL subquery or CTE can be used — joined against tables, filtered with WHERE clauses, aggregated, ordered, and paged.
@@ -256,6 +264,14 @@ ORDER BY ptc.theme_count DESC, v.book_order, v.chapter, v.verse;
 
 The graph handles the concept-to-passage and passage-to-theme relationships. The relational `lexicon` table holds the full Strong's definition. Ranking by theme count is computed in the graph and used as an ordering key in the SQL layer.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -378,6 +394,14 @@ The decision rule I use:
 
 The anti-pattern to avoid: storing data that belongs in the relational schema as graph properties. It is tempting to put everything on the graph — verse text, user reading history, translation variants — because it simplifies queries. But the relational schema handles updates, indexing, normalization, and foreign key constraints far better than graph properties do. Let each model do what it is good at, and join them at query time.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Data Architecture"
+supportingCopy: "Combining graph traversal with relational data in your own backend? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Putting It Together
 
 Apache AGE with hybrid querying gives this platform something neither pure Postgres nor a standalone graph database could provide alone: the ability to traverse Biblical relationships naturally while treating user data, content, and platform state as the relational first-class citizens they are.
@@ -385,6 +409,32 @@ Apache AGE with hybrid querying gives this platform something neither pure Postg
 The graph holds structure. The relational schema holds content. Hybrid queries join them at read time. The result is a data layer that can answer questions like "what has this user already read among the passages most connected to this theme?" in a single query, without denormalizing data into the wrong model or accepting the operational complexity of a separate graph database process.
 
 That combination — graph traversal for relationship-shaped questions, relational storage for content-shaped data, joined in Postgres — is the right architecture for a domain as richly interconnected as Biblical literature.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Vector Search"
+  supportingCopy: "Revisit \"Vector Search\" to see the other retrieval architecture in this backend — semantic search alongside the graph traversal covered here."
+  destinationUrl: "/blog/backendengineering/05-vector-search"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

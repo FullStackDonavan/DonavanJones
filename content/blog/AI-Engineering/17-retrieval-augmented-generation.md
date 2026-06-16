@@ -19,6 +19,14 @@ The earlier articles in this series have covered individual components of retrie
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What RAG Is and Why It Exists
 
 Language models are trained on a fixed corpus. Once training ends, the model's knowledge is frozen. It knows what it learned and nothing more. For many applications this is fine — a model trained on enough text has broad general knowledge. But for applications that require specific, authoritative, up-to-date, or verifiable knowledge, frozen training knowledge is a serious limitation.
@@ -152,6 +160,14 @@ All three are addressable through context assembly design:
 
 **Constraints matter.** The system prompt instruction "base your response on the provided context" is not magical, but it is real. Combined with citation requirements that force the model to reference specific passages, it significantly increases the probability that generation uses what was retrieved rather than falling back to training memory.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -184,6 +200,14 @@ RAG is a significant improvement over pure generation from training memory. It i
 
 **RAG does not replace human judgment.** The platform's most important feature is that it surfaces evidence and options, not that it provides answers. A user who reads "Reformed commentators tend to read this verse as supporting unconditional election, while Arminian commentators read it as conditional" has what they need to form their own view. A user who reads "this verse teaches unconditional election" has been given a theological conclusion dressed as evidence. RAG helps make the first kind of response easier to produce. The prompt design, content constraints, and uncertainty expressions ensure it actually happens.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Evaluating the Full System
 
 RAG quality is end-to-end quality. Retrieval precision and generation quality are necessary but not sufficient to evaluate individually. The metric that matters is whether the user's question was answered well — grounded in the text, accurate to what the text says, honest about uncertainty, useful for study.
@@ -203,6 +227,32 @@ Evaluation runs after each significant change to retrieval strategy, system prom
 The platform runs continuous evaluation on a sample of production queries (with user permission and privacy controls). Production queries reveal failure patterns that synthetic test sets do not — the unexpected combinations, the edge cases, the ways users phrase questions that no test writer would have predicted. Production evaluation is how the system improves over time rather than only at deployment time.
 
 RAG is not a feature or a product — it is a system discipline. Every component matters: the knowledge base structure, the chunking, the embedding strategy, the retrieval pipeline, the context assembly, the prompt design, the generation constraints, the post-processing, the evaluation. Getting one component right while leaving another unaddressed produces a system that works in some cases and fails in others. The work is getting all of them right, together, for the specific domain they serve.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Theological Consistency"
+  supportingCopy: "Continue with \"Theological Consistency\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/18-theological-consistency"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

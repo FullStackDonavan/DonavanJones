@@ -20,6 +20,14 @@ Earlier articles touched on batching in specific contexts: adaptive batching in 
 
 *Part of the [Backend Engineering series](/categories/backend-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every backend engineering breakdown in this series."
+destinationUrl: "/categories/backend-engineering"
+---
+::
+
 ## The Fundamental Economics
 
 Every operation has two cost components: fixed overhead and variable cost per unit.
@@ -171,6 +179,14 @@ async function batchWithFallback<T, R>(
 
 This finds the failing items in O(log n) retries rather than O(n) individual retries.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production backend system it was built for."
+destinationUrl: "/systems/backend"
+---
+::
+
 ---
 
 *Explore more articles in the [Backend Engineering series](/categories/backend-engineering).*
@@ -238,6 +254,14 @@ LIMIT 24;
 
 **Cost per unit** — for paid APIs (embedding, inference), cost per unit should decrease as batching improves. If cost per embedding is the same with batching as without, the batch API is not being used correctly or the provider does not discount batch requests.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Throughput Strategy"
+supportingCopy: "Designing batching or throughput optimizations for your own backend? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## When Not to Batch
 
 Batching is not always the right choice.
@@ -251,6 +275,32 @@ Batching is not always the right choice.
 The pattern to avoid is reflexive batching — adding a batch window everywhere because it sounds like a good idea. Measure the fixed overhead of the operation first. If it is small relative to variable cost, batching will not help much and will add latency and complexity for minimal gain.
 
 Batching is a tool for a specific problem. When the problem is there, it is one of the most impactful optimizations available. When it is not, it is just complexity.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The API Boilerplate"
+  supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
+  destinationUrl: "/products/production-ai-api-boilerplate"
+  price: "$49"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Latency Optimization"
+  supportingCopy: "Continue with \"Latency Optimization\" to see how batching fits into the broader set of techniques for making backend services feel fast."
+  destinationUrl: "/blog/backendengineering/15-latency-optimization"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new backend engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

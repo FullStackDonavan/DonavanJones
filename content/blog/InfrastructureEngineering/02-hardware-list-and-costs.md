@@ -22,6 +22,14 @@ My setup is intentionally hybrid: lightweight Raspberry Pi nodes form the backbo
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Compute Nodes (Kubernetes Cluster)
@@ -94,6 +102,14 @@ These are the primary nodes running k3s in my homelab rack:
   - Distributed storage for persistent workloads
   - Backup system for critical application data
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -115,11 +131,45 @@ These are the primary nodes running k3s in my homelab rack:
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Hardware Setup"
+supportingCopy: "Planning the hardware for your own homelab cluster? Let's talk through the architecture and cost tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 This homelab setup is designed as a scalable, self-hosted infrastructure for both software engineering and AI experimentation. The combination of a Kubernetes-based Raspberry Pi cluster and a dedicated GPU machine allows me to separate workloads efficiently—light services run continuously in the cluster, while compute-heavy AI tasks are offloaded to the RTX 3090 system.
 
 Over time, this architecture will evolve into a more production-like environment, supporting CI/CD pipelines, AI agent systems, and the backend infrastructure for my Bible app ecosystem. The goal is not just infrastructure for development, but a fully autonomous system that can build, deploy, and scale services with minimal external dependencies.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Flashing Raspberry Pi OS"
+  supportingCopy: "Continue with \"Flashing Raspberry Pi OS\" to start preparing the nodes this hardware list describes."
+  destinationUrl: "/blog/infrastructureengineering/03-flashing-raspberry-pi-os"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

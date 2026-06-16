@@ -21,6 +21,14 @@ The series documented building something I actually use and care about. That cha
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## What the Two Series Actually Built
 
 The Backend Engineering series and the AI Engineering series are one system described from two angles. The Backend series covers the infrastructure: how data is stored, services communicate, embeddings are generated, queues are processed, GPUs are allocated. The AI series covers the intelligence: how retrieval works, how generation is constrained, how memory persists, how quality is evaluated.
@@ -59,6 +67,14 @@ I have not solved this. What I have done is make the failures visible (through c
 
 **Take moderation more seriously from the start.** The moderation article describes a thoughtful system. It was not thoughtful from day one. The pastoral detection, manipulation pattern recognition, and heterodox content checks were all added in response to actual failure cases observed in testing. A few of those failures were uncomfortable. They would have been better handled by a system designed for them than by the reactive additions the system now has. Moderation for theological AI is not standard content filtering — it requires domain-specific thinking that I should have done earlier.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -77,6 +93,14 @@ I have not solved this. What I have done is make the failures visible (through c
 
 **Personalized study plans.** The memory system knows what a user has studied. It knows where they are theologically, what questions they are working through, what passages they engage with deeply. What it does not do is proactively suggest what to study next — a curriculum that builds on what the user already knows toward the theological questions they are working toward. The data exists. The retrieval and generation infrastructure exists. The missing piece is a planner that reasons about pedagogical sequence across theological topics. This is on the roadmap.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## The Meta-Lesson
 
 Building AI for a domain you care about deeply is different from building AI tools generally. The theological constraints I worked within — epistemic humility about interpretation, honest representation of traditions, pastoral sensitivity, citation transparency — turned out to be good engineering constraints. They forced the system to be more honest about what it knows, more careful about what it claims, more respectful of the complexity it is navigating.
@@ -90,6 +114,32 @@ The series is not a definitive reference for building theological AI. It is one 
 What I hope the series conveys is the shape of the problem: how many layers there are, how each layer creates constraints and opportunities for the layers above it, and how domain knowledge — about scripture, about how people study, about what theological accuracy means — has to permeate the system design rather than being left to the model. The model is capable. It needs to be given the right context, the right constraints, and the right evidence to work from. Building all of that is the engineering.
 
 There is more to build. There will always be more to build. That is not a complaint — it is the condition of working on something that matters.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Persistent Memory Systems"
+  supportingCopy: "Start back at the beginning with \"Persistent Memory Systems,\" the article that opened this series."
+  destinationUrl: "/blog/ai-engineering/01-persistent-memory-systems"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

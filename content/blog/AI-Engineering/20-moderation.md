@@ -21,6 +21,14 @@ This article covers how moderation is structured on the platform — what catego
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Theological Harm Taxonomy
 
 Before building a moderation system, you need a precise vocabulary for what you are moderating. For a general-purpose AI, the harm categories are familiar: violence, hate speech, CSAM, dangerous instructions. For a theological AI, the relevant harm categories are different:
@@ -175,6 +183,14 @@ High-risk inputs are routed to a modified pipeline that:
 
 The goal is not to refuse engagement but to ensure that difficult passages are handled with the weight of the full scholarly tradition, including the tradition's own self-criticism.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
+
 ---
 
 *Explore more articles in the [AI Engineering series](/categories/ai-engineering).*
@@ -273,6 +289,14 @@ Respond with exactly one word: AFFIRMING, DESCRIBING, REJECTING, or NEUTRAL`,
 
 Only `AFFIRMING` results trigger intervention. The platform can and should describe heterodox positions accurately when they are part of the scholarly or historical context — it should not affirm them as correct.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Moderation Without Over-Moderation
 
 The failure mode that receives less attention than under-moderation is over-moderation: a system that refuses, qualifies, or waters down responses to the point of being useless. For a theological platform, over-moderation looks like:
@@ -327,6 +351,32 @@ Events with `reviewFlag: true` enter a review queue. Human review focuses on:
 The review process is how the moderation system improves over time. False positive patterns are used to make rules more precise. Missed cases are used to extend coverage. This loop — deploy, monitor, review, refine — is the operational discipline that keeps moderation calibrated to actual behavior rather than theoretical risk.
 
 Moderation is not a feature you build once. It is a process you operate continuously. The theological domain makes it more complex than most, because the harms it guards against are often subtle — a misattributed position, a false consensus claim, a pastoral moment missed — rather than obvious. Getting it right requires both the technical infrastructure to detect and intervene and the ongoing human judgment to keep it calibrated.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Debate Agents"
+  supportingCopy: "Continue with \"Debate Agents\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/21-debate-agents"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

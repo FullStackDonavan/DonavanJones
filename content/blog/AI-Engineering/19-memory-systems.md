@@ -21,6 +21,14 @@ The central tension in memory system design is between completeness and precisio
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Four Memory Layers
 
 Each memory type stores different things and is retrieved under different conditions.
@@ -194,6 +202,14 @@ async function retrieveEpisodicContext(
 ```
 
 The score threshold of 0.72 is deliberately high for episodic retrieval. The purpose is to surface prior sessions that are genuinely relevant to the current question — not everything adjacent. A lower threshold produces episodic context that distracts the model with loosely related history; a higher threshold produces the focused prior-session grounding that actually helps.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -391,6 +407,14 @@ function assembleMemoryContext(
 
 The priority order — procedural first, semantic second, episodic third — reflects what is most reliably useful. Procedural memory shapes every response. Semantic memory shapes responses on topics the user knows well. Episodic memory provides specific session continuity; if the budget is tight, this is the first to be trimmed.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Theological Memory: What Makes This Domain Different
 
 Generic memory systems for AI assistants focus on user preferences and conversation continuity. Theological memory has additional requirements that generic designs do not address:
@@ -458,6 +482,32 @@ These metrics are evaluated quarterly against a cohort of active users. The eval
 Memory is the layer that transforms the platform from a capable theological tool into something closer to a study companion. The capability to answer questions well is table stakes. The ability to remember what you have studied, where you have arrived, and what questions you are still working through — that is what makes the tool feel like it knows you.
 
 Building it well is months of unglamorous work: extraction pipelines, schema design, retrieval tuning, privacy infrastructure, evaluation. None of it is visible to the user directly. But users who study with a system that has good memory versus one that does not feel the difference immediately.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Moderation"
+  supportingCopy: "Continue with \"Moderation\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/20-moderation"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 
