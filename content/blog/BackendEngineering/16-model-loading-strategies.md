@@ -275,7 +275,6 @@ The strategies in this article are appropriate for the model sizes I actually de
   buttonText: "Get The API Boilerplate"
   supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
   destinationUrl: "/products/production-ai-api-boilerplate"
-  price: "$49"
   ---
   :::
 

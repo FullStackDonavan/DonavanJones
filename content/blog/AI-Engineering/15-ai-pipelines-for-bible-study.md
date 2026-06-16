@@ -446,7 +446,6 @@ The pipeline structure on this platform grew from a single-call prototype that w
   buttonText: "Get The AI Starter Kit"
   supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
   destinationUrl: "/products/self-hosted-ai-starter-kit"
-  price: "$29"
   ---
   :::
 

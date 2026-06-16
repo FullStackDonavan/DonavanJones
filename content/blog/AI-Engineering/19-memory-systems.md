@@ -489,7 +489,6 @@ Building it well is months of unglamorous work: extraction pipelines, schema des
   buttonText: "Get The AI Starter Kit"
   supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
   destinationUrl: "/products/self-hosted-ai-starter-kit"
-  price: "$29"
   ---
   :::
 

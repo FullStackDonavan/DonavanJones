@@ -16,6 +16,7 @@
           :related-category-label="seoDoc.relatedCategoryLabel"
           :related-category-url="seoDoc.relatedCategoryUrl"
           :features="seoDoc.features || []"
+          :stripe-price-id="seoDoc.stripePriceId"
         >
           <template #right>
             <div

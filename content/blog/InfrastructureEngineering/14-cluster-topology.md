@@ -264,7 +264,6 @@ For my homelab, the focus is on building a practical infrastructure platform tha
   buttonText: "Get The Pi Cluster Blueprint"
   supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
   destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
-  price: "$19"
   ---
   :::
 

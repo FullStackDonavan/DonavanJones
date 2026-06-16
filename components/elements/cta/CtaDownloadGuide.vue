@@ -7,7 +7,7 @@ withDefaults(defineProps<{
   price?: string
 }>(), {
   heading: 'Digital guide',
-  price: '',
+  price: 'FREE',
 })
 
 const isExternal = (url: string) => /^https?:\/\//.test(url)
@@ -21,8 +21,10 @@ const isExternal = (url: string) => /^https?:\/\//.test(url)
   >
     <span
       v-if="price"
-      class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold
-             bg-amber-500 text-white shadow-sm"
+      class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold shadow-sm"
+      :class="price === 'FREE'
+        ? 'bg-emerald-500 text-white'
+        : 'bg-amber-500 text-white'"
     >
       {{ price }}
     </span>

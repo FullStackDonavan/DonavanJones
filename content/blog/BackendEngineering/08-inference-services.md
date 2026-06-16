@@ -272,7 +272,6 @@ Build the service like any other — clean boundaries, explicit contracts, obser
   buttonText: "Get The API Boilerplate"
   supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
   destinationUrl: "/products/production-ai-api-boilerplate"
-  price: "$49"
   ---
   :::
 

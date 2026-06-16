@@ -343,7 +343,6 @@ Total: roughly 44,000 vertices and 1,035,000 edges. At this scale, AGE handles q
   buttonText: "Get The API Boilerplate"
   supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
   destinationUrl: "/products/production-ai-api-boilerplate"
-  price: "$49"
   ---
   :::
 

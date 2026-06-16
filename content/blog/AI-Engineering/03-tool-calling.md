@@ -353,7 +353,6 @@ The next article covers agent orchestration: how to compose multiple tools and m
   buttonText: "Get The AI Starter Kit"
   supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
   destinationUrl: "/products/self-hosted-ai-starter-kit"
-  price: "$29"
   ---
   :::
 

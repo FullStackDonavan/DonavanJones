@@ -282,7 +282,6 @@ Batching is a tool for a specific problem. When the problem is there, it is one 
   buttonText: "Get The API Boilerplate"
   supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
   destinationUrl: "/products/production-ai-api-boilerplate"
-  price: "$49"
   ---
   :::
 

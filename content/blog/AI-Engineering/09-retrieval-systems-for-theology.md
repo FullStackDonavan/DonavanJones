@@ -322,7 +322,6 @@ The next two articles go deeper into two components of this pipeline: chunking s
   buttonText: "Get The AI Starter Kit"
   supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
   destinationUrl: "/products/self-hosted-ai-starter-kit"
-  price: "$29"
   ---
   :::
 

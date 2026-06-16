@@ -252,7 +252,6 @@ Latency optimization is never done — the system grows, new bottlenecks emerge,
   buttonText: "Get The API Boilerplate"
   supportingCopy: "Get the Production AI API Boilerplate — FastAPI starter, auth, vector search, embedding services, Docker, and CI/CD examples ($49)."
   destinationUrl: "/products/production-ai-api-boilerplate"
-  price: "$49"
   ---
   :::
 
