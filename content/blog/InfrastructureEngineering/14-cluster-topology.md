@@ -20,6 +20,14 @@ My current setup focuses on separating workloads across different systems while 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Why Topology Matters
 
 Cluster topology affects almost everything:
@@ -117,6 +125,14 @@ More powerful x86 systems are better suited for:
 - GPU acceleration
 
 My topology separates these responsibilities so the cluster remains efficient instead of forcing every workload onto the same hardware class.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -228,11 +244,45 @@ Possible future additions include:
 
 The important part is designing the foundation early so expansion does not require rebuilding the entire environment.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cluster Topology"
+supportingCopy: "Designing workload separation and failure domains for your own cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 # Conclusion
 
 Cluster topology is less about building the biggest rack possible and more about creating clear separation between workloads, responsibilities, and resource usage. A small but well-designed cluster is often far more useful than a large cluster with poor organization.
 
 For my homelab, the focus is on building a practical infrastructure platform that supports Kubernetes, AI engineering, CI/CD, self-hosting, and application development without becoming overly complicated too early. By separating lightweight cluster services from heavier GPU workloads and designing around modular growth, the rack can continue evolving into a more production-like environment over time.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Consumer Hardware Usage"
+  supportingCopy: "Continue with \"Consumer Hardware Usage\" to see how off-the-shelf hardware choices shape this topology in practice."
+  destinationUrl: "/blog/infrastructureengineering/15-consumer-hardware-usage"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

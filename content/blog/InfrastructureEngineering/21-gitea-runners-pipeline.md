@@ -23,6 +23,14 @@ My setup is built around a Kubernetes (K3s) cluster running on a small rack of m
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Pipeline Overview
@@ -57,6 +65,14 @@ My CI/CD pipeline is designed to be lightweight, distributed, and reproducible a
 - Kubernetes manifests or Helm charts are applied automatically.
 - Services are rolled out using rolling updates to avoid downtime.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -82,6 +98,14 @@ This system is designed to act as the “glue” of my infrastructure:
 
 This setup allows me to iterate quickly while keeping everything fully self-hosted and portable.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your CI/CD Pipeline"
+supportingCopy: "Building a self-hosted CI/CD pipeline with Gitea or similar tooling? Let's talk through the design."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -89,6 +113,32 @@ This setup allows me to iterate quickly while keeping everything fully self-host
 This Gitea runner pipeline turns my homelab into a full production-style DevOps environment. Instead of relying on external CI/CD platforms, everything runs inside my own infrastructure, giving me full control over build processes, deployment logic, and compute distribution.
 
 It also creates a strong foundation for future expansion, such as AI-driven CI agents, automated testing pipelines, and multi-service deployment systems across the cluster. As the system evolves, Gitea continues to act as the central orchestration layer that connects development, automation, and deployment into one unified workflow.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Infrastructure Design"
+  supportingCopy: "Continue with \"Infrastructure Design\" to see the bigger architectural picture this pipeline deploys into."
+  destinationUrl: "/blog/infrastructureengineering/22-infrastructure-design"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

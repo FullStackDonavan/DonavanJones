@@ -22,6 +22,14 @@ Instead of simply studying concepts like DNS, subnets, routing, or NAT, I learne
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Core Networking Foundations
@@ -71,6 +79,14 @@ Some common issues I’ve worked through include:
 
 Each issue required breaking the system down layer by layer—starting from the application, down through containers, services, network interfaces, and finally physical connectivity.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -89,6 +105,14 @@ Using Gitea and self-hosted runners in my cluster, I’ve built pipelines that:
 
 This requires a stable and predictable network layer. Without proper networking, deployment pipelines break, services become unreachable, and automation fails.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Networking Skills Gap"
+supportingCopy: "Building hands-on networking skills through your own homelab or cluster? Let's talk through what to tackle next."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -98,6 +122,32 @@ Networking has become one of the most critical skills in my infrastructure journ
 My homelab rack—built around a Raspberry Pi K3s cluster and connected services—continues to serve as a hands-on environment where I refine these skills daily. Every misconfiguration, outage, or deployment issue reinforces a deeper understanding of how modern distributed systems communicate.
 
 Rather than treating networking as a theoretical subject, I now see it as the invisible structure holding every system together. It is the layer that makes everything else—from CI/CD pipelines to AI services—actually work.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Node Roles"
+  supportingCopy: "Continue with \"Node Roles\" to see how these networking fundamentals map onto specific roles across the cluster."
+  destinationUrl: "/blog/infrastructureengineering/27-node-roles"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

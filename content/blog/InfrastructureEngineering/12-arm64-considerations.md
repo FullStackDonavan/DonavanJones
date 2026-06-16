@@ -19,6 +19,14 @@ As I continue building out my homelab rack and Kubernetes infrastructure, ARM64 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 What to consider when running infrastructure on ARM64 hardware.
 
 ## Compatibility
@@ -70,6 +78,14 @@ Benefits include:
 - Easier scaling at home
 
 This becomes especially valuable when running multiple nodes 24/7 in a homelab or rack environment. A cluster of Raspberry Pis or ARM mini PCs can provide enough compute for development, automation, and infrastructure services without dramatically increasing power usage.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -124,9 +140,43 @@ ARM64 is improving rapidly for AI-related workloads, especially with:
 
 However, large models still benefit heavily from dedicated GPUs. In my setup, ARM64 nodes support the surrounding infrastructure while AI containers and models run separately on more powerful hardware.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your ARM64 Workloads"
+supportingCopy: "Deciding what to run on ARM64 vs. dedicated GPU hardware? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 ARM64 has become an important part of modern self-hosted infrastructure because it enables efficient, scalable, and affordable deployments without requiring enterprise hardware. Whether running K3s clusters, CI/CD pipelines, APIs, or lightweight backend services, ARM64 hardware can handle far more than many people expect. In hybrid environments like my rack setup, combining ARM64 nodes for infrastructure workloads with dedicated x86 GPU systems for AI and heavy compute creates a flexible architecture that balances performance, cost, and power efficiency. As software support continues improving across the ecosystem, ARM64 will likely become even more common in homelabs, edge computing, and production-ready infrastructure.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Cluster Architecture (Homelab)"
+  supportingCopy: "Continue with \"Cluster Architecture (Homelab)\" to see how these ARM64 nodes fit into the broader rack design."
+  destinationUrl: "/blog/infrastructureengineering/13-cluster-architecture-homelab"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

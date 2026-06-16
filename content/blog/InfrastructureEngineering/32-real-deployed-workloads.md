@@ -22,6 +22,14 @@ The goal of this environment is to simulate production-grade infrastructure at h
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 # Cluster Overview
@@ -108,6 +116,14 @@ Kubernetes services route requests to this machine when GPU compute is required.
 
 This effectively turns the homelab into a small distributed AI system.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -187,6 +203,14 @@ The system mirrors real-world cloud architecture:
 - CI/CD automation
 - distributed compute routing
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Deployed Workloads"
+supportingCopy: "Running real production-style workloads on your own homelab cluster? Let's talk through what you're hosting."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -194,6 +218,32 @@ The system mirrors real-world cloud architecture:
 This homelab is not just a collection of services—it’s a full production-style infrastructure environment running locally. The combination of a Raspberry Pi K3s cluster, a GPU-powered AI node, and self-hosted CI/CD pipelines creates a system capable of supporting real applications at scale.
 
 As the system evolves, the focus is shifting toward tighter AI integration, improved workload routing, and more autonomous deployment pipelines. The end goal is a fully self-sustaining infrastructure where development, deployment, and AI inference all operate seamlessly across the cluster and GPU nodes.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Separation of Workloads"
+  supportingCopy: "Continue with \"Separation of Workloads\" to see the design rules behind how these services are split across compute."
+  destinationUrl: "/blog/infrastructureengineering/33-separation-of-workloads"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

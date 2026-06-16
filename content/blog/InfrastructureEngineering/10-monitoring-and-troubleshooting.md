@@ -23,6 +23,14 @@ Because resources are limited and nodes can be sensitive to network or power flu
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## How I Monitor My Cluster
@@ -68,6 +76,14 @@ When something breaks, I follow a consistent flow:
 
 This helps me separate infrastructure issues from application bugs quickly.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -88,11 +104,45 @@ I intentionally avoid heavy observability stacks unless I specifically need them
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Observability Stack"
+supportingCopy: "Building monitoring and troubleshooting tooling for your own homelab cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Monitoring and troubleshooting in a Raspberry Pi K3s homelab is less about enterprise-grade tooling and more about consistency and visibility. My rack setup forces me to stay close to the system, which actually makes me a better engineer—I see failures early, understand resource limits clearly, and learn how Kubernetes behaves under constrained conditions.
 
 Over time, this approach has made my cluster more predictable and easier to scale, especially as I continue adding services like CI/CD pipelines, AI workloads, and experimental applications on top of the same infrastructure.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Architecture Diagrams"
+  supportingCopy: "Continue with \"Architecture Diagrams\" to see the full system this monitoring setup keeps an eye on, mapped out visually."
+  destinationUrl: "/blog/infrastructureengineering/11-architecture-diagrams"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

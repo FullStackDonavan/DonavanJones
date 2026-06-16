@@ -22,6 +22,14 @@ This setup forces me to think differently about architecture: instead of scaling
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 # Understanding Pod Layouts in My Cluster
@@ -87,6 +95,14 @@ Examples of scheduling strategy:
 
 This hybrid approach keeps the cluster responsive even under load.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -137,6 +153,14 @@ To handle this:
 
 The pod layout is intentionally designed to assume hardware will eventually fail.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Pod Scheduling"
+supportingCopy: "Designing affinity rules and workload placement for your own cluster? Let's talk through the strategy."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -153,6 +177,32 @@ By combining:
 I’ve built a hybrid system that behaves like a small-scale cloud, but remains fully under my control.
 
 As the cluster evolves, pod layout will continue to be one of the most important factors in scaling services like my Bible app, AI systems, and future microservices architecture.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Power Consumption Tradeoffs"
+  supportingCopy: "Continue with \"Power Consumption Tradeoffs\" to see how these workload placement decisions affect the rack's power draw."
+  destinationUrl: "/blog/infrastructureengineering/30-power-consumption-tradeoffs"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -24,6 +24,14 @@ This document breaks down how I physically organized my rack and supporting equi
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Rack Overview
@@ -91,6 +99,14 @@ The design is:
 
 Gitea, CI runners, and Kubernetes API endpoints all rely on predictable network paths, so labeling and port consistency is critical.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -150,6 +166,14 @@ Everything in the rack is designed to be:
 
 This is especially important as the cluster evolves. Adding new nodes or services should not require rebuilding the rack structure.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Rack Layout"
+supportingCopy: "Organizing the physical layout of your own rack for maintainability? Let's talk through cable management and power planning."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -161,6 +185,32 @@ In my setup, the combination of a Raspberry Pi K3s cluster, a dedicated networki
 This physical discipline directly supports everything built on top of it—from CI/CD pipelines in Gitea to AI workloads running in Docker containers. When the physical layer is organized well, the software layer becomes significantly easier to scale, debug, and evolve.
 
 Ultimately, the rack is not just hardware—it is the foundation that everything else runs on.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Pod Layouts"
+  supportingCopy: "Continue with \"Pod Layouts\" to see how workloads are arranged inside the cluster this rack hosts."
+  destinationUrl: "/blog/infrastructureengineering/29-pod-layouts"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

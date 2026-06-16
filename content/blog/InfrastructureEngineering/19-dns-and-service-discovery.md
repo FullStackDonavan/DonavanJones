@@ -22,6 +22,14 @@ As the cluster grows to include services like my Bible app, Gitea CI runners, AI
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## How Kubernetes DNS Works
@@ -54,6 +62,14 @@ In my setup, this is what allows things like:
 - CI/CD runners in Gitea picking up jobs and routing them correctly across nodes
 
 Everything is loosely coupled but still deeply connected.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -113,6 +129,14 @@ Instead of manually wiring services, I can:
 
 This is what allows the system to scale from a few containers into a full distributed platform without becoming unmanageable.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Service Discovery Setup"
+supportingCopy: "Debugging DNS or service discovery issues on your own cluster? Let's talk through CoreDNS and networking."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -122,6 +146,32 @@ DNS and service discovery are not just Kubernetes features—they are the founda
 In my K3s rack setup, they allow a mix of Raspberry Pi nodes, a dedicated dev machine, and containerized services to behave like one unified system. Whether it’s AI workloads, CI/CD pipelines, or my Bible app backend, everything stays connected through simple service names instead of fragile infrastructure wiring.
 
 As the system continues to grow, this layer will remain one of the most important pieces keeping the architecture stable, scalable, and easy to evolve.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Future Expansion Plans"
+  supportingCopy: "Continue with \"Future Expansion Plans\" to see where this DNS and service discovery layer is headed next."
+  destinationUrl: "/blog/infrastructureengineering/20-future-expansion-plans"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -22,6 +22,14 @@ The network is designed to prioritize reliability, low latency between nodes, an
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Topology Overview
 
 My homelab network is centered around a managed switch in my rack, which connects all core infrastructure components:
@@ -56,6 +64,14 @@ My development workflow is tightly integrated into the network:
 
 This creates a self-hosted pipeline that reduces dependency on external CI services and keeps all deployment traffic within the local network.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -68,11 +84,45 @@ The RTX 3090 machine runs separately from the Kubernetes cluster but is still pa
 
 Communication between the cluster and this node happens over internal APIs and service endpoints.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Network Design"
+supportingCopy: "Planning the network topology for your own cluster and rack? Let's talk through routing and segmentation."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 This network topology is designed to scale from a simple homelab into a production-like distributed system. By combining a Kubernetes-based Raspberry Pi cluster, a dedicated GPU compute machine, and a tightly integrated CI/CD pipeline using Gitea, the system functions as a unified development and deployment environment.
 
 As the infrastructure evolves, the next steps include deeper network segmentation (VLANs), improved observability, and potential integration of the GPU node into the Kubernetes scheduling system for hybrid workloads.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Networking Issues"
+  supportingCopy: "Continue with \"Networking Issues\" to see common problems that show up once this topology is running."
+  destinationUrl: "/blog/infrastructureengineering/25-networking-issues"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -33,6 +33,14 @@ This separation allows me to iterate quickly while still maintaining a productio
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Short-Term Expansion Plans
 
 In the near term, I want to improve reliability and automation:
@@ -53,6 +61,14 @@ The next stage is scaling functionality and compute efficiency:
 - Introduce workload scheduling between local cluster and GPU machine depending on task type
 - Begin separating services into more independent, scalable microservices
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -69,9 +85,43 @@ Long term, this system becomes a fully self-hosted AI and application platform:
 - A scalable marketplace for games, books, and media integrated directly into the infrastructure
 - Multi-node redundancy so that no single device failure brings down core services
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Roadmap"
+supportingCopy: "Planning the next phase of your own homelab or cluster? Let's talk through where to scale next."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 The goal of my homelab is no longer just experimentation—it is becoming a production-grade ecosystem that supports real users, real applications, and real AI workloads. By combining lightweight Kubernetes on Raspberry Pi hardware with a powerful GPU-backed development machine and a growing CI/CD and AI tooling stack, I am building a system that can evolve with my Bible app, AI agents, and future projects. The focus now is refinement: making everything more automated, resilient, and scalable while keeping full control of the stack.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Gitea Runners Pipeline"
+  supportingCopy: "Continue with \"Gitea Runners Pipeline\" to see the CI/CD automation this roadmap is built around."
+  destinationUrl: "/blog/infrastructureengineering/21-gitea-runners-pipeline"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

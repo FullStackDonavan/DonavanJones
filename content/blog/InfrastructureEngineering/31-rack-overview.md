@@ -26,6 +26,14 @@ At the core of this setup is a Raspberry Pi-based K3s Kubernetes cluster, which 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Rack Architecture Overview
@@ -85,6 +93,14 @@ This machine runs:
 
 Rather than overloading the Kubernetes cluster with GPU workloads, I offload heavy AI computation to this system. This creates a clear separation between infrastructure services and compute-heavy ML tasks.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -130,6 +146,14 @@ Planned improvements to the rack include:
 - Introducing service mesh for advanced traffic control
 - Expanding AI inference services into cluster-native deployments
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Rack Build"
+supportingCopy: "Designing a homelab rack that mirrors real infrastructure patterns? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -137,6 +161,32 @@ Planned improvements to the rack include:
 This homelab rack is more than just a collection of hardware—it is a full engineering platform. It combines distributed systems, CI/CD automation, and AI development into a unified environment that mirrors real-world infrastructure.
 
 By integrating Kubernetes, Gitea, and a dedicated GPU workstation, the system allows me to move from idea to deployment quickly while still maintaining control over scalability and reliability. As it continues to evolve, the rack will serve as the backbone for increasingly complex applications, especially in AI, backend systems, and interactive platform development.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Real Deployed Workloads"
+  supportingCopy: "Continue with \"Real Deployed Workloads\" to see what's actually running on this rack day to day."
+  destinationUrl: "/blog/infrastructureengineering/32-real-deployed-workloads"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

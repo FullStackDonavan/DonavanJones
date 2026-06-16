@@ -18,15 +18,67 @@ This page presents a collection of visual diagrams that illustrate the architect
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
+---
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Architecture"
+supportingCopy: "Mapping out your own homelab or cluster architecture? Let's talk through the design."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 These architecture diagrams provide a clear, visual understanding of how my homelab and Kubernetes infrastructure are structured and operate. They serve as both a reference for future upgrades and a resource for others interested in building similar systems. If you have questions or want to see more details, feel free to reach out!
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: ARM64 Considerations"
+  supportingCopy: "Continue with \"ARM64 Considerations\" to see the hardware-level tradeoffs behind the topology shown in these diagrams."
+  destinationUrl: "/blog/infrastructureengineering/12-arm64-considerations"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

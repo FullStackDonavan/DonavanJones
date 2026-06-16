@@ -20,6 +20,14 @@ Control plane taints are one of the small Kubernetes features that can save you 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## What Is a Control Plane Taint?
 
 In Kubernetes, the control plane is responsible for managing the cluster. It runs the components that keep everything else alive, such as:
@@ -88,6 +96,14 @@ After that, pods may schedule onto the node like any other worker.
 
 This is practical in early rack builds, but it is usually better to keep the control plane dedicated if you can.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -132,11 +148,45 @@ In my own rack setup, this became real pretty quickly. Once I started running mo
 
 It also helped me think more clearly about architecture. Core infrastructure belongs in one place, and experimental or heavier workloads belong somewhere else. That distinction makes troubleshooting easier and helps the cluster scale more gracefully over time.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Scheduling Setup"
+supportingCopy: "Protecting the control plane on your own cluster? Let's talk through taints, tolerations, and node affinity."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Control plane taints are a small Kubernetes detail with a big impact. They help protect the node that runs the heart of the cluster, and they force you to think carefully about where workloads should live. In a homelab rack, that lesson shows up fast because resources are limited and every node matters.
 
 If you are building with K3s, self-hosting services, or running mixed workloads across a few machines, learning taints and tolerations early will save time and confusion later. It is one of those basics that quietly makes everything else work better.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Cooling and Power Setup"
+  supportingCopy: "Continue with \"Cooling and Power Setup\" to see how the physical rack keeps these nodes running reliably."
+  destinationUrl: "/blog/infrastructureengineering/17-cooling-and-power-setup"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

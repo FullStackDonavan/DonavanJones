@@ -30,6 +30,14 @@ Ingress becomes the bridge between all of them.
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Prerequisites
@@ -111,6 +119,14 @@ Using:
 
 This is what makes Ingress actually reachable from your browser.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -147,6 +163,14 @@ In your Pi rack setup, most failures are usually:
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Ingress Setup"
+supportingCopy: "Routing traffic into your own Kubernetes rack? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Ingress is the “front door” of your Kubernetes rack.
@@ -161,6 +185,32 @@ In your setup—where you’re running a hybrid system of:
 Ingress is what ties it all together into one clean routing system.
 
 Once it is stable, you stop thinking in terms of individual nodes and start thinking in terms of **services behind a single unified gateway**, which is exactly what you want for scaling your architecture cleanly over time.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Persistent Volumes"
+  supportingCopy: "Continue with \"Persistent Volumes\" to give the services now routed through ingress durable storage."
+  destinationUrl: "/blog/infrastructureengineering/09-persistent-volumes"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

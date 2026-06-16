@@ -26,6 +26,14 @@ A practical guide to the corpus-crawl Kubernetes Job — folder selection, monit
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## What the Crawler Does
@@ -253,6 +261,14 @@ scp user@<worker-ip>:/tmp/corpus_urls_crawl.jsonl <local-destination>
 
 This is the more durable path precisely because it survives the Job's lifecycle entirely — the PVC outlives the pod, and the pod is the only part of this with a 24-hour clock on it.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Failure Modes Reference
@@ -265,11 +281,45 @@ This is the more durable path precisely because it survives the Job's lifecycle 
 | `kubectl cp` fails on a finished pod | Pod already garbage-collected by the Job's TTL | Use the PVC host path instead |
 | Summary JSON missing | Job still running — summary is only written on completion | Wait for `1/1` completions, then re-check |
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Batch Workloads"
+supportingCopy: "Running one-shot Jobs alongside long-running services on your own cluster? Let's talk through the gotchas."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 A Kubernetes Job is the right shape for a script with a beginning and an end, but it behaves differently enough from a Deployment that the usual mental model — "if `kubectl get` doesn't find it, something's wrong" — actively misleads. The TTL that cleans up a finished Job is a feature, not a bug, but it means the output PVC, not the Job object, is the durable source of truth about whether a crawl happened and what it found. Combined with an immutable pod template that demands a delete-before-reapply dance for every folder change, the crawler is simple to run and easy to misread the status of — which is exactly why the output, not the Job, is what to check first.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: K3s on Raspberry Pis"
+  supportingCopy: "Start back at \"K3s on Raspberry Pis\" to revisit how this whole cluster — the one running this crawler — was built from the ground up."
+  destinationUrl: "/blog/infrastructureengineering/01-k3s-on-raspberry-pis"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -25,6 +25,14 @@ A practical recovery guide for when your K3s control plane gets a new IP — nod
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## The Cluster Before
@@ -198,6 +206,14 @@ The nodeSelector was also tightened from `kubernetes.io/arch: arm64` to `kuberne
 
 The redis pods in both the `default` and `redis` namespaces were Pending because they had been scheduled to `pi-node-redis`. Once that node reconnected to the control plane (after the `K3S_URL` update), the scheduler could reach the node again and the pods transitioned to Running without any manifest changes.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Key Lessons
@@ -228,11 +244,45 @@ kubectl exec -n postgres deploy/postgres-db -- pg_isready
 curl -s -o /dev/null -w "%{http_code}" http://192.168.1.219:30901
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cluster's Recovery Plan"
+supportingCopy: "Want a second pair of eyes on how your cluster handles node or network failures? Let's talk through the failure modes."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 A control plane IP change is a low-drama event if you know where to look. The k3s agent URL lives in a systemd environment file, updating it takes one `sed` and a service restart, and nodes rejoin within a minute. The harder part is the downstream cascade: stuck pods, orphaned PVCs, and hardcoded node selectors that were fine until the cluster had fewer healthy nodes. Fixing those is mostly manifest hygiene — and the incident is a useful prompt to audit which deployments have single-node dependencies you haven't thought about.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Deploying an App on the Rack"
+  supportingCopy: "Continue with \"Deploying an App on the Rack\" to see how a real application gets shipped onto this same recovered cluster."
+  destinationUrl: "/blog/infrastructureengineering/45-deploying-an-app-on-the-rack"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

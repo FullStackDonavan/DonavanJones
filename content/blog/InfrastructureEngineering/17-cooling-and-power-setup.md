@@ -24,6 +24,14 @@ This guide covers how I approached cooling and power distribution to keep the ra
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Cooling Strategy
@@ -52,6 +60,14 @@ I rely on system-level monitoring across nodes:
 - Alerts for sustained temperature spikes
 
 This ensures I catch thermal issues before they become stability problems in Kubernetes workloads.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -101,6 +117,14 @@ As I expand the system (adding more nodes, services, or AI workloads), I can:
 
 ---
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Rack's Power and Cooling"
+supportingCopy: "Planning cooling and power distribution for your own rack? Let's talk through the design."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 A homelab rack is an ecosystem, not just a stack of machines. Cooling and power design determine whether that ecosystem stays stable under load or collapses when workloads increase.
@@ -108,6 +132,32 @@ A homelab rack is an ecosystem, not just a stack of machines. Cooling and power 
 In my setup, separating compute tiers—low-power Kubernetes nodes on Raspberry Pis and high-power AI workloads on a dedicated GPU machine—makes everything more predictable and easier to manage. Combined with structured airflow, UPS-backed power, and monitoring, the system stays reliable even as I continue building out more services and experiments.
 
 The goal moving forward is simple: keep the infrastructure boring. If cooling and power are done right, everything else—AI agents, deployments, and experiments—can run freely on top of it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Cost vs Performance Tradeoffs"
+  supportingCopy: "Continue with \"Cost vs Performance Tradeoffs\" to see how these power and cooling choices weigh against raw performance."
+  destinationUrl: "/blog/infrastructureengineering/18-cost-vs-performance-tradeoffs"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

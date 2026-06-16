@@ -25,6 +25,14 @@ Cluster-wide metrics collection using Prometheus deployed as a native Kubernetes
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Why Run Prometheus Inside Kubernetes
@@ -238,6 +246,14 @@ up{instance="pi-worker-3", job="kubernetes-cadvisor"}             1
 
 A value of `0` means the target is unreachable. In my cluster, two nodes (`raspberrypi` and `pi-node-redis`) showed `0` — both had dropped off the cluster, which Prometheus surfaced immediately.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Useful Queries
@@ -259,11 +275,45 @@ Node-level CPU and memory queries require `node_exporter` running on each Pi:
 sudo apt install prometheus-node-exporter -y
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cluster's Observability"
+supportingCopy: "Setting up monitoring for your own Kubernetes cluster? Let's talk through the scrape config and RBAC."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 Prometheus running as a K3s pod gives full cluster visibility with minimal operational overhead. The RBAC setup lets it auto-discover every node and pod without manual target configuration. On ARM64 Pi hardware, the resource footprint at 30-second scrape intervals is well within what a single Pi node can sustain alongside other workloads.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Grafana on a Pi K3s Cluster"
+  supportingCopy: "Continue with \"Grafana on a Pi K3s Cluster\" to turn these Prometheus metrics into dashboards."
+  destinationUrl: "/blog/infrastructureengineering/42-grafana-on-pi-cluster"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

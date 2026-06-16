@@ -24,6 +24,14 @@ In my rack setup, storage is distributed across mounted external drives connecte
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Persistent Volume Architecture in My Cluster
@@ -111,6 +119,14 @@ Used for:
 
 This keeps the system lightweight while still giving me reliability where it matters.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -144,6 +160,14 @@ Persistent volumes are only part of the solution. In my rack, I treat backups as
 
 This ensures that even if a Raspberry Pi fails completely, the system can be rebuilt quickly.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Persistent Storage"
+supportingCopy: "Designing PVs and PVCs for your own stateful workloads? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Persistent volumes are the foundation that turns a Kubernetes homelab from a stateless experiment into a reliable infrastructure platform. In my Raspberry Pi–based rack, PVs allow me to run real workloads like Gitea, databases, and CI pipelines without worrying about node restarts or redeployments wiping data.
@@ -151,6 +175,32 @@ Persistent volumes are the foundation that turns a Kubernetes homelab from a sta
 By combining local SSD-backed storage, careful node scheduling, and a simple but effective backup strategy, I can maintain a lightweight yet resilient storage layer that fits the constraints of ARM64 hardware while still behaving like production-grade infrastructure.
 
 As the cluster grows, this storage layer becomes the backbone for everything else—CI/CD, AI services, and future distributed applications.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Monitoring and Troubleshooting"
+  supportingCopy: "Continue with \"Monitoring and Troubleshooting\" to keep an eye on these storage-backed workloads once they're running."
+  destinationUrl: "/blog/infrastructureengineering/10-monitoring-and-troubleshooting"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

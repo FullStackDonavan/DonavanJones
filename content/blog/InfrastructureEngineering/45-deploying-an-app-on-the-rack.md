@@ -26,6 +26,14 @@ A practical guide to CI/CD deployment over SSH to a bare-metal ARM64 machine usi
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Why Not Kubernetes for This?
@@ -294,6 +302,14 @@ Logs are written to `$DEPLOY_PATH/bibleverse.log` and can be tailed over SSH:
 ssh user@host "tail -f /path/to/bibleverse.log"
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Failure Modes Reference
@@ -306,11 +322,45 @@ ssh user@host "tail -f /path/to/bibleverse.log"
 | App not reachable after successful deploy | Old process still holding port | Check `ss -tlnp`; add `sleep 2` after pkill |
 | nohup process disappears after SSH closes | Not disowned from session | Add `disown` after `&` |
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Deployment Pipeline"
+supportingCopy: "Shipping an app to bare metal without Docker or Kubernetes? Let's talk through the SSH-based pipeline."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 Deploying a Node.js app to a bare-metal ARM64 machine over SSH is achievable with nothing but standard shell tools — no Docker, no Kubernetes, no external CI services. The main challenges are shell quoting across SSH boundaries, Prisma's ARM64 engine quirks, and the subtle ways that `pkill -f` and `nohup` interact with the SSH session lifecycle. Once those are understood, the pipeline is simple, fast, and fully observable from Gitea's built-in CI log view.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: How One Node Label Broke Every LoadBalancer Service in My K3s Cluster"
+  supportingCopy: "Continue with this incident report to see how a single node label took down every LoadBalancer service in the same cluster."
+  destinationUrl: "/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -22,6 +22,14 @@ What began as a few machines running locally has grown into a structured rack-ba
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## The Problem I Was Trying to Solve
 
 Before the homelab, I was constantly hitting the same walls:
@@ -61,6 +69,14 @@ Every time I push code:
 This setup turned my homelab into something closer to a real production environment. It also forces me to think in terms of infrastructure-as-code, repeatability, and reliability.
 
 It’s not just a dev environment anymore — it’s a full lifecycle system.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -109,6 +125,14 @@ Building this homelab has taught me more than any course or tutorial could:
 
 It also made me realize how much complexity exists under modern “simple” apps.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Reasons For Self-Hosting"
+supportingCopy: "Weighing whether to build your own homelab instead of renting cloud infrastructure? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 This homelab is not just a technical setup — it’s the foundation of how I build everything now.
@@ -118,6 +142,32 @@ It gives me a controlled environment to experiment, fail, and iterate quickly wh
 More importantly, it represents independence. Instead of renting infrastructure, I’m building it. Instead of being limited by platforms, I’m designing my own.
 
 And as my Bible app, AI systems, and game ecosystem grow, this homelab grows with them — not as a support tool, but as the backbone of everything.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Why Lightweight Kubernetes Matters"
+  supportingCopy: "Continue with \"Why Lightweight Kubernetes Matters\" to see why K3s specifically was the right fit for this homelab."
+  destinationUrl: "/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

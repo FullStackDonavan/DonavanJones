@@ -22,6 +22,14 @@ The real challenge isn’t just raw performance—it’s deciding where performa
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## The Core Tradeoff: Cost vs Performance
 
 At the heart of my setup is a clear split:
@@ -72,6 +80,14 @@ A distributed homelab introduces:
 
 This is where tools like Kubernetes and Gitea runners become essential—they reduce mental overhead even if they add system overhead.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -88,11 +104,45 @@ The biggest realization is that optimization is not about minimizing cost everyw
 
 My rack works because each layer has a clear purpose instead of trying to make every node do everything.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cost/Performance Balance"
+supportingCopy: "Figuring out where to spend on performance and where to save on your own rack? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 The real tradeoff in homelab design isn’t just cost versus performance—it’s simplicity versus flexibility. My setup leans into both extremes: inexpensive distributed nodes for resilience and experimentation, and a high-performance GPU machine for heavy workloads that actually need power.
 
 Over time, I’ve found that the goal isn’t to eliminate tradeoffs, but to understand them well enough that every piece of the system earns its place. In a way, the rack is less about hardware and more about intentional design—knowing exactly what should be cheap, what should be fast, and what should stay simple.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: DNS and Service Discovery"
+  supportingCopy: "Continue with \"DNS and Service Discovery\" to see how these cost-optimized nodes find and talk to each other."
+  destinationUrl: "/blog/infrastructureengineering/19-dns-and-service-discovery"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -24,6 +24,14 @@ This article breaks down why self-hosting Git fits into that architecture and wh
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Why Self-Hosted Git Matters in a Homelab
@@ -101,6 +109,14 @@ Self-hosting Git enables experimentation that would be harder on SaaS platforms,
 
 This turns Git from a storage system into an active part of the infrastructure runtime.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -117,6 +133,14 @@ In my current setup:
 
 Git sits at the center of this system, acting as the coordination layer between code, infrastructure, and deployment.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your CI/CD Setup"
+supportingCopy: "Considering self-hosting Git instead of relying on SaaS platforms? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -126,6 +150,32 @@ Self-hosting Git in my homelab isn’t about replacing GitHub—it’s about bui
 By integrating Git directly into my K3s cluster, I gain tighter control, better security, and a development workflow that mirrors production infrastructure. More importantly, it allows me to treat my homelab as a fully integrated system rather than a collection of disconnected tools.
 
 As my rack continues to evolve, self-hosted Git remains one of the foundational pieces that everything else builds on.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Prometheus on a Pi K3s Cluster"
+  supportingCopy: "Continue with \"Prometheus on a Pi K3s Cluster\" to see how monitoring fits into this same self-hosted, version-controlled infrastructure."
+  destinationUrl: "/blog/infrastructureengineering/41-prometheus-on-pi-cluster"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

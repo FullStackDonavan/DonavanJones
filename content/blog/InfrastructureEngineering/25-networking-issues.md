@@ -24,6 +24,14 @@ This article covers the most common networking issues I’ve run into (and seen 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 # Common Networking Issues in Kubernetes
@@ -91,6 +99,14 @@ kubectl describe svc <service-name>
 ```
 
 If you're running a Pi-based rack, make sure your switch and router are not isolating VLANs unintentionally.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -167,6 +183,14 @@ In my homelab rack (K3s cluster + CI runners + Gitea + AI containers), I always 
 
 This prevents wasting time debugging Kubernetes when the issue is actually physical networking.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Networking Problems"
+supportingCopy: "Chasing down flaky pod networking or DNS failures in your own cluster? Let's talk through the debugging approach."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Networking issues in Kubernetes are rarely caused by a single point of failure—they are usually a chain reaction between cluster configuration, CNI behavior, and underlying physical infrastructure. In a homelab rack environment like a Raspberry Pi K3s cluster, these issues become even more visible due to hardware limitations and simpler networking hardware.
@@ -174,6 +198,32 @@ Networking issues in Kubernetes are rarely caused by a single point of failure�
 The key takeaway is to always separate the problem into layers: physical network, node network, pod network, and service network. Once you consistently debug in that order, most issues become much easier to isolate and fix.
 
 As your rack grows—with CI/CD runners, Gitea, AI workloads, and additional services—the networking layer becomes the most critical part of the entire system. Keeping it clean and predictable will save you a lot of time long-term.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Networking (Skill)"
+  supportingCopy: "Continue with \"Networking (Skill)\" for a deeper look at the fundamentals behind these debugging steps."
+  destinationUrl: "/blog/infrastructureengineering/26-networking-skill"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

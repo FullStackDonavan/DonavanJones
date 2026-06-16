@@ -22,6 +22,14 @@ My current setup reflects this philosophy. I run a homelab rack powered by a K3s
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Core Principles
@@ -82,6 +90,14 @@ At a high level, my infrastructure looks like this:
 
 This setup allows me to simulate real-world distributed systems while still maintaining full control locally.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -112,6 +128,14 @@ Instead of scaling vertically, I scale horizontally through:
 
 This allows the system to grow organically without requiring a full redesign.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Infrastructure Design"
+supportingCopy: "Designing a homelab or self-hosted platform around production-grade principles? Let's talk through the approach."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -119,6 +143,32 @@ This allows the system to grow organically without requiring a full redesign.
 This infrastructure is designed to behave like a small production cloud, but fully controlled in a homelab environment. The combination of a K3s cluster, a GPU-powered development machine, and a CI/CD-driven workflow creates a system where experimentation and production engineering coexist.
 
 The real value is not in the hardware itself, but in the workflow it enables: rapid iteration, safe deployment, and the ability to treat infrastructure as code rather than manual setup. As the system grows, the goal remains the same—keep it modular, automated, and close to real-world production standards while still flexible enough for experimentation.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Installing Gitea in Kubernetes"
+  supportingCopy: "Continue with \"Installing Gitea in Kubernetes\" to see the CI/CD glue layer deployed inside this design."
+  destinationUrl: "/blog/infrastructureengineering/23-installing-gitea-in-kubernetes"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

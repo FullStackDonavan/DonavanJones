@@ -22,6 +22,14 @@ Rather than treating troubleshooting as reactive “fixing,” it has become a s
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Building Troubleshooting as a Core Skill
@@ -77,6 +85,14 @@ Over time, I developed a consistent workflow:
 
 This structured approach reduced downtime and made debugging significantly faster across the entire stack.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -95,6 +111,14 @@ Some of the most important lessons came from repeated failures:
 
 These lessons became more important as the system scaled.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Troubleshooting Workflow"
+supportingCopy: "Building a systematic debugging process for your own cluster or rack? Let's talk through the approach."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -102,6 +126,32 @@ These lessons became more important as the system scaled.
 Troubleshooting in a homelab environment is not just about fixing broken services—it is about understanding systems deeply enough to predict failure points before they happen. Working through issues in my K3s cluster, Gitea pipelines, and GPU-based development machine has turned debugging into a core engineering skill rather than a reactive task.
 
 As the infrastructure continues to grow, especially with more services and automation layers being added, this troubleshooting foundation becomes essential for maintaining stability, scalability, and confidence in the system as a whole.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Why I Built a Homelab"
+  supportingCopy: "Continue with \"Why I Built a Homelab\" to see the motivation behind all of these troubleshooting lessons."
+  destinationUrl: "/blog/infrastructureengineering/37-why-i-built-a-homelab"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

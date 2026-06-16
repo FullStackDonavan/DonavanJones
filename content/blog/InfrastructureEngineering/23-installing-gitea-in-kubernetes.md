@@ -23,6 +23,14 @@ This guide walks through installing Gitea in Kubernetes with a clean, repeatable
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Prerequisites
 
 Before you begin, make sure you have:
@@ -136,6 +144,14 @@ spec:
                   number: 3000
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -173,9 +189,43 @@ kubectl create namespace gitea
 
 Always make sure every code block starts and ends cleanly, especially when mixing Bash, YAML, and long rendered articles. This matters even more when copy/pasting into editors or when a UI splits the response across sections.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Git Hosting Setup"
+supportingCopy: "Self-hosting Gitea or another Git service inside your own cluster? Let's talk through the deployment."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Installing Gitea in Kubernetes is a solid fit for a homelab rack because it keeps source control, automation, and deployment workflows close together. With a namespace, persistent storage, a deployment, a service, and optional ingress, you can stand up a reliable self-hosted Git platform that supports your CI/CD pipeline and grows with the rest of your cluster. The key is keeping the Markdown clean, the YAML valid, and every code fence properly closed so the document renders correctly from start to finish.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Network Topology"
+  supportingCopy: "Continue with \"Network Topology\" to see how traffic reaches services like Gitea across the cluster."
+  destinationUrl: "/blog/infrastructureengineering/24-network-topology"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

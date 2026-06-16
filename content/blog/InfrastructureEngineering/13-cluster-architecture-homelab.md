@@ -21,6 +21,14 @@ The rack combines ARM nodes, self-hosted services, storage, networking, and GPU-
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 How my homelab Kubernetes cluster is architected.
 
 ## Overview
@@ -82,6 +90,14 @@ This system is used for:
 - Retrieval pipelines
 
 Long term, the plan is to integrate the GPU machine more tightly into the cluster for shared orchestration and scheduling.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -239,11 +255,45 @@ Planned improvements include:
 - Edge AI workloads
 - Multi-cluster experimentation
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cluster Architecture"
+supportingCopy: "Designing a homelab cluster that mirrors production systems? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 This homelab has become more than just a place to host applications — it functions as an active research and engineering environment where I can develop real-world skills across infrastructure, AI engineering, Kubernetes, distributed systems, and backend development.
 
 By combining self-hosted services, GPU-powered AI workloads, and automated deployment pipelines into a unified rack setup, the cluster gives me the flexibility to rapidly prototype ideas while learning how modern production systems are designed and operated at scale.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Cluster Topology"
+  supportingCopy: "Continue with \"Cluster Topology\" for a closer look at how nodes and roles are laid out across this architecture."
+  destinationUrl: "/blog/infrastructureengineering/14-cluster-topology"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

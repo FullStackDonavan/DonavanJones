@@ -26,6 +26,14 @@ Cluster-wide log aggregation on ARM64 using Loki for storage and Promtail as a n
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Architecture
@@ -243,6 +251,14 @@ kubectl logs -n loki daemonset/promtail
 
 A healthy deployment shows Loki `1/1` and all Promtail pods (one per node) `1/1`.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Querying Logs in Grafana
@@ -266,6 +282,14 @@ In Grafana → Explore → Loki:
 {namespace="loki"} |~ "(?i)error|warn"
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Log Pipeline"
+supportingCopy: "Debugging DaemonSet permissions or scrape configs for your own logging stack? Let's talk through it."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -273,6 +297,32 @@ In Grafana → Explore → Loki:
 Loki and Promtail on k3s works well once two issues are resolved: the control plane toleration so every node gets a Promtail pod, and the `privileged: true` security context so Promtail can actually read from `/var/log/pods/`. The static glob scrape config is simpler and more reliable than the kubernetes SD path-building approach for this version of Promtail on k3s.
 
 With all three components running — Prometheus, Loki, and Grafana — the cluster has full observability: metrics and logs from every pod on every node queryable from a single Grafana instance.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Recovering a K3s Cluster After a Control Plane IP Change"
+  supportingCopy: "Continue with \"Recovering a K3s Cluster After a Control Plane IP Change\" to see how this same cluster was brought back after a networking failure."
+  destinationUrl: "/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

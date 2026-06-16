@@ -25,6 +25,14 @@ This setup focuses on balancing simplicity and practicality while leaving room f
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Storage Goals
@@ -79,6 +87,14 @@ Typical path on nodes:
 
 
 This approach keeps everything lightweight and avoids needing external storage systems like NFS or Ceph.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -174,11 +190,45 @@ A few key lessons from running this setup:
 - Backups matter more than redundancy at small scale
 - Simplicity beats overengineering in early homelab stages
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Storage Strategy"
+supportingCopy: "Designing persistent storage for your own bare-metal cluster? Let's talk through the architecture."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 This storage setup is intentionally lightweight, reflecting the constraints and goals of a Raspberry Pi–based K3s homelab. Instead of introducing heavy distributed storage systems too early, the focus is on clarity, maintainability, and integration with real workloads like my Bible app, CI/CD pipelines, and AI services running across my rack.
 
 As the system evolves, this foundation allows me to layer in more advanced storage solutions without needing to redesign everything from scratch. For now, local-path storage combined with disciplined backups provides a stable and practical base for development and experimentation.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Ingress Setup"
+  supportingCopy: "Continue with \"Ingress Setup\" to expose these storage-backed workloads to traffic outside the cluster."
+  destinationUrl: "/blog/infrastructureengineering/08-ingress-setup"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

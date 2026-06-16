@@ -24,6 +24,14 @@ Lightweight Kubernetes is not just about saving resources. It’s about enabling
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 # What Makes Kubernetes “Lightweight”?
@@ -83,6 +91,14 @@ Logs and internal architecture may differ slightly from upstream Kubernetes, whi
 ### 4. Not Always Production Parity
 While stable, lightweight distributions may not perfectly mirror large-scale production Kubernetes environments used by cloud providers.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -119,6 +135,14 @@ There are situations where full Kubernetes or even non-Kubernetes setups are bet
 
 For your use case (homelab + development + learning), K3s is actually closer to optimal than full Kubernetes.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Kubernetes Distribution Choice"
+supportingCopy: "Deciding between K3s, full Kubernetes, or something else for your own rack? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 # Conclusion
@@ -128,6 +152,32 @@ Lightweight Kubernetes matters because it lowers the barrier between learning in
 In your case, it becomes more than just a cluster—it becomes the backbone of your entire development ecosystem. From CI/CD automation with Gitea to deploying services for your Bible app and experimenting with AI workloads, K3s gives you the structure needed to scale ideas without waiting for enterprise hardware.
 
 The real advantage is not just efficiency—it’s control. You’re building a system where every layer is intentional, observable, and yours to evolve.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Why Local AI Matters"
+  supportingCopy: "Continue with \"Why Local AI Matters\" to see why running models locally pairs so well with this lightweight Kubernetes setup."
+  destinationUrl: "/blog/infrastructureengineering/39-why-local-ai-matters"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

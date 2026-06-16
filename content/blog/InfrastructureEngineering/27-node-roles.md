@@ -22,6 +22,14 @@ This structure becomes especially important in a homelab setting where hardware 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Control Plane Nodes
@@ -52,6 +60,14 @@ In my homelab rack, worker nodes handle:
 Because my setup is ARM64-based across Raspberry Pi devices, workload efficiency is important. I often tune resource limits and requests carefully so multiple services can coexist without starving the node.
 
 Worker nodes are also the most scalable part of the system—adding a new Raspberry Pi to the rack immediately increases compute capacity without changing cluster architecture.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -84,6 +100,14 @@ Inside my Raspberry Pi rack, node roles are physically and logically distributed
 
 This design is what allows my homelab to support a mix of infrastructure, AI engineering, and application development without collapsing under complexity.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Node Layout"
+supportingCopy: "Deciding how to split control plane, worker, and specialized roles on your own cluster? Let's talk through the design."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -91,6 +115,32 @@ This design is what allows my homelab to support a mix of infrastructure, AI eng
 Node roles are the foundation that make a Kubernetes cluster understandable and maintainable, especially in a constrained homelab environment. In my Raspberry Pi rack, this separation transforms a collection of small devices into a structured, cloud-like system where each node has a purpose.
 
 By clearly defining control plane, worker, and specialized nodes, I can scale individual parts of the system independently, improve reliability, and keep workloads isolated. As the cluster grows—whether through new services, AI workloads, or CI/CD expansion—these roles ensure the architecture remains clean, predictable, and easy to evolve.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Physical Organization"
+  supportingCopy: "Continue with \"Physical Organization\" to see how these node roles map onto the physical layout of the rack."
+  destinationUrl: "/blog/infrastructureengineering/28-physical-organization"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

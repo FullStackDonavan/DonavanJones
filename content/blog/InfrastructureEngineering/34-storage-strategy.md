@@ -22,6 +22,14 @@ My goal is to create a storage strategy that supports multiple workloads: Kubern
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Core Principles
@@ -110,6 +118,14 @@ It handles:
 
 This prevents the Kubernetes cluster from being overloaded with workloads it was not designed to handle.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -158,6 +174,14 @@ As the rack grows, the storage strategy evolves toward:
 
 This ensures I don’t need to redesign the system as complexity increases.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Storage Strategy"
+supportingCopy: "Planning persistent storage and backups for your own homelab cluster? Let's talk through the tiers."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -165,6 +189,32 @@ This ensures I don’t need to redesign the system as complexity increases.
 This storage strategy is designed around the reality of a hybrid homelab: lightweight Kubernetes nodes, a powerful GPU development machine, and distributed storage rather than enterprise SAN hardware. By separating ephemeral and persistent workloads, leveraging network-based storage for shared data, and using the dev machine as a performance tier, the system stays both flexible and resilient.
 
 The end goal is not just storage that works today, but a foundation that can scale with my infrastructure—from a Raspberry Pi cluster into a full multi-node AI and application platform powering my Bible app, CI/CD pipelines, and future services.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Systems Thinking"
+  supportingCopy: "Continue with \"Systems Thinking\" to see the broader mental model behind decisions like this storage strategy."
+  destinationUrl: "/blog/infrastructureengineering/35-systems-thinking"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

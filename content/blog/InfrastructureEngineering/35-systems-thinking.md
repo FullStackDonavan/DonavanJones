@@ -22,6 +22,14 @@ This mindset shift is what systems thinking is about: designing not just for fun
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ## Understanding Infrastructure as a System
 
 My homelab evolved from a simple cluster into a multi-layered system:
@@ -73,6 +81,14 @@ Examples include:
 
 This approach keeps the system flexible. Each new addition strengthens the ecosystem rather than complicating it.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -92,11 +108,45 @@ Logs, metrics, and deployment feedback loops across my cluster help me understan
 
 Without observability, the system becomes guesswork. With it, the system becomes readable.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your System's Failure Modes"
+supportingCopy: "Thinking through feedback loops and failure domains in your own infrastructure? Let's talk through the design."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Systems thinking has completely changed how I approach infrastructure. My homelab is no longer a collection of tools—it is a living architecture where every decision has downstream effects. The Raspberry Pi cluster, the GPU development machine, Gitea, CI/CD pipelines, and my application stack all function as interconnected parts of a larger system rather than isolated projects.
 
 The goal is no longer just to “deploy things,” but to design a system that can evolve, fail safely, and scale through composition. That shift—from tools to systems—is what makes the difference between a fragile setup and a resilient one.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Troubleshooting (Skill)"
+  supportingCopy: "Continue with \"Troubleshooting (Skill)\" to see how this systems mindset translates into hands-on debugging."
+  destinationUrl: "/blog/infrastructureengineering/36-troubleshooting-skill"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

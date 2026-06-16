@@ -18,6 +18,14 @@ Building infrastructure at home does not always require enterprise servers, expe
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 How I use consumer hardware in my homelab.
 
 ## Why Consumer Hardware
@@ -80,6 +88,14 @@ My GPU machine is currently used for:
 
 Using consumer GPUs allows me to prototype AI systems locally before moving workloads to cloud infrastructure.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -107,9 +123,43 @@ One of the biggest benefits of using consumer hardware is gaining hands-on exper
 
 Building infrastructure this way also makes experimentation easier. I can break things, rebuild systems, test deployments, and learn operational workflows without risking production environments.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Hardware Choices"
+supportingCopy: "Weighing consumer vs. enterprise hardware for your own cluster? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ## Conclusion
 
 Consumer hardware has become powerful enough to support serious development, infrastructure engineering, and AI experimentation. My rack demonstrates that you can build practical Kubernetes clusters, AI pipelines, self-hosted platforms, and distributed systems using affordable components and incremental upgrades over time. While enterprise hardware still has advantages in reliability and scalability, consumer systems provide an accessible path into modern infrastructure engineering, especially for developers building homelabs, learning DevOps, or experimenting with AI workloads locally.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Control Plane Taints"
+  supportingCopy: "Continue with \"Control Plane Taints\" to see how scheduling is controlled once these consumer nodes are clustered together."
+  destinationUrl: "/blog/infrastructureengineering/16-control-plane-taints"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -23,6 +23,14 @@ In your setup specifically—where you’re running a multi-node Raspberry Pi cl
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Understanding the Power Spectrum in a Homelab
@@ -73,6 +81,14 @@ Your current hybrid model is effectively the optimal compromise:
 - Pi cluster = distributed control plane + microservices
 - GPU machine = centralized compute accelerator
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -118,6 +134,14 @@ Consider tracking:
 
 Even simple tools like smart plugs or inline power meters can give you enough data to make meaningful optimization decisions.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Power Budget"
+supportingCopy: "Balancing low-power nodes against high-draw GPU compute in your own rack? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -127,6 +151,32 @@ Power consumption in a homelab is not just a cost issue—it’s an architectura
 The real optimization comes from refinement: deciding what truly needs to be always-on, what can be scheduled, and what should only exist on demand. As your infrastructure grows—especially with CI/CD pipelines, AI workloads, and service orchestration—your ability to consciously allocate power will directly determine both performance efficiency and long-term scalability.
 
 A well-designed homelab isn’t just powerful. It’s intentionally powered.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Rack Overview"
+  supportingCopy: "Continue with \"Rack Overview\" for a full walkthrough of the hardware these power tradeoffs are based on."
+  destinationUrl: "/blog/infrastructureengineering/31-rack-overview"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

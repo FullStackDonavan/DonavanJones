@@ -22,6 +22,14 @@ Local AI changes the way you think about systems design. Instead of treating AI 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Full Control Over Your Stack
@@ -56,6 +64,14 @@ This makes it possible to iterate quickly on things like:
 - Game logic or narrative systems that use offline inference
 
 My Raspberry Pi K3s cluster handles orchestration, while the GPU box handles compute-heavy tasks. That separation mirrors real production architectures, but in a fully controllable lab environment.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
 
 ---
 
@@ -97,6 +113,14 @@ Local AI isn’t perfect. You sacrifice convenience, and you take on operational
 
 But in exchange, you gain ownership and flexibility. For me, that tradeoff is worth it because I’m not just using AI—I’m building systems around it.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Local AI Setup"
+supportingCopy: "Weighing local inference against cloud APIs for your own project? Let's talk through the tradeoffs."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -104,6 +128,32 @@ But in exchange, you gain ownership and flexibility. For me, that tradeoff is wo
 Local AI shifts your mindset from “using AI tools” to “building AI infrastructure.” In my homelab, the combination of a Raspberry Pi K3s cluster and a GPU-powered development machine creates a full ecosystem where I can design, deploy, and iterate on AI systems end-to-end.
 
 It’s not just about independence from cloud providers—it’s about learning how these systems actually work under the hood. And once you start thinking in terms of infrastructure instead of APIs, you stop being just a user of AI and start becoming an architect of it.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Why Self-Hosted Git"
+  supportingCopy: "Continue with \"Why Self-Hosted Git\" to see why Gitea runs inside this same homelab instead of relying on a third-party platform."
+  destinationUrl: "/blog/infrastructureengineering/40-why-self-hosted-git"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

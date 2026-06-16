@@ -26,6 +26,14 @@ A diagnosis of K3s's ServiceLB (klipper-lb) selector behavior, and why an "exclu
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## The Setup
@@ -182,6 +190,14 @@ svclb-watchman-9d8f531a             4         4         4
 
 Four nodes, four ready pods per service, across the board. External IPs reassigned themselves automatically, `192.168.1.219:8021` started accepting connections again, and audio and image generation on the live site recovered without touching a single application deployment.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Key Lessons
@@ -211,11 +227,45 @@ kubectl get svc -A | grep LoadBalancer
 nc -zv 192.168.1.219 8021
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Cluster's Edge Cases"
+supportingCopy: "Tracked down a strange Kubernetes networking incident of your own? Let's talk through the diagnosis."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 The cluster never stopped being "healthy" by the metrics that usually matter — pods Running, restarts at zero, CPU and memory nominal. The failure lived one layer further out, in a controller-managed DaemonSet selector that a single, well-intentioned node label had quietly rewritten for every LoadBalancer service in the cluster. The lesson isn't to avoid `enablelb=false` — it's to remember that in K3s, opting one node *out* of ServiceLB means everything else now needs to be opted *in* explicitly, and to check the DaemonSets, not just the pods, when a Service that used to work suddenly doesn't.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Running the Corpus Crawler on the Pi Rack"
+  supportingCopy: "Continue with \"Running the Corpus Crawler on the Pi Rack\" to see another real workload running on this same cluster."
+  destinationUrl: "/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

@@ -22,6 +22,14 @@ My setup is intentionally split across multiple layers: lightweight services run
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Core Principle: Right Workload, Right Environment
@@ -81,6 +89,14 @@ This creates a clean separation between writing code and deploying systems. I do
 
 This is also where infrastructure-as-code becomes powerful. My cluster state is reproducible through manifests, Helm charts, and deployment scripts.
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 *Explore more articles in the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
@@ -124,6 +140,14 @@ The biggest advantage of this separation strategy is predictability. Each layer 
 
 When something breaks, I immediately know where to look. If a service is slow, it's likely cluster resource pressure. If AI tasks lag, it's the GPU machine. If deployment fails, it's CI/CD.
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Workload Boundaries"
+supportingCopy: "Deciding how to isolate services, CI/CD, and GPU compute on your own infrastructure? Let's talk through the boundaries."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
@@ -133,6 +157,32 @@ Separating workloads in a homelab is not just about organization—it is about c
 Over time, this architecture also makes it easier to scale horizontally. New services can be added to the cluster without touching compute workloads, and new AI experiments can run on the GPU machine without risking production uptime.
 
 The result is a system that behaves like a small-scale production environment, but still remains flexible enough for rapid development and learning.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Storage Strategy"
+  supportingCopy: "Continue with \"Storage Strategy\" to see how data boundaries are handled across these separated workloads."
+  destinationUrl: "/blog/infrastructureengineering/34-storage-strategy"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 

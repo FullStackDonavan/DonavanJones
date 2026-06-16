@@ -26,6 +26,14 @@ Unified metrics and log dashboards for the Pi K3s cluster, deployed as a native 
 
 *Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every infrastructure engineering breakdown in this series."
+destinationUrl: "/categories/infrastructure-engineering"
+---
+::
+
 ---
 
 ## Prerequisites
@@ -235,6 +243,14 @@ increase(kube_pod_container_status_restarts_total[1h])
 {pod=~"scholar.*"}
 ```
 
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production infrastructure it was built for."
+destinationUrl: "/systems/infrastructure"
+---
+::
+
 ---
 
 ## Updating Datasources
@@ -246,11 +262,45 @@ kubectl apply -f grafana-datasource-configmap.yaml
 kubectl rollout restart deployment/grafana -n grafana
 ```
 
+::CtaContactWork
+---
+buttonText: "Let's Talk About Your Observability Stack"
+supportingCopy: "Wiring up Grafana, Prometheus, and Loki for your own cluster? Let's talk through the provisioning setup."
+destinationUrl: "/hire-me"
+---
+::
+
 ---
 
 ## Conclusion
 
 Grafana on K3s with provisioned datasources means the full observability UI is ready the moment the pod starts — no clicking through setup wizards. Combined with Prometheus for metrics and Loki for logs, it gives a complete picture of cluster health from a single browser tab.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The Pi Cluster Blueprint"
+  supportingCopy: "Get the Raspberry Pi AI Cluster Blueprint — hardware list, network diagram, node roles, folder structures, Kubernetes manifests, and a troubleshooting checklist ($19)."
+  destinationUrl: "/products/raspberry-pi-ai-cluster-blueprint"
+  price: "$19"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Loki and Promtail on a Pi K3s Cluster"
+  supportingCopy: "Continue with \"Loki and Promtail on a Pi K3s Cluster\" to see how the log datasource feeding this Grafana setup is deployed."
+  destinationUrl: "/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new infrastructure engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 
