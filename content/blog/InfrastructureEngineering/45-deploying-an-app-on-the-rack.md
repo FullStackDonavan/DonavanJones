@@ -1,8 +1,8 @@
 ---
 title: "Deploying an App on the Rack"
 description: "How I deploy a full-stack Node.js application to a bare-metal ARM64 machine using Gitea Actions, SSH, and nohup — without Docker, without Kubernetes, and without pm2."
-date: 2026-06-14
-lastUpdated: "2026-07-28"
+date: 2026-07-18
+lastUpdated: "2026-07-18"
 category: "infrastructure-engineering"
 tags:
   - gitea

@@ -1,8 +1,8 @@
 ---
 title: "Loki and Promtail on a Pi K3s Cluster"
 description: "Deploying Loki for log aggregation and Promtail as a DaemonSet on an ARM64 Raspberry Pi k3s cluster — including the troubleshooting steps needed to get pod log collection working."
-date: 2026-06-13
-lastUpdated: "2026-06-30"
+date: 2026-07-03
+lastUpdated: "2026-07-03"
 category: "infrastructure-engineering"
 tags:
   - loki

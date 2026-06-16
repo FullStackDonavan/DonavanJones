@@ -2,7 +2,7 @@
 title: "Recovering a K3s Cluster After a Control Plane IP Change"
 description: "What breaks when your K3s control plane gets a new IP address — and the exact steps to reconnect worker nodes, fix pending pods, and restore persistent storage services."
 date: 2026-07-14
-lastUpdated: "2026-06-14"
+lastUpdated: "2026-07-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
