@@ -64,7 +64,7 @@ onMounted(() => {
               </div>
               <NuxtLink
                 v-if="doc.category"
-                :to="{ path: `/categories/${doc.category}`, query: { from: route.fullPath } }"
+                :to="`/categories/${doc.category}`"
                 class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
               >
                 {{ doc.category }} →
@@ -128,7 +128,7 @@ onMounted(() => {
                 <NuxtLink
                   v-for="tag in doc.tags"
                   :key="tag"
-                  :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                  :to="`/tags/${tag}`"
                   class="text-[11px] px-2 py-0.5 rounded border
                          bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300
                          border-slate-200 dark:border-slate-700/50

@@ -62,7 +62,7 @@ function truncate(text: string, max = 110) {
       <NuxtLink
         v-for="article in articles"
         :key="article._path"
-        :to="{ path: article._path, query: { from: currentPath } }"
+        :to="article._path"
         class="group flex flex-col rounded-2xl overflow-hidden
                border border-slate-200 dark:border-slate-700/50
                bg-white dark:bg-slate-900/60

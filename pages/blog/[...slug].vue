@@ -210,7 +210,7 @@ function isoDate(d: string | undefined) {
                 </div>
                 <NuxtLink
                   v-if="seoDoc.category"
-                  :to="{ path: `/categories/${seoDoc.category}`, query: { from: route.fullPath } }"
+                  :to="`/categories/${seoDoc.category}`"
                   class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
                 >
                   {{ seoDoc.category }} →
@@ -257,7 +257,7 @@ function isoDate(d: string | undefined) {
                   <NuxtLink
                     v-for="(tag, index) in seoDoc.tags"
                     :key="index"
-                    :to="{ path: `/tags/${tag}`, query: { from: route.fullPath } }"
+                    :to="`/tags/${tag}`"
                     class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400"
                   >
                     #{{ tag }}

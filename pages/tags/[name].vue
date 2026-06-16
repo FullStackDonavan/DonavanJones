@@ -133,7 +133,7 @@ function formatDate(dateStr: string): string {
             <NuxtLink
               v-for="(article, index) in articles"
               :key="index"
-              :to="{ path: article._path, query: { from: route.fullPath } }"
+              :to="article._path"
               class="group flex flex-col rounded-2xl overflow-hidden
                      border border-slate-200 dark:border-slate-700/50
                      bg-white dark:bg-slate-900/60
