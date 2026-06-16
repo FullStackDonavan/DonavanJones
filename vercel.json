@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.donavanjones.com"
+        }
+      ],
+      "destination": "https://donavanjones.com/$1",
+      "permanent": true
+    }
+  ]
+}
