@@ -23,6 +23,14 @@ This article covers the architecture of persistent memory in AI agent systems �
 
 *Part of the [AI Engineering series](/categories/ai-engineering).*
 
+::CtaCategoryPillar
+---
+buttonText: "Browse More Like This"
+supportingCopy: "See every ai engineering deep-dive in this series."
+destinationUrl: "/categories/ai-engineering"
+---
+::
+
 ## The Core Problem: Context Window Limits
 
 A language model processes everything it knows about the current situation from its context window — the text passed in with each request. Context windows have grown large (100K–1M tokens in recent models), but they are still finite, and filling them entirely on every request is expensive.
@@ -91,6 +99,14 @@ Each memory type has different storage requirements:
 **Procedural storage** is a simple key-value structure. Keys like `response_style`, `explanation_depth`, `preferred_translation` map to learned values. These are updated slowly through explicit feedback and inferred behavioral patterns.
 
 **Working memory** lives in Redis as a session-scoped list. The current session's conversation turns are pushed to the list as they happen. When the list exceeds a token threshold, the oldest turns are summarized and the summary replaces them, keeping the list within bounds.
+
+::CtaSystemArchitecture
+---
+buttonText: "See The Full System"
+supportingCopy: "See how this fits into the production ai engineering system it was built for."
+destinationUrl: "/systems/ai"
+---
+::
 
 ---
 
@@ -168,6 +184,14 @@ Current session:
 
 This memory context replaces what would otherwise be a cold start. The model now knows who it is talking to before the first token of response is generated.
 
+::CtaTryApp
+---
+buttonText: "Try The Live AI App"
+supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
+destinationUrl: "https://bibleverse.donavanjones.com/register"
+---
+::
+
 ## Memory Decay and Relevance Weighting
 
 Not all memories should carry equal weight forever. A user's theological questions from two years ago may no longer reflect where they are. Study interests shift. Knowledge grows. An agent that relies too heavily on old memories gives responses calibrated for who the user was, not who they are.
@@ -211,6 +235,32 @@ With memory: "Romans 8:28 builds directly on the tension you were exploring last
 The second response is only possible because the system knows this user: their current study context, their prior questions, their interest in Greek. It is not a better generic answer — it is a specifically appropriate answer for this person at this point in their study.
 
 That specificity is what persistent memory makes possible. It is what makes an AI tool feel less like a search engine and more like a companion who has been paying attention.
+
+::CtaCardRow
+  :::CtaDownloadGuide
+  ---
+  buttonText: "Get The AI Starter Kit"
+  supportingCopy: "Get the Self-Hosted AI Starter Kit — Ollama setup, RAG architecture diagrams, embedding pipeline templates, and FastAPI examples ($29)."
+  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  price: "$29"
+  ---
+  :::
+
+  :::CtaRelatedArticle
+  ---
+  buttonText: "Read: Vector Databases"
+  supportingCopy: "Continue with \"Vector Databases\" for the next piece of this system."
+  destinationUrl: "/blog/ai-engineering/02-vector-databases"
+  ---
+  :::
+
+  :::CtaNewsletter
+  ---
+  buttonText: "Get New Posts By Email"
+  supportingCopy: "Get new ai engineering breakdowns delivered before they're public."
+  ---
+  :::
+::
 
 ---
 
