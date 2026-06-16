@@ -51,6 +51,7 @@ export default defineEventHandler(async (event) => {
     { path: '/',                      priority: '1.0', changefreq: 'weekly'  },
     { path: '/blog/overview',         priority: '1.0', changefreq: 'weekly'  },
     { path: '/projects/overview',     priority: '1.0', changefreq: 'weekly'  },
+    { path: '/products/overview',     priority: '0.9', changefreq: 'monthly' },
     { path: '/about',                 priority: '1.0', changefreq: 'weekly'  },
     { path: '/system-overview',       priority: '0.9', changefreq: 'monthly' },
     { path: '/resume',                priority: '0.9', changefreq: 'monthly' },

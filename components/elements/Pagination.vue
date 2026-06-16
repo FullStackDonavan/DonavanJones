@@ -23,6 +23,7 @@ const basePath = computed(() => {
   if (route.path.startsWith("/tags/")) return `/tags/${route.params.name}`;
   if (route.path.startsWith("/blog/overview")) return "/blog/overview";
   if (route.path.startsWith("/projects/overview")) return "/projects/overview";
+  if (route.path.startsWith("/products/overview")) return "/products/overview";
   return route.path;
 });
 </script>

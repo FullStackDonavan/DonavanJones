@@ -69,6 +69,13 @@
         </span>
       </NuxtLink>
 
+      <!-- Products -->
+      <NuxtLink to="/products/overview" class="relative group">
+        <span :class="navClass(isProductsActive)">
+          Products
+        </span>
+      </NuxtLink>
+
       <!-- About Dropdown -->
       <div class="relative group">
 
@@ -136,6 +143,11 @@ const isSystemsActive = computed(() => {
 // Projects
 const isProjectsActive = computed(() => {
   return route.path.startsWith('/projects')
+})
+
+// Products
+const isProductsActive = computed(() => {
+  return route.path.startsWith('/products')
 })
 
 // Blog / Knowledge system
