@@ -1,229 +1,307 @@
 <template>
-  <PatternSection>
-    <div class="min-h-screen bg-white dark:bg-slate-950">
+  <div class="min-h-screen bg-white dark:bg-slate-950">
 
-      <!-- Sticky breadcrumb -->
-      <div class="sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-          <nav class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-            <NuxtLink to="/products/overview" class="hover:text-sky-400 transition-colors">Products</NuxtLink>
-            <Icon name="mdi:chevron-right" class="text-slate-300 dark:text-slate-600" />
-            <NuxtLink to="/products/production-ai-api-boilerplate" class="hover:text-sky-400 transition-colors">Boilerplate</NuxtLink>
-            <Icon name="mdi:chevron-right" class="text-slate-300 dark:text-slate-600" />
-            <span class="text-slate-700 dark:text-slate-300 font-medium">Guide</span>
-          </nav>
-          <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500">
-            <Icon name="mdi:api" class="text-sm" />
-            Backend Engineering
-          </span>
-        </div>
+    <!-- Sticky breadcrumb -->
+    <div class="sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+        <nav class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+          <NuxtLink to="/products/overview" class="hover:text-sky-400 transition-colors">Products</NuxtLink>
+          <Icon name="mdi:chevron-right" class="text-slate-300 dark:text-slate-600" />
+          <NuxtLink to="/products/production-ai-api-boilerplate" class="hover:text-sky-400 transition-colors">API Boilerplate</NuxtLink>
+          <Icon name="mdi:chevron-right" class="text-slate-300 dark:text-slate-600" />
+          <span class="text-slate-700 dark:text-slate-300 font-medium">Guide</span>
+        </nav>
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          <Icon name="mdi:api" class="text-sm" />
+          Backend Engineering
+        </span>
       </div>
+    </div>
 
-      <!-- Body -->
-      <div class="max-w-7xl mx-auto px-6 py-12 lg:flex lg:gap-14">
+    <!-- Hero -->
+    <div class="bg-slate-900 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-6 py-16 sm:py-20">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-6">
+          <Icon name="mdi:api" class="text-sm" />
+          Production AI API Boilerplate
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
+          The Complete Boilerplate Guide
+        </h1>
+        <p class="text-slate-400 leading-relaxed max-w-2xl text-base">
+          Project structure, authentication, vector search, embedding services, Docker config, and CI/CD — the full scaffold for a production AI API, ready to fork and ship.
+        </p>
+      </div>
+    </div>
 
-        <!-- TOC sidebar -->
-        <aside class="hidden lg:block w-52 flex-shrink-0">
-          <div class="sticky top-16 pt-2">
-            <p class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Contents</p>
-            <nav class="space-y-0.5">
-              <a v-for="s in toc" :key="s.id" :href="`#${s.id}`"
-                class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-sky-400 dark:hover:text-sky-400 py-1.5 px-2 rounded-lg hover:bg-sky-500/5 transition-colors">
-                <Icon :name="s.icon" class="text-base flex-shrink-0" />
-                {{ s.title }}
-              </a>
-            </nav>
-          </div>
-        </aside>
-
-        <!-- Main content -->
-        <div class="flex-1 min-w-0 max-w-3xl">
-
-          <!-- Intro -->
-          <div class="mb-14">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-medium mb-5">
-              <Icon name="mdi:api" />
-              Production AI API Boilerplate
+    <!-- What's Inside cards -->
+    <div class="bg-slate-50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6 py-10">
+        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-6">What's Inside</p>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <a
+            v-for="(s, i) in toc"
+            :key="s.id"
+            :href="`#${s.id}`"
+            class="group block p-5 rounded-2xl border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60
+                   hover:border-emerald-500/40 dark:hover:border-emerald-500/30
+                   hover:shadow-lg hover:shadow-emerald-500/5
+                   transition-all duration-200"
+          >
+            <div
+              class="w-9 h-9 rounded-xl flex items-center justify-center mb-4"
+              :class="{
+                'bg-emerald-500/10': i % 4 === 0,
+                'bg-sky-500/10':     i % 4 === 1,
+                'bg-purple-500/10':  i % 4 === 2,
+                'bg-amber-500/10':   i % 4 === 3,
+              }"
+            >
+              <Icon
+                :name="s.icon"
+                class="text-base"
+                :class="{
+                  'text-emerald-400': i % 4 === 0,
+                  'text-sky-400':     i % 4 === 1,
+                  'text-purple-400':  i % 4 === 2,
+                  'text-amber-400':   i % 4 === 3,
+                }"
+              />
             </div>
-            <h1 class="text-3xl font-bold text-slate-900 dark:text-white leading-tight">
-              The Complete Boilerplate
-            </h1>
-            <p class="mt-3 text-slate-500 dark:text-slate-400 leading-relaxed">
-              FastAPI project structure, authentication, vector search, embedding services, Docker files, and CI/CD — the scaffolding already in place so you start on day one with the actual product logic.
+            <p class="text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-emerald-400 transition-colors leading-snug mb-1">
+              {{ s.title }}
             </p>
-          </div>
-
-          <!-- ── 1. Project Structure ────────────────────────────────── -->
-          <section id="project-structure" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
-                <Icon name="mdi:api" class="text-sky-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">FastAPI Project Structure</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              The directory layout that scales past a single <code class="font-mono text-xs">main.py</code>. Routers handle HTTP, services hold business logic, schemas define request/response shapes — each layer stays in its own place.
-            </p>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ folderTree }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">main.py</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ mainPy }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">config.py (settings via environment variables)</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ configPy }}</code></pre>
-          </section>
-
-          <!-- ── 2. Authentication ───────────────────────────────────── -->
-          <section id="authentication" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                <Icon name="mdi:shield-lock-outline" class="text-purple-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Authentication</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              JWT-based auth using <code class="font-mono text-xs">python-jose</code> and <code class="font-mono text-xs">passlib</code>. The login route returns a bearer token; a FastAPI dependency (<code class="font-mono text-xs">get_current_user</code>) protects any route that needs it.
-            </p>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">services/auth.py — token creation and verification</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ authService }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">routers/auth.py — login endpoint</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ authRouter }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">dependencies.py — protect any route with Depends(get_current_user)</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ authDeps }}</code></pre>
-          </section>
-
-          <!-- ── 3. Vector Search ────────────────────────────────────── -->
-          <section id="vector-search" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                <Icon name="mdi:magnify-scan" class="text-emerald-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Vector Search</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              ChromaDB handles vector storage and nearest-neighbor search. The service layer abstracts the ChromaDB client so it's easy to swap for pgvector or Qdrant later.
-            </p>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">services/search.py</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ searchService }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">routers/search.py — protected query endpoint</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ searchRouter }}</code></pre>
-          </section>
-
-          <!-- ── 4. Embedding Services ───────────────────────────────── -->
-          <section id="embedding-services" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                <Icon name="mdi:vector-combine" class="text-amber-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Embedding Services</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              Async embedding via <code class="font-mono text-xs">httpx</code> so the API stays non-blocking during the Ollama call. The ingest route accepts file uploads, chunks the content, and stores vectors.
-            </p>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">services/embedding.py</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ embeddingService }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">routers/ingest.py — document ingestion endpoint</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ ingestRouter }}</code></pre>
-          </section>
-
-          <!-- ── 5. Docker Files ─────────────────────────────────────── -->
-          <section id="docker-files" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center">
-                <Icon name="mdi:docker" class="text-sky-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Docker Files</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              The same container that runs locally deploys to production. <code class="font-mono text-xs">docker-compose.yml</code> brings up the API, Postgres, and ChromaDB together — one command to get a fully wired local environment.
-            </p>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Dockerfile</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ dockerfile }}</code></pre>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">docker-compose.yml</h3>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-4"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ dockerCompose }}</code></pre>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ dockerCommands }}</code></pre>
-          </section>
-
-          <!-- ── 6. CI/CD Examples ───────────────────────────────────── -->
-          <section id="cicd-examples" class="mb-16">
-            <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                <Icon name="mdi:sync-circle" class="text-purple-400 text-base" />
-              </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white">CI/CD Examples</h2>
-            </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
-              GitHub Actions workflow that runs tests on every PR, then builds and pushes a Docker image to the container registry on merge to main. The test job spins up a real Postgres service container — no mocking the database.
-            </p>
-            <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-loose">{{ cicdYaml }}</code></pre>
-          </section>
-
-          <!-- More Products -->
-          <div class="border-t border-slate-200 dark:border-slate-800 pt-12">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-base font-bold text-slate-900 dark:text-white">More Products</h2>
-              <NuxtLink to="/products/overview" class="text-sm text-sky-500 hover:text-sky-400 flex items-center gap-1 transition-colors">
-                All Products <Icon name="mdi:arrow-right" class="text-base" />
-              </NuxtLink>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <NuxtLink v-for="p in otherProducts" :key="p.slug" :to="`/products/${p.slug}`"
-                class="group flex items-start gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200">
-                <div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
-                  <Icon :name="p.icon" class="text-xl text-slate-400 dark:text-slate-500" />
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-sky-400 transition-colors">{{ p.title }}</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ p.tagline }}</p>
-                </div>
-              </NuxtLink>
-            </div>
-          </div>
-
+            <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">{{ s.description }}</p>
+          </a>
         </div>
       </div>
     </div>
-  </PatternSection>
+
+    <!-- Body: sidebar + content -->
+    <div class="max-w-7xl mx-auto px-6 py-14 lg:flex lg:gap-14">
+
+      <!-- TOC sidebar -->
+      <aside class="hidden lg:block w-52 flex-shrink-0">
+        <div class="sticky top-16 pt-2">
+          <p class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4">Sections</p>
+          <nav class="space-y-0.5">
+            <a
+              v-for="s in toc"
+              :key="s.id"
+              :href="`#${s.id}`"
+              class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-emerald-400 py-1.5 px-2 rounded-lg hover:bg-emerald-500/5 transition-colors"
+            >
+              <Icon :name="s.icon" class="text-base flex-shrink-0 opacity-60" />
+              {{ s.title }}
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <div class="flex-1 min-w-0 max-w-3xl space-y-20">
+
+        <!-- ── 1. Project Structure ────────────────────────────────── -->
+        <section id="project-structure">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:folder-open-outline" class="text-emerald-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Project Structure</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            A layout that scales past a single <code class="font-mono text-xs">main.py</code> file. Routers, services, and domain logic are separated so adding a feature doesn't mean touching every layer.
+          </p>
+          <pre class="bg-slate-900 rounded-xl overflow-x-auto mb-6"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ folderTree }}</code></pre>
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">main.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ mainPy }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">config.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ configPy }}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 2. Authentication ───────────────────────────────────── -->
+        <section id="authentication">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:shield-lock-outline" class="text-sky-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Authentication</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            JWT-based auth with bcrypt password hashing. The dependency injection pattern means any router can require authentication with a single import.
+          </p>
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">services/auth.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ authService }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">routers/auth.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ authRouter }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">dependencies.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ dependencies }}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 3. Vector Search ────────────────────────────────────── -->
+        <section id="vector-search">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:magnify" class="text-purple-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Vector Search</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            pgvector on Postgres for production. The same interface works with ChromaDB locally so you don't need Postgres running during development.
+          </p>
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">services/search.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ searchService }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">routers/search.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ searchRouter }}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 4. Embedding Services ───────────────────────────────── -->
+        <section id="embedding-services">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:vector-combine" class="text-amber-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Embedding Services</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            A single embedding service that switches between Ollama (local) and OpenAI (cloud) via environment variable. Ingest endpoint handles chunking, embedding, and storage in one call.
+          </p>
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">services/embedding.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ embeddingService }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">routers/ingest.py</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ ingestRouter }}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 5. Docker Files ─────────────────────────────────────── -->
+        <section id="docker-files">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:docker" class="text-emerald-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Docker Files</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            Multi-stage build keeps the final image small. The compose file wires the API, Postgres with pgvector, and Ollama together for local development.
+          </p>
+          <div class="space-y-5">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Dockerfile</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ dockerfile }}</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">docker-compose.yml</p>
+              <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ dockerCompose }}</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── 6. CI/CD Examples ───────────────────────────────────── -->
+        <section id="cicd-examples">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:github" class="text-sky-400" />
+            </div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">CI/CD Examples</h2>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed pl-12">
+            Full GitHub Actions workflow: lint, test, build, push to GHCR, and deploy on merge to main. Swap the deploy step for your hosting target.
+          </p>
+          <pre class="bg-slate-900 rounded-xl overflow-x-auto"><code class="block p-5 text-sm text-slate-300 font-mono leading-relaxed">{{ ciWorkflow }}</code></pre>
+        </section>
+
+        <!-- More Products -->
+        <div class="border-t border-slate-200 dark:border-slate-800 pt-12">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">More Products</h2>
+            <NuxtLink to="/products/overview" class="text-sm text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
+              All Products <Icon name="mdi:arrow-right" />
+            </NuxtLink>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <NuxtLink
+              v-for="p in otherProducts"
+              :key="p.slug"
+              :to="`/products/${p.slug}`"
+              class="group flex items-start gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50
+                     bg-slate-50 dark:bg-slate-900/60 hover:border-emerald-500/40 transition-all duration-200"
+            >
+              <div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+                <Icon :name="p.icon" class="text-xl text-slate-400 dark:text-slate-500" />
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-emerald-400 transition-colors">{{ p.title }}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ p.tagline }}</p>
+              </div>
+            </NuxtLink>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 useSeoMeta({
   title: 'Production AI API Boilerplate — Guide',
-  description: 'FastAPI project structure, JWT auth, vector search, embedding services, Docker, and CI/CD for a production AI-backed API.',
+  description: 'Project structure, authentication, vector search, embedding services, Docker config, and CI/CD for a production AI API.',
   robots: 'noindex, nofollow',
 })
 
 const toc = [
-  { id: 'project-structure',   title: 'Project Structure',  icon: 'mdi:api' },
-  { id: 'authentication',      title: 'Authentication',     icon: 'mdi:shield-lock-outline' },
-  { id: 'vector-search',       title: 'Vector Search',      icon: 'mdi:magnify-scan' },
-  { id: 'embedding-services',  title: 'Embedding Services', icon: 'mdi:vector-combine' },
-  { id: 'docker-files',        title: 'Docker Files',       icon: 'mdi:docker' },
-  { id: 'cicd-examples',       title: 'CI/CD',              icon: 'mdi:sync-circle' },
+  { id: 'project-structure',   title: 'Project Structure',   icon: 'mdi:folder-open-outline',  description: 'Directory layout that scales past a single main.py.' },
+  { id: 'authentication',      title: 'Authentication',      icon: 'mdi:shield-lock-outline',  description: 'JWT + bcrypt with FastAPI dependency injection.' },
+  { id: 'vector-search',       title: 'Vector Search',       icon: 'mdi:magnify',              description: 'pgvector in prod, ChromaDB locally — same interface.' },
+  { id: 'embedding-services',  title: 'Embedding Services',  icon: 'mdi:vector-combine',       description: 'Switch between Ollama and OpenAI via env var.' },
+  { id: 'docker-files',        title: 'Docker Files',        icon: 'mdi:docker',               description: 'Multi-stage build + compose for local dev.' },
+  { id: 'cicd-examples',       title: 'CI/CD Examples',      icon: 'mdi:github',               description: 'Full GitHub Actions: lint → test → build → deploy.' },
 ]
 
-const folderTree = `api/
+const folderTree = `ai-api/
 ├── app/
-│   ├── main.py              # FastAPI app, lifespan, routers
-│   ├── config.py            # Settings via pydantic-settings + .env
-│   ├── dependencies.py      # get_current_user, get_db, etc.
+│   ├── main.py
+│   ├── config.py
+│   ├── dependencies.py
 │   ├── routers/
-│   │   ├── auth.py          # POST /auth/login
-│   │   ├── search.py        # POST /search/query
-│   │   └── ingest.py        # POST /ingest/document
-│   ├── models/
-│   │   └── user.py          # SQLAlchemy User model
-│   ├── schemas/
-│   │   ├── auth.py          # LoginRequest, TokenResponse
-│   │   └── search.py        # QueryRequest, QueryResponse
+│   │   ├── auth.py
+│   │   ├── chat.py
+│   │   ├── search.py
+│   │   └── ingest.py
 │   └── services/
-│       ├── auth.py          # JWT create/verify, password hashing
-│       ├── embedding.py     # embed_text(), batch_embed()
-│       └── search.py        # vector_query()
+│       ├── auth.py
+│       ├── embedding.py
+│       └── search.py
 ├── tests/
-│   ├── conftest.py          # Fixtures: test client, test DB
 │   ├── test_auth.py
-│   └── test_search.py
-├── alembic/                 # DB migrations
-│   └── versions/
+│   ├── test_search.py
+│   └── test_ingest.py
 ├── Dockerfile
 ├── docker-compose.yml
 ├── pyproject.toml
@@ -231,319 +309,262 @@ const folderTree = `api/
     └── workflows/
         └── ci.yml`
 
-const mainPy = `from contextlib import asynccontextmanager
+const mainPy = `# app/main.py
 from fastapi import FastAPI
-from app.routers import auth, search, ingest
+from fastapi.middleware.cors import CORSMiddleware
+from app.routers import auth, chat, search, ingest
 from app.config import settings
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Startup: connection pool warm-up, embedding model check
-    yield
-    # Shutdown: close DB connections
+app = FastAPI(title=settings.app_name, version="1.0.0")
 
-app = FastAPI(
-    title=settings.app_name,
-    lifespan=lifespan,
-    docs_url="/docs" if settings.debug else None,
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-app.include_router(auth.router,   prefix="/auth",   tags=["auth"])
-app.include_router(search.router, prefix="/search", tags=["search"])
-app.include_router(ingest.router, prefix="/ingest", tags=["ingest"])
+app.include_router(auth.router)
+app.include_router(chat.router)
+app.include_router(search.router)
+app.include_router(ingest.router)
 
 @app.get("/health")
-async def health():
+async def health() -> dict:
     return {"status": "ok"}`
 
-const configPy = `from pydantic_settings import BaseSettings
+const configPy = `# app/config.py
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    app_name: str = "Production AI API"
-    debug: bool = False
-    secret_key: str                          # Required — no default
-    algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
-    database_url: str                        # Required — postgresql://...
-    ollama_url: str = "http://localhost:11434"
-    embedding_model: str = "nomic-embed-text"
-    llm_model: str = "llama3.2:3b"
-    chroma_host: str = "chroma"
-    chroma_port: int = 8000
+    app_name: str = "AI API"
+    secret_key: str
+    database_url: str
+    ollama_base_url: str = "http://localhost:11434"
+    openai_api_key: str = ""
+    embed_provider: str = "ollama"   # "ollama" | "openai"
+    embed_model: str = "nomic-embed-text"
+    chat_model: str = "llama3.1:8b"
+    cors_origins: list[str] = ["http://localhost:3000"]
 
     class Config:
         env_file = ".env"
 
 settings = Settings()`
 
-const authService = `from datetime import datetime, timedelta
-from jose import JWTError, jwt
+const authService = `# app/services/auth.py
+from datetime import datetime, timedelta, timezone
+from jose import jwt, JWTError
 from passlib.context import CryptContext
 from app.config import settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+ALGORITHM   = "HS256"
+EXPIRES_MIN = 60 * 24  # 1 day
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
+def verify_password(plain: str, hashed: str) -> bool:
+    return pwd_context.verify(plain, hashed)
+
+def create_access_token(data: dict) -> str:
     payload = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
-    payload.update({"exp": expire})
-    return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
+    payload["exp"] = datetime.now(timezone.utc) + timedelta(minutes=EXPIRES_MIN)
+    return jwt.encode(payload, settings.secret_key, algorithm=ALGORITHM)
 
 def decode_token(token: str) -> dict:
     try:
-        return jwt.decode(
-            token,
-            settings.secret_key,
-            algorithms=[settings.algorithm],
-        )
+        return jwt.decode(token, settings.secret_key, algorithms=[ALGORITHM])
     except JWTError:
-        raise ValueError("Invalid or expired token")`
+        return {}`
 
-const authRouter = `from datetime import timedelta
+const authRouter = `# app/routers/auth.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from app.services.auth import create_access_token, verify_password
-from app.schemas.auth import TokenResponse
-from app.config import settings
+from app.services.auth import verify_password, create_access_token
+from app.dependencies import get_db   # your db session dep
 
-router = APIRouter()
+router = APIRouter(prefix="/auth", tags=["auth"])
 
-# In production, get_user() queries your DB
-async def get_user(email: str):
-    # TODO: replace with real DB lookup
-    users = {"admin@example.com": {"email": "admin@example.com", "hashed_password": "..."}}
-    return users.get(email)
+@router.post("/token")
+async def login(form: OAuth2PasswordRequestForm = Depends(), db=Depends(get_db)):
+    user = await db.users.find_by_email(form.username)
+    if not user or not verify_password(form.password, user.hashed_password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    return {"access_token": create_access_token({"sub": str(user.id)}), "token_type": "bearer"}`
 
-@router.post("/login", response_model=TokenResponse)
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await get_user(form_data.username)
-    if not user or not verify_password(form_data.password, user["hashed_password"]):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    token = create_access_token(
-        data={"sub": user["email"]},
-        expires_delta=timedelta(minutes=settings.access_token_expire_minutes),
-    )
-    return TokenResponse(access_token=token, token_type="bearer")`
-
-const authDeps = `from fastapi import Depends, HTTPException, status
+const dependencies = `# app/dependencies.py
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from app.services.auth import decode_token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
-    try:
-        payload = decode_token(token)
-        email: str = payload.get("sub", "")
-        if not email:
-            raise ValueError()
-        return email
-    except (ValueError, Exception):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+async def require_auth(token: str = Depends(oauth2_scheme)) -> dict:
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    return payload
 
 # Usage in any router:
-# @router.post("/protected")
-# async def protected(user: str = Depends(get_current_user)):
-#     return {"user": user}`
+# @router.get("/me")
+# async def me(user = Depends(require_auth)):
+#     return user`
 
-const searchService = `import chromadb
-from app.services.embedding import embed_text
+const searchService = `# app/services/search.py
 from app.config import settings
 
-_collection = None
+async def similarity_search(embedding: list[float], top_k: int = 5) -> list[dict]:
+    if settings.database_url.startswith("postgresql"):
+        return await _pg_search(embedding, top_k)
+    return await _chroma_search(embedding, top_k)
 
-def get_collection():
-    global _collection
-    if _collection is None:
-        client = chromadb.HttpClient(host=settings.chroma_host, port=settings.chroma_port)
-        _collection = client.get_or_create_collection("documents")
-    return _collection
-
-async def vector_query(question: str, top_k: int = 5) -> list[dict]:
-    embedding = await embed_text(question)
-    results = get_collection().query(
-        query_embeddings=[embedding],
-        n_results=top_k,
-        include=["documents", "metadatas", "distances"],
+async def _pg_search(embedding: list[float], top_k: int) -> list[dict]:
+    # requires pgvector extension: CREATE EXTENSION vector;
+    # column: embedding vector(768)
+    from app.db import get_pool
+    pool = await get_pool()
+    rows = await pool.fetch(
+        """
+        SELECT content, 1 - (embedding <=> $1::vector) AS similarity
+        FROM documents
+        ORDER BY embedding <=> $1::vector
+        LIMIT $2
+        """,
+        embedding,
+        top_k,
     )
-    return [
-        {
-            "content": doc,
-            "source": meta.get("source", ""),
-            "score": round(1 - dist, 4),
-        }
-        for doc, meta, dist in zip(
-            results["documents"][0],
-            results["metadatas"][0],
-            results["distances"][0],
-        )
-    ]`
+    return [dict(r) for r in rows]
 
-const searchRouter = `from fastapi import APIRouter, Depends
-from app.dependencies import get_current_user
-from app.services.search import vector_query
-from app.schemas.search import QueryRequest, QueryResponse
-from app.config import settings
-import httpx
+async def _chroma_search(embedding: list[float], top_k: int) -> list[dict]:
+    import chromadb
+    db  = chromadb.PersistentClient(path=".chroma")
+    col = db.get_or_create_collection("knowledge")
+    res = col.query(query_embeddings=[embedding], n_results=top_k)
+    return [{"content": d} for d in res["documents"][0]]`
 
-router = APIRouter()
+const searchRouter = `# app/routers/search.py
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
+from app.services.search import similarity_search
+from app.services.embedding import embed
+from app.dependencies import require_auth
 
-@router.post("/query", response_model=QueryResponse)
-async def search(request: QueryRequest, user: str = Depends(get_current_user)):
-    chunks = await vector_query(request.question, top_k=request.top_k)
-    context = "\\n\\n".join(c["content"] for c in chunks)
-    sources = list({c["source"] for c in chunks if c["source"]})
+router = APIRouter(prefix="/search", tags=["search"])
 
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        resp = await client.post(
-            f"{settings.ollama_url}/api/generate",
-            json={
-                "model": settings.llm_model,
-                "prompt": f"Answer from context only:\\n\\n{context}\\n\\nQuestion: {request.question}\\nAnswer:",
-                "stream": False,
-            },
-        )
-    answer = resp.json().get("response", "")
-    return QueryResponse(answer=answer, sources=sources)`
+class SearchRequest(BaseModel):
+    query: str
+    top_k: int = 5
 
-const embeddingService = `import httpx
+@router.post("/")
+async def search(body: SearchRequest, _=Depends(require_auth)):
+    embedding = await embed(body.query)
+    results   = await similarity_search(embedding, body.top_k)
+    return {"results": results}`
+
+const embeddingService = `# app/services/embedding.py
 from app.config import settings
 
-async def embed_text(text: str) -> list[float]:
-    async with httpx.AsyncClient(timeout=30.0) as client:
-        resp = await client.post(
-            f"{settings.ollama_url}/api/embeddings",
-            json={"model": settings.embedding_model, "prompt": text},
+async def embed(text: str) -> list[float]:
+    if settings.embed_provider == "openai":
+        return await _openai_embed(text)
+    return await _ollama_embed(text)
+
+async def _ollama_embed(text: str) -> list[float]:
+    import httpx
+    async with httpx.AsyncClient() as client:
+        r = await client.post(
+            f"{settings.ollama_base_url}/api/embeddings",
+            json={"model": settings.embed_model, "prompt": text},
         )
-        resp.raise_for_status()
-    return resp.json()["embedding"]
+    return r.json()["embedding"]
 
-async def batch_embed(texts: list[str]) -> list[list[float]]:
-    # Sequential for now — add concurrency with asyncio.gather if needed
-    return [await embed_text(t) for t in texts]`
+async def _openai_embed(text: str) -> list[float]:
+    from openai import AsyncOpenAI
+    client = AsyncOpenAI(api_key=settings.openai_api_key)
+    r = await client.embeddings.create(model="text-embedding-3-small", input=text)
+    return r.data[0].embedding`
 
-const ingestRouter = `from fastapi import APIRouter, Depends, UploadFile, HTTPException
-from app.dependencies import get_current_user
-from app.services.embedding import embed_text
-from app.services.search import get_collection
+const ingestRouter = `# app/routers/ingest.py
+from fastapi import APIRouter, Depends, UploadFile, File
+from app.services.embedding import embed
+from app.services.search import store_document   # upsert to pg or chroma
+from app.dependencies import require_auth
 
-router = APIRouter()
+router = APIRouter(prefix="/ingest", tags=["ingest"])
+CHUNK_SIZE, OVERLAP = 512, 64
 
-def chunk_text(text: str, size: int = 512, overlap: int = 64) -> list[str]:
+def chunk(text: str) -> list[str]:
     words = text.split()
-    return [" ".join(words[i : i + size]) for i in range(0, len(words), size - overlap)]
+    out, i = [], 0
+    while i < len(words):
+        out.append(" ".join(words[i : i + CHUNK_SIZE]))
+        i += CHUNK_SIZE - OVERLAP
+    return out
 
-@router.post("/document")
-async def ingest_document(file: UploadFile, user: str = Depends(get_current_user)):
-    if not file.filename:
-        raise HTTPException(status_code=400, detail="File name required")
-    content = (await file.read()).decode("utf-8")
-    chunks = chunk_text(content)
-    collection = get_collection()
-    for i, chunk in enumerate(chunks):
-        embedding = await embed_text(chunk)
-        collection.add(
-            documents=[chunk],
-            embeddings=[embedding],
-            ids=[f"{file.filename}-chunk-{i}"],
-            metadatas=[{"source": file.filename, "chunk": i}],
-        )
-    return {"file": file.filename, "chunks_ingested": len(chunks)}`
+@router.post("/")
+async def ingest(file: UploadFile = File(...), _=Depends(require_auth)):
+    text   = (await file.read()).decode()
+    chunks = chunk(text)
+    for c in chunks:
+        vector = await embed(c)
+        await store_document(c, vector)
+    return {"chunks": len(chunks)}`
 
-const dockerfile = `FROM python:3.11-slim
-
-WORKDIR /app
-
-# Install system deps
-RUN apt-get update && apt-get install -y --no-install-recommends \\
-    curl build-essential \\
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python deps before copying app code (cache layer)
+const dockerfile = `# Build
+FROM python:3.12-slim AS builder
+WORKDIR /build
 COPY pyproject.toml .
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir build && pip install --no-cache-dir .
 
-# Copy app
+# Runtime
+FROM python:3.12-slim
+WORKDIR /app
+COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY app/ ./app/
 
 EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]`
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]`
-
-const dockerCompose = `version: "3.9"
-
-services:
+const dockerCompose = `services:
   api:
     build: .
     ports:
       - "8000:8000"
-    environment:
-      SECRET_KEY: "change-me-in-production"
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/api"
-      OLLAMA_URL: "http://host.docker.internal:11434"
-      CHROMA_HOST: "chroma"
-      CHROMA_PORT: "8000"
+    env_file: .env
     depends_on:
       db:
         condition: service_healthy
-      chroma:
+      ollama:
         condition: service_started
-    volumes:
-      - ./app:/app/app   # hot-reload in dev
 
   db:
-    image: postgres:15-alpine
+    image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_DB: api
+      POSTGRES_DB: aiapi
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
-      timeout: 5s
       retries: 5
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
-  chroma:
-    image: chromadb/chroma:latest
+  ollama:
+    image: ollama/ollama
     ports:
-      - "8001:8000"
+      - "11434:11434"
     volumes:
-      - chroma_data:/chroma/chroma
+      - ollama_data:/root/.ollama
 
 volumes:
-  postgres_data:
-  chroma_data:`
+  pg_data:
+  ollama_data:`
 
-const dockerCommands = `# Start everything
-docker compose up --build
-
-# Run in background
-docker compose up -d --build
-
-# Check logs
-docker compose logs -f api
-
-# Stop and remove volumes
-docker compose down -v`
-
-const cicdYaml = `# .github/workflows/ci.yml
-name: CI
+const ciWorkflow = `# .github/workflows/ci.yml
+name: CI / CD
 
 on:
   push:
@@ -551,66 +572,70 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: \${{ github.repository }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
-        image: postgres:15-alpine
+        image: pgvector/pgvector:pg16
         env:
-          POSTGRES_DB: api_test
-          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: aiapi_test
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "pip"
-
-      - name: Install dependencies
-        run: pip install -e ".[dev]"
-
-      - name: Run tests
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check app tests
+      - run: pytest tests/ -v
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/api_test
-          SECRET_KEY: test-secret-key-for-ci
-          OLLAMA_URL: http://localhost:11434   # not available in CI — tests should mock
-          CHROMA_HOST: localhost
-          CHROMA_PORT: "8001"
-        run: pytest tests/ -v --tb=short --cov=app --cov-report=term-missing
+          DATABASE_URL: postgresql://postgres:postgres@localhost/aiapi_test
+          SECRET_KEY: ci-secret-key
+          EMBED_PROVIDER: ollama
 
-  build:
-    runs-on: ubuntu-latest
+  build-push:
     needs: test
     if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: \${{ env.REGISTRY }}
+          username: \${{ github.actor }}
+          password: \${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: \${{ env.REGISTRY }}/\${{ env.IMAGE_NAME }}:latest
 
-      - name: Log in to GitHub Container Registry
-        run: echo "\${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u \${{ github.actor }} --password-stdin
-
-      - name: Build and push Docker image
+  deploy:
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
         run: |
-          IMAGE=ghcr.io/\${{ github.repository }}
-          docker build -t $IMAGE:\${{ github.sha }} -t $IMAGE:latest .
-          docker push $IMAGE:\${{ github.sha }}
-          docker push $IMAGE:latest`
+          # Replace with your deploy command
+          # e.g. kubectl set image deployment/api api=ghcr.io/...
+          echo "Deploy step — wire to your hosting target here"`
 
 const otherProducts = [
-  { slug: 'raspberry-pi-ai-cluster-blueprint', title: 'Raspberry Pi AI Cluster Blueprint', tagline: 'Build the rack without the trial and error.', icon: 'mdi:server-network' },
-  { slug: 'self-hosted-ai-starter-kit', title: 'Self-Hosted AI Starter Kit', tagline: "Run your own models without renting someone else's API.", icon: 'mdi:brain' },
+  { slug: 'raspberry-pi-ai-cluster-blueprint', title: 'Raspberry Pi AI Cluster Blueprint', tagline: 'Build a real K3s cluster on hardware you own.',          icon: 'mdi:server-network' },
+  { slug: 'self-hosted-ai-starter-kit',        title: 'Self-Hosted AI Starter Kit',        tagline: "Run your own models without renting someone else's API.", icon: 'mdi:brain' },
 ]
 </script>
