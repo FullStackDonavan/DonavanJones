@@ -31,7 +31,7 @@ const featuredWithData = computed(() => {
 const { data: totalArticlesCount } = await useAsyncData(
   `category-count-${categoryName.value}`,
   () =>
-    queryContent()
+    queryContent('/blog')
       .where({ category: { $contains: categoryName.value }, draft: { $ne: true } })
       .count()
 );
@@ -93,7 +93,7 @@ const currentPage = computed(() => parseInt(route.query.page as string) || 1);
 const fetchArticles = async () => {
   pending.value = true;
   try {
-    articles.value = await queryContent()
+    articles.value = await queryContent('/blog')
       .where({ category: { $contains: categoryName.value }, draft: { $ne: true } })
       .skip((currentPage.value - 1) * limit.value)
       .limit(limit.value)
