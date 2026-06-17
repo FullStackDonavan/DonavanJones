@@ -1,6 +1,6 @@
 [Unit]
-Description=fullstackjack service
-Documentation=https://fullstackjack.dev
+Description=donavanjones service
+Documentation=https://donavanjones.com
 After=network.target
 
 
@@ -14,4 +14,4 @@ ExecStart=/usr/bin/bash -c 'node .output/server/index.mjs'
 [Install]
 WantedBy=multi-user.target
 
-# /etc/systemd/system/fullstackjack.service
+# /etc/systemd/system/donavanjones.service
