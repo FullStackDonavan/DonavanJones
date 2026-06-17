@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   title: string
   tagline?: string
   description: string
@@ -15,31 +15,8 @@ const props = defineProps<{
   stripePriceId?: string
 }>()
 
-const form = reactive({ firstName: '', email: '' })
-const submitting = ref(false)
-const submitted = ref(false)
-const submitError = ref('')
-
-async function submit() {
-  submitting.value = true
-  submitError.value = ''
-  try {
-    await $fetch('/api/product-lead', {
-      method: 'POST',
-      body: {
-        firstName: form.firstName,
-        email: form.email,
-        productTitle: props.title,
-        productSlug: props.ctaUrl?.split('/').pop() ?? '',
-      },
-    })
-    submitted.value = true
-  } catch {
-    submitError.value = 'Something went wrong. Please try again.'
-  } finally {
-    submitting.value = false
-  }
-}
+const route = useRoute()
+const guideUrl = computed(() => `${route.path}/guide`)
 </script>
 
 <template>
@@ -91,10 +68,10 @@ async function submit() {
           </ul>
         </div>
 
-        <!-- ── Right: lead magnet form + stat cards ────────────────── -->
+        <!-- ── Right: CTA card + stat cards ───────────────────────── -->
         <div class="space-y-4">
 
-          <!-- Lead capture card -->
+          <!-- CTA card -->
           <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50
                       bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
 
@@ -106,93 +83,29 @@ async function submit() {
                 <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700" />
               </div>
               <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">
-                {{ title.toLowerCase().replace(/\s+/g, '.') }}.download
+                {{ title.toLowerCase().replace(/\s+/g, '.') }}.guide
               </span>
             </div>
 
-            <!-- Success state -->
-            <div v-if="submitted" class="p-8 text-center">
-              <Icon name="mdi:check-circle-outline" class="text-emerald-400 text-4xl mb-3" />
-              <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-1">You're all set!</h3>
-              <p class="text-sm text-slate-500 dark:text-slate-400">
-                Check your inbox — the download link is on its way.
-              </p>
-            </div>
-
-            <!-- Form -->
-            <form v-else @submit.prevent="submit" class="p-6 space-y-5">
-
-              <div>
-                <p class="text-sm font-semibold text-slate-900 dark:text-white mb-0.5">
-                  Get free access
-                </p>
-                <p class="text-xs text-slate-500 dark:text-slate-400">
-                  Enter your name and email and I'll send it straight to your inbox.
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-5">
+                <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl bg-sky-500/10">
+                  <Icon :name="badgeIcon || 'mdi:package-variant-closed'" class="text-xl text-sky-400" />
+                </div>
+                <p class="text-sm font-semibold text-slate-900 dark:text-white leading-snug">
+                  {{ tagline }}
                 </p>
               </div>
-
-              <!-- First Name -->
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
-                  First Name
-                </label>
-                <input
-                  v-model="form.firstName"
-                  type="text"
-                  placeholder="Jane"
-                  class="w-full px-4 py-2.5 rounded-xl text-sm
-                         border border-slate-200 dark:border-slate-700
-                         bg-white dark:bg-slate-800
-                         text-slate-900 dark:text-slate-100
-                         placeholder-slate-400 dark:placeholder-slate-600
-                         focus:outline-none focus:border-sky-500/60 focus:ring-1 focus:ring-sky-500/30
-                         transition-colors duration-150"
-                />
-              </div>
-
-              <!-- Email -->
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
-                  Email Address <span class="text-rose-400">*</span>
-                </label>
-                <input
-                  v-model="form.email"
-                  type="email"
-                  required
-                  placeholder="jane@example.com"
-                  class="w-full px-4 py-2.5 rounded-xl text-sm
-                         border border-slate-200 dark:border-slate-700
-                         bg-white dark:bg-slate-800
-                         text-slate-900 dark:text-slate-100
-                         placeholder-slate-400 dark:placeholder-slate-600
-                         focus:outline-none focus:border-sky-500/60 focus:ring-1 focus:ring-sky-500/30
-                         transition-colors duration-150"
-                />
-              </div>
-
-              <!-- Error -->
-              <p v-if="submitError" class="text-sm text-rose-500">{{ submitError }}</p>
-
-              <!-- Submit -->
-              <button
-                type="submit"
-                :disabled="submitting"
-                class="block w-full py-3 px-6 text-center rounded-xl font-semibold text-sm text-white
-                       transition duration-500 hover:scale-105
-                       bg-purple-600 hover:bg-purple-700 active:bg-purple-800
-                       disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100
-                       flex items-center justify-center gap-2"
+              <NuxtLink
+                :to="guideUrl"
+                class="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl
+                       font-semibold text-sm text-white bg-sky-500 hover:bg-sky-400
+                       transition-colors duration-150"
               >
-                <Icon v-if="submitting" name="mdi:loading" class="text-base animate-spin" />
-                <Icon v-else name="mdi:download-outline" class="text-base" />
-                {{ submitting ? 'Sending…' : 'Get Instant Access' }}
-              </button>
-
-              <p class="text-xs text-slate-400 dark:text-slate-500 text-center">
-                No spam. Unsubscribe at any time.
-              </p>
-
-            </form>
+                <Icon name="mdi:arrow-right" class="text-base" />
+                View the Guide
+              </NuxtLink>
+            </div>
           </div>
 
           <!-- Hero stat cards from slot -->

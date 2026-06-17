@@ -73,6 +73,50 @@
           />
         </div>
 
+        <!-- More Products -->
+        <div v-if="otherProducts.length" class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+          <div class="max-w-7xl mx-auto px-4 py-14">
+            <div class="flex items-center justify-between mb-8">
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white">More Products</h2>
+              <NuxtLink
+                to="/products/overview"
+                class="text-sm font-medium text-sky-500 hover:text-sky-400 flex items-center gap-1 transition-colors"
+              >
+                All Products
+                <Icon name="mdi:arrow-right" class="text-base" />
+              </NuxtLink>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <NuxtLink
+                v-for="p in otherProducts"
+                :key="p._path"
+                :to="p._path"
+                class="group flex items-start gap-5 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/50
+                       bg-white dark:bg-slate-900/60
+                       hover:border-sky-500/40 dark:hover:border-sky-500/30
+                       transition-all duration-200 hover:shadow-lg hover:shadow-sky-500/5"
+              >
+                <div class="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+                  <Icon :name="p.badgeIcon || 'mdi:package-variant-closed'" class="text-2xl text-slate-400 dark:text-slate-500" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-semibold text-emerald-500">{{ p.price }}</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500">·</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500">{{ p.format }}</span>
+                  </div>
+                  <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-sky-400 transition-colors truncate">
+                    {{ p.title }}
+                  </p>
+                  <p class="text-xs text-sky-500 dark:text-sky-400 mt-0.5">{{ p.tagline }}</p>
+                </div>
+                <Icon name="mdi:arrow-right" class="flex-shrink-0 text-slate-300 dark:text-slate-600 group-hover:text-sky-400 group-hover:translate-x-1 transition-all duration-200 text-lg mt-0.5" />
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </PatternSection>
@@ -89,6 +133,15 @@ const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 const { data: seoDoc } = await useAsyncData(
   `product-doc-${route.path}`,
   () => queryContent(route.path).findOne()
+)
+
+const { data: allProducts } = await useAsyncData(
+  'all-products',
+  () => queryContent('/products').where({ draft: { $ne: true } }).find()
+)
+
+const otherProducts = computed(() =>
+  (allProducts.value ?? []).filter(p => p._path !== route.path)
 )
 
 const pageTitle = computed(() =>
