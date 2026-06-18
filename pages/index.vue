@@ -201,9 +201,9 @@ function formatDate(dateStr: string): string {
             </div>
 
             <!-- Headline -->
-            <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-              AI Systems Engineer
-              <span class="block text-sky-500 mt-2">& Platform Builder</span>
+            <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] font-bold leading-[1.15] tracking-tight text-slate-900 dark:text-white">
+              Full-stack engineer
+              <span class="block text-sky-500 mt-2">AI-powered SaaS · Backend · Kubernetes</span>
             </h1>
 
             <!-- Sub -->
