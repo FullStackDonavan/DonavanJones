@@ -3,16 +3,16 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
-  title: 'Resume — Donavan Jones',
-  description: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
-  ogTitle: 'Resume — Donavan Jones | Full-Stack / Platform Engineer',
-  ogDescription: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
+  title: 'Resume — Donavan Jones | AI Systems Engineer',
+  description: 'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, full-stack SaaS platforms, and self-hosted cloud infrastructure.',
+  ogTitle: 'Resume — Donavan Jones | AI Systems Engineer',
+  ogDescription: 'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, and full-stack SaaS platforms.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/resume`,
   twitterCard: 'summary_large_image',
-  twitterTitle: 'Resume — Donavan Jones',
-  twitterDescription: 'Full-stack and platform engineer — 20+ years across web apps, SaaS, AI systems, and Kubernetes infrastructure.',
+  twitterTitle: 'Resume — Donavan Jones | AI Systems Engineer',
+  twitterDescription: 'AI Systems Engineer — production RAG pipelines, Kubernetes-hosted LLMs, full-stack SaaS, 20+ years.',
   canonical: `${_SITE}/resume`,
 })
 
@@ -165,7 +165,7 @@ const projectSystems = [
               Donavan Jones
             </h1>
             <p class="mt-2 text-lg font-medium text-sky-500">
-              Full-Stack / Platform Engineer
+              AI Systems Engineer &amp; Platform Builder
             </p>
             <p class="mt-1 text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
               <Icon name="mdi:map-marker-outline" class="text-base" />
@@ -218,6 +218,10 @@ const projectSystems = [
             <Icon name="mdi:github" class="text-base text-sky-400" />
             github.com/FullStackDonavan
           </a>
+          <a href="https://linkedin.com/in/donavanjones" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-sky-500 transition-colors">
+            <Icon name="mdi:linkedin" class="text-base text-sky-400" />
+            linkedin.com/in/donavanjones
+          </a>
         </div>
 
       </div>
@@ -244,13 +248,10 @@ const projectSystems = [
               </div>
               <div class="p-5 space-y-3">
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Full-stack engineer with 20+ years of development experience building web applications, SaaS platforms, CMS systems, and modern JavaScript-based systems.
+                  Self-directed AI Systems Engineer with 20+ years building production systems end-to-end — from bare-metal Kubernetes clusters running local LLMs to full-stack SaaS platforms with async job queues, vector search, and real-time features.
                 </p>
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Strong background in system architecture, API design, database modeling, AI systems, and multi-role SaaS applications. Comfortable working across frontend, backend, data, and infrastructure layers.
-                </p>
-                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Experienced in building AI-integrated applications, self-hosted infrastructure, and distributed system prototypes using modern cloud and local environments.
+                  Where I specialize: closing the gap between AI prototype and production system. I own the full stack — data model, API, AI pipeline, infrastructure, and observability — without needing a team to unblock me.
                 </p>
               </div>
             </div>
@@ -302,6 +303,35 @@ const projectSystems = [
                   </div>
                 </div>
 
+              </div>
+            </div>
+
+            <!-- Open to -->
+            <div class="rounded-2xl border border-green-500/20 bg-green-500/5 overflow-hidden print:hidden">
+              <div class="px-4 py-3 border-b border-green-500/10 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-[10px] text-green-400 font-semibold uppercase tracking-widest ml-1">Currently Open To</span>
+              </div>
+              <div class="p-4 space-y-2">
+                <div v-for="role in [
+                  'Senior Full-Stack Engineer',
+                  'Platform Engineering',
+                  'AI Systems Engineer',
+                  'Contract Opportunities',
+                ]" :key="role" class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                  <Icon name="mdi:check-circle" class="text-green-400 text-sm flex-shrink-0" />
+                  {{ role }}
+                </div>
+                <div class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-800 space-y-1.5">
+                  <a href="mailto:donavanjones79@gmail.com" class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-400 transition-colors">
+                    <Icon name="mdi:email-outline" class="text-sky-400 text-sm" />
+                    donavanjones79@gmail.com
+                  </a>
+                  <a href="https://linkedin.com/in/donavanjones" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-400 transition-colors">
+                    <Icon name="mdi:linkedin" class="text-sky-400 text-sm" />
+                    linkedin.com/in/donavanjones
+                  </a>
+                </div>
               </div>
             </div>
 

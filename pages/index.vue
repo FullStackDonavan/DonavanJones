@@ -3,19 +3,19 @@ const config = useRuntimeConfig()
 const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
-  title: 'Donavan Jones — Full-Stack / Platform Engineer',
+  title: 'Donavan Jones — AI Systems Engineer',
   description:
-    'Full-stack engineer with 20+ years of experience building SaaS platforms, AI systems, self-hosted infrastructure, and production-grade web applications.',
-  ogTitle: 'Donavan Jones — Full-Stack / Platform Engineer',
+    'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, full-stack SaaS platforms, and self-hosted cloud infrastructure.',
+  ogTitle: 'Donavan Jones — AI Systems Engineer',
   ogDescription:
-    'Full-stack engineer with 20+ years building SaaS platforms, AI systems, self-hosted infrastructure, and production-grade web applications.',
+    'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, and full-stack SaaS platforms.',
   ogType: 'website',
   ogImage: `${SITE}/img/logo.png`,
   ogUrl: `${SITE}/`,
   twitterCard: 'summary_large_image',
-  twitterTitle: 'Donavan Jones — Full-Stack / Platform Engineer',
+  twitterTitle: 'Donavan Jones — AI Systems Engineer',
   twitterDescription:
-    'Full-stack engineer with 20+ years building SaaS platforms, AI systems, and production-grade web applications.',
+    'AI Systems Engineer building production RAG pipelines, Kubernetes-hosted LLMs, and full-stack SaaS platforms.',
   canonical: `${SITE}/`,
 })
 
@@ -202,14 +202,14 @@ function formatDate(dateStr: string): string {
 
             <!-- Headline -->
             <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-              Full-Stack Engineer
+              AI Systems Engineer
               <span class="block text-sky-500 mt-2">& Platform Builder</span>
             </h1>
 
             <!-- Sub -->
             <p class="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-              20+ years building production web applications, SaaS platforms,
-              AI-powered systems, and self-hosted infrastructure. Lakeland, FL.
+              I design and ship production AI systems end-to-end — RAG pipelines, local LLM inference
+              on self-hosted Kubernetes, and full-stack SaaS platforms. 20+ years. No hand-holding required.
             </p>
 
             <!-- CTAs -->
@@ -291,15 +291,19 @@ function formatDate(dateStr: string): string {
             <div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-8">
               <div>
                 <p class="text-2xl font-bold text-slate-900 dark:text-white">20+</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Years experience</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Years engineering</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">Full-Stack</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Frontend to infrastructure</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">8-Node</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ARM64 Kubernetes cluster</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">Remote</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Remote-friendly</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">20k+</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Docs indexed for RAG</p>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">75+</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Technical articles</p>
               </div>
             </div>
 

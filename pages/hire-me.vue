@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Hire Me — Donavan Jones',
-  description: 'I build web apps, SaaS platforms, and internal tools for growing businesses. Let\'s talk about your project.',
-  ogTitle: 'Hire Me — Donavan Jones',
-  ogDescription: 'I build web apps, SaaS platforms, and internal tools for growing businesses. Let\'s talk about your project.',
+  title: 'Hire Me — Donavan Jones | AI Systems Engineer',
+  description: 'AI Systems Engineer open to senior IC and staff roles in AI engineering, platform engineering, and full-stack development. Also available for contract projects.',
+  ogTitle: 'Hire Me — Donavan Jones | AI Systems Engineer',
+  ogDescription: 'AI Systems Engineer open to senior roles in AI engineering and platform development. Also available for contract projects and freelance builds.',
   ogType: 'website',
 })
 
@@ -115,6 +115,127 @@ const faqs = [
 <template>
   <PatternSection>
     <div class="max-w-5xl mx-auto px-6 py-16 sm:py-24">
+
+      <!-- ── FOR RECRUITERS ───────────────────────────────────────── -->
+      <div class="mb-20 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
+
+        <!-- Chrome header -->
+        <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+            </div>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">opportunities.config</span>
+          </div>
+          <div class="inline-flex items-center gap-1.5 text-xs text-green-500 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            Available
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Open to New Opportunities</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+            Available for senior IC and staff engineering roles, as well as contract work.
+            Remote preferred. Roles where AI engineering, infrastructure, and full-stack development intersect.
+          </p>
+
+          <!-- Role types -->
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            <div v-for="role in [
+              { icon: 'mdi:brain', color: 'purple', label: 'AI Systems Engineer', desc: 'RAG pipelines, LLM inference, agent workflows, vector search' },
+              { icon: 'mdi:server-network', color: 'emerald', label: 'Platform Engineering', desc: 'Kubernetes, CI/CD, observability, distributed infrastructure' },
+              { icon: 'mdi:layers-triple', color: 'sky', label: 'Senior Full-Stack Engineer', desc: 'Nuxt/Vue, Node.js, TypeScript, PostgreSQL, production SaaS' },
+              { icon: 'mdi:briefcase-outline', color: 'amber', label: 'Contract / Freelance', desc: 'AI integration, SaaS builds, platform architecture' },
+            ]" :key="role.label"
+              class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/40"
+            >
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border"
+                :class="{
+                  'bg-purple-500/10 border-purple-500/20': role.color === 'purple',
+                  'bg-emerald-500/10 border-emerald-500/20': role.color === 'emerald',
+                  'bg-sky-500/10 border-sky-500/20': role.color === 'sky',
+                  'bg-amber-500/10 border-amber-500/20': role.color === 'amber',
+                }"
+              >
+                <Icon :name="role.icon" class="text-sm"
+                  :class="{
+                    'text-purple-400': role.color === 'purple',
+                    'text-emerald-400': role.color === 'emerald',
+                    'text-sky-400': role.color === 'sky',
+                    'text-amber-400': role.color === 'amber',
+                  }"
+                />
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ role.label }}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{{ role.desc }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact links -->
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="mailto:donavanjones79@gmail.com"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     bg-sky-500 hover:bg-sky-600 text-white transition-colors duration-200 shadow-lg shadow-sky-500/20"
+            >
+              <Icon name="mdi:email-outline" class="text-base" />
+              donavanjones79@gmail.com
+            </a>
+            <a
+              href="https://linkedin.com/in/donavanjones"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:linkedin" class="text-base" />
+              LinkedIn
+            </a>
+            <a
+              href="https://github.com/FullStackDonavan"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:github" class="text-base" />
+              GitHub
+            </a>
+            <NuxtLink
+              to="/resume"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:file-account-outline" class="text-base" />
+              View Resume
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DIVIDER ───────────────────────────────────────────────── -->
+      <div class="flex items-center gap-4 mb-20">
+        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-800"></div>
+        <span class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest font-medium">Also available for client projects</span>
+        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-800"></div>
+      </div>
 
       <!-- ── HERO ─────────────────────────────────────────────────── -->
       <div class="text-center mb-20">
