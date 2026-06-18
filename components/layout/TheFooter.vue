@@ -6,7 +6,7 @@
     <div class="max-w-6xl mx-auto px-6 py-12">
 
       <!-- Top grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
         <!-- Brand -->
         <div>
@@ -15,10 +15,10 @@
           </h2>
 
           <p class="mt-1 text-sm font-medium text-gray-800 dark:text-gray-200">
-            AI Systems Engineer &amp; Platform Builder
+            AI Automation &amp; Custom Software
           </p>
           <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            Building production AI systems, SaaS platforms, and self-hosted infrastructure.
+            AI automation and custom software for small businesses. Production systems built, deployed, and handed over.
           </p>
 
           <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -34,11 +34,25 @@
 
           <ul class="mt-4 space-y-2 text-sm">
             <li><NuxtLink to="/" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Home</NuxtLink></li>
-            <li><NuxtLink to="/about" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</NuxtLink></li>
-            <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
+            <li><NuxtLink to="/services" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Services</NuxtLink></li>
+            <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Case Studies</NuxtLink></li>
             <li><NuxtLink to="/blog/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
             <li><NuxtLink to="/insights/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Insights</NuxtLink></li>
-            <li><NuxtLink to="/resume" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Resume</NuxtLink></li>
+            <li><NuxtLink to="/about" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</NuxtLink></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
+            Services
+          </h3>
+
+          <ul class="mt-4 space-y-2 text-sm">
+            <li><NuxtLink to="/services/ai-automation" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">AI Automation</NuxtLink></li>
+            <li><NuxtLink to="/services/web-development" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Web Development</NuxtLink></li>
+            <li><NuxtLink to="/services/local-business-ai" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Local Business AI</NuxtLink></li>
+            <li><NuxtLink to="/hire-me#contact" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Request a Quote</NuxtLink></li>
           </ul>
         </div>
 
@@ -116,7 +130,7 @@
             </div>
 
             <p class="mt-4 text-xs text-gray-500 dark:text-gray-500">
-              Open to senior IC, staff, and contract opportunities
+              Available for freelance projects and full-time roles
             </p>
           </div>
 
