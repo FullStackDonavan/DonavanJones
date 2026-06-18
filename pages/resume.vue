@@ -48,12 +48,12 @@ const experience = [
     location: 'Lakeland, FL',
     caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
-      'Sole full-stack developer and architect — owned all decisions from database schema and API design to AWS infrastructure and deployment',
-      'Automated end-to-end group insurance enrollment for 92 businesses and hundreds of employees — eliminating manual application handling, PDF assembly, and email-based document distribution',
-      'Built invite-based onboarding that auto-links employees to their company on sign-up — zero manual admin assignment required',
-      'Designed a 5-step enrollment state machine that enforces workflow sequence across multiple actors: no employee can skip steps, no owner can authorize payment before all applications are complete',
-      'Eliminated manual PDF assembly: signed documents generated server-side per submission with digital signatures composited in; insurance cards delivered directly from the admin dashboard',
-      'Collaborated directly with business stakeholders to translate real enrollment workflows into production features — requirements gathering, iteration, and production feedback loop',
+      'Served as sole architect and lead developer — gathered requirements from business stakeholders, presented architecture decisions and tradeoffs to non-technical leadership, and owned the system from schema design through production deployment',
+      'Reduced enrollment workflow time from hours to minutes for 92 businesses by replacing a manual, spreadsheet-driven process with an automated SaaS platform — eliminated ~10 tracking spreadsheets and cut per-enrollment support emails from 5–10 to near zero',
+      'Trained end users and administrators post-launch; designed the system to minimize ongoing support overhead — support requests became rare after go-live',
+      'Designed a 5-step enrollment state machine (draft → open → applications-complete → payment-submitted → fulfilled) with atomic transitions — enforces workflow sequence across multiple concurrent actors with no manual coordination required',
+      'Automated PDF generation and document delivery: signed documents composited server-side on every submission, insurance cards delivered directly from the admin dashboard — eliminated manual PDF assembly and email attachment chains entirely',
+      'Coordinated with non-technical teams and business users throughout the build, translating operational workflows into production features and iterating based on real user feedback',
     ],
   },
   {
@@ -94,12 +94,12 @@ const experience = [
 ]
 
 const homelabPoints = [
-  'Designed and built a personal server rack environment for self-hosted development and distributed systems experimentation',
-  'Runs multi-service infrastructure including databases, caching systems, object storage, and AI services',
-  'Deployed and managed services including Redis, MinIO, vector databases, and backend APIs',
-  'Built and tested AI workflows including RAG pipelines and retrieval systems',
-  'Experimented with Kubernetes, networking, and service orchestration at scale',
-  'Developed practical understanding of distributed systems, scalability, and infrastructure design patterns',
+  'Designed and operate a 12-node self-hosted Kubernetes cluster (k3s): 8× Raspberry Pi 5 ARM64 nodes for general workloads + 4× NVIDIA Jetson Orin Nano Super GPU nodes for local AI inference',
+  'Runs production workloads: Bible Verse SaaS platform, PostgreSQL + Apache AGE, Redis, MinIO S3-compatible object storage, Weaviate vector database, and Gitea CI/CD',
+  'Full observability stack: Prometheus metrics, Loki log aggregation, Grafana dashboards, and Alertmanager routing — monitoring all cluster nodes and application services',
+  'Local LLM inference on CUDA-accelerated Jetson nodes: Llama 3.2 serving ~80% of AI requests at under 200ms RAG retrieval latency — ~70% cost reduction vs. full API routing',
+  'Automated CI/CD via self-hosted Gitea Actions: build, type-check, test, and rolling deploy on every push to main',
+  'Cloudflare Tunnel ingress — secure public routing without exposed ports; Flannel CNI for pod networking across heterogeneous hardware tiers',
 ]
 
 const projectSystems = [
@@ -246,10 +246,10 @@ const projectSystems = [
               </div>
               <div class="p-5 space-y-3">
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Self-directed AI Systems Engineer with 20+ years building production systems end-to-end — from bare-metal Kubernetes clusters running local LLMs to full-stack SaaS platforms with async job queues, vector search, and real-time features.
+                  AI Systems Engineer with 20+ years of end-to-end ownership — from gathering requirements with business stakeholders through architecture decisions, implementation, and production operations. Most recently served as sole architect and lead developer for a group benefits enrollment platform that automated workflows for 92 businesses, cutting enrollment time from hours to minutes and eliminating 10+ manual tracking spreadsheets.
                 </p>
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Where I specialize: closing the gap between AI prototype and production system. I own the full stack — data model, API, AI pipeline, infrastructure, and observability — without needing a team to unblock me.
+                  Also building a production AI platform on a self-hosted 12-node Kubernetes cluster: RAG pipelines with hybrid search under 200ms, local LLM inference on NVIDIA Jetson GPU nodes reducing inference costs ~70%, and full Prometheus + Loki + Grafana observability. I work best when I own the full problem — from first stakeholder conversation to production deployment.
                 </p>
               </div>
             </div>

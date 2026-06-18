@@ -137,9 +137,15 @@ const faqs = [
 
         <div class="p-6 sm:p-8">
           <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Open to New Opportunities</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">
+            Available for senior IC roles and contract work. Remote preferred.
+            Roles where AI engineering, infrastructure, and full-stack development intersect.
+          </p>
           <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
-            Available for senior IC and staff engineering roles, as well as contract work.
-            Remote preferred. Roles where AI engineering, infrastructure, and full-stack development intersect.
+            I work best when I'm brought in early — before the architecture is decided. I'll gather requirements,
+            make opinionated technical recommendations, build it, deploy it, and own it in production.
+            I've done this end-to-end at Amerus Financial Group (92 businesses, automated enrollment workflows
+            from hours to minutes) and I'm applying the same ownership model to my own AI platform.
           </p>
 
           <!-- Role types -->
@@ -173,6 +179,23 @@ const faqs = [
                 <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ role.label }}</p>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{{ role.desc }}</p>
               </div>
+            </div>
+          </div>
+
+          <!-- How I Work -->
+          <div class="mb-8 grid sm:grid-cols-3 gap-3">
+            <div v-for="item in [
+              { icon: 'mdi:account-voice', label: 'Stakeholder to Spec', desc: 'I gather requirements, ask the right questions, and translate business needs into technical architecture — before a line of code is written.' },
+              { icon: 'mdi:hammer-wrench', label: 'Build & Own', desc: 'I implement what I spec and own it through deployment — including infrastructure, observability, CI/CD, and post-launch operations.' },
+              { icon: 'mdi:school-outline', label: 'Train & Hand Off', desc: 'I document decisions, train end users and administrators, and leave systems that others can operate — not black boxes.' },
+            ]" :key="item.label"
+              class="flex flex-col gap-2 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/40"
+            >
+              <div class="flex items-center gap-2">
+                <Icon :name="item.icon" class="text-sky-400 text-lg" />
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ item.label }}</p>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ item.desc }}</p>
             </div>
           </div>
 

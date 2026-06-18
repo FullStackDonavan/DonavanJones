@@ -199,8 +199,18 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             and ~70% cost reduction vs. full cloud routing.
           </p>
           <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-            I'm looking for senior IC or staff-level roles where AI engineering, backend systems, and
-            infrastructure intersect. Remote. Companies building production AI — not vaporware.
+            At Amerus Financial Group, I served as the sole architect and lead developer for a production
+            benefits enrollment platform that automated workflows for 92 businesses. That meant more than
+            writing code — I gathered requirements directly from business stakeholders, presented architecture
+            decisions and tradeoffs to non-technical leadership, coordinated with contributors, and trained
+            end users and administrators after launch. Enrollment workflows that previously required hours and
+            5–10 support emails per cycle now take minutes. Ten spreadsheets replaced by a single auditable
+            system. That's the gap I close: between what a business needs and what actually runs in production.
+          </p>
+          <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            I'm looking for senior IC roles where AI engineering, backend systems, and infrastructure intersect —
+            where I can own technical direction, work closely with stakeholders, and ship systems that stay
+            running. Remote. Companies building production AI — not vaporware.
           </p>
 
           <!-- Socials + Resume -->

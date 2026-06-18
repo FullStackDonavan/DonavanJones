@@ -30,10 +30,32 @@
 
       <!-- Description -->
       <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-        A full-stack group insurance enrollment platform that automated a previously manual process for 92 businesses —
-        eliminating paper applications, email chains, and manual PDF assembly through invite-based onboarding,
-        server-side document generation, and a state-machine-enforced workflow with three role-scoped dashboards.
+        A full-stack group insurance enrollment platform that automated a previously manual process for 92 businesses.
+        I gathered requirements from stakeholders, presented architecture decisions to non-technical leadership, built the system,
+        trained end users, and owned it through production. Enrollment workflows that took hours now take minutes.
       </p>
+
+      <!-- Before / After -->
+      <div class="mb-6 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4">
+          <p class="text-xs font-semibold text-rose-500 uppercase tracking-wider mb-2">Before</p>
+          <ul class="space-y-1.5">
+            <li v-for="b in before" :key="b" class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400">
+              <Icon name="mdi:close-circle" class="text-rose-400 text-sm flex-shrink-0 mt-0.5" />
+              {{ b }}
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+          <p class="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-2">After</p>
+          <ul class="space-y-1.5">
+            <li v-for="a in after" :key="a" class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400">
+              <Icon name="mdi:check-circle" class="text-emerald-400 text-sm flex-shrink-0 mt-0.5" />
+              {{ a }}
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <!-- Business Impact stats -->
       <div class="mb-6">
@@ -127,11 +149,25 @@
 </template>
 
 <script setup lang="ts">
+const before = [
+  'Enrollment workflows took hours per business cycle',
+  '5–10 support emails required per enrollment to coordinate between roles',
+  '~10 spreadsheets tracking enrollment status manually',
+  'PDFs assembled and forwarded by hand',
+]
+
+const after = [
+  'Enrollment workflows take minutes',
+  'Support requests became rare — system enforces workflow automatically',
+  'All spreadsheets eliminated — single auditable platform',
+  'PDFs auto-generated server-side; cards delivered from dashboard',
+]
+
 const stats = [
-  { value: '92',    label: 'Businesses Automated' },
-  { value: '100s',  label: 'Employees Enrolled' },
+  { value: '92',    label: 'Businesses Onboarded' },
+  { value: '~10',   label: 'Spreadsheets Eliminated' },
   { value: '0',     label: 'Manual Assignment Steps' },
-  { value: '100%',  label: 'Audit Covered' },
+  { value: '100%',  label: 'Audit Coverage' },
 ]
 
 const outcomes = [

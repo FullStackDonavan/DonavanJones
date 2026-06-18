@@ -208,8 +208,9 @@ function formatDate(dateStr: string): string {
 
             <!-- Sub -->
             <p class="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-              I design and ship production AI systems end-to-end — RAG pipelines, local LLM inference
-              on self-hosted Kubernetes, and full-stack SaaS platforms. 20+ years. No hand-holding required.
+              I design and ship production AI systems end-to-end — working with stakeholders to scope requirements,
+              making architecture decisions, and owning the full stack from bare-metal Kubernetes to deployed application.
+              RAG pipelines, local LLM inference, full-stack SaaS. 20+ years. I take full ownership.
             </p>
 
             <!-- CTAs -->
@@ -395,7 +396,7 @@ function formatDate(dateStr: string): string {
           <div>
             <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Looking For</p>
             <ul class="space-y-2">
-              <li v-for="role in ['Senior Full-Stack Engineer', 'Platform Engineer', 'AI Systems Engineer']" :key="role"
+              <li v-for="role in ['AI Systems Engineer', 'Founding Engineer', 'Senior Full-Stack Engineer', 'Platform Engineer']" :key="role"
                 class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                 <Icon name="mdi:check-circle" class="text-sky-400 text-base flex-shrink-0" />
                 {{ role }}
@@ -407,7 +408,7 @@ function formatDate(dateStr: string): string {
           <div>
             <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Preferred</p>
             <ul class="space-y-2">
-              <li v-for="pref in ['Remote', 'U.S.-based', 'Individual contributor']" :key="pref"
+              <li v-for="pref in ['Remote', 'U.S.-based', 'Strong IC · comfortable owning technical direction']" :key="pref"
                 class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                 <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
                 {{ pref }}
@@ -419,7 +420,7 @@ function formatDate(dateStr: string): string {
           <div>
             <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Core Strengths</p>
             <ul class="space-y-2">
-              <li v-for="strength in ['End-to-end ownership', 'AI in production', 'Kubernetes & platform engineering', 'SaaS architecture']" :key="strength"
+              <li v-for="strength in ['Stakeholder to production', 'AI systems in production', 'Kubernetes platform engineering', 'Full-stack SaaS ownership']" :key="strength"
                 class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
                 <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
                 {{ strength }}
