@@ -137,7 +137,9 @@ const stats = [
 const outcomes = [
   'Reduced inference costs ~70% by routing 80% of requests to self-hosted Llama 3.2; OpenAI API handles only edge cases requiring stronger reasoning.',
   'RAG retrieval under 200ms average — achieved through hybrid BM25 + vector search in Weaviate, reducing irrelevant context passed to the model.',
+  'Semantic search across 37,000+ verses eliminates the need to know exact references — a natural language query surfaces contextually relevant passages from Bible and Quran in a single retrieval call.',
   'Zero request-path blocking on media uploads: FFmpeg transcoding fully decoupled via BullMQ, keeping API response times unaffected by processing load.',
+  'Whisper STT pipeline automates speech-to-text transcription for devotional audio — no manual transcription step in the media processing workflow.',
   'Cross-instance WebSocket consistency maintained at scale via Redis pub/sub, eliminating missed messages during peak concurrent sessions.',
   '5 independent system boundaries — each domain owns its data access and service logic, enabling isolated deploys with no cross-domain coupling.',
 ]

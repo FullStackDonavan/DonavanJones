@@ -126,7 +126,7 @@ const milestones = [
   {
     year: '2024–Now',
     title: 'Building Bible Verse AI',
-    desc: 'Full-stack AI platform indexing 37K+ Bible verses across 5 bounded domains with RAG retrieval, 5 AI models, and BullMQ job queues.',
+    desc: '37K+ verses indexed · RAG retrieval under 200ms · 80% of requests served by local Llama 3.2 on self-hosted Jetson GPU nodes · ~70% inference cost reduction · 5 bounded domains.',
     color: 'purple',
   },
   {
@@ -195,8 +195,8 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             with real retrieval quality, run local LLM inference on self-hosted Kubernetes, and ship full-stack
             SaaS platforms that are observable and maintainable from day one. Currently building
             <NuxtLink to="/projects/bible-verse" class="text-purple-400 hover:text-purple-300 font-medium transition-colors">Bible Logic</NuxtLink>
-            — a multi-domain platform indexing 37,000+ Bible verses with semantic search, five AI models,
-            and a fully async processing pipeline.
+            — 37,000+ verses indexed, RAG retrieval under 200ms, 80% of inference served locally on Jetson GPU nodes,
+            and ~70% cost reduction vs. full cloud routing.
           </p>
           <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
             I'm looking for senior IC or staff-level roles where AI engineering, backend systems, and

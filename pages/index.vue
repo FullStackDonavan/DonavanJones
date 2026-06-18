@@ -504,14 +504,14 @@ function formatDate(dateStr: string): string {
               </div>
               <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-sky-500 transition-colors">Bible Logic</h2>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                Production-grade multi-system SaaS platform combining AI Bible assistance, RAG-powered scripture search,
-                real-time livestreaming via AWS IVS, WebRTC peer debate, and a fully modular content ecosystem.
-                Built end-to-end as founder and sole engineer.
+                37,000+ Bible and Quran verses indexed. RAG retrieval under 200ms. 80% of inference requests served locally on
+                self-hosted Jetson GPU nodes — ~70% cost reduction vs. full cloud routing. Five independently deployable
+                system boundaries. Built end-to-end as founder and sole engineer.
               </p>
 
               <div class="mt-4 flex flex-wrap gap-2">
                 <span
-                  v-for="tag in ['Nuxt 3', 'Weaviate RAG', 'LLM', 'WebRTC', 'AWS IVS', 'PostgreSQL', 'Redis', 'MinIO']"
+                  v-for="tag in ['Nuxt 3', 'Weaviate RAG', 'Llama 3.2', 'BullMQ', 'WebRTC', 'PostgreSQL', 'Redis', 'Kubernetes']"
                   :key="tag"
                   class="text-[11px] px-2 py-0.5 rounded-md border bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700/50"
                 >{{ tag }}</span>

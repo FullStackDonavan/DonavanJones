@@ -49,11 +49,11 @@ const experience = [
     caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
       'Sole full-stack developer and architect — owned all decisions from database schema and API design to AWS infrastructure and deployment',
-      'Built and launched Business Benefit Alliance, a production group insurance enrollment SaaS that has onboarded 92 businesses, processed hundreds of employee applications, and handles dozens of daily active users',
-      'Designed and enforced a multi-step enrollment state machine covering application submission, digital signature capture, PDF generation, payment authorization, and admin fulfillment',
-      'Architected a three-role system (business owner, employee, app admin) with role-scoped data access enforced at the service layer — not just route guards',
-      'Designed and managed all AWS infrastructure including S3 object storage for signed PDFs and insurance card delivery',
-      'Collaborated directly with business stakeholders — gathered requirements, asked clarifying questions, translated workflows into production features, and iterated based on real user feedback',
+      'Automated end-to-end group insurance enrollment for 92 businesses and hundreds of employees — eliminating manual application handling, PDF assembly, and email-based document distribution',
+      'Built invite-based onboarding that auto-links employees to their company on sign-up — zero manual admin assignment required',
+      'Designed a 5-step enrollment state machine that enforces workflow sequence across multiple actors: no employee can skip steps, no owner can authorize payment before all applications are complete',
+      'Eliminated manual PDF assembly: signed documents generated server-side per submission with digital signatures composited in; insurance cards delivered directly from the admin dashboard',
+      'Collaborated directly with business stakeholders to translate real enrollment workflows into production features — requirements gathering, iteration, and production feedback loop',
     ],
   },
   {
@@ -104,41 +104,39 @@ const homelabPoints = [
 
 const projectSystems = [
   {
-    label: 'System Architecture',
+    label: 'Performance Outcomes',
     items: [
-      'Modular full-stack SaaS platform with role-based dashboards',
-      'Scalable Nuxt frontend architecture with API-driven backend',
-      'Multi-role system (users, admins, moderators)',
+      '37,000+ Bible and Quran verses indexed in Weaviate',
+      'RAG retrieval averaging under 200ms (hybrid BM25 + vector)',
+      '80% of inference requests served by local Llama 3.2 on Jetson GPU nodes',
+      '~70% inference cost reduction vs. full OpenAI API routing',
     ],
   },
   {
-    label: 'Core Features',
+    label: 'Reliability Outcomes',
     items: [
-      'AI Bible assistant powered by LLM integration',
-      'Retrieval-Augmented Generation (RAG) system using Weaviate',
-      'Scripture viewer and Quran comparison system',
-      'Real-time livestreaming via AWS IVS and FFmpeg pipelines',
-      'WebRTC-based peer-to-peer debate system',
+      'Zero request-path blocking: FFmpeg transcoding fully decoupled via BullMQ',
+      'Cross-instance WebSocket consistency via Redis pub/sub — no missed messages',
+      '5 independently deployable bounded domains with no cross-domain coupling',
+      'Circuit breaker on AI inference path — auto-routes to fallback on error threshold',
     ],
   },
   {
     label: 'Infrastructure',
     items: [
-      'AWS S3 + MinIO hybrid storage architecture',
-      'PostgreSQL + Prisma data layer',
-      'Redis caching and real-time state management',
-      'Vector search and semantic retrieval pipelines',
+      'Self-hosted Kubernetes (k3s) on 12-node cluster — 8× Pi 5 + 4× Jetson Orin Nano Super',
+      'MinIO S3-compatible object storage with signed URL delivery',
+      'PostgreSQL + Apache AGE for relational and graph queries',
+      'Prometheus + Loki + Grafana observability across all services',
     ],
   },
   {
-    label: 'Advanced Systems',
+    label: 'Architecture Decisions',
     items: [
-      'Game marketplace system',
-      'Digital book publishing tools',
-      'Achievement and user progression system',
-      'Ad monetization and campaign system',
-      'Moderation and content management tools',
-      'AI-assisted content and workflow automation',
+      '3 async BullMQ queues — transcoding, notifications, AI batch — keep API non-blocking',
+      'Prompt complexity classifier routes to local or cloud inference transparently',
+      'Redis pub/sub for cross-instance real-time state — no sticky sessions required',
+      'Domain-driven service modules: each domain owns its schema and data access',
     ],
   },
 ]
@@ -473,7 +471,7 @@ const projectSystems = [
                     </span>
                   </div>
                   <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
-                    Production-grade multi-system platform combining AI, streaming, search, and real-time communication features.
+                    37K+ verses indexed · &lt;200ms RAG retrieval · 80% local inference · ~70% cost reduction · 5 bounded domains · Self-hosted Kubernetes
                   </p>
                   <NuxtLink
                     to="/projects/bible-verse"

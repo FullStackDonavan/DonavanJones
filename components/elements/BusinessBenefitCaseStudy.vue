@@ -30,14 +30,14 @@
 
       <!-- Description -->
       <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-        A full-stack group insurance enrollment platform managing the complete lifecycle from business
-        registration and invite-based employee onboarding through digital signature capture, PDF generation,
-        S3 storage, and admin fulfillment — with three role-scoped dashboards and an append-only audit trail.
+        A full-stack group insurance enrollment platform that automated a previously manual process for 92 businesses —
+        eliminating paper applications, email chains, and manual PDF assembly through invite-based onboarding,
+        server-side document generation, and a state-machine-enforced workflow with three role-scoped dashboards.
       </p>
 
-      <!-- Results -->
+      <!-- Business Impact stats -->
       <div class="mb-6">
-        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Results</h4>
+        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Business Impact</h4>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div
             v-for="stat in stats"
@@ -48,6 +48,20 @@
             <div class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">{{ stat.label }}</div>
           </div>
         </div>
+      </div>
+
+      <!-- Efficiency Outcomes -->
+      <div class="mb-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+        <h4 class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-2">
+          <Icon name="mdi:trending-up" class="text-base" />
+          Efficiency Outcomes
+        </h4>
+        <ul class="space-y-2">
+          <li v-for="outcome in outcomes" :key="outcome" class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <Icon name="mdi:check-circle" class="text-emerald-400 text-base flex-shrink-0 mt-0.5" />
+            {{ outcome }}
+          </li>
+        </ul>
       </div>
 
       <!-- How We Built It -->
@@ -114,10 +128,18 @@
 
 <script setup lang="ts">
 const stats = [
-  { value: '92',   label: 'Businesses Onboarded' },
-  { value: '100s', label: 'Employees Enrolled' },
-  { value: '3',    label: 'Role Dashboards' },
-  { value: '100%', label: 'Audit Covered' },
+  { value: '92',    label: 'Businesses Automated' },
+  { value: '100s',  label: 'Employees Enrolled' },
+  { value: '0',     label: 'Manual Assignment Steps' },
+  { value: '100%',  label: 'Audit Covered' },
+]
+
+const outcomes = [
+  'Automated end-to-end enrollment for 92 businesses — invite codes auto-link employees to the correct company on sign-up, eliminating manual admin assignment.',
+  'Eliminated manual PDF assembly: signed documents generated server-side on every form submission with digital signatures composited in — one coherent file stored to S3.',
+  'Insurance cards delivered directly from the admin dashboard — no email attachments, no manual forwarding per employee.',
+  'Append-only audit trail covers every enrollment action, replacing informal tracking for a workflow that requires legal traceability.',
+  'State machine enforces the full 5-step enrollment sequence across multiple actors — no employee can submit out of order, no owner can authorize payment before all applications are complete.',
 ]
 
 const challenges = [
