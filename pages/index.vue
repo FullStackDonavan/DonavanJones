@@ -294,8 +294,8 @@ function formatDate(dateStr: string): string {
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Years engineering</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">8-Node</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ARM64 Kubernetes cluster</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">12-Node</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Kubernetes cluster (Pi 5 + Jetson)</p>
               </div>
               <div>
                 <p class="text-2xl font-bold text-slate-900 dark:text-white">20k+</p>

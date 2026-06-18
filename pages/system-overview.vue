@@ -4,9 +4,9 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Private AI Cloud — Donavan Jones | System Architecture',
-  description: 'How I designed and operate a private AI cloud: 8-node ARM64 Kubernetes cluster running LLM inference, RAG pipelines, Prometheus monitoring, Gitea CI/CD, and self-hosted storage.',
+  description: 'How I designed and operate a private AI cloud: 8-node ARM64 Kubernetes cluster running LLM inference, RAG pipelines, Prometheus, Loki, Grafana monitoring, Gitea CI/CD, and self-hosted storage.',
   ogTitle: 'Private AI Cloud — Donavan Jones | System Architecture',
-  ogDescription: 'Architecture deep-dive: 8-node ARM64 Kubernetes cluster with LLM inference, RAG pipelines, Prometheus, Grafana, Gitea CI/CD, MinIO, and Weaviate vector search.',
+  ogDescription: 'Architecture deep-dive: 8-node ARM64 Kubernetes cluster with LLM inference, RAG pipelines, Prometheus, Loki, Grafana, Gitea CI/CD, MinIO, and Weaviate vector search.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/system-overview`,
@@ -201,9 +201,10 @@ useSeoMeta({
               </p>
               <p>
                 The platform runs production AI workloads — LLM inference with Llama 3.2, RAG
-                pipelines backed by Weaviate, async job queues, and multi-model routing — all
-                on ARM64 hardware I own and operate. No vendor lock-in. No managed services. Just
-                documented decisions and real operational experience.
+                pipelines backed by Weaviate, async job queues, and multi-model routing. The cluster
+                is heterogeneous by design: 8 Raspberry Pi 5 nodes handle general services, while
+                4 NVIDIA Jetson Orin Nano Supers run GPU-accelerated inference with CUDA. No vendor
+                lock-in. No managed services. Just documented decisions and real operational experience.
               </p>
               <p>
                 This page is a technical walkthrough of the architecture, not a demo. If you want
@@ -224,13 +225,14 @@ useSeoMeta({
             </div>
             <div class="p-5 space-y-4">
               <div v-for="spec in [
-                { label: 'Hardware', value: '8× Raspberry Pi 5', color: 'sky' },
-                { label: 'Architecture', value: 'ARM64 (aarch64)', color: 'sky' },
+                { label: 'General Nodes', value: '8× Raspberry Pi 5 (ARM64)', color: 'sky' },
+                { label: 'GPU Nodes', value: '4× Jetson Orin Nano Super', color: 'green' },
+                { label: 'Total Nodes', value: '12 (1 control plane + 11 workers)', color: 'sky' },
                 { label: 'Orchestration', value: 'k3s — Lightweight Kubernetes', color: 'purple' },
                 { label: 'Networking', value: 'Flannel CNI · Cloudflare Tunnel', color: 'purple' },
-                { label: 'AI Inference', value: 'Llama 3.2 · Weaviate · Embeddings', color: 'emerald' },
+                { label: 'AI Inference', value: 'Llama 3.2 · CUDA · Weaviate · RAG', color: 'green' },
                 { label: 'Storage', value: 'MinIO S3 · PostgreSQL · Redis', color: 'emerald' },
-                { label: 'Observability', value: 'Prometheus · Grafana · Alertmanager', color: 'rose' },
+                { label: 'Observability', value: 'Prometheus · Loki · Grafana', color: 'rose' },
                 { label: 'CI/CD', value: 'Gitea · Actions Runners · Auto Deploy', color: 'amber' },
               ]" :key="spec.label" class="flex items-start justify-between gap-4 text-sm">
                 <span class="text-slate-500 dark:text-slate-400 shrink-0">{{ spec.label }}</span>
@@ -254,8 +256,9 @@ useSeoMeta({
           </div>
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Cluster Node Layout</h2>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
-            One control-plane node handles scheduling and the API server. Seven worker nodes run workloads.
-            All nodes communicate over a private LAN; external traffic enters through a Cloudflare Tunnel.
+            12-node heterogeneous cluster: 8 Raspberry Pi 5 nodes handle general workloads, and
+            4 NVIDIA Jetson Orin Nano Supers run GPU-accelerated AI inference. All nodes communicate
+            over a private LAN; external traffic enters through a Cloudflare Tunnel.
           </p>
         </div>
 
@@ -289,11 +292,14 @@ useSeoMeta({
           </div>
         </div>
 
-        <!-- Node grid -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- ── Raspberry Pi 5 tier ── -->
+        <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-3">
+          Raspberry Pi 5 — General Workers
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
           <!-- Control plane -->
-          <div class="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-5 col-span-full sm:col-span-2 lg:col-span-1">
+          <div class="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-5">
             <div class="flex items-center gap-2 mb-3">
               <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
                 <Icon name="mdi:kubernetes" class="text-purple-400 text-sm" />
@@ -304,30 +310,30 @@ useSeoMeta({
               </div>
             </div>
             <div class="space-y-1.5 text-[11px]">
-              <div class="flex justify-between">
-                <span class="text-slate-500 dark:text-slate-400">Role</span>
-                <span class="text-slate-700 dark:text-slate-300 font-medium">API Server · Scheduler · etcd</span>
+              <div class="flex justify-between gap-2">
+                <span class="text-slate-500 dark:text-slate-400 shrink-0">Role</span>
+                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">API Server · Scheduler · etcd</span>
               </div>
-              <div class="flex justify-between">
-                <span class="text-slate-500 dark:text-slate-400">Hardware</span>
-                <span class="text-slate-700 dark:text-slate-300 font-medium">Raspberry Pi 5</span>
+              <div class="flex justify-between gap-2">
+                <span class="text-slate-500 dark:text-slate-400 shrink-0">Hardware</span>
+                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">Raspberry Pi 5</span>
               </div>
-              <div class="flex justify-between">
-                <span class="text-slate-500 dark:text-slate-400">Arch</span>
-                <span class="text-slate-700 dark:text-slate-300 font-medium">ARM64</span>
+              <div class="flex justify-between gap-2">
+                <span class="text-slate-500 dark:text-slate-400 shrink-0">Arch</span>
+                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">ARM64</span>
               </div>
             </div>
           </div>
 
-          <!-- Worker nodes -->
+          <!-- Pi worker nodes -->
           <div v-for="n in [
             { id: 'node-01', workload: 'FastAPI · Nitro · App Services' },
-            { id: 'node-02', workload: 'Llama 3.2 · AI Inference' },
-            { id: 'node-03', workload: 'Weaviate · Vector Search' },
-            { id: 'node-04', workload: 'PostgreSQL · Redis · AGE' },
-            { id: 'node-05', workload: 'MinIO Object Storage' },
-            { id: 'node-06', workload: 'Gitea · Actions Runners' },
-            { id: 'node-07', workload: 'Prometheus · Grafana · Alerts' },
+            { id: 'node-02', workload: 'PostgreSQL · Redis · Apache AGE' },
+            { id: 'node-03', workload: 'MinIO Object Storage' },
+            { id: 'node-04', workload: 'Weaviate · Vector Search' },
+            { id: 'node-05', workload: 'Gitea · Actions Runners' },
+            { id: 'node-06', workload: 'Prometheus · Loki · Grafana · Alerts' },
+            { id: 'node-07', workload: 'General Worker · Overflow' },
           ]" :key="n.id"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
           >
@@ -344,6 +350,43 @@ useSeoMeta({
           </div>
 
         </div>
+
+        <!-- ── Jetson Orin Nano Super tier ── -->
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[10px] uppercase tracking-widest text-green-500 font-semibold">
+            NVIDIA Jetson Orin Nano Super — GPU / AI Workers
+          </p>
+          <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 font-medium">
+            <Icon name="mdi:gpu" class="text-xs" />
+            CUDA · 1024 cores
+          </span>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div v-for="n in [
+            { id: 'jetson-01', workload: 'Llama 3.2 · LLM Inference' },
+            { id: 'jetson-02', workload: 'Embeddings · Model Serving' },
+            { id: 'jetson-03', workload: 'RAG Pipeline Worker · AI Tasks' },
+            { id: 'jetson-04', workload: 'Multi-model Routing · Overflow' },
+          ]" :key="n.id"
+            class="rounded-2xl border border-green-500/30 bg-green-500/5 p-5"
+          >
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                <Icon name="mdi:chip" class="text-green-400 text-sm" />
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-slate-900 dark:text-white">Jetson Orin Nano Super</p>
+                <p class="text-[10px] text-green-400">{{ n.id }}</p>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed mb-3">{{ n.workload }}</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="text-[9px] px-1.5 py-0.5 rounded border border-green-500/20 bg-green-500/10 text-green-400">ARM64</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded border border-green-500/20 bg-green-500/10 text-green-400">GPU</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded border border-green-500/20 bg-green-500/10 text-green-400">8GB LPDDR5</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -358,13 +401,13 @@ useSeoMeta({
           </div>
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Monitoring Stack</h2>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
-            Prometheus scrapes metrics from every node and service every 15 seconds. Grafana visualizes
-            cluster health, AI workload performance, and service latency. Alertmanager fires on degraded
-            conditions before they become incidents.
+            Full observability across the cluster: Prometheus for metrics, Loki for log aggregation,
+            Grafana for unified dashboards, and Alertmanager for alert routing. Every node, pod,
+            and service is instrumented.
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-5 mb-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           <div v-for="tool in [
             {
               icon: 'mdi:chart-scatter-plot', color: 'rose',
@@ -373,10 +416,16 @@ useSeoMeta({
               details: ['Scrape interval: 15s', 'Node exporter on every Pi', 'kube-state-metrics', 'Custom service metrics'],
             },
             {
+              icon: 'mdi:text-box-search-outline', color: 'sky',
+              name: 'Loki',
+              role: 'Log aggregation & querying',
+              details: ['Cluster-wide log collection', 'Promtail agent on each node', 'LogQL query language', 'Grafana log explorer'],
+            },
+            {
               icon: 'mdi:view-dashboard', color: 'amber',
               name: 'Grafana',
-              role: 'Dashboards & visualization',
-              details: ['Cluster resource dashboards', 'AI inference latency panels', 'Service health overview', 'Storage utilization tracking'],
+              role: 'Unified dashboards & visualization',
+              details: ['Cluster resource dashboards', 'AI inference latency panels', 'Log + metrics correlation', 'Storage utilization tracking'],
             },
             {
               icon: 'mdi:bell-ring-outline', color: 'emerald',
@@ -391,6 +440,7 @@ useSeoMeta({
               <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
                 :class="{
                   'bg-rose-500/10 border-rose-500/20': tool.color === 'rose',
+                  'bg-sky-500/10 border-sky-500/20': tool.color === 'sky',
                   'bg-amber-500/10 border-amber-500/20': tool.color === 'amber',
                   'bg-emerald-500/10 border-emerald-500/20': tool.color === 'emerald',
                 }"
@@ -398,6 +448,7 @@ useSeoMeta({
                 <Icon :name="tool.icon" class="text-sm"
                   :class="{
                     'text-rose-400': tool.color === 'rose',
+                    'text-sky-400': tool.color === 'sky',
                     'text-amber-400': tool.color === 'amber',
                     'text-emerald-400': tool.color === 'emerald',
                   }"
@@ -620,6 +671,7 @@ useSeoMeta({
           <div v-for="shot in [
             { tool: 'Grafana', desc: 'Cluster resource dashboard', file: 'grafana-dashboard.png', color: 'amber', icon: 'mdi:view-dashboard' },
             { tool: 'Prometheus', desc: 'Metrics explorer & query UI', file: 'prometheus-metrics.png', color: 'rose', icon: 'mdi:chart-scatter-plot' },
+            { tool: 'Loki', desc: 'Log aggregation & LogQL explorer', file: 'loki-logs.png', color: 'sky', icon: 'mdi:text-box-search-outline' },
             { tool: 'Gitea Pipelines', desc: 'CI/CD Actions pipeline run', file: 'gitea-pipeline.png', color: 'emerald', icon: 'mdi:source-branch' },
             { tool: 'Kubernetes', desc: 'k3s dashboard / node view', file: 'kubernetes-dashboard.png', color: 'sky', icon: 'mdi:kubernetes' },
             { tool: 'MinIO', desc: 'Object storage bucket browser', file: 'minio-dashboard.png', color: 'amber', icon: 'mdi:harddisk' },

@@ -138,10 +138,10 @@
     </div>
     <div class="px-4 py-3">
       <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Cluster</p>
-      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">8</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">12</div>
       <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Kubernetes Nodes</div>
       <div class="flex flex-wrap gap-1.5">
-        <span v-for="t in ['k3s', 'Kubernetes', 'ARM64']" :key="t"
+        <span v-for="t in ['k3s', '8× Pi 5', '4× Jetson']" :key="t"
           class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
           {{ t }}
         </span>
