@@ -3,15 +3,15 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Infrastructure Engineering — Donavan Jones',
-  description: 'Designing and operating a self-hosted Kubernetes cluster on ARM64 — covering storage, networking, observability, CI/CD automation, and AI inference workloads.',
+  description: 'Designing and operating a 12-node self-hosted Kubernetes cluster — 8× Raspberry Pi 5 + 4× NVIDIA Jetson Orin Nano Super — covering storage, networking, observability, CI/CD, and local AI inference.',
   ogTitle: 'Infrastructure Engineering — Donavan Jones',
-  ogDescription: 'Self-hosted Kubernetes on 8 Raspberry Pi 5 ARM64 nodes — distributed storage, networking, observability, CI/CD automation, and AI inference workloads.',
+  ogDescription: '12-node self-hosted Kubernetes cluster (8× Pi 5 + 4× Jetson Orin Nano Super) — distributed storage, networking, Prometheus + Loki observability, CI/CD, and on-cluster AI inference.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/systems/infrastructure`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Infrastructure Engineering — Donavan Jones',
-  twitterDescription: 'Self-hosted Kubernetes on ARM64 — storage, networking, observability, CI/CD, and AI inference workloads.',
+  twitterDescription: '12-node self-hosted Kubernetes (ARM64 + CUDA) — Prometheus/Loki observability, Gitea CI/CD, MinIO storage, and local LLM inference on Jetson.',
   canonical: `${_SITE}/systems/infrastructure`,
 })
 
@@ -26,21 +26,27 @@ const principles = [
 const layers = [
   {
     icon: 'mdi:raspberry-pi', color: 'sky',
-    title: 'Compute Cluster',
-    desc: 'k3s on 8 Raspberry Pi 5 ARM64 nodes. Workload scheduling, resource quotas, and pod autoscaling.',
+    title: 'General Compute',
+    desc: 'k3s on 8 Raspberry Pi 5 ARM64 nodes — control plane + app services, databases, queues, CI/CD, and storage workloads.',
     tags: ['k3s', 'Raspberry Pi 5', 'ARM64'],
+  },
+  {
+    icon: 'mdi:chip', color: 'green',
+    title: 'GPU / AI Tier',
+    desc: '4 NVIDIA Jetson Orin Nano Super nodes dedicated to local LLM inference, embedding generation, and RAG pipeline workers.',
+    tags: ['Jetson Orin Nano Super', 'CUDA', '8GB LPDDR5'],
   },
   {
     icon: 'mdi:lan', color: 'purple',
     title: 'Networking',
-    desc: 'Ingress NGINX for cluster-edge routing. Internal DNS, service mesh patterns, and cert management.',
-    tags: ['Ingress NGINX', 'cert-manager', 'DNS'],
+    desc: 'Flannel CNI for pod networking. Ingress NGINX for cluster routing. Cloudflare Tunnel for secure public ingress without open ports.',
+    tags: ['Flannel CNI', 'Ingress NGINX', 'Cloudflare Tunnel'],
   },
   {
     icon: 'mdi:harddisk', color: 'emerald',
     title: 'Storage',
-    desc: 'MinIO S3-compatible object storage for assets and model weights. Persistent volumes for stateful workloads.',
-    tags: ['MinIO', 'PVC', 'S3-Compatible'],
+    desc: 'MinIO S3-compatible object storage for assets and model weights. PostgreSQL + Apache AGE and Weaviate for structured and vector data.',
+    tags: ['MinIO', 'PostgreSQL + AGE', 'Weaviate'],
   },
   {
     icon: 'mdi:source-branch', color: 'amber',
@@ -61,39 +67,46 @@ const failures = [
 const observability = [
   {
     icon: 'mdi:chart-line', color: 'sky',
-    title: 'Metrics',
-    desc: 'Prometheus scrapes node, container, and application metrics. Grafana dashboards surface CPU, memory, queue depth, and inference latency.',
+    title: 'Prometheus',
+    desc: 'Scrapes node, container, and application metrics. Surfaces CPU, memory, queue depth, and LLM inference latency across all cluster nodes.',
   },
   {
-    icon: 'mdi:file-document-outline', color: 'purple',
-    title: 'Logs',
-    desc: 'Centralized structured logging across all containers. Correlation IDs thread through API, worker, and AI service logs.',
+    icon: 'mdi:text-box-search-outline', color: 'purple',
+    title: 'Loki',
+    desc: 'Log aggregation for all container workloads. Correlation IDs thread through API, worker, and AI service logs. Queried directly from Grafana.',
   },
   {
-    icon: 'mdi:eye', color: 'emerald',
-    title: 'Tracing',
-    desc: 'Request tracing across distributed services. Health check endpoints polled by the load balancer per dependency.',
+    icon: 'mdi:view-dashboard-outline', color: 'amber',
+    title: 'Grafana',
+    desc: 'Unified dashboard layer over Prometheus metrics and Loki logs. Custom boards for inference latency, queue throughput, and storage pressure.',
+  },
+  {
+    icon: 'mdi:bell-alert-outline', color: 'emerald',
+    title: 'Alertmanager',
+    desc: 'Routes alerts from Prometheus rules. Notifies on sustained error rates, queue stalls, node resource pressure, and service health failures.',
   },
 ]
 
 const stack = [
-  'Kubernetes (k3s)', 'Raspberry Pi 5', 'Docker', 'ARM64',
-  'Ingress NGINX', 'cert-manager', 'MinIO', 'Gitea',
-  'Actions Runners', 'Prometheus', 'Grafana', 'Alertmanager',
+  'Kubernetes (k3s)', 'Raspberry Pi 5', 'NVIDIA Jetson Orin Nano Super', 'ARM64',
+  'CUDA', 'Docker', 'Flannel CNI', 'Cloudflare Tunnel',
+  'Ingress NGINX', 'cert-manager', 'MinIO', 'PostgreSQL + AGE',
+  'Weaviate', 'Gitea', 'Actions Runners', 'Prometheus',
+  'Loki', 'Grafana', 'Alertmanager',
 ]
 
 const faqs = [
   {
     question: 'What does your infrastructure look like?',
-    answer: 'A self-hosted k3s Kubernetes cluster running on 8 Raspberry Pi 5 ARM64 nodes. It supports AI inference, databases, APIs, media processing, and CI/CD pipelines across a single unified deployment target.'
+    answer: 'A 12-node self-hosted k3s Kubernetes cluster: 8 Raspberry Pi 5 ARM64 nodes for general workloads and 4 NVIDIA Jetson Orin Nano Super nodes for GPU-accelerated AI inference. It runs databases, APIs, media processing, CI/CD, and local LLM inference as a single unified deployment target.'
   },
   {
     question: 'What services do you self-host?',
     answer: 'PostgreSQL, Redis, MinIO object storage, Weaviate, Gitea, AI inference workloads (Llama 3.2), and custom applications including the Bible Verse platform.'
   },
   {
-    question: 'How do you handle AI workloads on ARM64?',
-    answer: 'AI workloads run as containerized pods scheduled to capable nodes. LLM inference and embedding generation run on dedicated pods with resource limits. Heavy batch jobs are enqueued via BullMQ and processed asynchronously.'
+    question: 'How do you handle AI workloads on the cluster?',
+    answer: 'AI inference runs on 4 dedicated NVIDIA Jetson Orin Nano Super nodes with CUDA acceleration. Llama 3.2 handles ~80% of requests locally; the OpenAI API handles edge cases. Embedding generation, RAG pipeline workers, and multi-model routing are each pinned to separate Jetson pods via node selectors.'
   },
   {
     question: 'How is your storage architecture designed?',
@@ -105,7 +118,7 @@ const faqs = [
   },
   {
     question: 'How do you monitor the cluster?',
-    answer: 'Prometheus scrapes metrics from nodes, pods, and applications. Grafana dashboards surface queue depth, inference latency, and memory pressure. Alertmanager notifies on sustained error rates or queue stalls.'
+    answer: 'Prometheus scrapes metrics from all nodes and pods. Loki aggregates container logs with correlation IDs across API, worker, and AI services. Grafana provides unified dashboards over both. Alertmanager routes alerts on sustained error rates, queue stalls, or node resource pressure.'
   },
   {
     question: 'Do you use cloud providers?',
@@ -113,7 +126,7 @@ const faqs = [
   },
   {
     question: 'What makes this architecture unique?',
-    answer: 'It combines ARM64 homelab hardware, Kubernetes orchestration, self-hosted AI inference, and full-stack application deployment into a single unified ecosystem supporting real production applications.'
+    answer: 'It combines two distinct hardware tiers — ARM64 general compute (Pi 5) and CUDA GPU nodes (Jetson Orin Nano Super) — under a single k3s control plane. Self-hosted AI inference, observability (Prometheus + Loki + Grafana), CI/CD (Gitea), and distributed storage (MinIO + Weaviate + PostgreSQL) all run on-cluster without cloud dependency.'
   },
 ]
 
@@ -159,8 +172,9 @@ useHead({
           Building Private Cloud Infrastructure
         </h1>
         <p class="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-          Designing and operating a self-hosted Kubernetes cluster with distributed storage,
-          networking, observability, CI/CD automation, and AI workloads on ARM64 nodes.
+          Designing and operating a 12-node self-hosted Kubernetes cluster — 8× Raspberry Pi 5 for general workloads
+          and 4× NVIDIA Jetson Orin Nano Super for GPU-accelerated AI inference — with distributed storage,
+          Prometheus + Loki observability, Gitea CI/CD, and Cloudflare Tunnel ingress.
         </p>
       </div>
 
@@ -249,7 +263,7 @@ useHead({
       <section class="mb-10">
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">Infrastructure Layers</h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div
             v-for="layer in layers"
             :key="layer.title"
@@ -261,6 +275,7 @@ useHead({
               class="w-10 h-10 rounded-lg flex items-center justify-center border"
               :class="{
                 'bg-sky-500/10 border-sky-500/20':         layer.color === 'sky',
+                'bg-green-500/10 border-green-500/20':     layer.color === 'green',
                 'bg-purple-500/10 border-purple-500/20':   layer.color === 'purple',
                 'bg-emerald-500/10 border-emerald-500/20': layer.color === 'emerald',
                 'bg-amber-500/10 border-amber-500/20':     layer.color === 'amber',
@@ -269,6 +284,7 @@ useHead({
               <Icon :name="layer.icon" class="text-xl"
                 :class="{
                   'text-sky-400':    layer.color === 'sky',
+                  'text-green-400':  layer.color === 'green',
                   'text-purple-400': layer.color === 'purple',
                   'text-emerald-400':layer.color === 'emerald',
                   'text-amber-400':  layer.color === 'amber',
@@ -296,7 +312,7 @@ useHead({
       <section class="mb-10">
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">Observability Stack</h2>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="obs in observability"
             :key="obs.title"
@@ -309,6 +325,7 @@ useHead({
                 :class="{
                   'bg-sky-500/10 border-sky-500/20':         obs.color === 'sky',
                   'bg-purple-500/10 border-purple-500/20':   obs.color === 'purple',
+                  'bg-amber-500/10 border-amber-500/20':     obs.color === 'amber',
                   'bg-emerald-500/10 border-emerald-500/20': obs.color === 'emerald',
                 }"
               >
@@ -316,6 +333,7 @@ useHead({
                   :class="{
                     'text-sky-400':    obs.color === 'sky',
                     'text-purple-400': obs.color === 'purple',
+                    'text-amber-400':  obs.color === 'amber',
                     'text-emerald-400':obs.color === 'emerald',
                   }"
                 />
