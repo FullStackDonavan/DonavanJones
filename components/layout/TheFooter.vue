@@ -14,8 +14,11 @@
             Donavan Jones
           </h2>
 
-          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            Full-Stack Engineer &amp; Platform Builder — AI systems, SaaS platforms, and self-hosted infrastructure.
+          <p class="mt-1 text-sm font-medium text-gray-800 dark:text-gray-200">
+            AI Systems Engineer &amp; Platform Builder
+          </p>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            Building production AI systems, SaaS platforms, and self-hosted infrastructure.
           </p>
 
           <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
@@ -113,7 +116,7 @@
             </div>
 
             <p class="mt-4 text-xs text-gray-500 dark:text-gray-500">
-              Open to freelance & full-time opportunities
+              Open to senior IC, staff, and contract opportunities
             </p>
           </div>
 

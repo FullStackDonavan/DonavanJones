@@ -50,7 +50,7 @@ useHead({
             '@id': `${SITE}/#person`,
             name: 'Donavan Jones',
             url: SITE,
-            jobTitle: 'Full-Stack Engineer & Systems Architect',
+            jobTitle: 'AI Systems Engineer & Platform Builder',
             worksFor: { '@id': `${SITE}/#organization` },
             sameAs: [
               'https://github.com/FullStackDonavan',

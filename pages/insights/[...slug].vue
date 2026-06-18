@@ -159,11 +159,11 @@ function isoDate(d: string | undefined) {
                   <NuxtLink
                     to="/about/"
                     rel="author"
-                    aria-label="Donavan Jones — Full-Stack Engineer & Platform Builder"
+                    aria-label="Donavan Jones — AI Systems Engineer & Platform Builder"
                   >
                     <img
                       src="/images/donavan.jpg"
-                      alt="Donavan Jones — Full-Stack Engineer & Platform Builder"
+                      alt="Donavan Jones — AI Systems Engineer & Platform Builder"
                       width="72"
                       height="72"
                       class="w-[72px] h-[72px] rounded-full border-2 border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800"
@@ -186,7 +186,7 @@ function isoDate(d: string | undefined) {
                       to="/"
                       class="text-xs px-2 py-0.5 rounded-full border bg-sky-500/10 border-sky-500/20 text-sky-500 font-medium hover:bg-sky-500/20 transition-colors"
                     >
-                      Full-Stack Engineer &amp; Platform Builder
+                      AI Systems Engineer &amp; Platform Builder
                     </NuxtLink>
                   </div>
 
@@ -195,10 +195,9 @@ function isoDate(d: string | undefined) {
                   </p>
 
                   <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
-                    Donavan Jones is a Full-Stack Engineer, Systems Architect, and Platform Builder with
-                    5+ years of experience designing, deploying, and operating production software systems.
-                    His work spans AI applications, RAG pipelines, Kubernetes infrastructure, real-time
-                    communication platforms, and modern SaaS architecture.
+                    Donavan Jones is an AI Systems Engineer with 20+ years building production systems
+                    end-to-end — RAG pipelines, local LLM inference on self-hosted Kubernetes, async job queues,
+                    and full-stack SaaS platforms. He owns the full stack from bare-metal to browser.
                   </p>
 
                   <!-- Homepage Internal Link -->

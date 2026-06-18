@@ -374,6 +374,64 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
+    <!-- ── RECRUITER STRIP ───────────────────────────────────────────────── -->
+    <section class="w-full bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6 py-8">
+
+        <div class="flex flex-wrap items-center gap-2 mb-5">
+          <span class="inline-flex items-center gap-1.5 text-xs text-green-500 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            Open to new roles
+          </span>
+          <span class="w-px h-3.5 bg-slate-300 dark:bg-slate-700"></span>
+          <NuxtLink to="/hire-me" class="text-xs text-sky-500 hover:text-sky-400 transition-colors font-medium">
+            View full details →
+          </NuxtLink>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6">
+
+          <!-- Looking for -->
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Looking For</p>
+            <ul class="space-y-2">
+              <li v-for="role in ['Senior Full-Stack Engineer', 'Platform Engineer', 'AI Systems Engineer']" :key="role"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:check-circle" class="text-sky-400 text-base flex-shrink-0" />
+                {{ role }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Preferred -->
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Preferred</p>
+            <ul class="space-y-2">
+              <li v-for="pref in ['Remote', 'U.S.-based', 'Individual contributor']" :key="pref"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
+                {{ pref }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Core strengths -->
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Core Strengths</p>
+            <ul class="space-y-2">
+              <li v-for="strength in ['End-to-end ownership', 'AI in production', 'Kubernetes & platform engineering', 'SaaS architecture']" :key="strength"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
+                {{ strength }}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
     <!-- ── WHAT I FOCUS ON ────────────────────────────────────────────────── -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
