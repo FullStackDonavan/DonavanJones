@@ -35,26 +35,35 @@ async function submit() {
 
 const services = [
   {
-    icon: 'mdi:laptop-account',
+    icon: 'mdi:phone-missed',
     color: 'sky',
-    title: 'Custom Web Applications',
-    description: 'Need something built that off-the-shelf software can\'t handle? I design and build web apps from scratch — customer portals, booking systems, workflow tools, anything with a login and a database behind it.',
-    examples: ['Customer portals', 'Booking & scheduling apps', 'Workflow automation tools', 'Internal business dashboards'],
+    title: 'AI Lead Capture & After-Hours Agent',
+    description: 'Stop losing leads when you\'re unavailable. AI answers missed calls, collects the caller\'s name, number, and what they need — then books the appointment and texts you a summary automatically.',
+    examples: ['Missed call AI response', 'Automated appointment booking', 'Lead info collection', 'SMS summary to owner'],
   },
   {
-    icon: 'mdi:view-dashboard-outline',
+    icon: 'mdi:chat-processing-outline',
     color: 'emerald',
-    title: 'SaaS & Admin Platforms',
-    description: 'Have a business idea that should be software? I\'ve built complete SaaS platforms end-to-end — user accounts, subscriptions, role-based access, and all the admin tools you need to run it.',
-    examples: ['Multi-tenant SaaS products', 'Subscription billing integration', 'Role-based user management', 'Admin fulfillment dashboards'],
+    title: 'AI Website Chat That Converts',
+    description: 'Replace your dead contact form with a 24/7 AI sales assistant. It answers pricing questions, qualifies leads, and pushes visitors toward booking — integrated with your email, calendar, or CRM.',
+    examples: ['Pricing & FAQ answers', 'Lead qualification', 'Booking & scheduling', 'Email / CRM integration'],
   },
   {
-    icon: 'mdi:cog-outline',
+    icon: 'mdi:cog-sync-outline',
     color: 'violet',
-    title: 'Internal Tools & Portals',
-    description: 'Spreadsheets and email chains slowing your team down? I build internal tools — employee portals, document management systems, inventory trackers — that replace manual work with software your team actually uses.',
-    examples: ['Employee onboarding portals', 'Document management systems', 'Inventory & order tracking', 'Report generation pipelines'],
+    title: 'Admin & Workflow Automation',
+    description: 'Automate the back-office tasks eating your team\'s time — quote generation, intake form processing, follow-up emails, review requests — all running without manual input.',
+    examples: ['Quote & invoice generation', 'Intake form → CRM pipeline', 'Automated follow-up emails', 'Google review requests'],
   },
+]
+
+const niches = [
+  { icon: 'mdi:home-roof', label: 'Roofing & Contractors' },
+  { icon: 'mdi:air-conditioner', label: 'HVAC & Plumbing' },
+  { icon: 'mdi:scale-balance', label: 'Law Firms' },
+  { icon: 'mdi:spa-outline', label: 'Med Spas & Dental' },
+  { icon: 'mdi:shield-account', label: 'Insurance Brokers' },
+  { icon: 'mdi:home-city-outline', label: 'Real Estate' },
 ]
 
 const steps = [
@@ -106,8 +115,12 @@ const faqs = [
     a: 'Yes. Everything built for your project is yours. You get the source code, the hosting setup, and complete control. I\'m not a rental — I hand it over.',
   },
   {
-    q: 'Can you work on an existing project?',
-    a: 'Yes. I take on projects that are already in progress — adding features, fixing what\'s broken, or picking up where another developer left off.',
+    q: 'What kinds of businesses do you work with?',
+    a: 'Local service businesses — roofing, HVAC, law firms, med spas, insurance brokers, real estate agencies, dental offices. Anywhere that relies on inbound calls, appointments, or repetitive admin work is a good fit.',
+  },
+  {
+    q: 'Do I need to manage or maintain the AI system myself?',
+    a: 'No. I build it, deploy it, connect it to your existing phone number, website, or calendar, and hand it over working. I\'ll walk you through how it works and stay available after launch.',
   },
 ]
 </script>
@@ -271,13 +284,13 @@ const faqs = [
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight
                    text-slate-900 dark:text-white mb-6 leading-tight">
-          I build web apps for<br class="hidden sm:block" />
-          <span class="text-sky-500">growing businesses</span>
+          AI that gets your business<br class="hidden sm:block" />
+          <span class="text-sky-500">more leads &amp; less admin</span>
         </h1>
 
         <p class="max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-          Custom software, SaaS platforms, and internal tools — built from scratch and
-          handed over to you completely. No subscriptions, no lock-in, no jargon.
+          I build AI lead capture systems, after-hours agents, and workflow automation for local businesses.
+          You get the system — built, connected to your business, and handed over. No platform lock-in.
         </p>
 
         <div class="flex flex-wrap justify-center gap-3">
@@ -304,11 +317,11 @@ const faqs = [
       <!-- ── SERVICES ────────────────────────────────────────────── -->
       <div class="mb-20">
         <div class="text-center mb-10">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">What I Build</h2>
-          <p class="text-slate-500 dark:text-slate-400">If your business runs on software, I can build it.</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">AI Services for Local Businesses</h2>
+          <p class="text-slate-500 dark:text-slate-400">Outcome-focused systems. Built once, connected to your business, handed over to you.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
           <div
             v-for="service in services"
             :key="service.title"
@@ -357,6 +370,22 @@ const faqs = [
             </div>
           </div>
         </div>
+
+        <!-- Best for niches -->
+        <div>
+          <p class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Best for</p>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="niche in niches"
+              :key="niche.label"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 text-xs text-slate-600 dark:text-slate-400"
+            >
+              <Icon :name="niche.icon" class="text-sm text-sky-400 flex-shrink-0" />
+              {{ niche.label }}
+            </span>
+          </div>
+        </div>
+
       </div>
 
       <!-- ── CASE STUDY ──────────────────────────────────────────── -->

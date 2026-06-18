@@ -484,6 +484,55 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
+    <!-- ── LOCAL BUSINESS AI ────────────────────────────────────────────────── -->
+    <section class="bg-white dark:bg-slate-900/30 py-14 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-7 sm:p-10">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-8">
+
+            <div class="flex-1">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-medium">
+                <Icon name="mdi:store-outline" class="text-sm" />
+                For Local Businesses
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                AI that gets you more leads.<br class="hidden sm:block" />
+                Automation that gives you your time back.
+              </h2>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl mb-5">
+                I build AI lead capture systems, after-hours agents, and workflow automation for local businesses —
+                roofing, HVAC, law firms, med spas, and more. You get the system built and handed over. No platform subscriptions.
+              </p>
+              <NuxtLink
+                to="/hire-me"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white transition-colors duration-200 shadow-lg shadow-amber-500/20"
+              >
+                <Icon name="mdi:arrow-right-circle-outline" class="text-base" />
+                See AI Services
+              </NuxtLink>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 lg:w-64 shrink-0">
+              <div
+                v-for="outcome in [
+                  { icon: 'mdi:phone-missed', text: 'Stop losing leads after hours' },
+                  { icon: 'mdi:chat-processing-outline', text: '24/7 AI sales assistant' },
+                  { icon: 'mdi:cog-sync-outline', text: 'Admin & follow-ups automated' },
+                  { icon: 'mdi:account-off-outline', text: 'No extra staff needed' },
+                ]"
+                :key="outcome.text"
+                class="flex items-start gap-2 p-3 rounded-xl border border-amber-500/15 bg-white dark:bg-slate-900/60"
+              >
+                <Icon :name="outcome.icon" class="text-amber-400 text-sm flex-shrink-0 mt-0.5" />
+                <span class="text-xs text-slate-600 dark:text-slate-400 leading-snug">{{ outcome.text }}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ── CURRENTLY BUILDING ─────────────────────────────────────────────── -->
     <section class="bg-white dark:bg-slate-900/30 py-12 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
