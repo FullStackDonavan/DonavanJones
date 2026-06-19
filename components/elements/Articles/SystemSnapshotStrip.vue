@@ -38,23 +38,23 @@ defineProps({
     default: () => [
       {
         title: "Scripture Engine",
-        subtitle: "Bible + Quran Data",
+        subtitle: "37K+ verses · Weaviate RAG",
         icon: "mdi:book-open-page-variant"
       },
       {
         title: "AI Reasoning",
-        subtitle: "Bible Logic",
+        subtitle: "80% local · <200ms retrieval",
         icon: "mdi:brain"
       },
       {
-        title: "Live System",
-        subtitle: "Streaming + Chat",
-        icon: "mdi:video-wireless"
+        title: "Async Pipeline",
+        subtitle: "BullMQ · FFmpeg · Non-blocking",
+        icon: "mdi:layers-triple"
       },
       {
-        title: "Cloud Infra",
-        subtitle: "AWS + Scalable Backend",
-        icon: "mdi:cloud-outline"
+        title: "Self-Hosted Infra",
+        subtitle: "12-node k3s · Jetson GPU tier",
+        icon: "mdi:server-network"
       }
     ]
   }

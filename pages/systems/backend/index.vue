@@ -38,8 +38,8 @@ const areas = [
   {
     icon: 'mdi:database', color: 'emerald',
     title: 'Databases',
-    desc: 'PostgreSQL with Prisma ORM, Redis for caching and sessions, Weaviate for vector search.',
-    tags: ['PostgreSQL', 'Redis', 'Weaviate'],
+    desc: 'PostgreSQL + Apache AGE for relational and graph queries. Redis for caching and pub/sub. Weaviate for vector search and hybrid retrieval.',
+    tags: ['PostgreSQL', 'Apache AGE', 'Redis', 'Weaviate'],
   },
   {
     icon: 'mdi:swap-horizontal', color: 'amber',
@@ -58,8 +58,9 @@ const failures = [
 
 const stack = [
   'Nuxt 3 / Nitro', 'FastAPI', 'Node.js', 'TypeScript',
-  'PostgreSQL', 'Prisma', 'Redis', 'BullMQ',
-  'Weaviate', 'MinIO', 'Zod', 'Docker',
+  'PostgreSQL', 'Apache AGE', 'Prisma', 'Redis',
+  'BullMQ', 'Weaviate', 'MinIO', 'Zod',
+  'Docker', 'Cloudflare Tunnel', 'Loki',
 ]
 
 const faqs = [
@@ -73,7 +74,7 @@ const faqs = [
   },
   {
     question: 'How do you handle databases?',
-    answer: 'PostgreSQL with Prisma for typed, migrated schemas. Redis for caching, rate limiting, and pub/sub. Weaviate for vector search. No cross-domain direct table access — each domain owns its own data layer.'
+    answer: 'PostgreSQL + Apache AGE for relational and graph-traversal queries on the same database. Prisma for typed, migrated schemas. Redis for caching, rate limiting, and pub/sub. Weaviate for vector search and hybrid BM25 retrieval. No cross-domain direct table access — each domain owns its own data layer.'
   },
   {
     question: 'How do you handle authentication?',

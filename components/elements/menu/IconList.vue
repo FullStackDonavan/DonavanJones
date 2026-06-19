@@ -47,7 +47,7 @@ watch(
              shadow shadow-sky-500/20"
     >
       <Icon name="mdi:briefcase-outline" class="text-sm" />
-      Hire Me
+      Work With Me
     </NuxtLink>
 
     <span

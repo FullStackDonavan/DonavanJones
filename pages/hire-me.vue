@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Hire Me — Donavan Jones',
-  description: 'I build web apps, SaaS platforms, and internal tools for growing businesses. Let\'s talk about your project.',
-  ogTitle: 'Hire Me — Donavan Jones',
-  ogDescription: 'I build web apps, SaaS platforms, and internal tools for growing businesses. Let\'s talk about your project.',
+  title: 'Hire Me — Donavan Jones | AI Systems Engineer',
+  description: 'AI Systems Engineer open to senior IC and staff roles in AI engineering, platform engineering, and full-stack development. Also available for contract projects.',
+  ogTitle: 'Hire Me — Donavan Jones | AI Systems Engineer',
+  ogDescription: 'AI Systems Engineer open to senior roles in AI engineering and platform development. Also available for contract projects and freelance builds.',
   ogType: 'website',
 })
 
@@ -35,26 +35,35 @@ async function submit() {
 
 const services = [
   {
-    icon: 'mdi:laptop-account',
+    icon: 'mdi:phone-missed',
     color: 'sky',
-    title: 'Custom Web Applications',
-    description: 'Need something built that off-the-shelf software can\'t handle? I design and build web apps from scratch — customer portals, booking systems, workflow tools, anything with a login and a database behind it.',
-    examples: ['Customer portals', 'Booking & scheduling apps', 'Workflow automation tools', 'Internal business dashboards'],
+    title: 'AI Lead Capture & After-Hours Agent',
+    description: 'Stop losing leads when you\'re unavailable. AI answers missed calls, collects the caller\'s name, number, and what they need — then books the appointment and texts you a summary automatically.',
+    examples: ['Missed call AI response', 'Automated appointment booking', 'Lead info collection', 'SMS summary to owner'],
   },
   {
-    icon: 'mdi:view-dashboard-outline',
+    icon: 'mdi:chat-processing-outline',
     color: 'emerald',
-    title: 'SaaS & Admin Platforms',
-    description: 'Have a business idea that should be software? I\'ve built complete SaaS platforms end-to-end — user accounts, subscriptions, role-based access, and all the admin tools you need to run it.',
-    examples: ['Multi-tenant SaaS products', 'Subscription billing integration', 'Role-based user management', 'Admin fulfillment dashboards'],
+    title: 'AI Website Chat That Converts',
+    description: 'Replace your dead contact form with a 24/7 AI sales assistant. It answers pricing questions, qualifies leads, and pushes visitors toward booking — integrated with your email, calendar, or CRM.',
+    examples: ['Pricing & FAQ answers', 'Lead qualification', 'Booking & scheduling', 'Email / CRM integration'],
   },
   {
-    icon: 'mdi:cog-outline',
+    icon: 'mdi:cog-sync-outline',
     color: 'violet',
-    title: 'Internal Tools & Portals',
-    description: 'Spreadsheets and email chains slowing your team down? I build internal tools — employee portals, document management systems, inventory trackers — that replace manual work with software your team actually uses.',
-    examples: ['Employee onboarding portals', 'Document management systems', 'Inventory & order tracking', 'Report generation pipelines'],
+    title: 'Admin & Workflow Automation',
+    description: 'Automate the back-office tasks eating your team\'s time — quote generation, intake form processing, follow-up emails, review requests — all running without manual input.',
+    examples: ['Quote & invoice generation', 'Intake form → CRM pipeline', 'Automated follow-up emails', 'Google review requests'],
   },
+]
+
+const niches = [
+  { icon: 'mdi:home-roof', label: 'Roofing & Contractors' },
+  { icon: 'mdi:air-conditioner', label: 'HVAC & Plumbing' },
+  { icon: 'mdi:scale-balance', label: 'Law Firms' },
+  { icon: 'mdi:spa-outline', label: 'Med Spas & Dental' },
+  { icon: 'mdi:shield-account', label: 'Insurance Brokers' },
+  { icon: 'mdi:home-city-outline', label: 'Real Estate' },
 ]
 
 const steps = [
@@ -106,8 +115,12 @@ const faqs = [
     a: 'Yes. Everything built for your project is yours. You get the source code, the hosting setup, and complete control. I\'m not a rental — I hand it over.',
   },
   {
-    q: 'Can you work on an existing project?',
-    a: 'Yes. I take on projects that are already in progress — adding features, fixing what\'s broken, or picking up where another developer left off.',
+    q: 'What kinds of businesses do you work with?',
+    a: 'Local service businesses — roofing, HVAC, law firms, med spas, insurance brokers, real estate agencies, dental offices. Anywhere that relies on inbound calls, appointments, or repetitive admin work is a good fit.',
+  },
+  {
+    q: 'Do I need to manage or maintain the AI system myself?',
+    a: 'No. I build it, deploy it, connect it to your existing phone number, website, or calendar, and hand it over working. I\'ll walk you through how it works and stay available after launch.',
   },
 ]
 </script>
@@ -115,6 +128,150 @@ const faqs = [
 <template>
   <PatternSection>
     <div class="max-w-5xl mx-auto px-6 py-16 sm:py-24">
+
+      <!-- ── FOR RECRUITERS ───────────────────────────────────────── -->
+      <div class="mb-20 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
+
+        <!-- Chrome header -->
+        <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+            </div>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">opportunities.config</span>
+          </div>
+          <div class="inline-flex items-center gap-1.5 text-xs text-green-500 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            Available
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Open to New Opportunities</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-2">
+            Available for senior IC roles and contract work. Remote preferred.
+            Roles where AI engineering, infrastructure, and full-stack development intersect.
+          </p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+            I work best when I'm brought in early — before the architecture is decided. I'll gather requirements,
+            make opinionated technical recommendations, build it, deploy it, and own it in production.
+            I've done this end-to-end at Amerus Financial Group (92 businesses, automated enrollment workflows
+            from hours to minutes) and I'm applying the same ownership model to my own AI platform.
+          </p>
+
+          <!-- Role types -->
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            <div v-for="role in [
+              { icon: 'mdi:brain', color: 'purple', label: 'AI Systems Engineer', desc: 'RAG pipelines, LLM inference, agent workflows, vector search' },
+              { icon: 'mdi:server-network', color: 'emerald', label: 'Platform Engineering', desc: 'Kubernetes, CI/CD, observability, distributed infrastructure' },
+              { icon: 'mdi:layers-triple', color: 'sky', label: 'Senior Full-Stack Engineer', desc: 'Nuxt/Vue, Node.js, TypeScript, PostgreSQL, production SaaS' },
+              { icon: 'mdi:briefcase-outline', color: 'amber', label: 'Contract / Freelance', desc: 'AI integration, SaaS builds, platform architecture' },
+            ]" :key="role.label"
+              class="flex items-start gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/40"
+            >
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border"
+                :class="{
+                  'bg-purple-500/10 border-purple-500/20': role.color === 'purple',
+                  'bg-emerald-500/10 border-emerald-500/20': role.color === 'emerald',
+                  'bg-sky-500/10 border-sky-500/20': role.color === 'sky',
+                  'bg-amber-500/10 border-amber-500/20': role.color === 'amber',
+                }"
+              >
+                <Icon :name="role.icon" class="text-sm"
+                  :class="{
+                    'text-purple-400': role.color === 'purple',
+                    'text-emerald-400': role.color === 'emerald',
+                    'text-sky-400': role.color === 'sky',
+                    'text-amber-400': role.color === 'amber',
+                  }"
+                />
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ role.label }}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">{{ role.desc }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- How I Work -->
+          <div class="mb-8 grid sm:grid-cols-3 gap-3">
+            <div v-for="item in [
+              { icon: 'mdi:account-voice', label: 'Stakeholder to Spec', desc: 'I gather requirements, ask the right questions, and translate business needs into technical architecture — before a line of code is written.' },
+              { icon: 'mdi:hammer-wrench', label: 'Build & Own', desc: 'I implement what I spec and own it through deployment — including infrastructure, observability, CI/CD, and post-launch operations.' },
+              { icon: 'mdi:school-outline', label: 'Train & Hand Off', desc: 'I document decisions, train end users and administrators, and leave systems that others can operate — not black boxes.' },
+            ]" :key="item.label"
+              class="flex flex-col gap-2 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/40"
+            >
+              <div class="flex items-center gap-2">
+                <Icon :name="item.icon" class="text-sky-400 text-lg" />
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ item.label }}</p>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ item.desc }}</p>
+            </div>
+          </div>
+
+          <!-- Contact links -->
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="mailto:donavanjones79@gmail.com"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     bg-sky-500 hover:bg-sky-600 text-white transition-colors duration-200 shadow-lg shadow-sky-500/20"
+            >
+              <Icon name="mdi:email-outline" class="text-base" />
+              donavanjones79@gmail.com
+            </a>
+            <a
+              href="https://linkedin.com/in/donavanjones"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:linkedin" class="text-base" />
+              LinkedIn
+            </a>
+            <a
+              href="https://github.com/FullStackDonavan"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:github" class="text-base" />
+              GitHub
+            </a>
+            <NuxtLink
+              to="/resume"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/50
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:file-account-outline" class="text-base" />
+              View Resume
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DIVIDER ───────────────────────────────────────────────── -->
+      <div class="flex items-center gap-4 mb-20">
+        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-800"></div>
+        <span class="text-xs text-slate-400 dark:text-slate-500 uppercase tracking-widest font-medium">Also available for client projects</span>
+        <div class="flex-1 h-px bg-slate-200 dark:bg-slate-800"></div>
+      </div>
 
       <!-- ── HERO ─────────────────────────────────────────────────── -->
       <div class="text-center mb-20">
@@ -127,13 +284,13 @@ const faqs = [
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight
                    text-slate-900 dark:text-white mb-6 leading-tight">
-          I build web apps for<br class="hidden sm:block" />
-          <span class="text-sky-500">growing businesses</span>
+          AI that gets your business<br class="hidden sm:block" />
+          <span class="text-sky-500">more leads &amp; less admin</span>
         </h1>
 
         <p class="max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-          Custom software, SaaS platforms, and internal tools — built from scratch and
-          handed over to you completely. No subscriptions, no lock-in, no jargon.
+          I build AI lead capture systems, after-hours agents, and workflow automation for local businesses.
+          You get the system — built, connected to your business, and handed over. No platform lock-in.
         </p>
 
         <div class="flex flex-wrap justify-center gap-3">
@@ -160,11 +317,11 @@ const faqs = [
       <!-- ── SERVICES ────────────────────────────────────────────── -->
       <div class="mb-20">
         <div class="text-center mb-10">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">What I Build</h2>
-          <p class="text-slate-500 dark:text-slate-400">If your business runs on software, I can build it.</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">AI Services for Local Businesses</h2>
+          <p class="text-slate-500 dark:text-slate-400">Outcome-focused systems. Built once, connected to your business, handed over to you.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
           <div
             v-for="service in services"
             :key="service.title"
@@ -213,6 +370,22 @@ const faqs = [
             </div>
           </div>
         </div>
+
+        <!-- Best for niches -->
+        <div>
+          <p class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Best for</p>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="niche in niches"
+              :key="niche.label"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 text-xs text-slate-600 dark:text-slate-400"
+            >
+              <Icon :name="niche.icon" class="text-sm text-sky-400 flex-shrink-0" />
+              {{ niche.label }}
+            </span>
+          </div>
+        </div>
+
       </div>
 
       <!-- ── CASE STUDY ──────────────────────────────────────────── -->

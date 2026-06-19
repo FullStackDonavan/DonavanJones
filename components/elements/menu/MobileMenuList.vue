@@ -37,6 +37,16 @@ watch(
 
       <li>
         <NuxtLink
+          to="/services"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:cog-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Services</span>
+        </NuxtLink>
+      </li>
+
+      <li>
+        <NuxtLink
           to="/"
           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >

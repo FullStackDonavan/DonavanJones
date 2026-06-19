@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { name, email, company, project, budget, timeline } = body
+  const { name, email, company, project, budget, timeline, source } = body
 
   if (!name || !email) {
     throw createError({ statusCode: 400, message: 'Name and email are required.' })
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
           lastName,
           email,
           locationId,
-          source: 'Hire Me Form',
+          source: source || 'Hire Me Form',
           tags: ['hire-me', 'website-lead'],
           ...(company ? { companyName: company } : {}),
         },

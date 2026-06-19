@@ -3,19 +3,19 @@ const config = useRuntimeConfig()
 const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
-  title: 'Donavan Jones — Full-Stack / Platform Engineer',
+  title: 'Donavan Jones — AI Automation & Custom Software for Small Businesses',
   description:
-    'Full-stack engineer with 20+ years of experience building SaaS platforms, AI systems, self-hosted infrastructure, and production-grade web applications.',
-  ogTitle: 'Donavan Jones — Full-Stack / Platform Engineer',
+    'I help small businesses build AI-powered systems, automation, and modern web apps that save time and increase revenue. AI lead capture, SaaS platforms, and workflow automation — built and handed over.',
+  ogTitle: 'Donavan Jones — AI Automation & Custom Software for Small Businesses',
   ogDescription:
-    'Full-stack engineer with 20+ years building SaaS platforms, AI systems, self-hosted infrastructure, and production-grade web applications.',
+    'AI lead capture, workflow automation, and custom SaaS development. Production systems delivered end-to-end for small businesses.',
   ogType: 'website',
   ogImage: `${SITE}/img/logo.png`,
   ogUrl: `${SITE}/`,
   twitterCard: 'summary_large_image',
-  twitterTitle: 'Donavan Jones — Full-Stack / Platform Engineer',
+  twitterTitle: 'Donavan Jones — AI Automation & Custom Software',
   twitterDescription:
-    'Full-stack engineer with 20+ years building SaaS platforms, AI systems, and production-grade web applications.',
+    'AI automation and custom software for small businesses. Built, deployed, and handed over.',
   canonical: `${SITE}/`,
 })
 
@@ -28,11 +28,29 @@ useHead({
         '@type': 'ProfilePage',
         '@id': `${SITE}/`,
         url: `${SITE}/`,
-        name: 'Donavan Jones — Full-Stack / Platform Engineer',
+        name: 'Donavan Jones — AI Automation & Custom Software',
         description:
-          'Full-stack engineer with 20+ years building SaaS platforms, AI systems, self-hosted infrastructure, and production-grade web applications.',
+          'AI automation, custom web applications, and business software for small businesses. 20+ years of engineering experience.',
         mainEntity: { '@id': `${SITE}/#person` },
         isPartOf: { '@id': `${SITE}/#website` },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        '@id': `${SITE}/#service`,
+        name: 'Donavan Jones',
+        url: SITE,
+        description:
+          'AI automation and custom software for small businesses — lead capture, SaaS platforms, workflow automation, and production AI systems.',
+        provider: { '@id': `${SITE}/#person` },
+        areaServed: [
+          { '@type': 'City', name: 'Lakeland', containedInPlace: { '@type': 'State', name: 'Florida' } },
+          { '@type': 'State', name: 'Florida' },
+          { '@type': 'Country', name: 'United States' },
+        ],
       }),
     },
     {
@@ -52,7 +70,7 @@ useHead({
         },
         image: { '@id': `${SITE}/#logo` },
         description:
-          'Full-stack engineering and systems architecture — AI systems, SaaS platforms, self-hosted Kubernetes infrastructure, and production-grade web applications.',
+          'AI automation and custom software for small businesses — production AI systems, SaaS platforms, and workflow automation.',
         founder: { '@id': `${SITE}/#person` },
         sameAs: [
           'https://github.com/FullStackDonavan',
@@ -69,7 +87,7 @@ useHead({
         url: SITE,
         name: 'Donavan Jones',
         description:
-          'Full-stack engineer and systems architect — writing and building in Nuxt, AI, Kubernetes, and distributed systems.',
+          'AI automation and custom software engineer — building production systems for small businesses.',
         inLanguage: 'en-US',
         publisher: { '@id': `${SITE}/#organization` },
       }),
@@ -82,7 +100,7 @@ useHead({
         '@id': `${SITE}/#person`,
         name: 'Donavan Jones',
         url: SITE,
-        jobTitle: 'Full-Stack Engineer & Systems Architect',
+        jobTitle: 'AI Systems Engineer & Software Developer',
         worksFor: { '@id': `${SITE}/#organization` },
         knowsAbout: [
           'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL',
@@ -114,28 +132,32 @@ const { data: recentProjects } = await useAsyncData('home-projects', () =>
 
 const focuses = [
   {
-    icon: 'mdi:layers-triple',
+    icon: 'mdi:robot-outline',
     color: 'sky',
-    title: 'Full-Stack Engineering',
-    desc: 'End-to-end product delivery — from Nuxt frontend architecture to Node.js APIs, database design, and deployment pipelines.',
+    title: 'AI Lead Capture & Automation',
+    desc: 'AI answers calls, captures leads, books appointments, and sends follow-ups — 24/7, without extra staff.',
+    to: '/services/ai-automation',
   },
   {
-    icon: 'mdi:brain',
+    icon: 'mdi:code-braces',
     color: 'purple',
-    title: 'AI Systems',
-    desc: 'Production RAG pipelines, vector search, LLM integration, agent workflows, and on-cluster inference using Llama and Weaviate.',
+    title: 'Custom Web Apps & SaaS',
+    desc: 'Full-stack web applications with dashboards, billing, auth, and real-time features — built from scratch and handed over.',
+    to: '/services/web-development',
   },
   {
-    icon: 'mdi:kubernetes',
-    color: 'emerald',
-    title: 'Infrastructure',
-    desc: 'Self-hosted Kubernetes on ARM64, CI/CD via Gitea, Prometheus observability, and distributed storage with MinIO.',
-  },
-  {
-    icon: 'mdi:view-dashboard-outline',
+    icon: 'mdi:cog-sync-outline',
     color: 'amber',
-    title: 'SaaS Platforms',
-    desc: 'Multi-role SaaS with RBAC, real-time features, async job queues, and modular service-oriented architecture.',
+    title: 'Workflow & Admin Automation',
+    desc: 'Automate quote generation, intake processing, follow-up emails, and review requests — no more manual busywork.',
+    to: '/services/ai-automation',
+  },
+  {
+    icon: 'mdi:server-network',
+    color: 'emerald',
+    title: 'Infrastructure & Deployment',
+    desc: 'Kubernetes, CI/CD, cloud deployment, and production monitoring — your system runs reliably from day one.',
+    to: '/services/web-development',
   },
 ]
 
@@ -201,111 +223,65 @@ function formatDate(dateStr: string): string {
             </div>
 
             <!-- Headline -->
-            <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-              Full-Stack Engineer
-              <span class="block text-sky-500 mt-2">& Platform Builder</span>
+            <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] font-bold leading-[1.15] tracking-tight text-slate-900 dark:text-white">
+              I build AI-powered systems
+              <span class="block text-sky-500 mt-2">that save your business time &amp; generate revenue</span>
             </h1>
 
             <!-- Sub -->
             <p class="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-              20+ years building production web applications, SaaS platforms,
-              AI-powered systems, and self-hosted infrastructure. Lakeland, FL.
+              Whether you need an AI lead capture system, a custom SaaS platform, or workflow automation —
+              I build it, connect it to your business, and hand it over. No subscriptions, no platform lock-in.
+              20+ years of engineering. Full ownership from concept to production.
             </p>
 
-            <!-- CTAs -->
-            <div class="mt-7 flex flex-wrap gap-3">
+            <!-- CTAs (dual-path) -->
+            <div class="mt-7 flex flex-wrap items-center gap-3">
               <NuxtLink
-                to="/projects/overview"
+                to="/services"
                 class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm transition-colors duration-200"
               >
-                <Icon name="mdi:code-braces" class="text-base" />
-                View Projects
+                <Icon name="mdi:cog-outline" class="text-base" />
+                See Services
               </NuxtLink>
               <NuxtLink
-                to="/blog/overview"
+                to="/projects/overview"
                 class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 hover:border-sky-500/40 hover:text-sky-500 dark:hover:text-sky-400 font-medium text-sm transition-colors duration-200"
               >
-                <Icon name="mdi:pencil-outline" class="text-base" />
-                Read the Blog
+                <Icon name="mdi:briefcase-outline" class="text-base" />
+                View Case Studies
               </NuxtLink>
               <NuxtLink
                 to="/resume"
-                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 hover:border-sky-500/40 hover:text-sky-500 dark:hover:text-sky-400 font-medium text-sm transition-colors duration-200"
+                class="text-sm text-slate-400 dark:text-slate-500 hover:text-sky-500 dark:hover:text-sky-400 font-medium transition-colors duration-200"
               >
-                <Icon name="mdi:file-account-outline" class="text-base" />
-                Resume
+                Hiring? View Resume →
               </NuxtLink>
-            </div>
-
-            <!-- Featured Projects card -->
-            <div class="mt-7 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden max-w-lg">
-
-              <!-- Card header -->
-              <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                  <div class="flex gap-1.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
-                  </div>
-                  <span class="text-xs text-slate-400 dark:text-slate-500 ml-1">featured.projects</span>
-                </div>
-                <NuxtLink
-                  to="/projects/overview"
-                  class="text-[10px] text-sky-500 hover:text-sky-400 transition-colors font-medium"
-                >
-                  View all →
-                </NuxtLink>
-              </div>
-
-              <!-- Project list -->
-              <div class="divide-y divide-slate-100 dark:divide-slate-800">
-                <NuxtLink
-                  v-for="project in recentProjects"
-                  :key="project._path"
-                  :to="project._path"
-                  class="group flex items-center gap-3 px-5 py-3 hover:bg-slate-100/60 dark:hover:bg-slate-800/40 transition-colors"
-                >
-                  <div class="w-6 h-6 rounded-md bg-sky-500/10 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
-                    <Icon name="mdi:code-braces" class="text-sky-400 text-[10px]" />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors truncate">
-                      {{ project.title }}
-                    </p>
-                    <div v-if="project.frontend?.length || project.backend?.length" class="mt-0.5 flex flex-wrap gap-1">
-                      <span
-                        v-for="tag in [...(project.frontend || []), ...(project.backend || [])].slice(0, 3)"
-                        :key="tag"
-                        class="text-[9px] px-1.5 py-px rounded border bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700/50"
-                      >{{ tag }}</span>
-                    </div>
-                  </div>
-                  <Icon name="mdi:arrow-right" class="text-slate-300 dark:text-slate-600 group-hover:text-sky-400 text-xs flex-shrink-0 transition-colors" />
-                </NuxtLink>
-              </div>
-
             </div>
 
             <!-- Stat strip -->
             <div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-8">
               <div>
                 <p class="text-2xl font-bold text-slate-900 dark:text-white">20+</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Years experience</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Years engineering</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">Full-Stack</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Frontend to infrastructure</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">92</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Businesses served</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">Remote</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Remote-friendly</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">3</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Production AI systems</p>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">75+</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Technical articles</p>
               </div>
             </div>
 
           </div>
 
-          <!-- RIGHT: Stack card -->
+          <!-- RIGHT: Outcomes card -->
           <div>
             <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden">
 
@@ -316,50 +292,34 @@ function formatDate(dateStr: string): string {
                   <span class="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700"></span>
                   <span class="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700"></span>
                 </div>
-                <span class="text-xs text-slate-400 dark:text-slate-500 ml-1">stack.config</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 ml-1">outcomes.results</span>
               </div>
 
-              <!-- Stack groups -->
-              <div class="p-5 space-y-1">
+              <!-- Outcomes list -->
+              <div class="p-5 space-y-4">
 
-                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-sky-500/10 dark:hover:bg-sky-500/8 group/sky">
-                  <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Cluster</p>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['k3s', 'Kubernetes', 'ARM64', 'Raspberry Pi 5', '8 Nodes']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
-                      {{ t }}
-                    </span>
-                  </div>
+                <div class="rounded-xl px-4 py-3 border border-sky-500/20 bg-sky-500/5">
+                  <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-1">Client Platform</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">92 Businesses</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Automated enrollment platform</p>
                 </div>
 
-                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-purple-500/10 dark:hover:bg-purple-500/8 group/purple">
-                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/purple:text-purple-600 dark:group-hover/purple:text-purple-400">AI & ML</p>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['Llama 3.2', 'Weaviate', 'RAG', 'Embeddings', 'LLMs']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
-                      {{ t }}
-                    </span>
-                  </div>
+                <div class="rounded-xl px-4 py-3 border border-emerald-500/20 bg-emerald-500/5">
+                  <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-1">Time Saved</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">Hours → Minutes</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Enrollment workflow automation</p>
                 </div>
 
-                <div class="rounded-xl px-3 py-3 transition-all duration-200 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/8 group/emerald">
-                  <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/emerald:text-emerald-600 dark:group-hover/emerald:text-emerald-400">Data Layer</p>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['PostgreSQL', 'Redis', 'Apache AGE', 'MinIO']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">
-                      {{ t }}
-                    </span>
-                  </div>
+                <div class="rounded-xl px-4 py-3 border border-purple-500/20 bg-purple-500/5">
+                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-1">AI Performance</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">37K+ Docs Indexed</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">RAG retrieval under 200ms</p>
                 </div>
 
-                <div class="rounded-xl px-3 py-3 border-t border-slate-200 dark:border-slate-800 transition-all duration-200 hover:bg-amber-500/10 dark:hover:bg-amber-500/8 group/amber">
-                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/amber:text-amber-600 dark:group-hover/amber:text-amber-400">Platform</p>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span v-for="t in ['FastAPI', 'Gitea', 'Actions Runners', 'Prometheus', 'Grafana']" :key="t"
-                      class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">
-                      {{ t }}
-                    </span>
-                  </div>
+                <div class="rounded-xl px-4 py-3 border border-amber-500/20 bg-amber-500/5">
+                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-1">Cost Reduction</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">70% Savings</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Local inference vs. cloud routing</p>
                 </div>
 
               </div>
@@ -370,28 +330,29 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
-    <!-- ── WHAT I FOCUS ON ────────────────────────────────────────────────── -->
+    <!-- ── WHAT I BUILD FOR CLIENTS ──────────────────────────────────────── -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
             <Icon name="mdi:target" class="text-sm" />
-            What I Focus On
+            Services
           </div>
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-            End-to-end system thinking
+            What I build for clients
           </h2>
           <p class="mt-2 text-slate-500 dark:text-slate-400 text-sm max-w-xl">
-            I work across the full stack — from user interface to bare metal, from API design to AI pipelines.
+            Production systems delivered end-to-end — from requirements to deployment. You own everything.
           </p>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div
+          <NuxtLink
             v-for="f in focuses"
             :key="f.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
+            :to="f.to"
+            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
           >
             <div
               class="w-10 h-10 rounded-lg flex items-center justify-center border"
@@ -412,52 +373,122 @@ function formatDate(dateStr: string): string {
               />
             </div>
             <div>
-              <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ f.title }}</h3>
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">{{ f.title }}</h3>
               <p class="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ f.desc }}</p>
             </div>
-          </div>
+            <div class="flex items-center gap-1 text-xs font-medium text-sky-500 group-hover:gap-2 transition-all mt-auto">
+              Learn more <Icon name="mdi:arrow-right" class="text-sm" />
+            </div>
+          </NuxtLink>
         </div>
 
       </div>
     </section>
 
-    <!-- ── CURRENTLY BUILDING ─────────────────────────────────────────────── -->
-    <section class="bg-white dark:bg-slate-900/30 py-12 border-b border-slate-200 dark:border-slate-800">
+    <!-- ── LOCAL BUSINESS AI ────────────────────────────────────────────────── -->
+    <section class="bg-white dark:bg-slate-900/30 py-14 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-7 sm:p-10">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-8">
+
+            <div class="flex-1">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-medium">
+                <Icon name="mdi:store-outline" class="text-sm" />
+                For Local Businesses · Central Florida
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                AI that gets you more leads.<br class="hidden sm:block" />
+                Automation that gives you your time back.
+              </h2>
+              <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl mb-5">
+                I build AI lead capture systems, after-hours agents, and workflow automation for local businesses in
+                Lakeland, Tampa, Orlando, and across Central Florida — roofing, HVAC, law firms, med spas, and more.
+                You get the system built and handed over. No platform subscriptions.
+              </p>
+              <NuxtLink
+                to="/services/local-business-ai"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white transition-colors duration-200 shadow-lg shadow-amber-500/20"
+              >
+                <Icon name="mdi:arrow-right-circle-outline" class="text-base" />
+                See Local Business AI Services
+              </NuxtLink>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 lg:w-64 shrink-0">
+              <div
+                v-for="outcome in [
+                  { icon: 'mdi:phone-missed', text: 'Stop losing leads after hours' },
+                  { icon: 'mdi:chat-processing-outline', text: '24/7 AI sales assistant' },
+                  { icon: 'mdi:cog-sync-outline', text: 'Admin & follow-ups automated' },
+                  { icon: 'mdi:account-off-outline', text: 'No extra staff needed' },
+                ]"
+                :key="outcome.text"
+                class="flex items-start gap-2 p-3 rounded-xl border border-amber-500/15 bg-white dark:bg-slate-900/60"
+              >
+                <Icon :name="outcome.icon" class="text-amber-400 text-sm flex-shrink-0 mt-0.5" />
+                <span class="text-xs text-slate-600 dark:text-slate-400 leading-snug">{{ outcome.text }}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TRUST BLOCK ──────────────────────────────────────────────────── -->
+    <TrustBlock variant="full" />
+
+    <!-- ── FEATURED CASE STUDY ────────────────────────────────────────────── -->
+    <section class="bg-slate-50 dark:bg-slate-950 py-12 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
 
         <NuxtLink
-          to="/projects/bible-verse"
-          class="group block rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-6 sm:p-8 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
+          to="/projects/business-benefit-alliance"
+          class="group block rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-6 sm:p-8 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
         >
           <div class="flex flex-col sm:flex-row sm:items-start gap-6">
 
-            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
-              <Icon name="mdi:hammer-wrench" class="text-purple-400 text-2xl" />
+            <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
+              <Icon name="mdi:domain" class="text-sky-400 text-2xl" />
             </div>
 
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                <span class="text-xs font-medium text-green-500 uppercase tracking-wider">Currently Building</span>
+                <span class="text-[11px] px-2 py-0.5 rounded-md font-medium bg-sky-500/10 border border-sky-500/20 text-sky-400">
+                  Case Study
+                </span>
               </div>
-              <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-sky-500 transition-colors">Bible Logic</h2>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-sky-500 transition-colors">Business Benefit Alliance</h2>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                Production-grade multi-system SaaS platform combining AI Bible assistance, RAG-powered scripture search,
-                real-time livestreaming via AWS IVS, WebRTC peer debate, and a fully modular content ecosystem.
-                Built end-to-end as founder and sole engineer.
+                Full-stack group insurance enrollment platform. 92 businesses onboarded. Enrollment workflows
+                reduced from hours to minutes. Multi-role dashboards, digital signature capture, automated PDF
+                generation, and audit trails. Built end-to-end as sole developer and architect.
               </p>
 
               <div class="mt-4 flex flex-wrap gap-2">
                 <span
-                  v-for="tag in ['Nuxt 3', 'Weaviate RAG', 'LLM', 'WebRTC', 'AWS IVS', 'PostgreSQL', 'Redis', 'MinIO']"
+                  v-for="tag in ['Nuxt 3', 'PostgreSQL', 'AWS S3', 'Prisma', 'PDF Generation', 'Digital Signatures']"
                   :key="tag"
                   class="text-[11px] px-2 py-0.5 rounded-md border bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700/50"
                 >{{ tag }}</span>
               </div>
 
               <div class="mt-5 flex items-center gap-1 text-xs font-medium text-sky-500 group-hover:gap-2 transition-all">
-                View Project
+                View full case study
                 <Icon name="mdi:arrow-right" class="text-sm" />
+              </div>
+            </div>
+
+            <div class="sm:text-right flex-shrink-0">
+              <div class="space-y-3">
+                <div>
+                  <p class="text-xs text-slate-400 dark:text-slate-500">Businesses</p>
+                  <p class="text-lg font-bold text-slate-900 dark:text-white">92</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400 dark:text-slate-500">Enrollment Time</p>
+                  <p class="text-lg font-bold text-emerald-500">Hours → Min</p>
+                </div>
               </div>
             </div>
 
@@ -467,82 +498,7 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
-    <!-- ── SYSTEMS ────────────────────────────────────────────────────────── -->
-    <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
-      <div class="max-w-7xl mx-auto px-6">
-
-        <div class="flex items-center justify-between mb-8">
-          <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
-              <Icon name="mdi:sitemap" class="text-sm" />
-              System Architecture
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Technical deep-dives</h2>
-          </div>
-          <NuxtLink
-            to="/system-overview"
-            class="hidden sm:inline-flex items-center gap-1 text-sm text-sky-500 hover:text-sky-400 transition-colors"
-          >
-            Full overview
-            <Icon name="mdi:arrow-right" class="text-base" />
-          </NuxtLink>
-        </div>
-
-        <div class="grid sm:grid-cols-3 gap-4">
-          <NuxtLink
-            v-for="sys in systems"
-            :key="sys.to"
-            :to="sys.to"
-            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-4 transition-all duration-200 hover:shadow-lg"
-            :class="{
-              'hover:border-purple-500/40 hover:shadow-purple-500/5': sys.color === 'purple',
-              'hover:border-sky-500/40 hover:shadow-sky-500/5':       sys.color === 'sky',
-              'hover:border-emerald-500/40 hover:shadow-emerald-500/5': sys.color === 'emerald',
-            }"
-          >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
-                'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
-              }"
-            >
-              <Icon :name="sys.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': sys.color === 'purple',
-                  'text-sky-400':    sys.color === 'sky',
-                  'text-emerald-400':sys.color === 'emerald',
-                }"
-              />
-            </div>
-            <div class="flex-1">
-              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
-                {{ sys.title }}
-              </h3>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <span
-                  v-for="tag in sys.tags"
-                  :key="tag"
-                  class="text-[10px] px-1.5 py-0.5 rounded border"
-                  :class="{
-                    'bg-purple-500/10 text-purple-400 border-purple-500/20': sys.color === 'purple',
-                    'bg-sky-500/10 text-sky-400 border-sky-500/20':           sys.color === 'sky',
-                    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20': sys.color === 'emerald',
-                  }"
-                >{{ tag }}</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-1 text-xs font-medium text-sky-500 group-hover:translate-x-1 transition-transform duration-200">
-              Explore <Icon name="mdi:arrow-right" class="text-sm" />
-            </div>
-          </NuxtLink>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ── RECENT PROJECTS ────────────────────────────────────────────────── -->
+    <!-- ── RECENT CASE STUDIES ────────────────────────────────────────────── -->
     <section v-if="recentProjects?.length" class="bg-white dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
 
@@ -550,9 +506,9 @@ function formatDate(dateStr: string): string {
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
               <Icon name="mdi:folder-multiple-outline" class="text-sm" />
-              Portfolio
+              Client Work
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Recent Projects</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Case Studies</h2>
           </div>
           <NuxtLink
             to="/projects/overview"
@@ -680,42 +636,207 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
-    <!-- ── CONTACT CTA ────────────────────────────────────────────────────── -->
-    <section id="contact" class="bg-white dark:bg-slate-950 py-16">
+    <!-- ── SYSTEMS (Technical Deep-Dives) ────────────────────────────────── -->
+    <section class="bg-white dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
       <div class="max-w-7xl mx-auto px-6">
 
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
+              <Icon name="mdi:sitemap" class="text-sm" />
+              Under the Hood
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Technical deep-dives</h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">The infrastructure behind the systems I build for clients.</p>
+          </div>
+          <NuxtLink
+            to="/system-overview"
+            class="hidden sm:inline-flex items-center gap-1 text-sm text-sky-500 hover:text-sky-400 transition-colors"
+          >
+            Full overview
+            <Icon name="mdi:arrow-right" class="text-base" />
+          </NuxtLink>
+        </div>
 
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
+        <div class="grid sm:grid-cols-3 gap-4">
+          <NuxtLink
+            v-for="sys in systems"
+            :key="sys.to"
+            :to="sys.to"
+            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 flex flex-col gap-4 transition-all duration-200 hover:shadow-lg"
+            :class="{
+              'hover:border-purple-500/40 hover:shadow-purple-500/5': sys.color === 'purple',
+              'hover:border-sky-500/40 hover:shadow-sky-500/5':       sys.color === 'sky',
+              'hover:border-emerald-500/40 hover:shadow-emerald-500/5': sys.color === 'emerald',
+            }"
+          >
+            <div
+              class="w-10 h-10 rounded-lg flex items-center justify-center border"
+              :class="{
+                'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
+                'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
+                'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
+              }"
+            >
+              <Icon :name="sys.icon" class="text-xl"
+                :class="{
+                  'text-purple-400': sys.color === 'purple',
+                  'text-sky-400':    sys.color === 'sky',
+                  'text-emerald-400':sys.color === 'emerald',
+                }"
+              />
+            </div>
+            <div class="flex-1">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
+                {{ sys.title }}
+              </h3>
+              <div class="mt-2 flex flex-wrap gap-1">
+                <span
+                  v-for="tag in sys.tags"
+                  :key="tag"
+                  class="text-[10px] px-1.5 py-0.5 rounded border"
+                  :class="{
+                    'bg-purple-500/10 text-purple-400 border-purple-500/20': sys.color === 'purple',
+                    'bg-sky-500/10 text-sky-400 border-sky-500/20':           sys.color === 'sky',
+                    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20': sys.color === 'emerald',
+                  }"
+                >{{ tag }}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 text-xs font-medium text-sky-500 group-hover:translate-x-1 transition-transform duration-200">
+              Explore <Icon name="mdi:arrow-right" class="text-sm" />
+            </div>
+          </NuxtLink>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── RECRUITER STRIP (condensed) ───────────────────────────────────── -->
+    <section class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6 py-8">
+
+        <div class="flex flex-wrap items-center gap-2 mb-5">
+          <span class="inline-flex items-center gap-1.5 text-xs text-green-500 font-medium">
             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-            Available for new projects
+            Open to new roles
+          </span>
+          <span class="w-px h-3.5 bg-slate-300 dark:bg-slate-700"></span>
+          <NuxtLink to="/hire-me" class="text-xs text-sky-500 hover:text-sky-400 transition-colors font-medium">
+            View full details →
+          </NuxtLink>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6">
+
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Looking For</p>
+            <ul class="space-y-2">
+              <li v-for="role in ['AI Systems Engineer', 'Founding Engineer', 'Senior Full-Stack Engineer', 'Platform Engineer']" :key="role"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:check-circle" class="text-sky-400 text-base flex-shrink-0" />
+                {{ role }}
+              </li>
+            </ul>
           </div>
 
-          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-            Let's build something together
-          </h2>
-          <p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-            I'm open to full-time roles, contract work, and consulting on web applications, SaaS platforms, AI systems, and infrastructure projects.
-          </p>
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Preferred</p>
+            <ul class="space-y-2">
+              <li v-for="pref in ['Remote', 'U.S.-based', 'Strong IC · comfortable owning technical direction']" :key="pref"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
+                {{ pref }}
+              </li>
+            </ul>
+          </div>
 
-          <div class="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href="mailto:donavanjones79@gmail.com"
-              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm transition-all duration-200 shadow-lg shadow-sky-500/20"
-            >
-              <Icon name="mdi:email-outline" class="text-base" />
-              donavanjones79@gmail.com
-            </a>
-            <NuxtLink
-              to="/resume"
-              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-sky-500/40 hover:text-sky-500 font-medium text-sm transition-all duration-200"
-            >
-              <Icon name="mdi:file-account-outline" class="text-base" />
-              View Resume
-            </NuxtLink>
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 font-semibold mb-3">Core Strengths</p>
+            <ul class="space-y-2">
+              <li v-for="strength in ['Stakeholder to production', 'AI systems in production', 'Kubernetes platform engineering', 'Full-stack SaaS ownership']" :key="strength"
+                class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <Icon name="mdi:circle-small" class="text-slate-400 text-lg flex-shrink-0" />
+                {{ strength }}
+              </li>
+            </ul>
           </div>
 
         </div>
+
+      </div>
+    </section>
+
+    <!-- ── DUAL CTA ──────────────────────────────────────────────────────── -->
+    <section id="contact" class="bg-white dark:bg-slate-950 py-16">
+      <div class="max-w-7xl mx-auto px-6">
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+          <!-- Freelance CTA -->
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-8 sm:p-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+              Available for projects
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              Ready to automate your business?
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+              Tell me what you're trying to build. I'll follow up within one business day with a plain-English proposal.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <NuxtLink
+                to="/hire-me#contact"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm transition-colors duration-200 shadow-lg shadow-sky-500/20"
+              >
+                <Icon name="mdi:email-outline" class="text-base" />
+                Request a Quote
+              </NuxtLink>
+              <NuxtLink
+                to="/services"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-sky-500/30 text-sky-500 hover:bg-sky-500/10 font-medium text-sm transition-colors duration-200"
+              >
+                <Icon name="mdi:cog-outline" class="text-base" />
+                See Services
+              </NuxtLink>
+            </div>
+          </div>
+
+          <!-- Recruiter CTA -->
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+              Open to new roles
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              Looking to hire?
+            </h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+              Senior IC roles in AI engineering, platform engineering, or full-stack development. Remote. U.S.-based.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <NuxtLink
+                to="/resume"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-sky-500/40 hover:text-sky-500 font-medium text-sm transition-all duration-200"
+              >
+                <Icon name="mdi:file-account-outline" class="text-base" />
+                View Resume
+              </NuxtLink>
+              <a
+                href="https://linkedin.com/in/donavanjones"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-sky-500/40 hover:text-sky-500 font-medium text-sm transition-all duration-200"
+              >
+                <Icon name="mdi:linkedin" class="text-base" />
+                LinkedIn
+              </a>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 

@@ -3,16 +3,16 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
-  title: 'About Me — Donavan Jones',
-  description: 'Donavan Jones is a full-stack engineer and systems architect. Learn about his work building production AI, SaaS platforms, and Kubernetes infrastructure.',
-  ogTitle: 'About Me — Donavan Jones',
-  ogDescription: 'Full-stack engineer and systems architect building production AI, SaaS platforms, and Kubernetes infrastructure. Learn the story behind the work.',
+  title: 'About — Donavan Jones | AI Systems Engineer',
+  description: 'Donavan Jones is an AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, and full-stack SaaS platforms.',
+  ogTitle: 'About — Donavan Jones | AI Systems Engineer',
+  ogDescription: 'AI Systems Engineer building production RAG pipelines, Kubernetes-hosted LLMs, and full-stack SaaS platforms. Learn the story behind the work.',
   ogType: 'profile',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/about`,
   twitterCard: 'summary_large_image',
-  twitterTitle: 'About Me — Donavan Jones',
-  twitterDescription: 'Full-stack engineer and systems architect — AI systems, SaaS platforms, and Kubernetes infrastructure.',
+  twitterTitle: 'About — Donavan Jones | AI Systems Engineer',
+  twitterDescription: 'AI Systems Engineer — production RAG pipelines, self-hosted Kubernetes, and full-stack SaaS.',
   canonical: `${_SITE}/about`,
 })
 
@@ -126,7 +126,7 @@ const milestones = [
   {
     year: '2024–Now',
     title: 'Building Bible Verse AI',
-    desc: 'Full-stack AI platform indexing 37K+ Bible verses across 5 bounded domains with RAG retrieval, 5 AI models, and BullMQ job queues.',
+    desc: '37K+ verses indexed · RAG retrieval under 200ms · 80% of requests served by local Llama 3.2 on self-hosted Jetson GPU nodes · ~70% inference cost reduction · 5 bounded domains.',
     color: 'purple',
   },
   {
@@ -181,19 +181,36 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             </h1>
           </div>
           <p class="mt-2 text-lg font-medium text-sky-500 dark:text-sky-400">
-            Full-Stack Engineer &amp; Systems Architect
+            AI Systems Engineer &amp; Platform Builder
           </p>
 
           <p class="mt-5 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-            I build production systems at the intersection of AI, backend engineering, and infrastructure.
-            My work spans RAG pipelines, async job queues, self-hosted Kubernetes clusters, and full-stack
-            SaaS platforms — always with a focus on correctness, observability, and production-readiness.
+            I'm a self-directed engineer with 20+ years of building systems the hard way — designing the
+            data model, writing the API, wiring up the AI pipeline, deploying on bare-metal Kubernetes, and
+            monitoring it in production. All of it. That end-to-end ownership is what separates me from
+            engineers who only see one layer of the stack.
           </p>
           <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-            Currently deep in building
-            <NuxtLink to="/projects/bible-verse" class="text-purple-400 hover:text-purple-300 font-medium transition-colors">Bible Verse AI</NuxtLink>
-            — a multi-domain platform that indexes 37,000+ Bible verses with semantic search, five AI models,
-            and a fully async processing pipeline.
+            Where I focus: closing the gap between "AI prototype" and "AI in production." I build RAG pipelines
+            with real retrieval quality, run local LLM inference on self-hosted Kubernetes, and ship full-stack
+            SaaS platforms that are observable and maintainable from day one. Currently building
+            <NuxtLink to="/projects/bible-verse" class="text-purple-400 hover:text-purple-300 font-medium transition-colors">Bible Logic</NuxtLink>
+            — 37,000+ verses indexed, RAG retrieval under 200ms, 80% of inference served locally on Jetson GPU nodes,
+            and ~70% cost reduction vs. full cloud routing.
+          </p>
+          <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            At Amerus Financial Group, I served as the sole architect and lead developer for a production
+            benefits enrollment platform that automated workflows for 92 businesses. That meant more than
+            writing code — I gathered requirements directly from business stakeholders, presented architecture
+            decisions and tradeoffs to non-technical leadership, coordinated with contributors, and trained
+            end users and administrators after launch. Enrollment workflows that previously required hours and
+            5–10 support emails per cycle now take minutes. Ten spreadsheets replaced by a single auditable
+            system. That's the gap I close: between what a business needs and what actually runs in production.
+          </p>
+          <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            I'm looking for senior IC roles where AI engineering, backend systems, and infrastructure intersect —
+            where I can own technical direction, work closely with stakeholders, and ship systems that stay
+            running. Remote. Companies building production AI — not vaporware.
           </p>
 
           <!-- Socials + Resume -->
@@ -536,23 +553,28 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
       <!-- CTA -->
       <section>
         <div class="rounded-2xl p-8 border border-sky-500/20 bg-sky-500/5 text-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            Available for new opportunities
+          </div>
           <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-2">
-            Want to see the work in depth?
+            Open to senior IC &amp; staff engineering roles
           </h2>
           <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-lg mx-auto">
-            Explore the projects, read the articles, or follow along with what I'm currently building.
+            AI systems, platform engineering, or full-stack. Remote. If you're building production AI infrastructure
+            and need someone who owns the full stack — let's talk.
           </p>
           <div class="flex flex-wrap justify-center gap-3">
             <NuxtLink
-              to="/projects/overview"
+              to="/hire-me"
               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
                      bg-sky-500 hover:bg-sky-400 text-white transition-colors duration-200"
             >
-              <Icon name="mdi:folder-multiple-outline" class="text-base" />
-              View Projects
+              <Icon name="mdi:briefcase-outline" class="text-base" />
+              Hire Me
             </NuxtLink>
             <NuxtLink
-              to="/blog/overview"
+              to="/resume"
               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
                      border border-slate-200 dark:border-slate-700/60
                      bg-white dark:bg-slate-900/60
@@ -560,8 +582,20 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
                      hover:border-sky-500/40 hover:text-sky-400
                      transition-all duration-200"
             >
-              <Icon name="mdi:text-box-multiple-outline" class="text-base" />
-              Read the Blog
+              <Icon name="mdi:file-account-outline" class="text-base" />
+              View Resume
+            </NuxtLink>
+            <NuxtLink
+              to="/projects/overview"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+                     border border-slate-200 dark:border-slate-700/60
+                     bg-white dark:bg-slate-900/60
+                     text-slate-600 dark:text-slate-300
+                     hover:border-sky-500/40 hover:text-sky-400
+                     transition-all duration-200"
+            >
+              <Icon name="mdi:folder-multiple-outline" class="text-base" />
+              View Projects
             </NuxtLink>
           </div>
         </div>

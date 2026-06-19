@@ -3,16 +3,16 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 
 useSeoMeta({
-  title: 'Resume — Donavan Jones',
-  description: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
-  ogTitle: 'Resume — Donavan Jones | Full-Stack / Platform Engineer',
-  ogDescription: 'Full-stack and platform engineer — 20+ years building production web apps, SaaS systems, AI pipelines, and self-hosted Kubernetes infrastructure.',
+  title: 'Resume — Donavan Jones | AI Systems Engineer',
+  description: 'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, full-stack SaaS platforms, and self-hosted cloud infrastructure.',
+  ogTitle: 'Resume — Donavan Jones | AI Systems Engineer',
+  ogDescription: 'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, and full-stack SaaS platforms.',
   ogType: 'website',
   ogImage: `${_SITE}/img/logo.png`,
   ogUrl: `${_SITE}/resume`,
   twitterCard: 'summary_large_image',
-  twitterTitle: 'Resume — Donavan Jones',
-  twitterDescription: 'Full-stack and platform engineer — 20+ years across web apps, SaaS, AI systems, and Kubernetes infrastructure.',
+  twitterTitle: 'Resume — Donavan Jones | AI Systems Engineer',
+  twitterDescription: 'AI Systems Engineer — production RAG pipelines, Kubernetes-hosted LLMs, full-stack SaaS, 20+ years.',
   canonical: `${_SITE}/resume`,
 })
 
@@ -48,12 +48,12 @@ const experience = [
     location: 'Lakeland, FL',
     caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
-      'Sole full-stack developer and architect — owned all decisions from database schema and API design to AWS infrastructure and deployment',
-      'Built and launched Business Benefit Alliance, a production group insurance enrollment SaaS that has onboarded 92 businesses, processed hundreds of employee applications, and handles dozens of daily active users',
-      'Designed and enforced a multi-step enrollment state machine covering application submission, digital signature capture, PDF generation, payment authorization, and admin fulfillment',
-      'Architected a three-role system (business owner, employee, app admin) with role-scoped data access enforced at the service layer — not just route guards',
-      'Designed and managed all AWS infrastructure including S3 object storage for signed PDFs and insurance card delivery',
-      'Collaborated directly with business stakeholders — gathered requirements, asked clarifying questions, translated workflows into production features, and iterated based on real user feedback',
+      'Served as sole architect and lead developer — gathered requirements from business stakeholders, presented architecture decisions and tradeoffs to non-technical leadership, and owned the system from schema design through production deployment',
+      'Reduced enrollment workflow time from hours to minutes for 92 businesses by replacing a manual, spreadsheet-driven process with an automated SaaS platform — eliminated ~10 tracking spreadsheets and cut per-enrollment support emails from 5–10 to near zero',
+      'Trained end users and administrators post-launch; designed the system to minimize ongoing support overhead — support requests became rare after go-live',
+      'Designed a 5-step enrollment state machine (draft → open → applications-complete → payment-submitted → fulfilled) with atomic transitions — enforces workflow sequence across multiple concurrent actors with no manual coordination required',
+      'Automated PDF generation and document delivery: signed documents composited server-side on every submission, insurance cards delivered directly from the admin dashboard — eliminated manual PDF assembly and email attachment chains entirely',
+      'Coordinated with non-technical teams and business users throughout the build, translating operational workflows into production features and iterating based on real user feedback',
     ],
   },
   {
@@ -94,51 +94,49 @@ const experience = [
 ]
 
 const homelabPoints = [
-  'Designed and built a personal server rack environment for self-hosted development and distributed systems experimentation',
-  'Runs multi-service infrastructure including databases, caching systems, object storage, and AI services',
-  'Deployed and managed services including Redis, MinIO, vector databases, and backend APIs',
-  'Built and tested AI workflows including RAG pipelines and retrieval systems',
-  'Experimented with Kubernetes, networking, and service orchestration at scale',
-  'Developed practical understanding of distributed systems, scalability, and infrastructure design patterns',
+  'Designed and operate a 12-node self-hosted Kubernetes cluster (k3s): 8× Raspberry Pi 5 ARM64 nodes for general workloads + 4× NVIDIA Jetson Orin Nano Super GPU nodes for local AI inference',
+  'Runs production workloads: Bible Verse SaaS platform, PostgreSQL + Apache AGE, Redis, MinIO S3-compatible object storage, Weaviate vector database, and Gitea CI/CD',
+  'Full observability stack: Prometheus metrics, Loki log aggregation, Grafana dashboards, and Alertmanager routing — monitoring all cluster nodes and application services',
+  'Local LLM inference on CUDA-accelerated Jetson nodes: Llama 3.2 serving ~80% of AI requests at under 200ms RAG retrieval latency — ~70% cost reduction vs. full API routing',
+  'Automated CI/CD via self-hosted Gitea Actions: build, type-check, test, and rolling deploy on every push to main',
+  'Cloudflare Tunnel ingress — secure public routing without exposed ports; Flannel CNI for pod networking across heterogeneous hardware tiers',
 ]
 
 const projectSystems = [
   {
-    label: 'System Architecture',
+    label: 'Performance Outcomes',
     items: [
-      'Modular full-stack SaaS platform with role-based dashboards',
-      'Scalable Nuxt frontend architecture with API-driven backend',
-      'Multi-role system (users, admins, moderators)',
+      '37,000+ Bible and Quran verses indexed in Weaviate',
+      'RAG retrieval averaging under 200ms (hybrid BM25 + vector)',
+      '80% of inference requests served by local Llama 3.2 on Jetson GPU nodes',
+      '~70% inference cost reduction vs. full OpenAI API routing',
     ],
   },
   {
-    label: 'Core Features',
+    label: 'Reliability Outcomes',
     items: [
-      'AI Bible assistant powered by LLM integration',
-      'Retrieval-Augmented Generation (RAG) system using Weaviate',
-      'Scripture viewer and Quran comparison system',
-      'Real-time livestreaming via AWS IVS and FFmpeg pipelines',
-      'WebRTC-based peer-to-peer debate system',
+      'Zero request-path blocking: FFmpeg transcoding fully decoupled via BullMQ',
+      'Cross-instance WebSocket consistency via Redis pub/sub — no missed messages',
+      '5 independently deployable bounded domains with no cross-domain coupling',
+      'Circuit breaker on AI inference path — auto-routes to fallback on error threshold',
     ],
   },
   {
     label: 'Infrastructure',
     items: [
-      'AWS S3 + MinIO hybrid storage architecture',
-      'PostgreSQL + Prisma data layer',
-      'Redis caching and real-time state management',
-      'Vector search and semantic retrieval pipelines',
+      'Self-hosted Kubernetes (k3s) on 12-node cluster — 8× Pi 5 + 4× Jetson Orin Nano Super',
+      'MinIO S3-compatible object storage with signed URL delivery',
+      'PostgreSQL + Apache AGE for relational and graph queries',
+      'Prometheus + Loki + Grafana observability across all services',
     ],
   },
   {
-    label: 'Advanced Systems',
+    label: 'Architecture Decisions',
     items: [
-      'Game marketplace system',
-      'Digital book publishing tools',
-      'Achievement and user progression system',
-      'Ad monetization and campaign system',
-      'Moderation and content management tools',
-      'AI-assisted content and workflow automation',
+      '3 async BullMQ queues — transcoding, notifications, AI batch — keep API non-blocking',
+      'Prompt complexity classifier routes to local or cloud inference transparently',
+      'Redis pub/sub for cross-instance real-time state — no sticky sessions required',
+      'Domain-driven service modules: each domain owns its schema and data access',
     ],
   },
 ]
@@ -165,7 +163,7 @@ const projectSystems = [
               Donavan Jones
             </h1>
             <p class="mt-2 text-lg font-medium text-sky-500">
-              Full-Stack / Platform Engineer
+              AI Systems Engineer &amp; Platform Builder
             </p>
             <p class="mt-1 text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
               <Icon name="mdi:map-marker-outline" class="text-base" />
@@ -218,6 +216,10 @@ const projectSystems = [
             <Icon name="mdi:github" class="text-base text-sky-400" />
             github.com/FullStackDonavan
           </a>
+          <a href="https://linkedin.com/in/donavanjones" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 hover:text-sky-500 transition-colors">
+            <Icon name="mdi:linkedin" class="text-base text-sky-400" />
+            linkedin.com/in/donavanjones
+          </a>
         </div>
 
       </div>
@@ -244,13 +246,10 @@ const projectSystems = [
               </div>
               <div class="p-5 space-y-3">
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Full-stack engineer with 20+ years of development experience building web applications, SaaS platforms, CMS systems, and modern JavaScript-based systems.
+                  AI Systems Engineer with 20+ years of end-to-end ownership — from gathering requirements with business stakeholders through architecture decisions, implementation, and production operations. Most recently served as sole architect and lead developer for a group benefits enrollment platform that automated workflows for 92 businesses, cutting enrollment time from hours to minutes and eliminating 10+ manual tracking spreadsheets.
                 </p>
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Strong background in system architecture, API design, database modeling, AI systems, and multi-role SaaS applications. Comfortable working across frontend, backend, data, and infrastructure layers.
-                </p>
-                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Experienced in building AI-integrated applications, self-hosted infrastructure, and distributed system prototypes using modern cloud and local environments.
+                  Also building a production AI platform on a self-hosted 12-node Kubernetes cluster: RAG pipelines with hybrid search under 200ms, local LLM inference on NVIDIA Jetson GPU nodes reducing inference costs ~70%, and full Prometheus + Loki + Grafana observability. I work best when I own the full problem — from first stakeholder conversation to production deployment.
                 </p>
               </div>
             </div>
@@ -302,6 +301,35 @@ const projectSystems = [
                   </div>
                 </div>
 
+              </div>
+            </div>
+
+            <!-- Open to -->
+            <div class="rounded-2xl border border-green-500/20 bg-green-500/5 overflow-hidden print:hidden">
+              <div class="px-4 py-3 border-b border-green-500/10 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-[10px] text-green-400 font-semibold uppercase tracking-widest ml-1">Currently Open To</span>
+              </div>
+              <div class="p-4 space-y-2">
+                <div v-for="role in [
+                  'Senior Full-Stack Engineer',
+                  'Platform Engineering',
+                  'AI Systems Engineer',
+                  'Contract Opportunities',
+                ]" :key="role" class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                  <Icon name="mdi:check-circle" class="text-green-400 text-sm flex-shrink-0" />
+                  {{ role }}
+                </div>
+                <div class="pt-2 mt-2 border-t border-slate-200 dark:border-slate-800 space-y-1.5">
+                  <a href="mailto:donavanjones79@gmail.com" class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-400 transition-colors">
+                    <Icon name="mdi:email-outline" class="text-sky-400 text-sm" />
+                    donavanjones79@gmail.com
+                  </a>
+                  <a href="https://linkedin.com/in/donavanjones" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-sky-400 transition-colors">
+                    <Icon name="mdi:linkedin" class="text-sky-400 text-sm" />
+                    linkedin.com/in/donavanjones
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -443,7 +471,7 @@ const projectSystems = [
                     </span>
                   </div>
                   <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
-                    Production-grade multi-system platform combining AI, streaming, search, and real-time communication features.
+                    37K+ verses indexed · &lt;200ms RAG retrieval · 80% local inference · ~70% cost reduction · 5 bounded domains · Self-hosted Kubernetes
                   </p>
                   <NuxtLink
                     to="/projects/bible-verse"

@@ -30,14 +30,36 @@
 
       <!-- Description -->
       <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-        A full-stack group insurance enrollment platform managing the complete lifecycle from business
-        registration and invite-based employee onboarding through digital signature capture, PDF generation,
-        S3 storage, and admin fulfillment — with three role-scoped dashboards and an append-only audit trail.
+        A full-stack group insurance enrollment platform that automated a previously manual process for 92 businesses.
+        I gathered requirements from stakeholders, presented architecture decisions to non-technical leadership, built the system,
+        trained end users, and owned it through production. Enrollment workflows that took hours now take minutes.
       </p>
 
-      <!-- Results -->
+      <!-- Before / After -->
+      <div class="mb-6 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4">
+          <p class="text-xs font-semibold text-rose-500 uppercase tracking-wider mb-2">Before</p>
+          <ul class="space-y-1.5">
+            <li v-for="b in before" :key="b" class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400">
+              <Icon name="mdi:close-circle" class="text-rose-400 text-sm flex-shrink-0 mt-0.5" />
+              {{ b }}
+            </li>
+          </ul>
+        </div>
+        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+          <p class="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-2">After</p>
+          <ul class="space-y-1.5">
+            <li v-for="a in after" :key="a" class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-400">
+              <Icon name="mdi:check-circle" class="text-emerald-400 text-sm flex-shrink-0 mt-0.5" />
+              {{ a }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Business Impact stats -->
       <div class="mb-6">
-        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Results</h4>
+        <h4 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Business Impact</h4>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div
             v-for="stat in stats"
@@ -48,6 +70,20 @@
             <div class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight mt-0.5">{{ stat.label }}</div>
           </div>
         </div>
+      </div>
+
+      <!-- Efficiency Outcomes -->
+      <div class="mb-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+        <h4 class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 mb-3 flex items-center gap-2">
+          <Icon name="mdi:trending-up" class="text-base" />
+          Efficiency Outcomes
+        </h4>
+        <ul class="space-y-2">
+          <li v-for="outcome in outcomes" :key="outcome" class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+            <Icon name="mdi:check-circle" class="text-emerald-400 text-base flex-shrink-0 mt-0.5" />
+            {{ outcome }}
+          </li>
+        </ul>
       </div>
 
       <!-- How We Built It -->
@@ -113,11 +149,33 @@
 </template>
 
 <script setup lang="ts">
+const before = [
+  'Enrollment workflows took hours per business cycle',
+  '5–10 support emails required per enrollment to coordinate between roles',
+  '~10 spreadsheets tracking enrollment status manually',
+  'PDFs assembled and forwarded by hand',
+]
+
+const after = [
+  'Enrollment workflows take minutes',
+  'Support requests became rare — system enforces workflow automatically',
+  'All spreadsheets eliminated — single auditable platform',
+  'PDFs auto-generated server-side; cards delivered from dashboard',
+]
+
 const stats = [
-  { value: '92',   label: 'Businesses Onboarded' },
-  { value: '100s', label: 'Employees Enrolled' },
-  { value: '3',    label: 'Role Dashboards' },
-  { value: '100%', label: 'Audit Covered' },
+  { value: '92',    label: 'Businesses Onboarded' },
+  { value: '~10',   label: 'Spreadsheets Eliminated' },
+  { value: '0',     label: 'Manual Assignment Steps' },
+  { value: '100%',  label: 'Audit Coverage' },
+]
+
+const outcomes = [
+  'Automated end-to-end enrollment for 92 businesses — invite codes auto-link employees to the correct company on sign-up, eliminating manual admin assignment.',
+  'Eliminated manual PDF assembly: signed documents generated server-side on every form submission with digital signatures composited in — one coherent file stored to S3.',
+  'Insurance cards delivered directly from the admin dashboard — no email attachments, no manual forwarding per employee.',
+  'Append-only audit trail covers every enrollment action, replacing informal tracking for a workflow that requires legal traceability.',
+  'State machine enforces the full 5-step enrollment sequence across multiple actors — no employee can submit out of order, no owner can authorize payment before all applications are complete.',
 ]
 
 const challenges = [

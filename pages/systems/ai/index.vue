@@ -56,10 +56,18 @@ const failures = [
   { icon: 'mdi:swap-horizontal', color: 'sky',    text: 'Unstable tool execution ordering in parallel agent steps' },
 ]
 
+const inferenceMetrics = [
+  { value: '80%',    label: 'Requests served by local LLM' },
+  { value: '<200ms', label: 'Avg. RAG retrieval latency' },
+  { value: '37K+',   label: 'Documents indexed (Weaviate)' },
+  { value: '4',      label: 'Jetson GPU nodes (CUDA)' },
+]
+
 const stack = [
   'Llama 3.2 8B', 'OpenAI API', 'Weaviate', 'RAG Pipelines',
-  'FastAPI', 'Redis', 'PostgreSQL', 'BullMQ',
-  'Whisper STT', 'ElevenLabs TTS', 'Stable Diffusion', 'Prometheus',
+  'NVIDIA Jetson Orin Nano Super', 'CUDA', 'FastAPI', 'Redis',
+  'PostgreSQL', 'BullMQ', 'Whisper STT', 'ElevenLabs TTS',
+  'Stable Diffusion', 'Prometheus', 'Loki',
 ]
 
 const faqs = [
@@ -89,7 +97,7 @@ const faqs = [
   },
   {
     question: 'Can you deploy AI on private infrastructure?',
-    answer: 'Yes. I specialize in self-hosted AI deployments using Kubernetes, ARM64 clusters, and GPU nodes — giving full control over privacy, cost, and inference latency.'
+    answer: 'Yes. My cluster runs 4 NVIDIA Jetson Orin Nano Super GPU nodes dedicated to local LLM inference and embedding generation — no cloud required. Llama 3.2 handles ~80% of requests locally, cutting inference costs ~70% vs routing everything through the OpenAI API.'
   },
   {
     question: 'Do you build AI agents and workflow automation?',
@@ -265,6 +273,35 @@ useHead({
               >{{ tag }}</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTION METRICS -->
+      <section class="mb-10">
+        <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-6">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+              <Icon name="mdi:chip" class="text-green-400 text-lg" />
+            </div>
+            <div>
+              <h2 class="text-base font-semibold text-slate-900 dark:text-white">Running in Production</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">4× NVIDIA Jetson Orin Nano Super — dedicated GPU inference tier on the 12-node cluster</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div
+              v-for="m in inferenceMetrics"
+              :key="m.label"
+              class="rounded-xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-4 text-center"
+            >
+              <div class="text-2xl font-bold text-slate-900 dark:text-white">{{ m.value }}</div>
+              <div class="text-[11px] text-slate-500 dark:text-slate-400 leading-tight mt-1">{{ m.label }}</div>
+            </div>
+          </div>
+          <p class="mt-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Local inference on CUDA-accelerated Jetson nodes serves the majority of requests at under 200ms RAG retrieval latency.
+            The OpenAI API handles only edge cases requiring stronger reasoning — keeping inference costs ~70% lower than full-cloud routing.
+          </p>
         </div>
       </section>
 
