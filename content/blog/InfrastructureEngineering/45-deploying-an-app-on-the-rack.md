@@ -1,8 +1,8 @@
 ---
 title: "Deploying an App on the Rack"
-description: "How I deploy a full-stack Node.js application to a bare-metal ARM64 machine using Gitea Actions, SSH, and nohup — without Docker, without Kubernetes, and without pm2."
+description: "How I deploy a full-stack Node.js application to a bare-metal ARM64 machine using Gitea Actions, SSH, and systemd — without Docker, without Kubernetes, and without pm2."
 date: 2026-07-18
-lastUpdated: "2026-07-18"
+lastUpdated: "2026-06-19"
 category: "infrastructure-engineering"
 tags:
   - gitea
@@ -18,7 +18,7 @@ slug: deploying-an-app-on-the-rack
 author: Donavan Jones
 ---
 
-Not every workload belongs in Kubernetes. Sometimes you have a Node.js app, a bare-metal machine on your rack, and you just need the thing to run and stay running. This article documents the full deployment pipeline I use to ship a Nuxt 3 app to a bare ARM64 machine — covering secrets management, SSH-based build and migrate, process management without pm2, and the specific failure modes that only appear when you're actually doing this on real hardware.
+Not every workload belongs in Kubernetes. Sometimes you have a Node.js app, a bare-metal machine on your rack, and you just need the thing to run and stay running. This article documents the full deployment pipeline I use to ship a Nuxt 3 app to a bare ARM64 machine — covering secrets management, SSH-based build and migrate, systemd process management, and the specific failure modes that only appear when you're actually doing this on real hardware (including a glibc malloc corruption bug on ARM64 that took several hours to diagnose).
 
 # Deploying an App on the Rack
 
@@ -208,7 +208,7 @@ This was the first in a series of `exit 255` surprises this deployment surfaced.
 
 ## Stage 5: Restart App on Rack
 
-Once the build is in place, the app is restarted over a second SSH connection:
+Once the build is in place, the pipeline generates a systemd unit file and restarts the service:
 
 ```yaml
 - name: Restart app on rack
@@ -218,67 +218,132 @@ Once the build is in place, the app is restarted over a second SSH connection:
     DB_URL_B64=$(printf '%s' "$DATABASE_URL" | tr -d '\r\n' | \
       sed 's/^"//;s/"$//' | base64 | tr -d '\n')
 
+    # Build the systemd service file on the runner
+    SVC_B64=$(printf '%s\n' \
+      '[Unit]' \
+      'Description=BibleVerse App' \
+      'After=network.target' \
+      '' \
+      '[Service]' \
+      'Type=simple' \
+      "User=${DEPLOY_USER}" \
+      "WorkingDirectory=${DEPLOY_PATH}/app" \
+      "EnvironmentFile=${DEPLOY_PATH}/.env.production" \
+      'Environment=HOST=0.0.0.0' \
+      'Environment=PORT=3001' \
+      'Environment=NODE_ENV=production' \
+      'Environment=REDIS_HOST=192.168.1.104' \
+      'Environment=REDIS_PORT=32379' \
+      'Environment=LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libjemalloc.so.2' \
+      'Environment=MALLOC_CHECK_=0' \
+      'ExecStart=__NODEPATH__ .output/server/index.mjs' \
+      'Restart=always' \
+      'RestartSec=5' \
+      "StandardOutput=append:${DEPLOY_PATH}/bibleverse.log" \
+      "StandardError=append:${DEPLOY_PATH}/bibleverse.log" \
+      '' \
+      '[Install]' \
+      'WantedBy=multi-user.target' \
+      | base64 | tr -d '\n')
+
     /usr/bin/ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" "
     DB_URL=\$(printf '%s' '$DB_URL_B64' | base64 -d)
-    cd '$DEPLOY_PATH/app'
 
-    export HOST=0.0.0.0
-    export PORT=3001
-    export NODE_ENV=production
-    export DISABLE_REDIS=true
-    export DATABASE_URL=\"\$DB_URL\"
+    echo '==> writing env file'
+    printf 'DATABASE_URL=%s\n...' \"\$DB_URL\" > '$DEPLOY_PATH/.env.production'
+    chmod 600 '$DEPLOY_PATH/.env.production'
 
-    echo '==> restarting service'
-    if command -v pm2 >/dev/null 2>&1; then
-      echo '==> pm2 found'
-      if pm2 describe bibleverse >/dev/null 2>&1; then
-        pm2 restart bibleverse --update-env && pm2 save || echo 'WARN: pm2 restart failed'
-      else
-        pm2 start '.output/server/index.mjs' --name bibleverse --time && pm2 save || echo 'WARN: pm2 start failed'
-      fi
-    else
-      echo '==> pm2 not found, using nohup'
-      pkill -f '^node .output' 2>/dev/null || true
-      sleep 2
-      nohup node .output/server/index.mjs >> '$DEPLOY_PATH/bibleverse.log' 2>&1 &
-      disown
-      echo '==> nohup process started'
-    fi
+    echo '==> writing systemd service'
+    NODE_BIN=\$(which node)
+    printf '%s' '$SVC_B64' | base64 -d | \
+      sed \"s|__NODEPATH__|\$NODE_BIN|\" | \
+      sudo tee /etc/systemd/system/bibleverse.service > /dev/null
+
+    echo '==> enabling and restarting service'
+    sudo systemctl daemon-reload
+    sudo systemctl enable bibleverse
+    sudo systemctl restart bibleverse
+    sudo systemctl status bibleverse --no-pager || true
     echo '==> restart complete'
-    " || echo 'WARN: restart SSH step exited non-zero (exit code 255 is normal on ARM64)'
+    " || echo 'WARN: restart SSH step exited non-zero'
 ```
 
-### pm2 vs nohup
+### Why systemd Instead of nohup or pm2
 
-The pipeline tries pm2 first because it handles process supervision, auto-restart on crash, and log rotation. When pm2 is not installed, it falls back to `nohup`.
+Earlier versions of this pipeline used `nohup` with `disown`, which had several problems:
 
-The `nohup` path:
-1. Kills any running instance
-2. Waits 2 seconds for the port to clear
-3. Starts node in the background, redirecting output to a log file
-4. Calls `disown` to detach the process from the SSH session
+- **No automatic restart** — if the process crashed, it stayed down until the next deploy
+- **The pkill self-kill bug** — `pkill -f '.output/server/index.mjs'` would match the bash SSH session itself, killing the deploy mid-script (the fix was anchoring to `^node .output`, but the fragility remained)
+- **Signal race condition** — without `disown`, the SSH session's SIGHUP could kill the backgrounded process before nohup set up signal handling
 
-### The pkill Self-Kill Bug
+systemd solves all of these:
 
-This took several failed deploys to diagnose. The symptom: the pipeline would print `==> pm2 not found, using nohup` and then immediately die with exit 255 — before any nohup output appeared.
+- `Restart=always` with `RestartSec=5` restarts the app automatically on any crash
+- No `pkill` gymnastics — `systemctl restart` handles the process lifecycle cleanly
+- Logs go to a file via `StandardOutput=append:` and are also available through `journalctl -u bibleverse`
+- The service persists across reboots via `systemctl enable`
 
-The cause: `pkill -f '.output/server/index.mjs'` searches for that string in the **full command line** of every running process. When SSH executes a script, the remote shell runs as `bash -c "entire script as one argument"`. That command-line argument contained the string `.output/server/index.mjs`. So pkill matched and killed the current bash session — dropping the SSH connection mid-script.
+### The Node Binary Path Problem
 
-The fix is to anchor the pattern to the start of the command line:
+The systemd unit file needs the absolute path to `node` in `ExecStart`. This varies between machines (`/usr/bin/node`, `/usr/local/bin/node`, etc.), so the pipeline uses a placeholder:
+
+```
+ExecStart=__NODEPATH__ .output/server/index.mjs
+```
+
+On the remote machine, `which node` resolves the actual path, and `sed` substitutes it in before writing the service file.
+
+### The EnvironmentFile Pattern
+
+Secrets like `DATABASE_URL` go into `.env.production` rather than being hardcoded in the service file. This keeps credentials out of the systemd unit (which is world-readable under `/etc/systemd/system/`) and into a `chmod 600` file owned by the deploy user.
+
+---
+
+## The ARM64 glibc Malloc Crash
+
+After upgrading the rack machine to Debian Trixie (Debian 13), the app started crashing after every request with errors like:
+
+```
+malloc(): unaligned tcache chunk detected
+free(): double free detected in tcache 2
+malloc(): corrupted unsorted chunks 2
+```
+
+The app would serve the request successfully — chat responses streamed, messages saved to the database — and then the Node.js process would abort during cleanup. systemd would restart it in 5 seconds, but any request hitting the server during that window got a 502 from Cloudflare.
+
+### Why It Happens
+
+Debian Trixie ships glibc 2.38+, which introduced stricter malloc alignment checks. Native Node.js addons compiled against older glibc versions (particularly Prisma's query engine, which is a prebuilt Rust binary) trigger these checks and cause the process to abort.
+
+The crash is not a bug in application code. It's a compatibility issue between prebuilt ARM64 binaries and the newer glibc's stricter heap corruption detection.
+
+### What Didn't Work
+
+- **`npm rebuild --build-from-source`** — rebuilt bcrypt and other native modules, but Prisma's query engine is a prebuilt binary that can't be recompiled from source via npm
+- **`GLIBC_TUNABLES=glibc.malloc.tcache_count=0`** — disabled tcache but the crashes shifted to other allocator paths (`double free or corruption (fasttop)`)
+- **`LD_PRELOAD=libjemalloc.so.2`** — jemalloc loaded successfully and handled most allocations, but Prisma's Rust engine has glibc statically linked internally, so jemalloc couldn't intercept its malloc calls
+
+### What Fixed It
+
+The combination of jemalloc (to handle the majority of allocations safely) and `MALLOC_CHECK_=0` (to tell glibc to silently ignore corruption in the remaining allocations from statically-linked native modules):
+
+```ini
+[Service]
+Environment=LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libjemalloc.so.2
+Environment=MALLOC_CHECK_=0
+```
+
+Install jemalloc on the rack machine:
 
 ```bash
-# Wrong — matches bash -c "...node .output/server/index.mjs..."
-pkill -f '.output/server/index.mjs' || true
-
-# Correct — only matches processes whose cmdline starts with 'node'
-pkill -f '^node .output' 2>/dev/null || true
+sudo apt-get install -y libjemalloc2
 ```
 
-A process started as `nohup node .output/server/index.mjs` has a cmdline that begins with `node`. The bash process begins with `bash`. The anchor makes the difference.
+These environment variables are baked into the systemd service file that the deploy pipeline generates, so they persist across deploys.
 
-### Why `disown` Matters
+### The Proper Fix
 
-Without `disown`, the backgrounded node process remains in the shell's job table. When the SSH session ends, the shell sends `SIGHUP` to all jobs in its table. Even though `nohup` ignores SIGHUP for the initial exec, there is a short window before nohup sets up signal handling. `disown` removes the job from the table entirely, eliminating the race condition.
+Upgrading to Node.js 22 LTS and updating Prisma to the latest version should resolve the underlying binary compatibility issue, making the jemalloc workaround unnecessary. This is planned but not yet deployed.
 
 ---
 
@@ -318,9 +383,11 @@ destinationUrl: "/systems/infrastructure"
 |---|---|---|
 | Step fails immediately, no SSH output | Missing secret, SSH key invalid | Check Gitea secrets; verify key format |
 | Build succeeds, migrate exits 255 | Prisma ARM64 engine bug | Tolerate with `\|\| echo WARN` |
-| Restart prints "pm2 not found, using nohup" then dies with 255 | `pkill -f` kills the bash session | Anchor pattern to `^node` |
-| App not reachable after successful deploy | Old process still holding port | Check `ss -tlnp`; add `sleep 2` after pkill |
-| nohup process disappears after SSH closes | Not disowned from session | Add `disown` after `&` |
+| `malloc(): unaligned tcache chunk detected` after every request | Debian Trixie glibc 2.38+ vs prebuilt ARM64 native modules | `LD_PRELOAD=libjemalloc.so.2` + `MALLOC_CHECK_=0` in systemd |
+| App crashes but data is saved | malloc abort happens during cleanup, after response sent | systemd `Restart=always` masks it; jemalloc fix prevents it |
+| 502 from Cloudflare intermittently | App process restarting (5s window) | Fix the crash; or reduce `RestartSec` to `1` |
+| CI runner fails with "Cannot find: node in PATH" | Runner image missing Node.js; `apk add` failed at startup | Bake Node.js into a custom runner image |
+| `ExecStart` fails with "node: not found" | Hardcoded node path doesn't match target machine | Use `which node` + `sed` placeholder substitution |
 
 ::CtaContactWork
 ---
@@ -334,7 +401,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Deploying a Node.js app to a bare-metal ARM64 machine over SSH is achievable with nothing but standard shell tools — no Docker, no Kubernetes, no external CI services. The main challenges are shell quoting across SSH boundaries, Prisma's ARM64 engine quirks, and the subtle ways that `pkill -f` and `nohup` interact with the SSH session lifecycle. Once those are understood, the pipeline is simple, fast, and fully observable from Gitea's built-in CI log view.
+Deploying a Node.js app to a bare-metal ARM64 machine over SSH is achievable with nothing but standard shell tools — no Docker, no Kubernetes, no external CI services. The main challenges are shell quoting across SSH boundaries, Prisma's ARM64 engine quirks, and the glibc compatibility issues that surface when running prebuilt native binaries on newer Debian releases. systemd handles process supervision cleanly, and the jemalloc + `MALLOC_CHECK_=0` workaround keeps the app stable until the underlying binary compatibility is resolved upstream. Once those are understood, the pipeline is simple, fast, and fully observable from Gitea's built-in CI log view.
 
 ::CtaCardRow
   :::CtaDownloadGuide
