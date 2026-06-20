@@ -51,29 +51,69 @@ The rack machine in question is an ARM64 node that sits outside the K3s cluster.
 
 ## Pre-Deploy: Provisioning with Kingdom Tools
 
-Before the pipeline touches the rack, the app needs its own isolated data resources — a dedicated PostgreSQL database, a MinIO bucket for file storage, and optionally a Redis database slot and a Weaviate collection for vector search. Rather than SSH-ing into the cluster and running `CREATE DATABASE` and `mc mb` by hand, I use Kingdom Tools — a management dashboard that runs inside the K3s cluster at `http://192.168.1.219:30800`.
+Before the pipeline touches the rack, the app needs its own isolated data resources — a dedicated PostgreSQL database, a MinIO bucket for file storage, and optionally a Redis database slot, a Weaviate collection for vector search, and a MongoDB database for document storage. Rather than SSH-ing into the cluster and running `CREATE DATABASE` and `mc mb` by hand, I use Kingdom Tools — an internal developer platform that runs inside the K3s cluster at `http://192.168.1.219:30800`.
 
-### Quick Provision
+Kingdom Tools is more than a dashboard. It's a Kubernetes-native service control plane with a custom resource definition (`KingdomService`), a reconciliation controller, service templates, secrets management, Grafana integration, and drift detection. It enforces the opinion that a service is a *bundle of infrastructure resources*, not just a deployment.
 
-Navigate to the **Provision** page in Kingdom Tools and enter the service name. For a service called `bibleverse`, checking all four boxes creates:
+### Declarative Provisioning (CRD)
 
-| Resource | Name Created | Connection |
-|---|---|---|
-| PostgreSQL database | `bibleverse` | `postgresql://dev:devpass@postgres.postgres.svc.cluster.local:5432/bibleverse` |
-| MinIO bucket | `bibleverse` | `minio-service.minio.svc.cluster.local:9000` |
-| Redis database | Next available slot (db1–15) | `redis://redis.redis.svc.cluster.local:6379/1` |
-| Weaviate collection | `Bibleverse` | `http://weaviate.weaviate.svc.cluster.local:8080` |
+The preferred way to provision a service is declaratively via `kubectl`:
 
-One click, four isolated resources. Each new service gets its own database, its own bucket, its own Redis keyspace, and its own vector collection — no data leaks between services.
+```yaml
+apiVersion: kingdom.donavanjones.com/v1alpha1
+kind: KingdomService
+metadata:
+  name: bibleverse
+spec:
+  template: web-app
+  deployment:
+    image: bibleverse:arm64
+    port: 3000
+```
+
+Apply it with `kubectl apply -f bibleverse-ks.yaml` and within seconds the controller:
+
+1. Resolves the `web-app` template (PostgreSQL + MinIO + Redis)
+2. Creates a `bibleverse` database in PostgreSQL
+3. Creates a `bibleverse` bucket in MinIO
+4. Assigns the next available Redis database slot
+5. Updates the CR status to `Phase: Ready` with per-resource conditions
+6. Shadow-writes to the service catalog for dashboard visibility
+
+Check the result:
+
+```bash
+$ kubectl get ks
+NAME         TEMPLATE   PHASE   AGE
+bibleverse   web-app    Ready   12s
+```
+
+The controller continuously reconciles — if a resource is deleted or drifts, it recreates it automatically.
+
+### Quick Provision (Dashboard)
+
+For one-off provisioning without writing YAML, Kingdom Tools also has a dashboard UI. Navigate to the **Provision** page, pick a template, enter a service name, and hit Provision. For a service called `bibleverse` with the `web-app` template, it creates:
+
+| Resource | Name Created | Connection (in-cluster) | Connection (external) |
+|---|---|---|---|
+| PostgreSQL | `bibleverse` | `postgres.postgres.svc.cluster.local:5432` | `192.168.1.219:30432` |
+| MinIO | `bibleverse` | `minio-service.minio.svc.cluster.local:9000` | `192.168.1.219:30900` |
+| Redis | Next available slot | `redis.redis.svc.cluster.local:6379/1` | `192.168.1.219:32379` |
+
+Six templates are available: `web-app`, `ai-agent`, `scraper`, `api-service`, `worker`, and `document-store`. Each defines which of the six data layers (PostgreSQL, MinIO, Redis, Weaviate, MongoDB, Grafana dashboards) are enabled and provides sane defaults.
 
 ### Managing Resources After Provisioning
 
-Kingdom Tools also lets you manage these resources after creation:
+Kingdom Tools provides full lifecycle management beyond provisioning:
 
-- **Databases** page — view all PostgreSQL databases, their sizes, create new ones, or drop ones you no longer need (core databases like `devdb` and `postgres` are protected)
-- **Storage** page — browse MinIO buckets, see object counts and sizes, create or delete buckets, and browse individual objects inside a bucket
-- **Redis** page — view all 16 Redis database slots with key counts, browse keys in any slot, and flush non-primary databases
-- **Weaviate** page — list collections with property schemas and object counts, create or delete collections, and browse stored objects
+- **Databases** — view all PostgreSQL and MongoDB databases, create new ones, drop ones you no longer need (system databases are protected)
+- **Storage** — browse MinIO buckets, see object counts and sizes, create or delete buckets
+- **Redis** — view all 16 database slots with key counts, browse keys, flush non-primary databases
+- **Weaviate** — list vector collections with object counts, create or delete collections
+- **Secrets** — generate and rotate K8s Secrets per service (SECRET_KEY, JWT_SECRET, API_KEY) with cryptographically secure values
+- **Dashboards** — create per-service Grafana dashboards (request rate, error rate, latency, CPU, memory, logs) with one click
+- **Audit** — drift detection that cross-references all resources against the service catalog, flags orphans and missing resources, and reconciles in one pass
+- **Registry** — lists container images and repos from Gitea's built-in registry
 
 For bare-metal deploys like this one, the app connects to these resources via the cluster's NodePorts from outside K3s. The `DATABASE_URL` in the pipeline secrets points to `192.168.1.219:30432`, MinIO is reachable at `192.168.1.219:30900`, and Redis at `192.168.1.219:32379`.
 

@@ -118,8 +118,8 @@ useSeoMeta({
 
         </div>
 
-        <!-- Infrastructure 4-col -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Infrastructure 5-col -->
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
 
           <div
             v-for="node in [
@@ -127,6 +127,7 @@ useSeoMeta({
               { icon: 'mdi:kubernetes',      color: 'purple', label: 'Orchestration',  sub: 'Scheduling, networking, autoscaling' },
               { icon: 'mdi:source-branch',   color: 'emerald',label: 'CI/CD',          sub: 'Automated builds via Gitea runners' },
               { icon: 'mdi:chart-line',      color: 'rose',   label: 'Observability',  sub: 'Metrics, logs, dashboards, alerting' },
+              { icon: 'mdi:tools',           color: 'amber',  label: 'Kingdom Tools',  sub: 'Service catalog, provisioning & drift detection' },
             ]"
             :key="node.label"
             class="rounded-2xl p-5 border transition-all duration-200"
@@ -140,6 +141,7 @@ useSeoMeta({
                 'text-purple-400': node.color === 'purple',
                 'text-emerald-400':node.color === 'emerald',
                 'text-rose-400':   node.color === 'rose',
+                'text-amber-400':  node.color === 'amber',
               }"
             />
             <div class="text-sm font-semibold text-slate-900 dark:text-white">{{ node.label }}</div>
@@ -672,6 +674,7 @@ useSeoMeta({
             { tool: 'Kubernetes', desc: 'k3s dashboard / node view', file: 'kubernetes-dashboard.png', color: 'sky', icon: 'mdi:kubernetes' },
             { tool: 'MinIO', desc: 'Object storage bucket browser', file: 'minio-dashboard.png', color: 'amber', icon: 'mdi:harddisk' },
             { tool: 'Weaviate', desc: 'Vector database & schema view', file: 'weaviate-dashboard.png', color: 'purple', icon: 'mdi:vector-arrange-above' },
+            { tool: 'Kingdom Tools', desc: 'Service catalog, provisioning & drift detection', file: 'kingdom-tools-dashboard.png', color: 'amber', icon: 'mdi:tools' },
           ]" :key="shot.tool"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 overflow-hidden bg-white dark:bg-slate-900/60"
           >

@@ -87,12 +87,48 @@ const observability = [
   },
 ]
 
+const kingdomTools = {
+  features: [
+    {
+      icon: 'mdi:view-dashboard-variant', color: 'sky',
+      title: 'Cluster Management',
+      desc: 'View all nodes, pods, deployments, and services across every namespace. Restart or scale deployments and view pod logs in-browser.',
+    },
+    {
+      icon: 'mdi:database-cog', color: 'emerald',
+      title: 'Data Layer Management',
+      desc: 'PostgreSQL databases, MinIO buckets, Redis slots, and Weaviate collections — create, browse, and delete from one interface.',
+    },
+    {
+      icon: 'mdi:clipboard-list', color: 'purple',
+      title: 'Service Catalog',
+      desc: 'Every service is registered with a declarative spec defining its database, bucket, Redis slot, Weaviate collection, and deployment config.',
+    },
+    {
+      icon: 'mdi:rocket-launch', color: 'amber',
+      title: 'One-Click Provisioning',
+      desc: '5 service templates (web-app, ai-agent, scraper, api-service, worker). Pick a template, hit provision — isolated resources created across all four data layers.',
+    },
+    {
+      icon: 'mdi:shield-search', color: 'rose',
+      title: 'Audit & Drift Detection',
+      desc: 'Cross-references every resource against the catalog. Flags orphans and missing resources. Reconcile button fixes drift instantly.',
+    },
+    {
+      icon: 'mdi:chart-box', color: 'sky',
+      title: 'Observability Dashboard',
+      desc: 'Stat cards for nodes, pods, deployments, databases, buckets, Redis slots, collections, and catalog count. Alerts panel for unhealthy pods.',
+    },
+  ],
+  stack: ['Python', 'FastAPI', 'K8s API', 'PostgreSQL', 'MinIO', 'Redis', 'Weaviate', 'Prometheus', 'Loki'],
+}
+
 const stack = [
   'Kubernetes (k3s)', 'Raspberry Pi 5', 'NVIDIA Jetson Orin Nano Super', 'ARM64',
   'CUDA', 'Docker', 'Flannel CNI', 'Cloudflare Tunnel',
   'Ingress NGINX', 'cert-manager', 'MinIO', 'PostgreSQL + AGE',
   'Weaviate', 'Gitea', 'Actions Runners', 'Prometheus',
-  'Loki', 'Grafana', 'Alertmanager',
+  'Loki', 'Grafana', 'Alertmanager', 'Kingdom Tools',
 ]
 
 const faqs = [
@@ -127,6 +163,10 @@ const faqs = [
   {
     question: 'What makes this architecture unique?',
     answer: 'It combines two distinct hardware tiers — ARM64 general compute (Pi 5) and CUDA GPU nodes (Jetson Orin Nano Super) — under a single k3s control plane. Self-hosted AI inference, observability (Prometheus + Loki + Grafana), CI/CD (Gitea), and distributed storage (MinIO + Weaviate + PostgreSQL) all run on-cluster without cloud dependency.'
+  },
+  {
+    question: 'What is Kingdom Tools?',
+    answer: 'Kingdom Tools is an internal service control plane that manages the full lifecycle of microservices on the cluster. It combines a service catalog, one-click resource provisioning across PostgreSQL, MinIO, Redis, and Weaviate, automated drift detection that flags orphaned or missing resources, and a reconcile engine that fixes infrastructure drift in one pass. It runs as a Python FastAPI pod in the kingdom-tools namespace.'
   },
 ]
 
@@ -341,6 +381,80 @@ useHead({
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ obs.title }}</h3>
             </div>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{{ obs.desc }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KINGDOM TOOLS -->
+      <section class="mb-10">
+        <div class="mb-6">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3
+                   bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium"
+          >
+            <Icon name="mdi:tools" class="text-sm" />
+            Service Control Plane
+          </div>
+          <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Kingdom Tools</h2>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-3xl leading-relaxed">
+            An internal platform layer that combines cluster observability, resource provisioning, a service catalog,
+            and drift detection into a single dashboard. It enforces the opinion that a service is a bundle of
+            infrastructure resources — not just a deployment.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div
+            v-for="feat in kingdomTools.features"
+            :key="feat.title"
+            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 flex flex-col gap-3"
+          >
+            <div
+              class="w-10 h-10 rounded-lg flex items-center justify-center border"
+              :class="{
+                'bg-sky-500/10 border-sky-500/20':         feat.color === 'sky',
+                'bg-emerald-500/10 border-emerald-500/20': feat.color === 'emerald',
+                'bg-purple-500/10 border-purple-500/20':   feat.color === 'purple',
+                'bg-amber-500/10 border-amber-500/20':     feat.color === 'amber',
+                'bg-rose-500/10 border-rose-500/20':       feat.color === 'rose',
+              }"
+            >
+              <Icon :name="feat.icon" class="text-xl"
+                :class="{
+                  'text-sky-400':    feat.color === 'sky',
+                  'text-emerald-400':feat.color === 'emerald',
+                  'text-purple-400': feat.color === 'purple',
+                  'text-amber-400':  feat.color === 'amber',
+                  'text-rose-400':   feat.color === 'rose',
+                }"
+              />
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ feat.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ feat.desc }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+                 bg-white dark:bg-slate-900/60"
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
+              <Icon name="mdi:code-tags" class="text-sky-400 text-sm" />
+            </div>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Kingdom Tools Stack</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="t in kingdomTools.stack" :key="t"
+              class="text-[11px] px-2.5 py-1 rounded-lg border
+                     bg-slate-100 dark:bg-slate-800
+                     text-slate-600 dark:text-slate-300
+                     border-slate-200 dark:border-slate-700/50"
+            >{{ t }}</span>
           </div>
         </div>
       </section>
