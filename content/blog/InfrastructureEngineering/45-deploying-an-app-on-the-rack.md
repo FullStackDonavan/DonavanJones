@@ -49,6 +49,36 @@ The rack machine in question is an ARM64 node that sits outside the K3s cluster.
 
 ---
 
+## Pre-Deploy: Provisioning with Kingdom Tools
+
+Before the pipeline touches the rack, the app needs its own isolated data resources — a dedicated PostgreSQL database, a MinIO bucket for file storage, and optionally a Redis database slot and a Weaviate collection for vector search. Rather than SSH-ing into the cluster and running `CREATE DATABASE` and `mc mb` by hand, I use Kingdom Tools — a management dashboard that runs inside the K3s cluster at `http://192.168.1.219:30800`.
+
+### Quick Provision
+
+Navigate to the **Provision** page in Kingdom Tools and enter the service name. For a service called `bibleverse`, checking all four boxes creates:
+
+| Resource | Name Created | Connection |
+|---|---|---|
+| PostgreSQL database | `bibleverse` | `postgresql://dev:devpass@postgres.postgres.svc.cluster.local:5432/bibleverse` |
+| MinIO bucket | `bibleverse` | `minio-service.minio.svc.cluster.local:9000` |
+| Redis database | Next available slot (db1–15) | `redis://redis.redis.svc.cluster.local:6379/1` |
+| Weaviate collection | `Bibleverse` | `http://weaviate.weaviate.svc.cluster.local:8080` |
+
+One click, four isolated resources. Each new service gets its own database, its own bucket, its own Redis keyspace, and its own vector collection — no data leaks between services.
+
+### Managing Resources After Provisioning
+
+Kingdom Tools also lets you manage these resources after creation:
+
+- **Databases** page — view all PostgreSQL databases, their sizes, create new ones, or drop ones you no longer need (core databases like `devdb` and `postgres` are protected)
+- **Storage** page — browse MinIO buckets, see object counts and sizes, create or delete buckets, and browse individual objects inside a bucket
+- **Redis** page — view all 16 Redis database slots with key counts, browse keys in any slot, and flush non-primary databases
+- **Weaviate** page — list collections with property schemas and object counts, create or delete collections, and browse stored objects
+
+For bare-metal deploys like this one, the app connects to these resources via the cluster's NodePorts from outside K3s. The `DATABASE_URL` in the pipeline secrets points to `192.168.1.219:30432`, MinIO is reachable at `192.168.1.219:30900`, and Redis at `192.168.1.219:32379`.
+
+---
+
 ## Pipeline Overview
 
 The deploy pipeline has five stages, all defined in a single Gitea Actions workflow:

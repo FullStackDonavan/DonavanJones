@@ -481,12 +481,8 @@ useSeoMeta({
             </div>
             <span class="text-[10px] text-slate-400 uppercase tracking-widest">Live Dashboard</span>
           </div>
-          <div class="relative bg-slate-900 min-h-[240px] flex items-center justify-center">
-            <div class="text-center py-16 px-6">
-              <Icon name="mdi:monitor-screenshot" class="text-slate-600 text-5xl mb-3" />
-              <p class="text-sm font-medium text-slate-400">Grafana Dashboard Screenshot</p>
-              <p class="text-xs text-slate-600 mt-1">Add screenshot to <code class="text-sky-500">public/img/screenshots/grafana-dashboard.png</code></p>
-            </div>
+          <div class="relative bg-slate-900">
+            <NuxtImg src="/img/screenshots/grafana-dashboard.PNG" alt="Grafana Dashboard Screenshot" class="w-full object-cover" />
           </div>
         </div>
 
