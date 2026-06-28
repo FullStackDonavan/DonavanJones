@@ -79,11 +79,11 @@ const caseStudies = [
     result: 'Hours → Minutes enrollment',
   },
   {
-    title: 'Bible Logic',
+    title: 'VerseHub',
     highlight: '37,000+ verses indexed',
     desc: 'AI-powered scripture study platform with RAG retrieval under 200ms, local LLM inference on self-hosted GPU nodes, real-time chat via WebRTC, and async job pipelines.',
     tags: ['Weaviate', 'Llama 3.2', 'BullMQ', 'WebRTC', 'Kubernetes'],
-    to: '/projects/bible-verse',
+    to: '/projects/versehub',
     result: '70% inference cost reduction',
   },
 ]

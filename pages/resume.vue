@@ -95,7 +95,7 @@ const experience = [
 
 const homelabPoints = [
   'Designed and operate a 12-node self-hosted Kubernetes cluster (k3s): 8× Raspberry Pi 5 ARM64 nodes for general workloads + 4× NVIDIA Jetson Orin Nano Super GPU nodes for local AI inference',
-  'Runs production workloads: Bible Verse SaaS platform, PostgreSQL + Apache AGE, Redis, MinIO S3-compatible object storage, Weaviate vector database, and Gitea CI/CD',
+  'Runs production workloads: VerseHub SaaS platform, PostgreSQL + Apache AGE, Redis, MinIO S3-compatible object storage, Weaviate vector database, and Gitea CI/CD',
   'Full observability stack: Prometheus metrics, Loki log aggregation, Grafana dashboards, and Alertmanager routing — monitoring all cluster nodes and application services',
   'Local LLM inference on CUDA-accelerated Jetson nodes: Llama 3.2 serving ~80% of AI requests at under 200ms RAG retrieval latency — ~70% cost reduction vs. full API routing',
   'Automated CI/CD via self-hosted Gitea Actions: build, type-check, test, and rolling deploy on every push to main',
@@ -457,14 +457,14 @@ const projectSystems = [
 
               <div class="px-6 py-5">
 
-                <!-- Bible Logic -->
+                <!-- VerseHub -->
                 <div class="mb-2">
                   <div class="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                     <NuxtLink
-                      to="/projects/bible-verse"
+                      to="/projects/versehub"
                       class="text-base font-semibold text-slate-900 dark:text-white hover:text-purple-400 transition-colors"
                     >
-                      Bible Verse AI
+                      VerseHub
                     </NuxtLink>
                     <span class="text-[11px] px-2 py-0.5 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20 self-start sm:self-auto">
                       Full-Stack SaaS Platform — Founder &amp; Developer
@@ -474,7 +474,7 @@ const projectSystems = [
                     37K+ verses indexed · &lt;200ms RAG retrieval · 80% local inference · ~70% cost reduction · 5 bounded domains · Self-hosted Kubernetes
                   </p>
                   <NuxtLink
-                    to="/projects/bible-verse"
+                    to="/projects/versehub"
                     class="inline-flex items-center gap-1 text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors mb-4"
                   >
                     View project <Icon name="mdi:arrow-right" class="text-sm" />
