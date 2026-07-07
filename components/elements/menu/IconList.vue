@@ -91,16 +91,6 @@ async function logout() {
       Log In
     </NuxtLink>
 
-    <NuxtLink
-      to="/hire-me"
-      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
-             bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-200
-             shadow shadow-sky-500/20"
-    >
-      <Icon name="mdi:briefcase-outline" class="text-sm" />
-      Work With Me
-    </NuxtLink>
-
     <span
       class="md:block"
       @click="setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
@@ -130,5 +120,15 @@ async function logout() {
         />
       </svg>
     </span>
+
+    <NuxtLink
+      to="/hire-me"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
+             bg-sky-500 text-white hover:bg-sky-600 transition-colors duration-200
+             shadow shadow-sky-500/20"
+    >
+      <Icon name="mdi:briefcase-outline" class="text-sm" />
+      Work With Me
+    </NuxtLink>
   </div>
 </template>
