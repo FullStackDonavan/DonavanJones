@@ -43,9 +43,10 @@ const skills = {
 
 const experience = [
   {
-    company: 'Amerus Financial Group',
+    company: 'NBBA (Business Benefit Alliance)',
     title: 'Web Developer',
     location: 'Lakeland, FL',
+    dates: 'Aug 2025 – Present',
     caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
       'Served as sole architect and lead developer — gathered requirements from business stakeholders, presented architecture decisions and tradeoffs to non-technical leadership, and owned the system from schema design through production deployment',
@@ -60,6 +61,7 @@ const experience = [
     company: 'Web Instinct',
     title: 'Web Developer',
     location: 'Tampa, FL',
+    dates: 'Aug 2024 – Feb 2025',
     points: [
       'Developed and maintained web applications using Concrete5 CMS',
       'Built custom client portals with performance-focused frontend architecture',
@@ -69,9 +71,22 @@ const experience = [
     ],
   },
   {
+    company: 'Amerus Financial Group',
+    title: 'Web Developer',
+    location: 'Lakeland, FL',
+    dates: 'Dec 2020 – Jul 2024',
+    points: [
+      'Designed and built the agency’s employee management system in Vue.js — owned the feature set from requirements through deployment',
+      'Developed custom WordPress themes and plugins powering the agency’s public web presence and marketing pages',
+      'Served as the technical point of contact for management — translated the development process into plain-English status, scope, and tradeoff decisions',
+      'Led troubleshooting and issue resolution across the agency’s web properties and internal systems',
+    ],
+  },
+  {
     company: 'Florida Water Analysis',
     title: 'Web Developer',
     location: 'Florida',
+    dates: 'Jul 2018 – May 2024',
     points: [
       'Built React-based web application for water treatment tracking and client management',
       'Developed and maintained multiple business websites and landing pages',
@@ -84,6 +99,7 @@ const experience = [
     company: 'Footbridge Media',
     title: 'Junior Web Developer',
     location: 'Pensacola, FL',
+    dates: 'Nov 2013 – Mar 2018',
     points: [
       'Developed Laravel-based internal admin system for tracking client content workflows',
       'Maintained and extended enterprise WordPress theme framework across client sites',
@@ -360,10 +376,16 @@ const projectSystems = [
                       <h3 class="text-base font-semibold text-slate-900 dark:text-white">{{ job.company }}</h3>
                       <p class="text-sm font-medium text-sky-500">{{ job.title }}</p>
                     </div>
-                    <span class="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1 shrink-0">
-                      <Icon name="mdi:map-marker-outline" class="text-sm" />
-                      {{ job.location }}
-                    </span>
+                    <div class="flex flex-col sm:items-end gap-0.5 shrink-0">
+                      <span class="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <Icon name="mdi:calendar-range" class="text-sm" />
+                        {{ job.dates }}
+                      </span>
+                      <span class="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
+                        <Icon name="mdi:map-marker-outline" class="text-sm" />
+                        {{ job.location }}
+                      </span>
+                    </div>
                   </div>
                   <ul class="space-y-1.5">
                     <li
