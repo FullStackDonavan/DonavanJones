@@ -80,6 +80,18 @@
               <div class="font-medium text-gray-900 dark:text-gray-100">Infrastructure Systems</div>
               <div class="text-sm text-gray-500 dark:text-gray-400">Kubernetes, ARM64, homelab, GPU nodes</div>
             </NuxtLink>
+            <NuxtLink to="/systems/agentic-ai" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Agentic AI Systems</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Planning, memory, orchestration, verification</div>
+            </NuxtLink>
+            <NuxtLink to="/systems/ai-homelab" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">AI Homelab Engineering</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Compute, orchestration, storage, security</div>
+            </NuxtLink>
+            <NuxtLink to="/systems/local-vibe-coding" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Local Vibe Coding</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Local models, agent loop, hybrid GPU routing</div>
+            </NuxtLink>
           </div>
         </div>
 
@@ -175,11 +187,7 @@ const isServicesActive = computed(() => {
 
 // Systems
 const isSystemsActive = computed(() => {
-  return (
-    route.path.startsWith('/systems/ai') ||
-    route.path.startsWith('/systems/backend') ||
-    route.path.startsWith('/systems/infrastructure')
-  )
+  return route.path.startsWith('/systems')
 })
 
 // Projects

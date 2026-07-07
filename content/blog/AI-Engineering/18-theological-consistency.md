@@ -8,7 +8,7 @@ tags:
   - ai-engineering
   - theology
   - consistency
-draft: true
+draft: false
 slug: theological-consistency
 author: Donavan Jones
 ---

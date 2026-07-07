@@ -41,6 +41,7 @@ const fetchArticles = async () => {
   try {
     articles.value = await queryContent()
       .where({ tags: { $contains: tagName.value }, draft: { $ne: true } })
+      .sort({ date: -1 })
       .skip((currentPage.value - 1) * limit.value)
       .limit(limit.value)
       .find();

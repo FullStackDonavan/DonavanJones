@@ -774,6 +774,33 @@ useSeoMeta({
                 desc: 'k3s cluster across 8 Raspberry Pi 5 nodes with Gitea CI/CD, Prometheus, and Grafana.',
                 tags: ['k3s', 'Raspberry Pi 5', 'Gitea', 'Prometheus'],
               },
+              {
+                to: '/systems/agentic-ai',
+                icon: 'mdi:robot-outline',
+                color: 'amber',
+                title: 'Agentic AI Systems',
+                sub: 'Planning · Memory · Orchestration · Verification',
+                desc: 'Autonomous agent loops — task planning, layered memory, durable orchestration, and output verification before it reaches a user.',
+                tags: ['Temporal', 'Kafka', 'Weaviate', 'Verification Agents'],
+              },
+              {
+                to: '/systems/ai-homelab',
+                icon: 'mdi:chip',
+                color: 'rose',
+                title: 'AI Homelab Engineering',
+                sub: 'Compute · Orchestration · Storage · Security',
+                desc: 'The home lab cluster underneath everything — hybrid GPU compute, k3s orchestration, distributed storage, and network security.',
+                tags: ['RTX 3090', 'Jetson Orin', 'k3s', 'MinIO'],
+              },
+              {
+                to: '/systems/local-vibe-coding',
+                icon: 'mdi:laptop',
+                color: 'indigo',
+                title: 'Local Vibe Coding',
+                sub: 'Models · Agent Loop · Retrieval · Hardware',
+                desc: 'A local AI coding environment — Ornith-1.0-35B, a custom agent loop, and hybrid GPU routing, replacing hosted subscriptions.',
+                tags: ['Ornith-1.0-35B', 'Ollama', 'OpenClaw', 'RTX 3090'],
+              },
             ]"
             :key="sys.to"
             :to="sys.to"
@@ -785,6 +812,9 @@ useSeoMeta({
               'hover:border-purple-500/40 hover:shadow-purple-500/5': sys.color === 'purple',
               'hover:border-sky-500/40 hover:shadow-sky-500/5':       sys.color === 'sky',
               'hover:border-emerald-500/40 hover:shadow-emerald-500/5': sys.color === 'emerald',
+              'hover:border-amber-500/40 hover:shadow-amber-500/5':   sys.color === 'amber',
+              'hover:border-rose-500/40 hover:shadow-rose-500/5':     sys.color === 'rose',
+              'hover:border-indigo-500/40 hover:shadow-indigo-500/5': sys.color === 'indigo',
             }"
           >
             <div class="p-6 flex flex-col flex-1">
@@ -795,6 +825,9 @@ useSeoMeta({
                   'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
                   'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
                   'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
+                  'bg-amber-500/10 border-amber-500/20':   sys.color === 'amber',
+                  'bg-rose-500/10 border-rose-500/20':     sys.color === 'rose',
+                  'bg-indigo-500/10 border-indigo-500/20': sys.color === 'indigo',
                 }"
               >
                 <Icon :name="sys.icon" class="text-2xl"
@@ -802,6 +835,9 @@ useSeoMeta({
                     'text-purple-400': sys.color === 'purple',
                     'text-sky-400':    sys.color === 'sky',
                     'text-emerald-400':sys.color === 'emerald',
+                    'text-amber-400':  sys.color === 'amber',
+                    'text-rose-400':   sys.color === 'rose',
+                    'text-indigo-400': sys.color === 'indigo',
                   }"
                 />
               </div>
@@ -816,6 +852,9 @@ useSeoMeta({
                     'text-purple-400': sys.color === 'purple',
                     'text-sky-400':    sys.color === 'sky',
                     'text-emerald-400':sys.color === 'emerald',
+                    'text-amber-400':  sys.color === 'amber',
+                    'text-rose-400':   sys.color === 'rose',
+                    'text-indigo-400': sys.color === 'indigo',
                   }"
                 >
                   {{ sys.sub }}

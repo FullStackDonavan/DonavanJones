@@ -37,6 +37,7 @@ const totalPages = computed(() =>
 const { data: articles, refresh } = await useAsyncData("blog", () =>
   queryContent("/blog")
     .where({ draft: { $ne: true } })
+    .sort({ date: -1 })
     .skip((currentPage.value - 1) * limit.value)
     .limit(limit.value)
     .find()
