@@ -314,6 +314,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ middleware: 'product-owner' })
+
 useSeoMeta({
   title: 'Raspberry Pi AI Cluster Blueprint — Guide',
   description: 'Hardware list, network diagram, node roles, folder structures, K3s manifests, and troubleshooting checklist for a real Raspberry Pi cluster.',

@@ -49,7 +49,8 @@ export async function registerWithEmail(
   lastName: string,
   phone: string,
   email: string,
-  password: string
+  password: string,
+  redirectTo: string = '/profile'
 ): Promise<FormValidation> {
 
   try {
@@ -60,7 +61,7 @@ export async function registerWithEmail(
 
     if (data) {
       useState('user').value = data
-      await useRouter().push('/subscribe')
+      await useRouter().push(redirectTo)
     }
 
     return { hasErrors: false, loggedIn: true }
@@ -69,7 +70,7 @@ export async function registerWithEmail(
   }
 }
 
-export async function loginWithEmail(usernameOrEmail: string, password: string): Promise<FormValidation> {
+export async function loginWithEmail(usernameOrEmail: string, password: string, redirectTo: string = '/profile'): Promise<FormValidation> {
   try {
     const result = await $fetch('/api/auth/login', { method: 'POST', body: { usernameOrEmail: usernameOrEmail, password: password } })
 
@@ -77,7 +78,7 @@ export async function loginWithEmail(usernameOrEmail: string, password: string):
       throw Error('something went wrong')
     }
     useState('user').value = result
-    await useRouter().push('/dashboard')
+    await useRouter().push(redirectTo)
 
     return { hasErrors: false, loggedIn: true }
   } catch (error: any) {

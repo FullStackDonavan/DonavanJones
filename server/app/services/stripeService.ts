@@ -1,10 +1,11 @@
 import { SubPostRes } from '~/types/SubPostRes';
-import { updateSubscription, createSubscription, getSubscriptionById, getUserByStripeCustomerId} from "~/server/database/repositories/userRespository"
+import { updateSubscription, createSubscription, getSubscriptionById, getUserByStripeCustomerId, getUserByEmail} from "~/server/database/repositories/userRespository"
 import { createGHLContact} from "~/server/database/repositories/crmServices"
 import { IUser } from '~/types/IUser';
 import Stripe from 'stripe';
 import { ISubscription } from '~~/types/ISubscription';
 import { sendMail } from './mailer';
+import { recordPurchase } from '~~/server/database/repositories/purchaseRepository';
 
 const config = useRuntimeConfig()
 const stripe = new Stripe(config.private.stripeSecretKey, null);
@@ -96,13 +97,36 @@ export async function handleProductPurchase(session: Stripe.Checkout.Session): P
       ? `${config.public.appDomain}${guidePath}`
       : `${config.public.appDomain}/products/overview`;
 
+    // Record the purchase so it shows on the buyer's profile. Attached to
+    // an account when the email matches one; otherwise claimed at login.
+    // A DB failure should not block the fulfillment email.
+    try {
+      const user = await getUserByEmail(email);
+      await recordPurchase({
+        email: email,
+        userId: user?.id ?? null,
+        productSlug: session.metadata?.productSlug || 'unknown',
+        productTitle: title,
+        stripeSessionId: session.id,
+        stripePriceId: session.metadata?.stripePriceId ?? null,
+        amountTotal: session.amount_total ?? null,
+        currency: session.currency ?? null,
+      });
+    } catch (error) {
+      console.error(`Failed to record purchase for session ${session.id}:`, error);
+    }
+
     const sent = await sendMail({
       to: email,
       subject: `${title}: here is your access link`,
       html: `
         <p>Thanks for buying <strong>${title}</strong>!</p>
-        <p>Your complete guide is ready here:</p>
+        <p>Your complete guide lives here:</p>
         <p><a href="${guideUrl}">${guideUrl}</a></p>
+        <p>Access is tied to this email address (${email}). Create an account with it,
+        or log in if you already have one, and the guide unlocks automatically:</p>
+        <p><a href="${config.public.appDomain}/register">Create your account</a> ·
+        <a href="${config.public.appDomain}/login">Log in</a></p>
         <p>Keep this email so you can always find your way back. If you have any
         questions or run into trouble, just reply and I will help you out.</p>
         <p>Donavan Jones<br><a href="${config.public.appDomain}">${config.public.appDomain}</a></p>

@@ -269,6 +269,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ middleware: 'product-owner' })
+
 useSeoMeta({
   title: 'Production AI API Boilerplate — Guide',
   description: 'Project structure, authentication, vector search, embedding services, Docker config, and CI/CD for a production AI API.',

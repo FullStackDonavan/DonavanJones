@@ -1,6 +1,24 @@
 <template>
   <div v-if="seoDoc" class="min-h-screen bg-white dark:bg-slate-950">
 
+    <!-- Locked-guide notice -->
+    <div v-if="showLockedNotice" class="bg-amber-500/10 border-b border-amber-500/20">
+      <div class="max-w-7xl mx-auto px-6 py-3.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+        <Icon name="mdi:lock-outline" class="text-amber-500 text-base flex-shrink-0" />
+        <span class="text-slate-700 dark:text-slate-300 font-medium">The full guide is included with purchase.</span>
+        <span class="text-slate-500 dark:text-slate-400">
+          Already bought it?
+          <NuxtLink
+            :to="`/login?redirect=${encodeURIComponent(`${route.path}/guide`)}`"
+            class="text-sky-500 hover:text-sky-400 font-medium transition-colors"
+          >
+            Log in with your purchase email
+          </NuxtLink>
+          and it unlocks automatically.
+        </span>
+      </div>
+    </div>
+
     <!-- Hero -->
     <ProductHero
       :title="seoDoc.title"
@@ -254,6 +272,8 @@ const otherProducts = computed(() =>
 )
 
 const guideUrl = computed(() => `${route.path}/guide`)
+
+const showLockedNotice = computed(() => route.query.locked === '1')
 
 const parsedFeatures = computed(() => {
   const features: string[] = seoDoc.value?.features ?? []

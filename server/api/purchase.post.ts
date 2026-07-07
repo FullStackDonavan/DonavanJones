@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
       productSlug: product.slug ?? '',
       productTitle: product.title ?? '',
       guidePath: `${product._path}/guide`,
+      stripePriceId: priceId,
     },
     success_url: `${config.public.appDomain}/products/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${config.public.appDomain}${product._path}`,

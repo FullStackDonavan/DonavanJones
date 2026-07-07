@@ -324,6 +324,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ middleware: 'product-owner' })
+
 useSeoMeta({
   title: 'Local Vibe Coding Blueprint Guide',
   description: 'Hardware split, Kubernetes manifests, repository indexing, the draft and verify agent loop, escalation rules, and a cost worksheet for a local AI coding assistant.',

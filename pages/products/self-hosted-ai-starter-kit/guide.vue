@@ -278,6 +278,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ middleware: 'product-owner' })
+
 useSeoMeta({
   title: 'Self-Hosted AI Starter Kit — Guide',
   description: 'Ollama setup, RAG architecture, embedding pipeline, FastAPI examples, and prompt patterns for running your own AI stack.',
