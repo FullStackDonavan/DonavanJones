@@ -36,10 +36,61 @@ watch(
   },
   { deep: true }
 );
+
+async function logout() {
+  hideActions.value = true;
+  await userLogout();
+}
 </script>
 
 <template>
   <div class="hidden lg:flex justify-between space-x-6 items-center">
+    <!-- Account: dropdown when logged in, login link when not -->
+    <div v-if="isLoggedIn" ref="userActions" class="relative">
+      <button
+        type="button"
+        class="flex items-center text-gray-500 dark:text-gray-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors duration-200"
+        aria-label="Account menu"
+        @click="hideActions = !hideActions"
+      >
+        <Icon name="mdi:account-circle-outline" class="text-[26px]" />
+      </button>
+      <div
+        v-show="!hideActions"
+        class="absolute right-0 top-full mt-4 w-52 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 z-50"
+      >
+        <div class="p-2 flex flex-col">
+          <NuxtLink
+            to="/profile"
+            class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            @click="hideActions = true"
+          >
+            <div class="font-medium text-gray-900 dark:text-gray-100">My Profile</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400">Account and purchased products</div>
+          </NuxtLink>
+          <button
+            type="button"
+            class="px-4 py-3 rounded-lg text-left hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            @click="logout"
+          >
+            <div class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <Icon name="mdi:logout" class="text-base" />
+              Log Out
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <NuxtLink
+      v-else
+      to="/login"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-gray-200
+             hover:text-sky-500 dark:hover:text-sky-400 transition-colors duration-200"
+    >
+      <Icon name="mdi:account-circle-outline" class="text-xl" />
+      Log In
+    </NuxtLink>
+
     <NuxtLink
       to="/hire-me"
       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold

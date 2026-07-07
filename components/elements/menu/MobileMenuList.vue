@@ -23,6 +23,36 @@ watch(
     <ul class="space-y-1 px-2">
       <MenuIconList />
 
+      <li v-if="isLoggedIn">
+        <NuxtLink
+          to="/profile"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:account-circle-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>My Profile</span>
+        </NuxtLink>
+      </li>
+
+      <li v-if="!isLoggedIn">
+        <NuxtLink
+          to="/login"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:account-circle-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Log In</span>
+        </NuxtLink>
+      </li>
+
+      <li v-if="!isLoggedIn">
+        <NuxtLink
+          to="/register"
+          class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <Icon name="mdi:account-plus-outline" class="w-5 h-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+          <span>Create Account</span>
+        </NuxtLink>
+      </li>
+
       <li>
         <NuxtLink
           to="/hire-me"
