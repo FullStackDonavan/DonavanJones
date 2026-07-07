@@ -205,6 +205,12 @@ DIGITAL_PRODUCTS = {
         "Kubernetes manifests, and Grafana dashboards ($19).",
         "/products/raspberry-pi-ai-cluster-blueprint",
     ),
+    "local-vibe-coding": (
+        "Get The Vibe Coding Blueprint",
+        "Get the Local Vibe Coding Blueprint: hardware split guide, Kubernetes manifests, "
+        "repo indexing scripts, and the draft and verify agent loop ($39).",
+        "/products/local-vibe-coding-blueprint",
+    ),
 }
 
 INSIGHTS_CATEGORY_LINK = {

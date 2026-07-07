@@ -516,5 +516,6 @@ Be specific. Reference line numbers if relevant. Don't rewrite the whole thing.
 const otherProducts = [
   { slug: 'raspberry-pi-ai-cluster-blueprint', title: 'Raspberry Pi AI Cluster Blueprint', tagline: 'Build a real K3s cluster on hardware you own.',  icon: 'mdi:server-network' },
   { slug: 'production-ai-api-boilerplate',     title: 'Production AI API Boilerplate',     tagline: 'Skip the scaffolding, ship the feature.',        icon: 'mdi:api' },
+  { slug: 'local-vibe-coding-blueprint',       title: 'Local Vibe Coding Blueprint',       tagline: 'Run your own AI coding assistant on hardware you own.', icon: 'mdi:code-braces' },
 ]
 </script>

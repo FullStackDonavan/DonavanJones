@@ -126,9 +126,9 @@ Next up: Ollama configuration in depth, the case for Ornith-1.0-35B specifically
 ::CtaCardRow
   :::CtaDownloadGuide
   ---
-  buttonText: "Get The AI Starter Kit"
-  supportingCopy: "Get the Self-Hosted AI Starter Kit: Ollama setup, RAG architecture diagrams, and FastAPI examples ($29)."
-  destinationUrl: "/products/self-hosted-ai-starter-kit"
+  buttonText: "Get The Vibe Coding Blueprint"
+  supportingCopy: "Get the Local Vibe Coding Blueprint: hardware split guide, Kubernetes manifests, repo indexing scripts, and the draft and verify agent loop ($39)."
+  destinationUrl: "/products/local-vibe-coding-blueprint"
   ---
   :::
 

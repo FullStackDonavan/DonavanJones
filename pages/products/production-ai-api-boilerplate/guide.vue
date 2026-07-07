@@ -637,5 +637,6 @@ jobs:
 const otherProducts = [
   { slug: 'raspberry-pi-ai-cluster-blueprint', title: 'Raspberry Pi AI Cluster Blueprint', tagline: 'Build a real K3s cluster on hardware you own.',          icon: 'mdi:server-network' },
   { slug: 'self-hosted-ai-starter-kit',        title: 'Self-Hosted AI Starter Kit',        tagline: "Run your own models without renting someone else's API.", icon: 'mdi:brain' },
+  { slug: 'local-vibe-coding-blueprint',       title: 'Local Vibe Coding Blueprint',       tagline: 'Run your own AI coding assistant on hardware you own.',   icon: 'mdi:code-braces' },
 ]
 </script>

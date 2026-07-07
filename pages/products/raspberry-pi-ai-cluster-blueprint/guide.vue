@@ -583,5 +583,6 @@ const troubleshooting = [
 const otherProducts = [
   { slug: 'self-hosted-ai-starter-kit',    title: 'Self-Hosted AI Starter Kit',    tagline: "Run your own models without renting someone else's API.", icon: 'mdi:brain' },
   { slug: 'production-ai-api-boilerplate', title: 'Production AI API Boilerplate', tagline: 'Skip the scaffolding, ship the feature.',                 icon: 'mdi:api' },
+  { slug: 'local-vibe-coding-blueprint',   title: 'Local Vibe Coding Blueprint',   tagline: 'Run your own AI coding assistant on hardware you own.',   icon: 'mdi:code-braces' },
 ]
 </script>
