@@ -6,17 +6,14 @@
   - You are about to drop the `TestMigration` table. If the table is not empty, all the data it contains will be lost.
 
 */
--- DropForeignKey
-ALTER TABLE "InsuranceSales" DROP CONSTRAINT "InsuranceSales_sellerId_fkey";
+-- DropTable
+DROP TABLE IF EXISTS "InsuranceSales" CASCADE;
 
 -- DropTable
-DROP TABLE "InsuranceSales";
+DROP TABLE IF EXISTS "TestAnotherMigration" CASCADE;
 
 -- DropTable
-DROP TABLE "TestAnotherMigration";
-
--- DropTable
-DROP TABLE "TestMigration";
+DROP TABLE IF EXISTS "TestMigration" CASCADE;
 
 -- CreateTable
 CREATE TABLE "Purchase" (

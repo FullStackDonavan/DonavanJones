@@ -9,6 +9,7 @@ import { recordPurchase } from '~~/server/database/repositories/purchaseReposito
 
 const config = useRuntimeConfig()
 const stripe = new Stripe(config.private.stripeSecretKey, null);
+const siteUrl = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 export async function getSubscribeUrl(lookupKey: string, user: IUser): Promise<SubPostRes> {
   const customerEmail = user.email;
@@ -33,8 +34,8 @@ export async function getSubscribeUrl(lookupKey: string, user: IUser): Promise<S
         },
       ],
       mode: 'subscription',
-      success_url: `${config.public.appDomain}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${config.public.appDomain}/subscribe/cancel`,
+      success_url: `${siteUrl}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/subscribe/cancel`,
       customer: user.stripeCustomerId
     });
 
@@ -94,8 +95,8 @@ export async function handleProductPurchase(session: Stripe.Checkout.Session): P
     const title = session.metadata?.productTitle || 'your purchase';
     const guidePath = session.metadata?.guidePath;
     const guideUrl = guidePath
-      ? `${config.public.appDomain}${guidePath}`
-      : `${config.public.appDomain}/products/overview`;
+      ? `${siteUrl}${guidePath}`
+      : `${siteUrl}/products/overview`;
 
     // Record the purchase so it shows on the buyer's profile. Attached to
     // an account when the email matches one; otherwise claimed at login.
@@ -125,11 +126,11 @@ export async function handleProductPurchase(session: Stripe.Checkout.Session): P
         <p><a href="${guideUrl}">${guideUrl}</a></p>
         <p>Access is tied to this email address (${email}). Create an account with it,
         or log in if you already have one, and the guide unlocks automatically:</p>
-        <p><a href="${config.public.appDomain}/register">Create your account</a> ·
-        <a href="${config.public.appDomain}/login">Log in</a></p>
+        <p><a href="${siteUrl}/register">Create your account</a> ·
+        <a href="${siteUrl}/login">Log in</a></p>
         <p>Keep this email so you can always find your way back. If you have any
         questions or run into trouble, just reply and I will help you out.</p>
-        <p>Donavan Jones<br><a href="${config.public.appDomain}">${config.public.appDomain}</a></p>
+        <p>Donavan Jones<br><a href="${siteUrl}">${siteUrl}</a></p>
       `,
     });
 
