@@ -4,6 +4,7 @@ import { createGHLContact} from "~/server/database/repositories/crmServices"
 import { IUser } from '~/types/IUser';
 import Stripe from 'stripe';
 import { ISubscription } from '~~/types/ISubscription';
+import { sendMail } from './mailer';
 
 const config = useRuntimeConfig()
 const stripe = new Stripe(config.private.stripeSecretKey, null);
@@ -73,6 +74,48 @@ export async function handleSubscriptionChange(subscription: Stripe.Subscription
   } catch (error) {
     console.error('Error in handleSubscriptionChange:', error);
     throw error; // Propagate the error to handle it at the caller's level!
+  }
+}
+
+export async function handleProductPurchase(session: Stripe.Checkout.Session): Promise<boolean> {
+  try {
+    // Subscription checkouts are fulfilled by the customer.subscription.* events
+    if (session.mode !== 'payment' || session.payment_status !== 'paid') {
+      return true;
+    }
+
+    const email = session.customer_details?.email;
+    if (!email) {
+      console.error(`Product purchase session ${session.id} has no customer email`);
+      return false;
+    }
+
+    const title = session.metadata?.productTitle || 'your purchase';
+    const guidePath = session.metadata?.guidePath;
+    const guideUrl = guidePath
+      ? `${config.public.appDomain}${guidePath}`
+      : `${config.public.appDomain}/products/overview`;
+
+    const sent = await sendMail({
+      to: email,
+      subject: `${title}: here is your access link`,
+      html: `
+        <p>Thanks for buying <strong>${title}</strong>!</p>
+        <p>Your complete guide is ready here:</p>
+        <p><a href="${guideUrl}">${guideUrl}</a></p>
+        <p>Keep this email so you can always find your way back. If you have any
+        questions or run into trouble, just reply and I will help you out.</p>
+        <p>Donavan Jones<br><a href="${config.public.appDomain}">${config.public.appDomain}</a></p>
+      `,
+    });
+
+    if (!sent) {
+      console.error(`Fulfillment email failed for session ${session.id} (${email})`);
+    }
+    return sent;
+  } catch (error) {
+    console.error('Error in handleProductPurchase:', error);
+    throw error; // Propagate the error to handle it at the caller's level
   }
 }
 

@@ -1,17 +1,37 @@
-import {nodemailer, defaults} from 'nodemailer'
+import { Resend } from 'resend'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-const transport = nodemailer.createTransport({
-    pool: true,
-    host: "smtp.google.com",
-    port: 465,
-    secure: true, // use TLS
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.MAIL_APP_PASSWORD,
-    },
-});
+// onboarding@resend.dev works for testing; set MAIL_FROM once the
+// donavanjones.com domain is verified in Resend
+const FROM = process.env.MAIL_FROM || 'Donavan Jones <onboarding@resend.dev>'
 
-let transporter = nodemailer.createTransport(transport[defaults])
+export interface MailOptions {
+    to: string
+    subject: string
+    html: string
+}
 
+export async function sendMail(options: MailOptions): Promise<boolean> {
+    if (!process.env.RESEND_API_KEY) {
+        console.error('Mailer not configured: set the RESEND_API_KEY env var')
+        return false
+    }
+    try {
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        const { error } = await resend.emails.send({
+            from: FROM,
+            to: options.to,
+            subject: options.subject,
+            html: options.html,
+        })
+        if (error) {
+            console.error('Error sending mail:', error)
+            return false
+        }
+        return true
+    } catch (error) {
+        console.error('Error sending mail:', error)
+        return false
+    }
+}

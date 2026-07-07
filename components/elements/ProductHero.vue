@@ -96,11 +96,25 @@ const guideUrl = computed(() => `${route.path}/guide`)
                   {{ tagline }}
                 </p>
               </div>
+              <form v-if="stripePriceId" method="post" action="/api/purchase" class="mb-3">
+                <input type="hidden" name="price_id" :value="stripePriceId">
+                <button
+                  type="submit"
+                  class="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl
+                         font-semibold text-sm text-white bg-sky-500 hover:bg-sky-400
+                         transition-colors duration-150"
+                >
+                  <Icon name="mdi:lock-outline" class="text-base" />
+                  Buy Now{{ price ? ` · ${price}` : '' }}
+                </button>
+              </form>
               <NuxtLink
                 :to="guideUrl"
                 class="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl
-                       font-semibold text-sm text-white bg-sky-500 hover:bg-sky-400
-                       transition-colors duration-150"
+                       font-semibold text-sm transition-colors duration-150"
+                :class="stripePriceId
+                  ? 'text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-sky-500/40 hover:text-sky-500 dark:hover:text-sky-400'
+                  : 'text-white bg-sky-500 hover:bg-sky-400'"
               >
                 <Icon name="mdi:arrow-right" class="text-base" />
                 View the Guide
