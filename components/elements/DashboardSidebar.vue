@@ -1,8 +1,11 @@
 <script setup lang="ts">
 // import DialogBox from "./DialogBox.vue";
+import { useUser } from "~/composables/useAuth";
+
 const router = useRouter();
 const route = useRoute();
 const isLoggedIn = await useLoggedIn();
+const user = await useUser();
 const hideDialog = ref(true);
 
 console.log(route.path);
@@ -92,6 +95,19 @@ function rehide() {
                   size="50"
                 />
                 <span class="flex-1 whitespace-nowrap">Leave A Review</span>
+              </NuxtLink>
+            </li>
+            <li v-if="user?.isAdmin">
+              <NuxtLink
+                to="/dashboard/invoices"
+                class="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <Icon
+                  name="mdi:receipt-text-outline"
+                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  size="45"
+                />
+                <span class="flex-1 whitespace-nowrap">Invoices</span>
               </NuxtLink>
             </li>
           </ul>

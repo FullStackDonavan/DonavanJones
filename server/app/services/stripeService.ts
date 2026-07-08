@@ -6,6 +6,7 @@ import Stripe from 'stripe';
 import { ISubscription } from '~~/types/ISubscription';
 import { sendMail } from './mailer';
 import { recordPurchase } from '~~/server/database/repositories/purchaseRepository';
+import { markInvoiceStatus, getInvoiceByStripeId } from '~~/server/database/repositories/invoiceRepository';
 
 const config = useRuntimeConfig()
 const stripe = new Stripe(config.private.stripeSecretKey, null);
@@ -173,5 +174,38 @@ export async function handleSubscriptionCreate(subscription: Stripe.Subscription
   } catch (error) {
     console.error('Error in handleSubscriptionCreate:', error);
     throw error; // Propagate the error to handle it at the caller's level
+  }
+}
+
+export async function handleInvoicePaid(invoice: Stripe.Invoice): Promise<boolean> {
+  try {
+    await markInvoiceStatus(invoice.id, 'paid', new Date())
+
+    const localInvoice = await getInvoiceByStripeId(invoice.id)
+    if (!localInvoice) return true
+
+    const amount = `$${(invoice.amount_paid / 100).toFixed(2)}`
+    await sendMail({
+      to: 'donavanjones79@gmail.com',
+      subject: `Invoice paid: ${localInvoice.clientName} — ${amount}`,
+      html: `
+        <p><strong>${localInvoice.clientName}</strong> (${localInvoice.clientEmail}) just paid invoice #${localInvoice.id} — ${amount}.</p>
+        <p><a href="${localInvoice.hostedInvoiceUrl}">View on Stripe</a></p>
+      `,
+    })
+    return true
+  } catch (error) {
+    console.error('Error in handleInvoicePaid:', error)
+    throw error
+  }
+}
+
+export async function handleInvoiceStatusChange(invoice: Stripe.Invoice, status: string): Promise<boolean> {
+  try {
+    await markInvoiceStatus(invoice.id, status)
+    return true
+  } catch (error) {
+    console.error('Error in handleInvoiceStatusChange:', error)
+    throw error
   }
 }

@@ -12,6 +12,7 @@ export interface IUser {
   avatarUrl?: string
   subscription?: ISubscription | null
   stripeCustomerId?: string | null
+  isAdmin?: boolean
 }
 
 

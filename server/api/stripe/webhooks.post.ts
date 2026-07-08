@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 import sendDefaultErrorResponse from '~~/server/app/errors/responses/DefaultErrorsResponse';
-import { handleSubscriptionChange, handleSubscriptionCreate, handleProductPurchase } from '~~/server/app/services/stripeService';
+import { handleSubscriptionChange, handleSubscriptionCreate, handleProductPurchase, handleInvoicePaid, handleInvoiceStatusChange } from '~~/server/app/services/stripeService';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -42,6 +42,15 @@ export default defineEventHandler(async (event) => {
         break;
       case 'checkout.session.completed':
         await handleProductPurchase(stripeEvent.data.object as Stripe.Checkout.Session);
+        break;
+      case 'invoice.paid':
+        await handleInvoicePaid(stripeEvent.data.object as Stripe.Invoice);
+        break;
+      case 'invoice.voided':
+        await handleInvoiceStatusChange(stripeEvent.data.object as Stripe.Invoice, 'void');
+        break;
+      case 'invoice.marked_uncollectible':
+        await handleInvoiceStatusChange(stripeEvent.data.object as Stripe.Invoice, 'uncollectible');
         break;
       default:
         console.log(`Unhandled event type ${stripeEvent.type}`);

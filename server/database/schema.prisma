@@ -24,9 +24,11 @@ model User {
   questions        Question[]
   answers          Answer[]
   stripeCustomerId String?
+  isAdmin          Boolean        @default(false)
   Subscription     Subscription[]
   purchases        Purchase[]
   reviews          Review[]
+  invoicesCreated  Invoice[]
 }
 
 model Session {
@@ -87,6 +89,41 @@ model Review {
 
   @@unique([userId, productSlug])
   @@index([productSlug])
+}
+
+// Ad-hoc client invoices, billed and collected through Stripe Invoicing.
+// Mirrors the Stripe-side invoice so the dashboard can list/search them
+// without round-tripping to Stripe's API on every page load.
+model Invoice {
+  id               Int           @id @default(autoincrement())
+  createdBy        User          @relation(fields: [createdByUserId], references: [id])
+  createdByUserId  Int
+  clientName       String
+  clientEmail      String
+  notes            String?
+  totalCents       Int
+  currency         String        @default("usd")
+  status           String        @default("open") // open, paid, void, uncollectible
+  dueDate          DateTime?
+  stripeInvoiceId  String        @unique
+  stripeCustomerId String
+  hostedInvoiceUrl String?
+  invoicePdf       String?
+  items            InvoiceItem[]
+  createdAt        DateTime      @default(now())
+  paidAt           DateTime?
+
+  @@index([clientEmail])
+  @@index([status])
+}
+
+model InvoiceItem {
+  id          Int     @id @default(autoincrement())
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoiceId   Int
+  description String
+  amountCents Int
+  quantity    Int     @default(1)
 }
 
 model Question {
