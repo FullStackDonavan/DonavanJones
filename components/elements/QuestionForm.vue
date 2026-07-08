@@ -11,12 +11,20 @@ interface Props {
 const props = defineProps<Props>();
 const data = props.data;
 const router = useRouter();
+const errorMessage = ref('');
 
 async function postQuestion() {
-  const { data: question } = await useFetch<IQuestion>(
+  errorMessage.value = '';
+
+  const { data: question, error } = await useFetch<IQuestion>(
     () => `${props.endpoint}`,
     { method: "post", body: { data }, pick: ["id"] }
   );
+
+  if (error.value || !question.value) {
+    errorMessage.value = error.value?.data?.message || error.value?.data?.data || 'Could not submit your question. Please try again.';
+    return;
+  }
 
   router.push(`/dashboard/question/${question.value.id}`);
 }
@@ -52,6 +60,8 @@ async function postQuestion() {
       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
       placeholder="Be specific and kind"
     ></textarea>
+
+    <p v-if="errorMessage" class="mt-2 text-sm text-red-500">{{ errorMessage }}</p>
 
     <div class="flex justify-center sm:justify-end">
       <!-- Center the button on small screens -->

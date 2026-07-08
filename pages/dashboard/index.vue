@@ -257,7 +257,7 @@ function formatAmount(p: IPurchase): string {
                 </p>
               </div>
               <NuxtLink
-                to="/hire-me"
+                to="/dashboard/start-project"
                 class="flex-shrink-0 flex items-center justify-center gap-2 px-6 py-3 rounded-xl
                        font-semibold text-sm text-white bg-sky-500 hover:bg-sky-400 transition-colors"
               >

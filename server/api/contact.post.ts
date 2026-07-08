@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const { name, email, company, project, budget, timeline, source } = body
+  const { name, email, company, project, budget, timeline, source, product } = body
 
   if (!name || !email) {
     throw createError({ statusCode: 400, message: 'Name and email are required.' })
@@ -53,6 +53,7 @@ export default defineEventHandler(async (event) => {
   // Attach project details as a note
   if (contactId) {
     const noteBody = [
+      product  ? `Related product: ${product}` : null,
       project  ? `Project: ${project}`   : null,
       budget   ? `Budget: ${budget}`     : null,
       timeline ? `Timeline: ${timeline}` : null,

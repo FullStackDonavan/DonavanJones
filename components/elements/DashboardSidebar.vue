@@ -43,15 +43,15 @@ function rehide() {
             </li>
             <li>
               <NuxtLink
-                to="/dashboard/WebsiteBuild"
+                to="/dashboard/start-project"
                 class="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <Icon
-                  name="file-icons:robots"
+                  name="mdi:rocket-launch-outline"
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   size="45"
                 />
-                <span class="flex-1 whitespace-nowrap">AI Agent</span>
+                <span class="flex-1 whitespace-nowrap">Start Your Project</span>
               </NuxtLink>
             </li>
             <li>
