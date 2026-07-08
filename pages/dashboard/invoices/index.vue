@@ -23,9 +23,14 @@ interface IInvoice {
   status: string
   dueDate: string | null
   hostedInvoiceUrl: string | null
+  reviewToken: string
+  review: { id: number } | null
   createdAt: string
   items: IInvoiceItem[]
 }
+
+const config = useRuntimeConfig()
+const siteUrl = (config.public.appDomain as string) || 'https://donavanjones.com'
 
 const cookieHeaders = useRequestHeaders(['cookie'])
 const { data: invoices, pending } = await useFetch<IInvoice[]>('/api/invoices', {
@@ -33,6 +38,7 @@ const { data: invoices, pending } = await useFetch<IInvoice[]>('/api/invoices', 
 })
 
 const copiedId = ref<number | null>(null)
+const copiedReviewId = ref<number | null>(null)
 
 function formatCents(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`
@@ -57,6 +63,12 @@ async function copyLink(invoice: IInvoice) {
   await navigator.clipboard.writeText(invoice.hostedInvoiceUrl)
   copiedId.value = invoice.id
   setTimeout(() => { copiedId.value = null }, 1500)
+}
+
+async function copyReviewLink(invoice: IInvoice) {
+  await navigator.clipboard.writeText(`${siteUrl}/review/${invoice.reviewToken}`)
+  copiedReviewId.value = invoice.id
+  setTimeout(() => { copiedReviewId.value = null }, 1500)
 }
 </script>
 
@@ -112,6 +124,21 @@ async function copyLink(invoice: IInvoice) {
                   </div>
                   <div class="flex items-center gap-3 flex-shrink-0">
                     <span class="text-base font-bold text-slate-900 dark:text-white">{{ formatCents(invoice.totalCents) }}</span>
+                    <button
+                      v-if="invoice.status === 'paid'"
+                      type="button"
+                      class="px-3 py-2 rounded-xl text-xs font-semibold border transition-colors"
+                      :class="invoice.review
+                        ? 'border-emerald-500/30 text-emerald-500'
+                        : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-amber-400/50 hover:text-amber-500'"
+                      :title="invoice.review ? 'Client left a review' : 'Copy review link'"
+                      @click="copyReviewLink(invoice)"
+                    >
+                      <Icon
+                        :name="invoice.review ? 'mdi:star' : (copiedReviewId === invoice.id ? 'mdi:check' : 'mdi:star-outline')"
+                        class="text-sm"
+                      />
+                    </button>
                     <button
                       v-if="invoice.hostedInvoiceUrl"
                       type="button"

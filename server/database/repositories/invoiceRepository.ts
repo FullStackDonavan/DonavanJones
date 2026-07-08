@@ -50,7 +50,7 @@ export async function createInvoice(data: IInvoiceCreate) {
 export async function getAllInvoices() {
   return await prisma.invoice.findMany({
     orderBy: { createdAt: 'desc' },
-    include: { items: true },
+    include: { items: true, review: { select: { id: true } } },
   })
 }
 
@@ -63,4 +63,22 @@ export async function markInvoiceStatus(stripeInvoiceId: string, status: string,
 
 export async function getInvoiceByStripeId(stripeInvoiceId: string) {
   return await prisma.invoice.findUnique({ where: { stripeInvoiceId } })
+}
+
+// Invoices billed to this email, newest first — for the client's own
+// dashboard view. Matched by email since a client isn't necessarily the
+// account that will end up logging in to pay/review it.
+export async function getInvoicesForClient(email: string) {
+  return await prisma.invoice.findMany({
+    where: { clientEmail: email },
+    orderBy: { createdAt: 'desc' },
+    include: { items: true, review: { select: { id: true } } },
+  })
+}
+
+export async function getInvoiceByReviewToken(reviewToken: string) {
+  return await prisma.invoice.findUnique({
+    where: { reviewToken },
+    include: { items: true, review: true },
+  })
 }

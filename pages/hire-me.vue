@@ -311,6 +311,15 @@ const faqs = [
             <Icon name="mdi:briefcase-outline" class="text-base" />
             See My Work
           </NuxtLink>
+          <NuxtLink
+            to="/testimonials"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold
+                   border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors duration-200"
+          >
+            <Icon name="mdi:star-outline" class="text-base" />
+            Client Reviews
+          </NuxtLink>
         </div>
       </div>
 

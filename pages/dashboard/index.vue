@@ -20,10 +20,33 @@ interface IPurchase {
   purchasedAt: string
 }
 
+interface IInvoiceItem {
+  id: number
+  description: string
+  amountCents: number
+  quantity: number
+}
+
+interface IInvoice {
+  id: number
+  totalCents: number
+  status: string
+  dueDate: string | null
+  hostedInvoiceUrl: string | null
+  reviewToken: string
+  review: { id: number } | null
+  createdAt: string
+  items: IInvoiceItem[]
+}
+
 const user = await useUser()
 const cookieHeaders = useRequestHeaders(['cookie'])
 
 const { data: purchases } = await useFetch<IPurchase[]>('/api/profile/purchases', {
+  headers: cookieHeaders as HeadersInit,
+})
+
+const { data: invoices } = await useFetch<IInvoice[]>('/api/profile/invoices', {
   headers: cookieHeaders as HeadersInit,
 })
 
@@ -60,6 +83,19 @@ function formatAmount(p: IPurchase): string {
   const amount = (p.amountTotal / 100).toFixed(2)
   const currency = (p.currency || 'usd').toUpperCase()
   return currency === 'USD' ? `$${amount}` : `${amount} ${currency}`
+}
+
+function formatCents(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`
+}
+
+function invoiceStatusClasses(status: string): string {
+  switch (status) {
+    case 'paid': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30'
+    case 'void': return 'bg-slate-500/10 text-slate-500 border-slate-500/30'
+    case 'uncollectible': return 'bg-red-500/10 text-red-500 border-red-500/30'
+    default: return 'bg-amber-500/10 text-amber-500 border-amber-500/30'
+  }
 }
 </script>
 
@@ -102,6 +138,70 @@ function formatAmount(p: IPurchase): string {
                 <Icon name="ic:sharp-live-help" class="text-xl text-sky-400" />
                 <p class="text-xs font-semibold text-sky-500">Ask a Question</p>
               </NuxtLink>
+            </div>
+
+            <!-- Your Invoices -->
+            <div v-if="invoices?.length">
+              <div class="mb-5 flex items-center justify-between">
+                <h2 class="text-base font-bold text-slate-900 dark:text-white">Your Invoices</h2>
+              </div>
+
+              <div class="space-y-4">
+                <div
+                  v-for="invoice in invoices"
+                  :key="invoice.id"
+                  class="p-5 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60"
+                >
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 mb-1">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Invoice #{{ invoice.id }}</p>
+                        <span
+                          class="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border"
+                          :class="invoiceStatusClasses(invoice.status)"
+                        >
+                          {{ invoice.status }}
+                        </span>
+                      </div>
+                      <p class="text-xs text-slate-400 dark:text-slate-500">
+                        {{ invoice.items.map(i => i.description).join(', ') }}
+                        <template v-if="invoice.dueDate"> · Due {{ formatDate(invoice.dueDate) }}</template>
+                      </p>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                      <span class="text-base font-bold text-slate-900 dark:text-white">{{ formatCents(invoice.totalCents) }}</span>
+                      <a
+                        v-if="invoice.status === 'open' && invoice.hostedInvoiceUrl"
+                        :href="invoice.hostedInvoiceUrl"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white
+                               bg-sky-500 hover:bg-sky-400 transition-colors"
+                      >
+                        <Icon name="mdi:lock-outline" class="text-sm" />
+                        Pay Invoice
+                      </a>
+                    </div>
+                  </div>
+
+                  <div v-if="invoice.status === 'paid'" class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <span v-if="invoice.review" class="flex items-center gap-1.5 text-xs font-medium text-emerald-500">
+                      <Icon name="mdi:star" class="text-sm" />
+                      You left a review — thank you!
+                    </span>
+                    <NuxtLink
+                      v-else
+                      :to="`/review/${invoice.reviewToken}`"
+                      class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold border
+                             border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300
+                             hover:border-amber-400/50 hover:text-amber-500 transition-colors"
+                    >
+                      <Icon name="mdi:star-outline" class="text-sm" />
+                      Leave a Review
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Your Products -->

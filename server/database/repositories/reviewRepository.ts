@@ -36,7 +36,7 @@ export async function getReviewsForProduct(productSlug: string) {
     body: r.body,
     createdAt: r.createdAt,
     updatedAt: r.updatedAt,
-    authorName: r.user.firstName || r.user.username || 'Verified buyer',
+    authorName: r.user?.firstName || r.user?.username || 'Verified buyer',
   }))
 }
 
@@ -47,17 +47,55 @@ export async function getReviewsForUser(userId: number) {
   })
 }
 
+export interface IInvoiceReviewUpsert {
+  invoiceId: number
+  rating: number
+  body: string
+}
+
+// One review per invoice — resubmitting edits the existing one
+export async function upsertInvoiceReview(data: IInvoiceReviewUpsert) {
+  return await prisma.review.upsert({
+    where: { invoiceId: data.invoiceId },
+    update: { rating: data.rating, body: data.body },
+    create: {
+      invoiceId: data.invoiceId,
+      rating: data.rating,
+      body: data.body,
+    },
+  })
+}
+
+// Invoice-based testimonials for public display (e.g. a testimonials page)
+export async function getTestimonials() {
+  const reviews = await prisma.review.findMany({
+    where: { invoiceId: { not: null } },
+    orderBy: { createdAt: 'desc' },
+    include: { invoice: { select: { clientName: true } } },
+  })
+
+  return reviews.map(r => ({
+    id: r.id,
+    rating: r.rating,
+    body: r.body,
+    createdAt: r.createdAt,
+    clientName: r.invoice?.clientName ?? 'Verified client',
+  }))
+}
+
 // Average rating + count per product, keyed by slug. Only slugs with at
 // least one review are present in the result map.
 export async function getReviewSummaries(): Promise<Record<string, { average: number; count: number }>> {
   const groups = await prisma.review.groupBy({
     by: ['productSlug'],
+    where: { productSlug: { not: null } },
     _avg: { rating: true },
     _count: { rating: true },
   })
 
   const summaries: Record<string, { average: number; count: number }> = {}
   for (const g of groups) {
+    if (!g.productSlug) continue
     summaries[g.productSlug] = {
       average: Math.round((g._avg.rating ?? 0) * 10) / 10,
       count: g._count.rating,

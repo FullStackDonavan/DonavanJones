@@ -193,6 +193,18 @@ export async function handleInvoicePaid(invoice: Stripe.Invoice): Promise<boolea
         <p><a href="${localInvoice.hostedInvoiceUrl}">View on Stripe</a></p>
       `,
     })
+
+    await sendMail({
+      to: localInvoice.clientEmail,
+      subject: `Thanks, ${localInvoice.clientName}! Got a minute for a quick review?`,
+      html: `
+        <p>Hi ${localInvoice.clientName},</p>
+        <p>Thanks for the payment — it's much appreciated. If you have a minute, I'd love to hear
+        how the project went. It really helps other clients know what to expect.</p>
+        <p><a href="${siteUrl}/review/${localInvoice.reviewToken}">Leave a quick review</a></p>
+        <p>Thanks,<br>Donavan Jones</p>
+      `,
+    })
     return true
   } catch (error) {
     console.error('Error in handleInvoicePaid:', error)

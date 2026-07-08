@@ -75,13 +75,18 @@ model Purchase {
   @@index([userId])
 }
 
-// One review per user per product, left only by users who bought the
-// product (enforced in the API layer via the Purchase table).
+// Two kinds of review share this table:
+//  - Product reviews: userId + productSlug set, left by logged-in buyers
+//    (enforced in the API layer via the Purchase table).
+//  - Invoice testimonials: invoiceId set instead, left by a paid invoice's
+//    client via a private link — no account required.
 model Review {
   id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  productSlug String
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+  productSlug String?
+  invoice     Invoice? @relation(fields: [invoiceId], references: [id])
+  invoiceId   Int?     @unique
   rating      Int
   body        String   @db.Text
   createdAt   DateTime @default(now())
@@ -109,6 +114,8 @@ model Invoice {
   stripeCustomerId String
   hostedInvoiceUrl String?
   invoicePdf       String?
+  reviewToken      String        @unique @default(cuid())
+  review           Review?
   items            InvoiceItem[]
   createdAt        DateTime      @default(now())
   paidAt           DateTime?
