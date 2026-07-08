@@ -33,6 +33,7 @@
       :related-category-label="seoDoc.relatedCategoryLabel"
       :related-category-url="seoDoc.relatedCategoryUrl"
       :stripe-price-id="seoDoc.stripePriceId"
+      :review-summary="reviewSummary"
     >
       <template #right>
         <div
@@ -202,6 +203,9 @@
       </aside>
     </div>
 
+    <!-- Reviews -->
+    <ProductReviews :product-slug="seoDoc.slug" />
+
     <!-- More Products -->
     <div v-if="otherProducts.length" class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
       <div class="max-w-7xl mx-auto px-6 py-14">
@@ -273,6 +277,14 @@ const otherProducts = computed(() =>
 
 const guideUrl = computed(() => `${route.path}/guide`)
 
+const { data: reviewSummaries } = await useAsyncData('review-summaries', () =>
+  $fetch<Record<string, { average: number; count: number }>>('/api/reviews/summary')
+)
+const reviewSummary = computed(() => {
+  const slug = seoDoc.value?.slug
+  return slug ? reviewSummaries.value?.[slug] : undefined
+})
+
 const showLockedNotice = computed(() => route.query.locked === '1')
 
 const parsedFeatures = computed(() => {
@@ -331,6 +343,13 @@ useHead({
               priceCurrency: 'USD',
               url: pageUrl,
               availability: 'https://schema.org/InStock',
+            },
+          } : {}),
+          ...(reviewSummary.value ? {
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: reviewSummary.value.average,
+              reviewCount: reviewSummary.value.count,
             },
           } : {}),
           brand: { '@type': 'Person', name: 'Donavan Jones' },

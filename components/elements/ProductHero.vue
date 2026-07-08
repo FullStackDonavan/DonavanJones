@@ -13,6 +13,7 @@ defineProps<{
   relatedCategoryUrl?: string
   features?: string[]
   stripePriceId?: string
+  reviewSummary?: { average: number; count: number }
 }>()
 
 const route = useRoute()
@@ -50,6 +51,13 @@ const guideUrl = computed(() => `${route.path}/guide`)
           <p v-if="tagline" class="mt-3 text-lg font-medium text-sky-500 dark:text-sky-400">
             {{ tagline }}
           </p>
+
+          <div v-if="reviewSummary?.count" class="mt-3 flex items-center gap-2">
+            <StarRating :model-value="reviewSummary.average" readonly size="text-sm" />
+            <span class="text-sm text-slate-500 dark:text-slate-400">
+              {{ reviewSummary.average.toFixed(1) }} · {{ reviewSummary.count }} review{{ reviewSummary.count === 1 ? '' : 's' }}
+            </span>
+          </div>
 
           <p class="mt-4 text-slate-500 dark:text-slate-400 leading-relaxed text-base">
             {{ description }}

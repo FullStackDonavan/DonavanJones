@@ -26,6 +26,7 @@ model User {
   stripeCustomerId String?
   Subscription     Subscription[]
   purchases        Purchase[]
+  reviews          Review[]
 }
 
 model Session {
@@ -70,6 +71,22 @@ model Purchase {
 
   @@index([email])
   @@index([userId])
+}
+
+// One review per user per product, left only by users who bought the
+// product (enforced in the API layer via the Purchase table).
+model Review {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  productSlug String
+  rating      Int
+  body        String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, productSlug])
+  @@index([productSlug])
 }
 
 model Question {

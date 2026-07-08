@@ -82,8 +82,8 @@ function rehide() {
               </NuxtLink>
             </li>
             <li>
-              <a
-                href="#"
+              <NuxtLink
+                to="/dashboard#your-products"
                 class="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <Icon
@@ -92,7 +92,7 @@ function rehide() {
                   size="50"
                 />
                 <span class="flex-1 whitespace-nowrap">Leave A Review</span>
-              </a>
+              </NuxtLink>
             </li>
           </ul>
         </div>
