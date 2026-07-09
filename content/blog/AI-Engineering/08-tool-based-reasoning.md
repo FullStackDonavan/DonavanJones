@@ -270,7 +270,7 @@ Logging full reasoning traces — every thought step, tool call, and observation
 ---
 buttonText: "Try The Live AI App"
 supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
-destinationUrl: "https://bibleverse.donavanjones.com/register"
+destinationUrl: "https://versehub.app/register"
 ---
 ::
 

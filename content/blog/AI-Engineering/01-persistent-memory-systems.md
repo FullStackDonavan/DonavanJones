@@ -188,7 +188,7 @@ This memory context replaces what would otherwise be a cold start. The model now
 ---
 buttonText: "Try The Live AI App"
 supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
-destinationUrl: "https://bibleverse.donavanjones.com/register"
+destinationUrl: "https://versehub.app/register"
 ---
 ::
 

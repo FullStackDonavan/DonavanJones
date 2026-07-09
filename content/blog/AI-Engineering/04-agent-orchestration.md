@@ -272,7 +272,7 @@ Injecting memory at the pipeline entry rather than having each agent independent
 ---
 buttonText: "Try The Live AI App"
 supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
-destinationUrl: "https://bibleverse.donavanjones.com/register"
+destinationUrl: "https://versehub.app/register"
 ---
 ::
 

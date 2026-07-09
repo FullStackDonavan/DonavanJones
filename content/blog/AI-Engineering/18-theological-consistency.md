@@ -237,7 +237,7 @@ This kind of longitudinal awareness makes the system feel like a study companion
 ---
 buttonText: "Try The Live AI App"
 supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
-destinationUrl: "https://bibleverse.donavanjones.com/register"
+destinationUrl: "https://versehub.app/register"
 ---
 ::
 

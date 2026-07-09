@@ -258,14 +258,14 @@ for a in articles:
             ctas.append((
                 "Try one of my applications", "Try The Live AI App",
                 "Try the RAG-powered Bible study app these patterns were built for.",
-                "https://bibleverse.donavanjones.com/register", "Mid-article",
+                "https://versehub.app/register", "Mid-article",
             ))
             product_count += 1
         elif cat == "backend-engineering" and a["filename"] in BACKEND_APP_TIE:
             ctas.append((
                 "Try one of my applications", "Try The Live AI App",
                 "See this exact backend pattern running in production on a live app.",
-                "https://bibleverse.donavanjones.com/register", "Mid-article",
+                "https://versehub.app/register", "Mid-article",
             ))
             product_count += 1
         elif cat == "backend-engineering" and a["filename"] in BACKEND_COMMERCIAL:

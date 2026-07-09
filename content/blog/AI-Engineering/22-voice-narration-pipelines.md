@@ -336,7 +336,7 @@ Scripture verses are pre-generated at ingest time for the most common voice conf
 ---
 buttonText: "Try The Live AI App"
 supportingCopy: "Try the RAG-powered Bible study app these patterns were built for."
-destinationUrl: "https://bibleverse.donavanjones.com/register"
+destinationUrl: "https://versehub.app/register"
 ---
 ::
 
