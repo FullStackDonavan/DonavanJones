@@ -37,31 +37,34 @@ OpenClaw's agent loop is deliberately simple — the sophistication is in the to
 
 ```
 1. Receive task from user
-2. Retrieve: pull relevant context for the task from Weaviate (repository-memory)
-3. Send task + context to Ornith-1.0-35B on the 3090
-4. Ornith-1.0-35B responds with either:
+2. Classify: architecture-review checks whether the task is safe for a local coding agent to touch at all
+3. If structural (an ORM swap, a data-model redesign): escalate to Claude Code, stop
+4. Retrieve: pull relevant context for the task from Weaviate (repository-memory)
+5. Send task + context to Ornith-1.0-35B on the 3090
+6. Ornith-1.0-35B responds with either:
    a. A tool call (read_file, edit_file, run_command, search_codebase)
    b. A final diff, tagged pass or needs_help against its own review of the change
-5. If tool call: execute it, return result, go to 4
-6. If final diff tagged pass: present diff for human review, stop
-7. If final diff tagged needs_help, or the task was flagged as hard up front: escalate to Claude Code instead of retrying locally again
+7. If tool call: execute it, return result, go to 6
+8. If final diff tagged pass: present diff for human review, stop
+9. If final diff tagged needs_help: escalate to Claude Code instead of retrying locally again
 ```
 
-This is the same shape as most production agent loops — the loop terminates on a final answer, not on a fixed step count, and every tool call result feeds back into the next model call. Step 4b is the one addition worth calling out: the model reviews its own diff against the task and the retrieved context before handing it back, rather than just returning whatever it first produces. That self-review is viable specifically because Ornith-1.0-35B is large enough to hold the whole task — repository conventions, the diff, and a critique of that diff — in one context, which a smaller drafting-only model can't do reliably.
+This is the same shape as most production agent loops — the loop terminates on a final answer, not on a fixed step count, and every tool call result feeds back into the next model call. Steps 2-3 and 6b are the two additions worth calling out. The architecture-review gate exists because I watched the coding agent burn a full local cycle on a task that was never a coding problem in the first place — "replace the ORM" isn't a diff, it's a decision, and the earlier version of this loop had no way to recognize that before the agent was three files into a migration it had no business making unilaterally. Step 6b's self-review is a separate thing: the model reviews its own diff against the task and the retrieved context before handing it back, rather than just returning whatever it first produces. That's viable specifically because Ornith-1.0-35B is large enough to hold the whole task — repository conventions, the diff, and a critique of that diff — in one context, which a smaller drafting-only model can't do reliably.
 
 ### From a Hardcoded Loop to a Router
 
-The seven steps above describe the control flow, but the first version of OpenClaw baked that flow directly into one function, which made it awkward to change what "needs help" actually does without editing the loop itself. The version I run today separates the two: OpenClaw is a router, and each step in the loop is a skill — a self-contained folder under `.claude/skills/` with its own instructions, independently testable and independently swappable.
+The nine steps above describe the control flow, but the first version of OpenClaw baked that flow directly into one function, which made it awkward to change what "needs help" actually does without editing the loop itself. The version I run today separates the two: OpenClaw is a router, and each step in the loop is a skill — a self-contained folder under `.claude/skills/` with its own instructions, independently testable and independently swappable.
 
 ```
 .claude/skills/
-├── repository-memory/    # step 2 above — Weaviate + embeddings, Jetson #1
-├── coding-agent/         # steps 3-6 above — Ornith-1.0-35B, 3090-hosted
+├── architecture-review/  # steps 2-3 above — gates structural changes before they reach coding-agent
+├── repository-memory/    # step 4 above — embeddings generated on Jetson #1, indexed in Weaviate on the storage server
+├── coding-agent/         # steps 5-8 above — Ornith-1.0-35B, 3090-hosted
 ├── code-review/
 ├── security-review/
 ├── test-runner/
 ├── deployment/
-└── ask-claude-fix/       # step 7 — Claude Code escalation
+└── ask-claude-fix/       # step 9 — Claude Code escalation
 ```
 
 The router's only job is deciding which skill handles a task next, based on the task's declared complexity and whatever the previous skill reported back:
@@ -76,7 +79,7 @@ task = {
 router.assign(task)
 ```
 
-`router.assign` looks at `task["type"]` and any complexity hint attached to it, then walks the same retrieve → code → review/escalate path from the seven-step loop — the difference is that path is now data (which skill ran, what it returned) instead of inline branching. That's what makes `ask-claude-fix` a first-class skill rather than a special-cased exception at the bottom of the function: architecturally, escalating to Claude Code is no different from calling `code-review`, it's just another skill the router can reach. `code-review`, `security-review`, `test-runner`, and `deployment` exist as their own skills rather than being folded into `coding-agent` because each is a task category common enough to deserve its own prompt and routing rule — a security review isn't just "run the coding agent again with a different question."
+`router.assign` looks at `task["type"]` and any complexity hint attached to it, then walks the same classify → retrieve → code → review/escalate path from the nine-step loop — the difference is that path is now data (which skill ran, what it returned) instead of inline branching. That's what makes `ask-claude-fix` a first-class skill rather than a special-cased exception at the bottom of the function: architecturally, escalating to Claude Code is no different from calling `code-review`, it's just another skill the router can reach — and `architecture-review` reaching the same conclusion before `coding-agent` ever runs is no different either. `code-review`, `security-review`, `test-runner`, and `deployment` exist as their own skills rather than being folded into `coding-agent` because each is a task category common enough to deserve its own prompt and routing rule — a security review isn't just "run the coding agent again with a different question."
 
 ## Installation
 
@@ -93,7 +96,7 @@ The config file is where model routing lives:
 models:
   agent: "hf.co/deepreinforce-ai/Ornith-1.0-35B:Q4_K_M"     # the coding agent, 3090-hosted
   utility: "hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"        # background tasks, Jetson #3-hosted
-  embed: "nomic-embed-text"                                  # retrieval embeddings, Jetson #1-hosted
+  embed: "nomic-embed-text"                                  # embedding generation on Jetson #1, index on the storage server's Weaviate
   escalate: "claude-code"                                    # tasks the local agent can't resolve
   endpoint: "http://localhost:11434"
 
@@ -109,7 +112,7 @@ router:
 
 `require_confirmation` is the safety valve — any tool listed there pauses for explicit approval before executing. The agent's own self-review catches a bad diff before it's shown to me; it doesn't undo a destructive tool call that already ran, which is why the confirmation gate sits in front of every tool call, not just at the end of the loop.
 
-`router.hard_task_types` is the up-front skip: a task tagged as one of those goes straight to `ask-claude-fix` without burning a `coding-agent` cycle first, since I already know those categories need Claude's judgment more often than not. `router.eval_log` is where every skill invocation gets written — task, which skill ran, what the agent produced, and for anything that needed Claude, why. That table is what turns "the local agent got this wrong" from an annoyance into a dataset, and it's the input to the LoRA training pass covered later in this series.
+`router.hard_task_types` is what `architecture-review` actually checks against: a task tagged as one of those goes straight to `ask-claude-fix` without burning a `coding-agent` cycle first, since I already know those categories need Claude's judgment more often than not. `router.eval_log` is where every skill invocation gets written — task, which skill ran, what the agent produced, and for anything that needed Claude, why. That table is what turns "the local agent got this wrong" from an annoyance into a dataset, and it's the input to the LoRA training pass covered later in this series.
 
 ## First Workflow
 

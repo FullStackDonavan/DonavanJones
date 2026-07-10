@@ -47,6 +47,7 @@ In OpenClaw specifically, the "Agent Loop" box isn't one function — it's a thi
 
 ```
 .claude/skills/
+├── architecture-review/
 ├── repository-memory/
 ├── coding-agent/
 ├── code-review/
@@ -56,7 +57,7 @@ In OpenClaw specifically, the "Agent Loop" box isn't one function — it's a thi
 └── ask-claude-fix/
 ```
 
-That split matters for the "build your own" version of this too: `repository-memory` and `coding-agent` are the two you need on day one — retrieval, then a single model capable enough to own the whole read-plan-edit-test-review loop itself, rather than splitting that job across a fast small model and a separate reviewer. Everything past that — `code-review`, `security-review`, `test-runner`, `deployment`, `ask-claude-fix` — is a skill you add later, for a task category you've decided is common enough to deserve its own dedicated prompt and routing rule instead of being lumped into a generic "fix this" request. Starting with two skills and a router that only knows how to call them is a better first version than trying to design the full skill taxonomy up front.
+That split matters for the "build your own" version of this too: `repository-memory` and `coding-agent` are the two you need on day one — retrieval, then a single model capable enough to own the whole read-plan-edit-test-review loop itself, rather than splitting that job across a fast small model and a separate reviewer. Everything past that is a skill you add once you've hit the specific problem it solves, not before. `architecture-review` is the one I'd add second, and earlier than the rest — it earns its place the first time the coding agent burns a full cycle on a task that was never a coding problem (an ORM swap, a data-model redesign) before you've built anything that catches that up front. `code-review`, `security-review`, `test-runner`, and `deployment` come after that, each for a task category you've decided is common enough to deserve its own dedicated prompt and routing rule instead of being lumped into a generic "fix this" request. Starting with two skills and a router that only knows how to call them is a better first version than trying to design the full skill taxonomy up front.
 
 ## Decisions That Matter Most
 
