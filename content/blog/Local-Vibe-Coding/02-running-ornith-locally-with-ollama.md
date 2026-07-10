@@ -2,7 +2,7 @@
 title: "Running Ornith-1.0-35B Locally with Ollama: A Complete Guide"
 description: "A practical walkthrough of running Ornith-1.0-35B locally with Ollama — model selection, quantization, and configuration for coding workloads."
 date: 2026-01-19
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -60,7 +60,7 @@ Running Ornith-1.0-35B alone as a chat-and-generate model works, but the setup c
 ollama pull hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M
 ```
 
-At Q4_K_M, the 9B variant is roughly 5.6GB — small enough to stay resident on Jetson-class VRAM alongside the embedding model, and fast enough that a first-pass draft doesn't feel like a wait. The 35B never writes a draft in this setup; it only reviews what the 9B already wrote. That split is covered in full in the [OpenClaw build article](/blog/local-vibe-coding/openclaw-from-scratch).
+At Q4_K_M, the 9B variant is roughly 5.6GB — small enough to stay resident on Jetson-class VRAM alongside the embedding model, and fast enough that a first-pass draft doesn't feel like a wait. The 35B never writes a draft in this setup; it only reviews what the 9B already wrote, as OpenClaw's `verify-code` skill. That split is covered in full in the [OpenClaw build article](/blog/local-vibe-coding/openclaw-from-scratch).
 
 ## Configuring for Tool Calling
 
@@ -103,7 +103,7 @@ destinationUrl: "/systems/local-vibe-coding"
 
 ## Where It Falls Short
 
-Ornith-1.0-35B is not a frontier model, and as a verifier that matters just as much as it would as a generator — it can only catch what it's capable of recognizing as wrong. It's excellent at the 80% of coding work that's pattern-following — CRUD endpoints, test scaffolding, refactors with a clear shape — and noticeably weaker at catching the kind of subtle, single-bug-in-a-large-system error that benefits most from a larger reasoning model. That's exactly the class of task that gets routed to Claude Code instead of trusted to the local draft/verify loop.
+Ornith-1.0-35B is not a frontier model, and as a verifier that matters just as much as it would as a generator — it can only catch what it's capable of recognizing as wrong. It's excellent at the 80% of coding work that's pattern-following — CRUD endpoints, test scaffolding, refactors with a clear shape — and noticeably weaker at catching the kind of subtle, single-bug-in-a-large-system error that benefits most from a larger reasoning model. That's exactly the class of task the router hands to Claude Code's Principal Engineer Mode rather than trusting to the local draft/verify pair.
 
 ::CtaCardRow
   :::CtaDownloadGuide

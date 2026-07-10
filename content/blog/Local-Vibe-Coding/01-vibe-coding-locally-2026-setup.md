@@ -2,7 +2,7 @@
 title: "Vibe Coding Locally: My Complete 2026 Setup with Jetson Orin and an RTX 3090"
 description: "Why I stopped treating local AI as a toy and built a production coding assistant on my own Kubernetes cluster: Jetson Orin, RTX 3090, Ollama, repository embeddings, and a multi-model agent pipeline."
 date: 2026-07-06
-lastUpdated: "2026-07-07"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -32,10 +32,10 @@ This isn't a one-off setup tour. It's the first entry in a build log. Everything
 2. **Choosing the base model.** Why Ornith-9B drafts and Ornith-1.0-35B verifies.
 3. **Repository indexing.** Teaching the assistant the shape of a codebase.
 4. **Building embeddings.** The Weaviate retrieval layer that feeds every prompt.
-5. **Tool calling.** How OpenClaw reads files, runs commands, and edits code.
+5. **Tool calling and the skills layer.** How OpenClaw routes a task through draft, retrieval, and verification skills to read files, run commands, and edit code.
 6. **Git integration.** From generated diff to reviewed commit on self-hosted Gitea.
 7. **Agent memory.** What the assistant remembers between sessions.
-8. **LoRA training.** Fine-tuning on my own code and conventions.
+8. **LoRA training.** Turning logged verification failures into training data for a better draft model.
 9. **Benchmarks.** The local pipeline vs Claude Code, with real numbers.
 10. **Open-sourcing it.** Turning the whole thing into a framework anyone can run.
 
@@ -64,11 +64,11 @@ The division of labor matters more than the raw specs. Drafting is bursty and wa
 | Model runtime | Ollama | Model serving, quantization management, API compatibility |
 | Draft model | Ornith-9B (Q4_K_M, ~5.6GB) | First-pass code generation, on the Jetson tier |
 | Verification model | Ornith-1.0-35B (quantized) | Reviews the draft against task, context, and conventions before it's shown to me |
-| Escalation | Claude Code | Genuinely hard tasks the local draft/verify loop can't resolve |
-| Agent layer | OpenClaw (custom) | Tool calling, file edits, command execution |
+| Escalation | Claude Code (Principal Engineer Mode) | Architecture decisions, hard debugging, security review, and whatever fails local verification twice |
+| Agent layer | OpenClaw (custom) | Router + skills: `draft-code`, `verify-code`, `repository-memory`, `ask-claude-fix` |
 | Orchestration | k3s | Scheduling every workload across the Jetson and desktop nodes |
 | Ingress | Traefik | Routes requests to services across namespaces |
-| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, caching, object storage, vector search for retrieval |
+| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search for retrieval |
 | Git + CI | Gitea + Actions runner | Self-hosted repo hosting and pipeline runs, no dependency on GitHub |
 | Observability | Prometheus, Grafana, Loki + Promtail | Metrics, dashboards, and log aggregation across every pod |
 
@@ -88,6 +88,54 @@ The obvious question: why not put everything on the 3090 and skip the Jetson clu
 
 In practice, a session looks like: OpenClaw reads the relevant files (via the Jetson-hosted embedding index for retrieval), Ornith-9B drafts a first pass on that same Jetson tier, Ornith-1.0-35B on the 3090 reviews the draft against the task and codebase conventions, and if it passes I review the diff before it lands. If the task is the kind that keeps failing verification, or I already know it's the kind that will, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's agent loop (read, plan, edit, verify), just with an extra local verification pass in front of the human review, and every part of it running on hardware I own.
 
+## The Router and the Skills Layer
+
+Early on, OpenClaw was a hardcoded script: task in, draft model, verifier model, done. That worked, but it hid the decision-making inside a single function instead of making it a first-class part of the system. What actually runs today is closer to a small engineering-manager loop, with OpenClaw acting as a router in front of a set of named skills rather than a single fixed path:
+
+```
+                 User Request
+                      |
+                      v
+              OpenClaw Router
+                      |
+        +-------------+-------------+
+        |                           |
+        v                           v
+  draft-code skill           repository-memory skill
+        |                           |
+ Jetson (Ornith-9B)          Jetson (Weaviate + embeddings)
+        |
+        v
+  Generated diff
+        |
+        v
+  verify-code skill
+        |
+  RTX 3090 (Ornith-1.0-35B)
+        |
+   +----+----+
+   |         |
+ PASS       FAIL
+   |         |
+   v         v
+ Commit   ask-claude-fix skill
+             |
+             v
+        Claude Code
+```
+
+Each box on the right is a skill: a self-contained folder with its own instructions, not a branch buried in application code. `draft-code` and `verify-code` are the two halves of the loop described above. `repository-memory` is the retrieval layer — it's what actually queries Weaviate and assembles context, rather than that logic living inline in the draft step. `ask-claude-fix` is what fires when `verify-code` rejects a draft twice, or when the router decides up front that a task is hard enough to skip the local pair entirely (an architecture change, an unfamiliar area of the codebase, a security-sensitive fix). Making that decision an explicit skill instead of an if-statement is what lets the routing logic itself get smarter over time without touching the model-calling code underneath it.
+
+The router's job, concretely, is sizing the task before picking a path:
+
+- **Simple** (a new endpoint, a small component, a test): `draft-code` → `verify-code` → commit.
+- **Medium** (an auth flow, a multi-file refactor): `draft-code` → `verify-code`, and on failure, one retry with the verifier's objection attached before falling through to `ask-claude-fix`.
+- **Hard** (anything touching the data model or the architecture): skip local entirely and go straight to Claude Code.
+
+## The Eval Database Is the Point
+
+Every run through the router — which skill handled it, what the draft looked like, whether verification passed, and if it didn't, why — gets logged to a `agent_tasks` table in Postgres. The interesting field is `failure_reason`: a short note on what the draft got wrong before `ask-claude-fix` handed it to Claude. Weeks of those rows are the raw material for the LoRA training pass later in this series — the local pair's failures become the training set for a better local pair. That's a longer-term payoff than the draft/verify loop itself; the loop is useful today, the failure log is what makes the 9B drafter better next quarter.
+
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
@@ -102,7 +150,7 @@ I'm not going to tell you the local pipeline matches a frontier model, because i
 
 Concretely: Claude Code has solved refactors in one prompt that my local assistant needed three verification retries to get right, and on a few of those, the third retry still failed and I escalated anyway. Multi-file changes that require holding a lot of the codebase in working memory are the most common failure mode; the 9B drafter loses the thread, and the 35B verifier correctly rejects the draft but can't fix it. Subtle convention violations occasionally slip through verification too: code that's correct but doesn't look like the rest of the repo.
 
-That's exactly why Claude Code is a first-class part of the stack rather than a fallback I'm embarrassed about. The local pipeline earns its keep on the high-volume, well-scoped work, and the failures are the most useful data I have. Several of them are driving the LoRA training work later in this series, and the benchmarks post will put honest numbers on where the line actually sits.
+That's exactly why Claude Code isn't a fallback I'm embarrassed about — it's a distinct mode with a distinct job. The local pair handles the volume: CRUD, components, tests, docs, small refactors, migrations. Claude Code runs in what I've started thinking of as Principal Engineer Mode — architecture decisions, debugging the genuinely confusing failures, large refactors, security review, anything in a part of the codebase the local pair hasn't seen enough of to have good instincts about. That's a different job description than "handles what the small model couldn't," and treating it that way changes what I route to it up front instead of only after two failed local retries. The failures the local pair does hit are still the most useful data I have; they're what's driving the LoRA training work later in this series, and the benchmarks post will put honest numbers on where the line actually sits.
 
 ## What I'd Change
 

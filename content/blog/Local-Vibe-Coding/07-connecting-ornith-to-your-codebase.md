@@ -2,7 +2,7 @@
 title: "Connecting Ornith to Your Own Codebase"
 description: "How to give a local model real awareness of an existing codebase — indexing, retrieval, and context assembly for large repositories."
 date: 2026-02-23
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -15,7 +15,7 @@ author: Donavan Jones
 
 # Connecting Ornith to Your Own Codebase
 
-A model with no knowledge of your codebase's structure, conventions, and existing utilities will confidently reinvent things that already exist. Giving Ornith real awareness of a large repository — beyond whatever fits in a single context window — requires the same retrieval patterns used for RAG, applied to code instead of documents. Both models in the draft/verify pair need it: Ornith-9B to write code that fits existing conventions, and Ornith-1.0-35B to check the draft against those same conventions.
+A model with no knowledge of your codebase's structure, conventions, and existing utilities will confidently reinvent things that already exist. Giving Ornith real awareness of a large repository — beyond whatever fits in a single context window — requires the same retrieval patterns used for RAG, applied to code instead of documents. In OpenClaw this lives as its own skill, `repository-memory`, rather than being inlined into the draft step — and both models in the draft/verify pair call into it: Ornith-9B to write code that fits existing conventions, and Ornith-1.0-35B to check the draft against those same conventions.
 
 *Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
 

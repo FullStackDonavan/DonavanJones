@@ -2,7 +2,7 @@
 title: "OpenClaw from Scratch: Installation, Configuration, and First Workflow"
 description: "Building OpenClaw, a self-hosted coding agent loop on top of a local model — installation, configuration, and the first end-to-end workflow."
 date: 2026-02-09
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -50,6 +50,35 @@ OpenClaw's agent loop is deliberately simple — the sophistication is in the to
 
 This is the same shape as most production agent loops — the loop terminates on a final answer, not on a fixed step count, and every tool call result feeds back into the next model call. The verification stage is the one addition that isn't in a typical single-model ReAct loop, and it's the reason a 9B model drafting is viable at all — it doesn't need to be right the first time, it needs a second, more capable model checking its work before a human ever sees it.
 
+### From a Hardcoded Loop to a Router
+
+The eight steps above describe the control flow, but the first version of OpenClaw baked that flow directly into one function, which made it awkward to change what "verification failed twice" actually does without editing the loop itself. The version I run today separates the two: OpenClaw is a router, and each step in the loop is a skill — a self-contained folder under `.claude/skills/` with its own instructions, independently testable and independently swappable.
+
+```
+.claude/skills/
+├── draft-code/          # step 2-4 above — Ornith-9B, Jetson-hosted
+├── verify-code/         # step 5 — Ornith-1.0-35B, 3090-hosted
+├── ask-claude-fix/       # step 8 — Claude Code escalation
+├── repository-memory/    # retrieval context feeding both draft and verify
+├── kubernetes-deployment/
+├── security-review/
+└── performance-review/
+```
+
+The router's only job is deciding which skill handles a task next, based on the task's declared complexity and whatever the previous skill reported back:
+
+```python
+task = {
+    "type": "feature_request",
+    "repo": "versehub",
+    "priority": "medium",
+}
+
+router.assign(task)
+```
+
+`router.assign` looks at `task["type"]` and any complexity hint attached to it, then walks the same draft → verify → retry/escalate path from the eight-step loop — the difference is that path is now data (which skill ran, what it returned) instead of inline branching. That's what makes `ask-claude-fix` a first-class skill rather than a special-cased exception at the bottom of the function: architecturally, escalating to Claude Code is no different from calling `verify-code`, it's just another skill the router can reach.
+
 ## Installation
 
 ```bash
@@ -74,9 +103,15 @@ tools:
   allow_write: true
   require_confirmation: ["run_command", "delete_file"]
   max_verify_retries: 1
+
+router:
+  hard_task_types: ["architecture_change", "security_review", "unfamiliar_codebase"]
+  eval_log: "postgres://localhost/agent_tasks"
 ```
 
 `require_confirmation` is the safety valve — any tool listed there pauses for explicit approval before executing, which matters a lot more when the model actually calling tools is a fast 9B draft model than when it's a much more reliable frontier model. The verification pass catches a bad diff before it's shown to me; it doesn't undo a destructive tool call that already ran, which is why the confirmation gate sits in front of the draft model specifically, not after verification.
+
+`router.hard_task_types` is the up-front skip: a task tagged as one of those goes straight to `ask-claude-fix` without burning a `draft-code`/`verify-code` cycle first, since I already know those categories fail local verification often enough that the retry isn't worth the wait. `router.eval_log` is where every skill invocation gets written — task, which skill ran, the draft, the verifier's score, and for failures, why. That table is what turns "the local pair got this wrong" from an annoyance into a dataset, and it's the input to the LoRA training pass covered later in this series.
 
 ## First Workflow
 

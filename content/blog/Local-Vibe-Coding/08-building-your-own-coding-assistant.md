@@ -2,7 +2,7 @@
 title: "Building Your Own Coding Assistant"
 description: "A general blueprint for building a local coding assistant from the pieces covered in this series — model, retrieval, tools, and the agent loop."
 date: 2026-03-02
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -33,7 +33,7 @@ destinationUrl: "/categories/local-vibe-coding"
 ┌─────────────────────────────────────┐
 │  Interface (CLI / editor extension) │
 ├─────────────────────────────────────┤
-│  Agent Loop (plan → act → verify)   │
+│  Agent Loop (router → skills)       │
 ├─────────────────────────────────────┤
 │  Retrieval (codebase index/search)  │
 ├─────────────────────────────────────┤
@@ -42,6 +42,21 @@ destinationUrl: "/categories/local-vibe-coding"
 ```
 
 Each layer is independently replaceable. The interface can be a bare CLI or a full editor extension. The agent loop can be as minimal as the 150-line version covered earlier in this series or as featured as OpenClaw, with or without a verification stage between draft and human review. The retrieval layer can be skipped entirely for small codebases. The model runtime is the one layer that's genuinely load-bearing — everything above it depends on the model (or models) actually being capable enough to drive the loop.
+
+In OpenClaw specifically, the "Agent Loop" box isn't one function — it's a thin router in front of a folder of skills, one per concern:
+
+```
+.claude/skills/
+├── draft-code/
+├── verify-code/
+├── ask-claude-fix/
+├── repository-memory/
+├── kubernetes-deployment/
+├── security-review/
+└── performance-review/
+```
+
+That split matters for the "build your own" version of this too: `draft-code` and `verify-code` are the two you need on day one, `repository-memory` is the retrieval layer from the diagram given its own address instead of being inlined into the draft step, and everything past that — `kubernetes-deployment`, `security-review`, `performance-review` — is a skill you add later, for a task category you've decided is common enough to deserve its own dedicated prompt and routing rule instead of being lumped into a generic "fix this" request. Starting with two skills and a router that only knows how to call them is a better first version than trying to design the full skill taxonomy up front.
 
 ## Decisions That Matter Most
 

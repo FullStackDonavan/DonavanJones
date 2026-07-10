@@ -2,7 +2,7 @@
 title: "Best Local Models for Coding"
 description: "A practical, opinionated comparison of the locally-runnable models worth using for coding work in 2026 — quality, speed, and VRAM tradeoffs."
 date: 2026-01-26
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -43,7 +43,7 @@ Benchmark scores on HumanEval-style tests measure something narrower than what m
 
 ## What I Actually Run
 
-For the agent loop covered elsewhere in this series (OpenClaw), it's not one daily driver but a pair: Ornith-9B drafts on the Jetson tier, and Ornith-1.0-35B verifies on the 3090 before anything reaches me. The tool-calling reliability matters more for an agentic workflow than a few extra points of raw code quality on either end, because a model that occasionally emits malformed function calls breaks the loop entirely, while a model that's slightly weaker at code but consistently well-formed keeps the agent moving. Splitting draft and verify across two model sizes gets more of that reliability per dollar of VRAM than running one mid-sized model for both jobs.
+For the agent loop covered elsewhere in this series (OpenClaw), it's not one daily driver but a pair, each wired in as its own skill: Ornith-9B drafts on the Jetson tier via `draft-code`, and Ornith-1.0-35B verifies on the 3090 via `verify-code` before anything reaches me. The tool-calling reliability matters more for an agentic workflow than a few extra points of raw code quality on either end, because a model that occasionally emits malformed function calls breaks the loop entirely, while a model that's slightly weaker at code but consistently well-formed keeps the agent moving. Splitting draft and verify across two model sizes gets more of that reliability per dollar of VRAM than running one mid-sized model for both jobs.
 
 For pure autocomplete-style single-file work — not agentic, just "finish this function" — Qwen2.5-Coder at 32B is faster and, on Python and TypeScript specifically, noticeably sharper.
 

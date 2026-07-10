@@ -2,7 +2,7 @@
 title: "Building Your First AI Coding Agent That Runs Completely Offline"
 description: "A minimal, from-first-principles guide to building a tool-calling coding agent against a fully local model stack."
 date: 2026-02-16
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -79,7 +79,7 @@ The iteration cap matters more than it looks — a small local model is more pro
 
 ## Where This Breaks Down at Scale
 
-This minimal version has no context management — every tool result gets appended to `messages` forever, which will eventually blow past the context window on a long session. It also has no confirmation gate, so `run_command` will happily execute anything the model asks, including destructive commands. And it trusts whatever the model returns as a final answer — there's no second pass checking the diff before it's applied. All three are exactly the gaps OpenClaw's fuller implementation closes: it drafts with a small model like this one, but adds a larger model that reviews the draft before anything reaches you.
+This minimal version has no context management — every tool result gets appended to `messages` forever, which will eventually blow past the context window on a long session. It also has no confirmation gate, so `run_command` will happily execute anything the model asks, including destructive commands. And it trusts whatever the model returns as a final answer — there's no second pass checking the diff before it's applied. All three are exactly the gaps OpenClaw's fuller implementation closes: instead of one `agent_loop` function doing everything, a router hands the task to a `draft-code` skill (this same small model), then a `verify-code` skill on a larger model reviews the draft before anything reaches you — and a task the pair can't resolve goes to an `ask-claude-fix` skill instead of looping forever.
 
 ::CtaSystemArchitecture
 ---
