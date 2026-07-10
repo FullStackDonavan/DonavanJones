@@ -2,7 +2,7 @@
 title: "Why I Stopped Paying for Claude: Building a Local AI Development Environment"
 description: "The reasoning behind moving day-to-day coding work off a hosted subscription and onto a self-hosted model stack — and what actually changed."
 date: 2026-03-09
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -33,9 +33,9 @@ I already owned a Jetson Orin cluster and an RTX 3090 for other projects — the
 
 ## What Actually Moved
 
-**Boilerplate and pattern-following work** — CRUD endpoints, test scaffolding, straightforward refactors, anything where I already know the shape of the solution and just need it typed out — moved to the local stack (Ornith-9B drafting, Ornith-1.0-35B verifying, OpenClaw tying it together) almost entirely.
+**Boilerplate and pattern-following work** — CRUD endpoints, test scaffolding, straightforward refactors, anything where I already know the shape of the solution and just need it typed out — moved to the local stack (Ornith-1.0-35B as the coding agent on the 3090, OpenClaw tying it together) almost entirely.
 
-**Hard reasoning work** — unfamiliar codebases, subtle bugs, architecture decisions with real tradeoffs — stayed on Claude Code. The local pair is good, not frontier-good, and pretending otherwise on the tasks where it actually matters would be a false economy. In practice that shows up as tasks that keep failing the 35B's verification pass — after one retry, they go to Claude Code instead of a second local attempt.
+**Hard reasoning work** — unfamiliar codebases, subtle bugs, architecture decisions with real tradeoffs — stayed on Claude Code. The local agent is good, not frontier-good, and pretending otherwise on the tasks where it actually matters would be a false economy. In practice that shows up as tasks the 35B's own self-review flags as uncertain — those go straight to Claude Code rather than a retry loop.
 
 ## What I Didn't Expect
 

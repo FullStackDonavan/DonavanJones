@@ -15,7 +15,7 @@ author: Donavan Jones
 
 # OpenClaw from Scratch: Installation, Configuration, and First Workflow
 
-OpenClaw is the name I gave the coding agent I built to sit on top of a local model pair — the same read-plan-edit-verify loop that tools like Claude Code popularized, but with drafting and verification split across two different local models instead of one, and a hosted model kept in reserve for whatever that pair can't resolve. This walks through getting it installed and running your first real workflow.
+OpenClaw is the name I gave the coding agent I built on top of a local model — the same read-plan-edit-verify loop that tools like Claude Code popularized, running against a 35B model with enough capacity to own that whole loop itself, with a hosted model kept in reserve for whatever it flags as needing help. This walks through getting it installed and running your first real workflow.
 
 *Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
 
@@ -29,40 +29,39 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## Why Build Rather Than Use an Existing Agent
 
-There are open-source coding agent frameworks already. I built my own for a narrower reason: control over exactly how a task moves between the fast Jetson-hosted draft model, the larger 3090-hosted verifier, and a hosted escalation path, plus control over the permission model for destructive operations (file writes, shell commands) without depending on an upstream project's release cadence for security-sensitive changes.
+There are open-source coding agent frameworks already. I built my own for a narrower reason: control over exactly how a task moves between the 3090-hosted coding agent, the Jetson-hosted retrieval and background layer, and a hosted escalation path, plus control over the permission model for destructive operations (file writes, shell commands) without depending on an upstream project's release cadence for security-sensitive changes.
 
 ## The Core Loop
 
-OpenClaw's agent loop is deliberately simple — the sophistication is in the tool implementations, not the loop itself. The addition over a single-model loop is a verification stage between "model produced a diff" and "human sees a diff":
+OpenClaw's agent loop is deliberately simple — the sophistication is in the tool implementations, not the loop itself. It's the same read-plan-edit-test-review shape as any other agent loop, with a self-review pass before the diff ever reaches me:
 
 ```
 1. Receive task from user
-2. Draft: send task + relevant file context to Ornith-9B
-3. Ornith-9B responds with either:
+2. Retrieve: pull relevant context for the task from Weaviate (repository-memory)
+3. Send task + context to Ornith-1.0-35B on the 3090
+4. Ornith-1.0-35B responds with either:
    a. A tool call (read_file, edit_file, run_command, search_codebase)
-   b. A final diff
-4. If tool call: execute it, return result to Ornith-9B, go to 3
-5. If final diff: send it to Ornith-1.0-35B for verification against the task and codebase conventions
-6. If verification passes: present diff for human review, stop
-7. If verification fails: send Ornith-9B the diff plus the verifier's objection for one retry
-8. If verification fails twice, or the task was flagged as hard up front: escalate to Claude Code instead of retrying locally again
+   b. A final diff, tagged pass or needs_help against its own review of the change
+5. If tool call: execute it, return result, go to 4
+6. If final diff tagged pass: present diff for human review, stop
+7. If final diff tagged needs_help, or the task was flagged as hard up front: escalate to Claude Code instead of retrying locally again
 ```
 
-This is the same shape as most production agent loops — the loop terminates on a final answer, not on a fixed step count, and every tool call result feeds back into the next model call. The verification stage is the one addition that isn't in a typical single-model ReAct loop, and it's the reason a 9B model drafting is viable at all — it doesn't need to be right the first time, it needs a second, more capable model checking its work before a human ever sees it.
+This is the same shape as most production agent loops — the loop terminates on a final answer, not on a fixed step count, and every tool call result feeds back into the next model call. Step 4b is the one addition worth calling out: the model reviews its own diff against the task and the retrieved context before handing it back, rather than just returning whatever it first produces. That self-review is viable specifically because Ornith-1.0-35B is large enough to hold the whole task — repository conventions, the diff, and a critique of that diff — in one context, which a smaller drafting-only model can't do reliably.
 
 ### From a Hardcoded Loop to a Router
 
-The eight steps above describe the control flow, but the first version of OpenClaw baked that flow directly into one function, which made it awkward to change what "verification failed twice" actually does without editing the loop itself. The version I run today separates the two: OpenClaw is a router, and each step in the loop is a skill — a self-contained folder under `.claude/skills/` with its own instructions, independently testable and independently swappable.
+The seven steps above describe the control flow, but the first version of OpenClaw baked that flow directly into one function, which made it awkward to change what "needs help" actually does without editing the loop itself. The version I run today separates the two: OpenClaw is a router, and each step in the loop is a skill — a self-contained folder under `.claude/skills/` with its own instructions, independently testable and independently swappable.
 
 ```
 .claude/skills/
-├── draft-code/          # step 2-4 above — Ornith-9B, Jetson-hosted
-├── verify-code/         # step 5 — Ornith-1.0-35B, 3090-hosted
-├── ask-claude-fix/       # step 8 — Claude Code escalation
-├── repository-memory/    # retrieval context feeding both draft and verify
-├── kubernetes-deployment/
+├── repository-memory/    # step 2 above — Weaviate + embeddings, Jetson #1
+├── coding-agent/         # steps 3-6 above — Ornith-1.0-35B, 3090-hosted
+├── code-review/
 ├── security-review/
-└── performance-review/
+├── test-runner/
+├── deployment/
+└── ask-claude-fix/       # step 7 — Claude Code escalation
 ```
 
 The router's only job is deciding which skill handles a task next, based on the task's declared complexity and whatever the previous skill reported back:
@@ -77,7 +76,7 @@ task = {
 router.assign(task)
 ```
 
-`router.assign` looks at `task["type"]` and any complexity hint attached to it, then walks the same draft → verify → retry/escalate path from the eight-step loop — the difference is that path is now data (which skill ran, what it returned) instead of inline branching. That's what makes `ask-claude-fix` a first-class skill rather than a special-cased exception at the bottom of the function: architecturally, escalating to Claude Code is no different from calling `verify-code`, it's just another skill the router can reach.
+`router.assign` looks at `task["type"]` and any complexity hint attached to it, then walks the same retrieve → code → review/escalate path from the seven-step loop — the difference is that path is now data (which skill ran, what it returned) instead of inline branching. That's what makes `ask-claude-fix` a first-class skill rather than a special-cased exception at the bottom of the function: architecturally, escalating to Claude Code is no different from calling `code-review`, it's just another skill the router can reach. `code-review`, `security-review`, `test-runner`, and `deployment` exist as their own skills rather than being folded into `coding-agent` because each is a task category common enough to deserve its own prompt and routing rule — a security review isn't just "run the coding agent again with a different question."
 
 ## Installation
 
@@ -92,26 +91,25 @@ The config file is where model routing lives:
 
 ```yaml
 models:
-  draft: "hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"          # first-pass generation, Jetson-hosted
-  verify: "hf.co/deepreinforce-ai/Ornith-1.0-35B:Q4_K_M"    # reviews the draft, 3090-hosted
-  embed: "nomic-embed-text"                                  # retrieval embeddings
-  escalate: "claude-code"                                    # tasks the local pair can't resolve
+  agent: "hf.co/deepreinforce-ai/Ornith-1.0-35B:Q4_K_M"     # the coding agent, 3090-hosted
+  utility: "hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"        # background tasks, Jetson #3-hosted
+  embed: "nomic-embed-text"                                  # retrieval embeddings, Jetson #1-hosted
+  escalate: "claude-code"                                    # tasks the local agent can't resolve
   endpoint: "http://localhost:11434"
 
 tools:
   allow_shell: true
   allow_write: true
   require_confirmation: ["run_command", "delete_file"]
-  max_verify_retries: 1
 
 router:
   hard_task_types: ["architecture_change", "security_review", "unfamiliar_codebase"]
   eval_log: "postgres://localhost/agent_tasks"
 ```
 
-`require_confirmation` is the safety valve — any tool listed there pauses for explicit approval before executing, which matters a lot more when the model actually calling tools is a fast 9B draft model than when it's a much more reliable frontier model. The verification pass catches a bad diff before it's shown to me; it doesn't undo a destructive tool call that already ran, which is why the confirmation gate sits in front of the draft model specifically, not after verification.
+`require_confirmation` is the safety valve — any tool listed there pauses for explicit approval before executing. The agent's own self-review catches a bad diff before it's shown to me; it doesn't undo a destructive tool call that already ran, which is why the confirmation gate sits in front of every tool call, not just at the end of the loop.
 
-`router.hard_task_types` is the up-front skip: a task tagged as one of those goes straight to `ask-claude-fix` without burning a `draft-code`/`verify-code` cycle first, since I already know those categories fail local verification often enough that the retry isn't worth the wait. `router.eval_log` is where every skill invocation gets written — task, which skill ran, the draft, the verifier's score, and for failures, why. That table is what turns "the local pair got this wrong" from an annoyance into a dataset, and it's the input to the LoRA training pass covered later in this series.
+`router.hard_task_types` is the up-front skip: a task tagged as one of those goes straight to `ask-claude-fix` without burning a `coding-agent` cycle first, since I already know those categories need Claude's judgment more often than not. `router.eval_log` is where every skill invocation gets written — task, which skill ran, what the agent produced, and for anything that needed Claude, why. That table is what turns "the local agent got this wrong" from an annoyance into a dataset, and it's the input to the LoRA training pass covered later in this series.
 
 ## First Workflow
 
@@ -119,7 +117,7 @@ router:
 openclaw run "Add input validation to the signup form in src/forms/signup.py"
 ```
 
-OpenClaw reads `signup.py` and its imports, sends the task and file contents to Ornith-9B, and gets back a sequence of tool calls: read the validation utility module, propose an edit to `signup.py` adding calls to it, then a final diff. That diff goes to Ornith-1.0-35B for review against the same file context; if it passes, the diff is shown for review before anything is written to disk.
+OpenClaw's `repository-memory` skill pulls `signup.py`, its imports, and the project's existing validation conventions from Weaviate. `coding-agent` takes that context and gets to work on Ornith-1.0-35B: read the validation utility module, propose an edit to `signup.py` adding calls to it, run the existing test file, and review its own diff against the task before returning it. If it comes back tagged `pass`, the diff is shown for review before anything is written to disk; if it comes back `needs_help`, it goes to `ask-claude-fix` instead.
 
 ::CtaSystemArchitecture
 ---

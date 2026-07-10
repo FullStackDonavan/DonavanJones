@@ -1,8 +1,8 @@
 ---
 title: "Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days"
-description: "A 30-day head-to-head comparison of a local Ornith-9B/Ornith-1.0-35B/OpenClaw coding setup against Claude Code, on real cost, speed, and privacy metrics."
+description: "A 30-day head-to-head comparison of a local Ornith-1.0-35B/OpenClaw coding setup against Claude Code, on real cost, speed, and privacy metrics."
 date: 2026-03-16
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -35,12 +35,12 @@ The honest framing: this isn't "free AI coding forever." It's "a lower recurring
 
 ## Speed
 
-Local wins on first-token latency — no network round-trip to a hosted API means Ornith-9B's draft starts arriving faster, consistently. Time to a *verified* answer is a fairer comparison, since the draft still has to clear Ornith-1.0-35B's review before it's shown to me, and that's a second local call the Claude Code path doesn't pay. In practice the two-hop pipeline still comes out ahead on typical requests, because both local calls stay on the LAN, but the margin over Claude Code is smaller than raw first-token numbers suggest. On large-context requests it flips — local runs noticeably slower than a hosted frontier model, since local hardware doesn't have the batching and optimization a large-scale inference provider runs at, and now that cost is paid twice.
+Local wins on first-token latency — no network round-trip to a hosted API means the local coding agent starts arriving faster, consistently. Time to a *reviewed* answer is a fairer comparison, since Ornith-1.0-35B's self-review pass runs before the diff is shown to me, and that's a second generation call the Claude Code path doesn't pay in the same way. In practice the local agent still comes out ahead on typical requests, because both the initial pass and the review stay on the LAN, but the margin over Claude Code is smaller than raw first-token numbers suggest. On large-context requests it flips — local runs noticeably slower than a hosted frontier model, since local hardware doesn't have the batching and optimization a large-scale inference provider runs at, and a self-review pass on a large context pays that cost twice.
 
-| | Local (Ornith-9B draft + Ornith-1.0-35B verify) | Claude Code |
+| | Local (Ornith-1.0-35B coding agent + self-review) | Claude Code |
 |---|---|---|
 | First-token latency | Faster (no network hop) | Slightly slower |
-| Time to verified answer | Comparable (two local hops) | Comparable (one hosted hop) |
+| Time to reviewed answer | Comparable (agent + self-review) | Comparable (one hosted hop) |
 | Large-context requests | Slower (VRAM-bound, paid twice) | Faster (data-center scale) |
 
 ## Privacy

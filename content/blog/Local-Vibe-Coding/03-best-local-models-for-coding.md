@@ -35,15 +35,15 @@ Benchmark scores on HumanEval-style tests measure something narrower than what m
 
 | Model | Size (usable local) | Strengths | Weaknesses |
 |---|---|---|---|
-| Ornith-9B | 9B | Fast enough to draft on Jetson-class hardware, still tool-calling reliable | Misses more than a larger model would if it were the only check |
-| Ornith-1.0-35B | 35B | Reliable tool-calling, follows instructions literally, good quantization support | Weaker on unusual language/framework combos |
+| Ornith-9B | 9B | Fast enough for background tasks on Jetson-class hardware, still tool-calling reliable | Not capable enough to own a full agentic coding loop on its own |
+| Ornith-1.0-35B | 35B | Reliable tool-calling, follows instructions literally, good quantization support, enough capacity to plan and self-review | Weaker on unusual language/framework combos |
 | Qwen2.5-Coder | 32B | Strong on Python and TypeScript specifically, fast | Less reliable tool-calling out of the box |
 | DeepSeek-Coder-V2 | 16B / 236B (MoE) | Excellent code completion quality at the 16B tier | The larger MoE variant is impractical on a single consumer GPU |
 | CodeLlama | 34B | Mature, well-documented, wide tooling support | Noticeably behind newer releases on complex tasks |
 
 ## What I Actually Run
 
-For the agent loop covered elsewhere in this series (OpenClaw), it's not one daily driver but a pair, each wired in as its own skill: Ornith-9B drafts on the Jetson tier via `draft-code`, and Ornith-1.0-35B verifies on the 3090 via `verify-code` before anything reaches me. The tool-calling reliability matters more for an agentic workflow than a few extra points of raw code quality on either end, because a model that occasionally emits malformed function calls breaks the loop entirely, while a model that's slightly weaker at code but consistently well-formed keeps the agent moving. Splitting draft and verify across two model sizes gets more of that reliability per dollar of VRAM than running one mid-sized model for both jobs.
+For the agent loop covered elsewhere in this series (OpenClaw), Ornith-1.0-35B on the 3090 is the daily driver — it owns the whole `coding-agent` skill: read, plan, edit, test, and review its own diff before anything reaches me. Ornith-9B runs separately on the Jetson tier as a utility model for background work (docs, commit summaries, log analysis) that doesn't touch the coding loop at all. Tool-calling reliability matters more for an agentic workflow than a few extra points of raw code quality, because a model that occasionally emits malformed function calls breaks the loop entirely — which is part of why the coding agent runs on the model with the most headroom rather than the fastest one. I ran a split-tier version of this earlier, with the 9B drafting and the 35B only reviewing; the 35B has enough capacity to do the whole job itself, and reserving it for review alone left most of that capacity unused.
 
 For pure autocomplete-style single-file work — not agentic, just "finish this function" — Qwen2.5-Coder at 32B is faster and, on Python and TypeScript specifically, noticeably sharper.
 

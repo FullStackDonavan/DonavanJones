@@ -2,7 +2,7 @@
 title: "Ornith-1.0-35B vs Claude Code"
 description: "A direct, model-level comparison of a locally-hosted Ornith-1.0-35B model against Claude Code on real coding tasks."
 date: 2026-03-23
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -29,7 +29,7 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## The Test Set
 
-I ran the same 20 real tasks — pulled from actual work over several weeks, not a synthetic benchmark — through both the local pipeline and Claude Code, and rated the output on three axes: correctness (did it work), idiomaticity (did it match the codebase's existing conventions), and whether it required follow-up correction. "Ornith-1.0-35B" below is shorthand for what actually reaches me locally: Ornith-9B's draft after it's passed Ornith-1.0-35B's verification pass, not the 35B generating from scratch — the verification step is baked into every local result in this comparison.
+I ran the same 20 real tasks — pulled from actual work over several weeks, not a synthetic benchmark — through both the local pipeline and Claude Code, and rated the output on three axes: correctness (did it work), idiomaticity (did it match the codebase's existing conventions), and whether it required follow-up correction. "Ornith-1.0-35B" below refers to what actually reaches me locally: its output after its own self-review pass, not the first uncritiqued generation — that self-review step is baked into every local result in this comparison.
 
 ## Where Ornith-1.0-35B Holds Up
 
@@ -56,7 +56,7 @@ destinationUrl: "/systems/local-vibe-coding"
 
 ## What This Means Practically
 
-Route by task type, not by habit. The instinct to reach for whichever tool is open is worth resisting — a quick mental check ("is this pattern-following or does it require holding a lot of context") is usually enough to route correctly, and getting that routing right is most of what makes the hybrid setup work at all. In OpenClaw this routing is partly automatic: a task that fails Ornith-1.0-35B's verification twice gets escalated to Claude Code instead of a third local retry, which catches most of the "should have gone to Claude Code from the start" cases even when my own initial guess was wrong.
+Route by task type, not by habit. The instinct to reach for whichever tool is open is worth resisting — a quick mental check ("is this pattern-following or does it require holding a lot of context") is usually enough to route correctly, and getting that routing right is most of what makes the hybrid setup work at all. In OpenClaw this routing is partly automatic: a task Ornith-1.0-35B's own self-review flags as uncertain gets escalated to Claude Code instead of a local retry, which catches most of the "should have gone to Claude Code from the start" cases even when my own initial guess was wrong.
 
 ::CtaCardRow
   :::CtaDownloadGuide

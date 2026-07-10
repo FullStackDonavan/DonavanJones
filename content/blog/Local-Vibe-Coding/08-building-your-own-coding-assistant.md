@@ -15,7 +15,7 @@ author: Donavan Jones
 
 # Building Your Own Coding Assistant
 
-By this point in the series, every individual piece has been covered — a model pair (Ornith-9B drafting, Ornith-1.0-35B verifying), a runtime (Ollama), a retrieval layer for codebase awareness, and an agent loop (OpenClaw). This article is the assembly instructions: how those pieces fit together into something you'd actually use daily, and the decisions that matter most when building your own version.
+By this point in the series, every individual piece has been covered — a coding agent (Ornith-1.0-35B, running the full read-plan-edit-test-review loop), a runtime (Ollama), a retrieval layer for codebase awareness, and an agent loop (OpenClaw). This article is the assembly instructions: how those pieces fit together into something you'd actually use daily, and the decisions that matter most when building your own version.
 
 *Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
 
@@ -41,22 +41,22 @@ destinationUrl: "/categories/local-vibe-coding"
 └─────────────────────────────────────┘
 ```
 
-Each layer is independently replaceable. The interface can be a bare CLI or a full editor extension. The agent loop can be as minimal as the 150-line version covered earlier in this series or as featured as OpenClaw, with or without a verification stage between draft and human review. The retrieval layer can be skipped entirely for small codebases. The model runtime is the one layer that's genuinely load-bearing — everything above it depends on the model (or models) actually being capable enough to drive the loop.
+Each layer is independently replaceable. The interface can be a bare CLI or a full editor extension. The agent loop can be as minimal as the 150-line version covered earlier in this series or as featured as OpenClaw, with or without a self-review pass between the agent's draft and human review. The retrieval layer can be skipped entirely for small codebases. The model runtime is the one layer that's genuinely load-bearing — everything above it depends on the model (or models) actually being capable enough to drive the loop, which is the reason OpenClaw's coding agent runs on the 3090 rather than a smaller Jetson-hosted model: it needs enough capacity to read, plan, edit, test, and critique its own output in one pass, not just generate.
 
 In OpenClaw specifically, the "Agent Loop" box isn't one function — it's a thin router in front of a folder of skills, one per concern:
 
 ```
 .claude/skills/
-├── draft-code/
-├── verify-code/
-├── ask-claude-fix/
 ├── repository-memory/
-├── kubernetes-deployment/
+├── coding-agent/
+├── code-review/
 ├── security-review/
-└── performance-review/
+├── test-runner/
+├── deployment/
+└── ask-claude-fix/
 ```
 
-That split matters for the "build your own" version of this too: `draft-code` and `verify-code` are the two you need on day one, `repository-memory` is the retrieval layer from the diagram given its own address instead of being inlined into the draft step, and everything past that — `kubernetes-deployment`, `security-review`, `performance-review` — is a skill you add later, for a task category you've decided is common enough to deserve its own dedicated prompt and routing rule instead of being lumped into a generic "fix this" request. Starting with two skills and a router that only knows how to call them is a better first version than trying to design the full skill taxonomy up front.
+That split matters for the "build your own" version of this too: `repository-memory` and `coding-agent` are the two you need on day one — retrieval, then a single model capable enough to own the whole read-plan-edit-test-review loop itself, rather than splitting that job across a fast small model and a separate reviewer. Everything past that — `code-review`, `security-review`, `test-runner`, `deployment`, `ask-claude-fix` — is a skill you add later, for a task category you've decided is common enough to deserve its own dedicated prompt and routing rule instead of being lumped into a generic "fix this" request. Starting with two skills and a router that only knows how to call them is a better first version than trying to design the full skill taxonomy up front.
 
 ## Decisions That Matter Most
 
@@ -66,21 +66,21 @@ That split matters for the "build your own" version of this too: `draft-code` an
 
 The CLI version prints the final diff as text and stops — fine for a demo, bad for daily use, because reading a unified diff in a terminal and then manually applying it defeats half the point of an agent. Getting it into the editor took two changes: OpenClaw had to stop printing prose and start emitting structured events, and something on the editor side had to be listening for them.
 
-**OpenClaw side — swap stdout prose for an event stream.** The CLI already moves through named stages (draft, verify, retry, escalate, final diff); the only change is emitting each as a JSON line instead of a sentence:
+**OpenClaw side — swap stdout prose for an event stream.** The CLI already moves through named stages (retrieve, agent, self-review, escalate, final diff); the only change is emitting each as a JSON line instead of a sentence:
 
 ```bash
 openclaw run --json "Add input validation to the signup form in src/forms/signup.py"
 ```
 
 ```json
-{"event": "draft_started", "model": "ornith-9b"}
+{"event": "retrieval_started", "skill": "repository-memory"}
+{"event": "agent_started", "model": "ornith-1.0-35b"}
 {"event": "tool_call", "name": "read_file", "args": {"path": "src/forms/signup.py"}}
-{"event": "verify_started", "model": "ornith-1.0-35b"}
-{"event": "verify_passed"}
+{"event": "self_review_passed"}
 {"event": "final_diff", "file": "src/forms/signup.py", "diff": "@@ -12,6 +12,9 @@..."}
 ```
 
-Nothing about the loop itself changes — it's the same draft → verify → retry/escalate sequence from the core loop, just narrated as events instead of printed as text.
+Nothing about the loop itself changes — it's the same retrieve → code → review/escalate sequence from the core loop, just narrated as events instead of printed as text.
 
 **Editor side — a thin extension that shells out and renders.** The extension doesn't reimplement any of the agent logic; it spawns the CLI, reads the JSON lines, and reacts to whichever events it cares about:
 

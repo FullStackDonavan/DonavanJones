@@ -15,7 +15,7 @@ author: Donavan Jones
 
 # Running Ornith-1.0-35B Locally with Ollama: A Complete Guide
 
-Ornith-1.0-35B is the model I settled on after cycling through most of the popular locally-runnable options — it's instruction-tuned, handles tool-calling formats cleanly, and quantizes down to a size that fits comfortably on a single consumer GPU without losing enough quality to matter for day-to-day coding work. In my setup it doesn't write the first draft of anything — a smaller Ornith-9B does that on the Jetson tier — its job is reviewing that draft before it reaches me. This is the setup guide I wish I'd had.
+Ornith-1.0-35B is the model I settled on after cycling through most of the popular locally-runnable options — it's instruction-tuned, handles tool-calling formats cleanly, and quantizes down to a size that fits comfortably on a single consumer GPU without losing enough quality to matter for day-to-day coding work. In my setup it's the coding agent itself: it reads the relevant files, plans the change, edits, runs tests, and reviews its own diff before anything reaches me. A smaller Ornith-9B runs separately, on the Jetson tier, handling background tasks that don't need that much capacity. This is the setup guide I wish I'd had.
 
 *Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
 
@@ -52,15 +52,15 @@ The `Q4_K_M` suffix is the quantization level — 4-bit with a mixed precision s
 | Q4_K_M | ~20GB | Balanced quality/speed for most coding tasks |
 | Q5_K_M | ~24GB | Best local quality for complex refactors and explanation |
 
-## Pairing With a Draft Model
+## Pairing With a Utility Model
 
-Running Ornith-1.0-35B alone as a chat-and-generate model works, but the setup covered in the rest of this series pairs it with Ornith-9B running on a Jetson node:
+Ornith-1.0-35B on the 3090 is the coding agent, not one half of a pair — but it isn't the only model running. The rest of this series also runs a smaller Ornith-9B on a Jetson node, for background work that doesn't need the 35B's capacity:
 
 ```bash
 ollama pull hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M
 ```
 
-At Q4_K_M, the 9B variant is roughly 5.6GB — small enough to stay resident on Jetson-class VRAM alongside the embedding model, and fast enough that a first-pass draft doesn't feel like a wait. The 35B never writes a draft in this setup; it only reviews what the 9B already wrote, as OpenClaw's `verify-code` skill. That split is covered in full in the [OpenClaw build article](/blog/local-vibe-coding/openclaw-from-scratch).
+At Q4_K_M, the 9B variant is roughly 5.6GB — small enough to stay resident on Jetson-class VRAM alongside the embedding model. It handles documentation generation, commit summaries, and log analysis as OpenClaw's utility model, entirely separate from the coding loop. My first version of this setup had the split reversed — 9B drafting, 35B reviewing — and moved the 35B into the driver's seat once it became clear a verifier-only role was wasting most of what a 35B model can actually do. That's covered in full in the [OpenClaw build article](/blog/local-vibe-coding/openclaw-from-scratch).
 
 ## Configuring for Tool Calling
 
@@ -103,7 +103,7 @@ destinationUrl: "/systems/local-vibe-coding"
 
 ## Where It Falls Short
 
-Ornith-1.0-35B is not a frontier model, and as a verifier that matters just as much as it would as a generator — it can only catch what it's capable of recognizing as wrong. It's excellent at the 80% of coding work that's pattern-following — CRUD endpoints, test scaffolding, refactors with a clear shape — and noticeably weaker at catching the kind of subtle, single-bug-in-a-large-system error that benefits most from a larger reasoning model. That's exactly the class of task the router hands to Claude Code's Principal Engineer Mode rather than trusting to the local draft/verify pair.
+Ornith-1.0-35B is not a frontier model, and it's honest about that in its own self-review more often than it's wrong outright — it flags uncertainty on the kind of task it can't fully reason through rather than confidently shipping a bad diff, most of the time. It's excellent at the 80% of coding work that's pattern-following — CRUD endpoints, test scaffolding, refactors with a clear shape — and noticeably weaker at holding a large, unfamiliar system in working memory across a multi-file change. That's exactly the class of task the router hands to Claude Code's external Principal Architect role rather than trusting to the local coding agent.
 
 ::CtaCardRow
   :::CtaDownloadGuide

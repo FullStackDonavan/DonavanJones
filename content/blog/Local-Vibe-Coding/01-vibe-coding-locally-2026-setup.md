@@ -16,7 +16,7 @@ author: Donavan Jones
 
 # Vibe Coding Locally: My Complete 2026 Setup with Jetson Orin and an RTX 3090
 
-I wanted an AI coding assistant that understood my entire codebase, kept my source code private, and didn't cost hundreds of dollars every month. So I stopped treating local AI as a toy and built a production coding assistant that runs on my own Kubernetes cluster: Jetson Orin boards drafting code, an RTX 3090 verifying it, Ollama serving the models, repository embeddings feeding retrieval, and a multi-model agent pipeline tying it all together.
+I wanted an AI coding assistant that understood my entire codebase, kept my source code private, and didn't cost hundreds of dollars every month. So I stopped treating local AI as a toy and built a production coding assistant that runs on my own Kubernetes cluster: three Jetson Orin Nano Supers running the always-on retrieval and background-agent layer, an RTX 3090 running the actual coding agent, Ollama serving the models, repository embeddings feeding retrieval, and a multi-model agent pipeline tying it all together.
 
 "Vibe coding," where you lean on an AI agent for the bulk of the typing while you steer architecture and review output, is normally described as a cloud thing. Claude Code, Cursor, a browser tab open to a hosted model. My version runs on a rack in my office and a desktop under my desk, and after months of daily use it holds up for a real, meaningful slice of my day-to-day work.
 
@@ -29,13 +29,13 @@ This post is the foundation: the hardware, the models, the agent loop, and why I
 This isn't a one-off setup tour. It's the first entry in a build log. Everything below is running today, but each piece deserves its own deep-dive, and that's where this series is headed:
 
 1. **Why I'm building my own coding assistant.** This post covers the hardware, the stack, and the reasoning.
-2. **Choosing the base model.** Why Ornith-9B drafts and Ornith-1.0-35B verifies.
+2. **Choosing the base model.** Why Ornith-1.0-35B is the coding agent, and where the Jetson-hosted Ornith-9B fits as a utility model.
 3. **Repository indexing.** Teaching the assistant the shape of a codebase.
 4. **Building embeddings.** The Weaviate retrieval layer that feeds every prompt.
-5. **Tool calling and the skills layer.** How OpenClaw routes a task through draft, retrieval, and verification skills to read files, run commands, and edit code.
+5. **Tool calling and the skills layer.** How OpenClaw routes a task through the repository-memory, coding-agent, and review skills to read files, run commands, and edit code.
 6. **Git integration.** From generated diff to reviewed commit on self-hosted Gitea.
 7. **Agent memory.** What the assistant remembers between sessions.
-8. **LoRA training.** Turning logged verification failures into training data for a better draft model.
+8. **LoRA training.** Turning logged failed attempts into training data for a better coding agent, trained right on the 3090 that runs it.
 9. **Benchmarks.** The local pipeline vs Claude Code, with real numbers.
 10. **Open-sourcing it.** Turning the whole thing into a framework anyone can run.
 
@@ -49,23 +49,27 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## The Hardware Split
 
-I run two distinct inference tiers, and the split is deliberate rather than accidental:
+I run two distinct tiers, and the split is deliberate rather than accidental — though it took a revision to get the division of labor right. My first version had this backwards.
 
-**Jetson Orin Nano Super cluster** hosts Ornith-9B (Q4_K_M, ~5.6GB), the model that actually drafts code. Small enough to stay loaded on modest VRAM, fast enough that a first-pass draft doesn't feel like waiting. This tier also handles embedding generation and background agent tasks that don't need the 3090's throughput.
+**A Jetson Orin Nano Super cluster (three nodes)** is the always-on infrastructure layer, not a coding brain. I say "a cluster" carefully here: each node runs its own independent services rather than one model split across the three, so this is a cluster in the always-on-fleet sense, not a distributed-inference one. Each node has a specific job:
 
-**RTX 3090 (24GB VRAM)** hosts Ornith-1.0-35B, which never writes a first draft. Its job is reviewing what the 9B just wrote: checking it against the task, the retrieved context, and the codebase's conventions, and either passing it through or sending it back for another pass. A verifier benefits from being the bigger, slower model in a way a drafter doesn't, since it only runs once per draft, not once per token.
+- **Jetson #1 — Repository Memory.** Parses git repos, generates embeddings, and hosts Weaviate. This is what feeds the coding agent context.
+- **Jetson #2 — Agent Workers.** Documentation generation, commit summaries, log analysis, test-report parsing, background security scans — the steady stream of small tasks that don't need a 35B model or a human in the loop.
+- **Jetson #3 — Always-On AI Services.** Whisper, TTS, and smaller utility LLMs, including Ornith-9B, for API-facing and production AI features that don't need the 3090's throughput.
 
-The division of labor matters more than the raw specs. Drafting is bursty and wants to feel instant, so it runs on the tier that's always warmed up and doesn't compete with anything else. Verification is a single, heavier call per draft, so it's worth spending the 3090's extra capacity on it. Background tasks (indexing a repo, generating embeddings for search) share the Jetson tier with the drafter rather than the 3090.
+**RTX 3090 (24GB VRAM)** hosts Ornith-1.0-35B as the local coding agent — the model that owns the actual loop: read the relevant files, plan the change, edit, run tests, and review its own diff before I ever see it. My original design treated the 3090 as a verifier only, reviewing drafts written by the Jetson-hosted 9B. That undersold it. A verifier is reactive — "here's code, find problems with it" — but a coding agent needs repository understanding, planning, multi-file edits, tool use, and iterative fixes, and a 35B model on 24GB of VRAM has enough capacity to actually do that across a multi-step edit, not just critique one. Reserving that capacity for review alone was leaving most of it unused. Ornith-9B didn't go away — it moved to Jetson #3, where it's a utility model for background tasks, not the model doing the coding.
+
+The division of labor now maps to *interactive vs. always-on* rather than *fast-and-small vs. big-and-slow*. The coding agent is the one thing that wants a human sitting in front of it waiting on a response, so it gets the GPU that isn't doing anything else. Everything else — indexing, embeddings, background workers, utility inference — runs on the Jetson fleet, which is built to sit at low power 24/7 without competing with the interactive path.
 
 ## Software Stack
 
 | Layer | Tool | Purpose |
 |---|---|---|
 | Model runtime | Ollama | Model serving, quantization management, API compatibility |
-| Draft model | Ornith-9B (Q4_K_M, ~5.6GB) | First-pass code generation, on the Jetson tier |
-| Verification model | Ornith-1.0-35B (quantized) | Reviews the draft against task, context, and conventions before it's shown to me |
-| Escalation | Claude Code (Principal Engineer Mode) | Architecture decisions, hard debugging, security review, and whatever fails local verification twice |
-| Agent layer | OpenClaw (custom) | Router + skills: `draft-code`, `verify-code`, `repository-memory`, `ask-claude-fix` |
+| Coding agent | Ornith-1.0-35B (quantized) | Reads, plans, edits, tests, and reviews its own diff, RTX 3090-hosted |
+| Utility models | Ornith-9B (Q4_K_M, ~5.6GB) | Background tasks — docs, commit summaries, log analysis — on Jetson #3 |
+| Escalation | Claude Code (External Principal Architect) | Architecture decisions, hard debugging, security review, and whatever the coding agent flags as needing help |
+| Agent layer | OpenClaw (custom) | Router + skills: `repository-memory`, `coding-agent`, `code-review`, `security-review`, `test-runner`, `deployment`, `ask-claude-fix` |
 | Orchestration | k3s | Scheduling every workload across the Jetson and desktop nodes |
 | Ingress | Traefik | Routes requests to services across namespaces |
 | Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search for retrieval |
@@ -82,59 +86,77 @@ The obvious question: why not put everything on the 3090 and skip the Jetson clu
 
 **Power.** The 3090 idles hot even at low load. Running background embedding jobs and small-model lookups 24/7 on it means a meaningfully higher power bill for work that doesn't need that much silicon. The Jetson nodes sip power by comparison and are built to be always-on.
 
-**Contention.** When I'm mid-session with the coding agent, I don't want a background indexing job stealing VRAM or scheduling priority. Splitting the workload across separate hardware means the interactive path never waits on the batch path.
+**Contention.** When I'm mid-session with the coding agent on the 3090, I don't want a background indexing job on the same card stealing VRAM or scheduling priority. Splitting the workload across separate hardware means the interactive path — the one I'm actually sitting in front of — never waits on the batch path.
 
 ## What "Vibe Coding" Actually Looks Like Here
 
-In practice, a session looks like: OpenClaw reads the relevant files (via the Jetson-hosted embedding index for retrieval), Ornith-9B drafts a first pass on that same Jetson tier, Ornith-1.0-35B on the 3090 reviews the draft against the task and codebase conventions, and if it passes I review the diff before it lands. If the task is the kind that keeps failing verification, or I already know it's the kind that will, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's agent loop (read, plan, edit, verify), just with an extra local verification pass in front of the human review, and every part of it running on hardware I own.
+In practice, a session looks like: OpenClaw's `repository-memory` skill pulls context from Weaviate on Jetson #1, Ornith-1.0-35B on the 3090 runs the actual loop — read the relevant files, plan the change, edit, run tests, review its own diff — and I review what it produces before it lands. If the agent flags its own diff as uncertain, or I already know up front that the task is the kind that needs an architecture call, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's own agent loop (read, plan, edit, verify), just running on hardware I own, with a human review step in front of the commit either way.
 
 ## The Router and the Skills Layer
 
-Early on, OpenClaw was a hardcoded script: task in, draft model, verifier model, done. That worked, but it hid the decision-making inside a single function instead of making it a first-class part of the system. What actually runs today is closer to a small engineering-manager loop, with OpenClaw acting as a router in front of a set of named skills rather than a single fixed path:
+OpenClaw's job isn't running a model — it's deciding which skill handles a task and what happens next. Early versions had that decision hardcoded into one function; what runs today is a router in front of a set of named skills, each a self-contained folder with its own instructions rather than a branch buried in application code:
 
 ```
-                 User Request
-                      |
-                      v
-              OpenClaw Router
-                      |
-        +-------------+-------------+
-        |                           |
-        v                           v
-  draft-code skill           repository-memory skill
-        |                           |
- Jetson (Ornith-9B)          Jetson (Weaviate + embeddings)
-        |
-        v
-  Generated diff
-        |
-        v
-  verify-code skill
-        |
-  RTX 3090 (Ornith-1.0-35B)
-        |
-   +----+----+
-   |         |
- PASS       FAIL
-   |         |
-   v         v
- Commit   ask-claude-fix skill
-             |
-             v
-        Claude Code
+                      User Request
+                            |
+                            v
+                    OpenClaw Router
+                            |
+                  repository-memory skill
+                            |
+                    Weaviate context
+                     (Jetson #1)
+                            |
+                            v
+                  coding-agent skill
+                  RTX 3090 (Ornith-1.0-35B)
+                            |
+                    Read → Plan → Edit
+                       → Test → Review
+                            |
+                            v
+                     Human Review
+                            |
+                   +--------+--------+
+                   |                 |
+                 Good           Needs Help
+                   |                 |
+                   v                 v
+                Commit      ask-claude-fix skill
+                                     |
+                                     v
+                               Claude Code
 ```
 
-Each box on the right is a skill: a self-contained folder with its own instructions, not a branch buried in application code. `draft-code` and `verify-code` are the two halves of the loop described above. `repository-memory` is the retrieval layer — it's what actually queries Weaviate and assembles context, rather than that logic living inline in the draft step. `ask-claude-fix` is what fires when `verify-code` rejects a draft twice, or when the router decides up front that a task is hard enough to skip the local pair entirely (an architecture change, an unfamiliar area of the codebase, a security-sensitive fix). Making that decision an explicit skill instead of an if-statement is what lets the routing logic itself get smarter over time without touching the model-calling code underneath it.
+`repository-memory` is the retrieval layer — it queries Weaviate and assembles context before the coding agent ever sees the task, rather than that logic living inline in the agent itself. `coding-agent` is the loop above: the one skill that actually reads, plans, edits, tests, and reviews. Alongside it are narrower skills for work that deserves its own dedicated prompt and routing rule instead of being lumped into a generic request: `code-review`, `security-review`, `test-runner`, `deployment`. `ask-claude-fix` fires when the coding agent flags its own output as uncertain, or when the router decides up front that a task is hard enough to skip local entirely (an architecture change, an unfamiliar area of the codebase, a security-sensitive fix). Making that an explicit skill instead of an if-statement is what lets the routing logic get smarter over time without touching the model-calling code underneath it.
 
 The router's job, concretely, is sizing the task before picking a path:
 
-- **Simple** (a new endpoint, a small component, a test): `draft-code` → `verify-code` → commit.
-- **Medium** (an auth flow, a multi-file refactor): `draft-code` → `verify-code`, and on failure, one retry with the verifier's objection attached before falling through to `ask-claude-fix`.
+- **Simple** (a new endpoint, a small component, a test): `repository-memory` → `coding-agent` → human review → commit.
+- **Medium** (an auth flow, a multi-file refactor): the same path, but if the agent flags the diff as uncertain, it falls through to `ask-claude-fix` rather than looping on itself.
 - **Hard** (anything touching the data model or the architecture): skip local entirely and go straight to Claude Code.
 
-## The Eval Database Is the Point
+## The AI Engineering Loop Is the Point
 
-Every run through the router — which skill handled it, what the draft looked like, whether verification passed, and if it didn't, why — gets logged to a `agent_tasks` table in Postgres. The interesting field is `failure_reason`: a short note on what the draft got wrong before `ask-claude-fix` handed it to Claude. Weeks of those rows are the raw material for the LoRA training pass later in this series — the local pair's failures become the training set for a better local pair. That's a longer-term payoff than the draft/verify loop itself; the loop is useful today, the failure log is what makes the 9B drafter better next quarter.
+The hardware split is a decent story. The bigger differentiator is what happens to the tasks the coding agent doesn't get right the first time. Every run through the router — which skill handled it, what the agent produced, whether it needed Claude, and if so why — gets logged to an `agent_tasks` table in Postgres:
+
+```
+        agent_tasks
+             |
+             v
+   Failed Local Attempts
+             |
+             v
+     Training Dataset
+             |
+             v
+      RTX 3090 LoRA
+             |
+             v
+   Better Coding Agent
+```
+
+The interesting field is `failure_reason`: a short note on what the agent got wrong before `ask-claude-fix` handed the task to Claude. Because the coding agent and the training run share the same 3090, there's no separate training rig to provision — weeks of logged failures become the LoRA dataset, and the fine-tuning happens on the same card that's going to run the improved model. That's the part most local-AI setups miss: running a model locally is table stakes, but a system that turns its own failures into next quarter's training data is a coding agent that gets better on its own schedule instead of only on whatever cadence the upstream model gets updated.
 
 ::CtaSystemArchitecture
 ---
@@ -148,9 +170,9 @@ destinationUrl: "/systems/local-vibe-coding"
 
 I'm not going to tell you the local pipeline matches a frontier model, because it doesn't, and pretending otherwise would make everything else in this series less trustworthy.
 
-Concretely: Claude Code has solved refactors in one prompt that my local assistant needed three verification retries to get right, and on a few of those, the third retry still failed and I escalated anyway. Multi-file changes that require holding a lot of the codebase in working memory are the most common failure mode; the 9B drafter loses the thread, and the 35B verifier correctly rejects the draft but can't fix it. Subtle convention violations occasionally slip through verification too: code that's correct but doesn't look like the rest of the repo.
+Concretely: Claude Code has solved refactors in one prompt that my local agent needed a couple of self-review passes to get right, and on a few of those, it still flagged the result as uncertain and I escalated anyway. Multi-file changes that require holding a lot of the codebase in working memory are the most common failure mode; the agent loses the thread past a certain number of files in play, and its own self-review catches that it's uncertain more often than it catches a genuinely wrong diff outright. Subtle convention violations occasionally slip through too: code that's correct but doesn't look like the rest of the repo.
 
-That's exactly why Claude Code isn't a fallback I'm embarrassed about — it's a distinct mode with a distinct job. The local pair handles the volume: CRUD, components, tests, docs, small refactors, migrations. Claude Code runs in what I've started thinking of as Principal Engineer Mode — architecture decisions, debugging the genuinely confusing failures, large refactors, security review, anything in a part of the codebase the local pair hasn't seen enough of to have good instincts about. That's a different job description than "handles what the small model couldn't," and treating it that way changes what I route to it up front instead of only after two failed local retries. The failures the local pair does hit are still the most useful data I have; they're what's driving the LoRA training work later in this series, and the benchmarks post will put honest numbers on where the line actually sits.
+That's exactly why Claude Code isn't a fallback I'm embarrassed about — it's a distinct role with a distinct job. Think of it as two people, not one model backing up another: the RTX 3090 running Ornith-1.0-35B is the **local Principal Developer** — it owns CRUD, components, tests, docs, small refactors, migrations, and the day-to-day volume. Claude Code is the **external Principal Architect** — architecture decisions, debugging the genuinely confusing failures, large refactors, security review, anything in a part of the codebase the local agent hasn't seen enough of to have good instincts about. That's a different job description than "handles what the smaller model couldn't," and treating it that way changes what I route to it up front instead of only after a failed local attempt. I'm not replacing Claude here — I'm building a private engineering team where Claude is the outside expert I bring in for the hard calls. The failures the local agent does hit are still the most useful data I have; they're what's driving the LoRA training work above, and the benchmarks post will put honest numbers on where the line actually sits.
 
 ## What I'd Change
 
@@ -167,15 +189,15 @@ docker compose up
 # review changes, commit, all on your own hardware
 ```
 
-Every post in this series doubles as documentation for that framework: the model choices, the indexing pipeline, the tool-calling layer, the verification loop. By the time we reach Part 10, the build log becomes the manual.
+Every post in this series doubles as documentation for that framework: the model choices, the indexing pipeline, the tool-calling layer, the coding agent's read-plan-edit-test-review loop. By the time we reach Part 10, the build log becomes the manual.
 
-Next up: Ollama configuration in depth, the case for Ornith-1.0-35B specifically, and the from-scratch build of OpenClaw itself.
+Next up: Ollama configuration in depth, the case for Ornith-1.0-35B specifically as the local coding agent, and the from-scratch build of OpenClaw itself.
 
 ::CtaCardRow
   :::CtaDownloadGuide
   ---
   buttonText: "Get The Vibe Coding Blueprint"
-  supportingCopy: "Get the Local Vibe Coding Blueprint: hardware split guide, Kubernetes manifests, repo indexing scripts, and the draft and verify agent loop ($39)."
+  supportingCopy: "Get the Local Vibe Coding Blueprint: hardware split guide, Kubernetes manifests, repo indexing scripts, and the coding agent's skill loop ($39)."
   destinationUrl: "/products/local-vibe-coding-blueprint"
   ---
   :::
