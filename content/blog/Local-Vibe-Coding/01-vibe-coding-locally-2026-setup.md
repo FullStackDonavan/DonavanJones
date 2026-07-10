@@ -2,7 +2,7 @@
 title: "Vibe Coding Locally: My Complete 2026 Setup with Jetson Orin and an RTX 3090"
 description: "Why I stopped treating local AI as a toy and built a production coding assistant on my own Kubernetes cluster: Jetson Orin, RTX 3090, Ollama, repository embeddings, and a multi-model agent pipeline."
 date: 2026-07-06
-lastUpdated: "2026-07-09"
+lastUpdated: "2026-07-12"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -53,11 +53,11 @@ I run two distinct tiers, and the split is deliberate rather than accidental —
 
 **A Jetson Orin Nano Super cluster (three nodes)** is the always-on infrastructure layer, not a coding brain. I say "a cluster" carefully here: each node runs its own independent services rather than one model split across the three, so this is a cluster in the always-on-fleet sense, not a distributed-inference one. Each node has a specific job:
 
-- **Jetson #1 — Repository Memory Worker.** Parses git repos, chunks code, and generates embeddings. It does not host the vector database itself — Weaviate's memory footprint grows with collection size, and across VerseHub, Kingdom Tools, and everything else I want indexed, that's more RAM than a Jetson board is sized for. Jetson #1 does the compute-light, always-on ingestion work and writes into Weaviate; it doesn't hold the index.
+- **Jetson #1 — Repository Memory Worker.** Parses git repos, chunks code, and generates embeddings. It does not hold the vector database itself — that lives elsewhere, on hardware provisioned for storage rather than inference, so a growing index isn't competing with Jetson #1 for the RAM it needs to keep generating embeddings. Jetson #1 does the compute-light, always-on ingestion work and writes into Weaviate; it doesn't hold the index.
 - **Jetson #2 — Agent Workers.** Documentation generation, commit summaries, log analysis, test-report parsing, background security scans — the steady stream of small tasks that don't need a 35B model or a human in the loop.
 - **Jetson #3 — Always-On AI Services.** Whisper, TTS, and smaller utility LLMs, including Ornith-9B, for API-facing and production AI features that don't need the 3090's throughput.
 
-**A small x86 storage server** holds Weaviate, PostgreSQL, and MinIO. This isn't an inference node at all — no model runs on it — but it earns its own line in the hardware list rather than getting silently folded into "the Jetson tier," because that's exactly the kind of undersell that leads to putting a memory-hungry vector database on a board that can't hold it. Jetson #1 feeds it; the coding agent queries it; it does neither the drafting nor the deciding.
+**A Raspberry Pi with an NVMe drive** holds Weaviate, PostgreSQL, and MinIO. This isn't an inference node at all — no model runs on it — but it earns its own line in the hardware list rather than getting silently folded into "the Jetson tier." A Pi with NVMe attached is plenty for the data layer: Weaviate and Postgres want steady, reliable I/O more than they want raw compute, and keeping that on its own board means neither the Jetson inference fleet nor the RTX 3090 is sharing disk and RAM with a vector index that keeps growing as I index more repos. Jetson #1 feeds it; the coding agent queries it; it does neither the drafting nor the deciding.
 
 **RTX 3090 (24GB VRAM)** hosts Ornith-1.0-35B as the local coding agent — the model that owns the actual loop: read the relevant files, plan the change, edit, run tests, and review its own diff before I ever see it. My original design treated the 3090 as a verifier only, reviewing drafts written by the Jetson-hosted 9B. That undersold it. A verifier is reactive — "here's code, find problems with it" — but a coding agent needs repository understanding, planning, multi-file edits, tool use, and iterative fixes, and a 35B model on 24GB of VRAM has enough capacity to actually do that across a multi-step edit, not just critique one. Reserving that capacity for review alone was leaving most of it unused. Ornith-9B didn't go away — it moved to Jetson #3, where it's a utility model for background tasks, not the model doing the coding.
 
@@ -72,9 +72,9 @@ The division of labor now maps to *interactive vs. always-on* rather than *fast-
 | Utility models | Ornith-9B (Q4_K_M, ~5.6GB) | Background tasks — docs, commit summaries, log analysis — on Jetson #3 |
 | Escalation | Claude Code (External Principal Architect) | Architecture decisions, hard debugging, security review, and whatever the coding agent flags as needing help |
 | Agent layer | OpenClaw (custom) | Router + skills: `architecture-review`, `repository-memory`, `coding-agent`, `code-review`, `security-review`, `test-runner`, `deployment`, `ask-claude-fix` |
-| Orchestration | k3s | Scheduling every workload across the Jetson, desktop, and storage nodes |
+| Orchestration | k3s | Scheduling every workload across the Jetson, desktop, and storage Pi nodes |
 | Ingress | Traefik | Routes requests to services across namespaces |
-| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search — all on the dedicated storage server, not the Jetson fleet |
+| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search — all on the dedicated storage Pi (with NVMe), not the Jetson inference fleet |
 | Git + CI | Gitea + Actions runner | Self-hosted repo hosting and pipeline runs, no dependency on GitHub |
 | Observability | Prometheus, Grafana, Loki + Promtail | Metrics, dashboards, and log aggregation across every pod |
 
@@ -92,7 +92,7 @@ The obvious question: why not put everything on the 3090 and skip the Jetson clu
 
 ## What "Vibe Coding" Actually Looks Like Here
 
-In practice, a session looks like: OpenClaw's `repository-memory` skill pulls context from Weaviate on the storage server (kept current by Jetson #1's ingestion jobs), Ornith-1.0-35B on the 3090 runs the actual loop — read the relevant files, plan the change, edit, run tests, review its own diff — and I review what it produces before it lands. If the agent flags its own diff as uncertain, or I already know up front that the task is the kind that needs an architecture call, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's own agent loop (read, plan, edit, verify), just running on hardware I own, with a human review step in front of the commit either way.
+In practice, a session looks like: OpenClaw's `repository-memory` skill pulls context from Weaviate on the storage Pi (kept current by Jetson #1's ingestion jobs), Ornith-1.0-35B on the 3090 runs the actual loop — read the relevant files, plan the change, edit, run tests, review its own diff — and I review what it produces before it lands. If the agent flags its own diff as uncertain, or I already know up front that the task is the kind that needs an architecture call, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's own agent loop (read, plan, edit, verify), just running on hardware I own, with a human review step in front of the commit either way.
 
 ## The Router and the Skills Layer
 
@@ -115,7 +115,7 @@ OpenClaw's job isn't running a model — it's deciding which skill handles a tas
                    |
                    v
              Weaviate context
-        (storage server, kept current
+         (storage Pi, kept current
           by Jetson #1 ingestion)
                    |
                    v
@@ -185,11 +185,11 @@ Zoomed out past the individual skills, the whole system is three pieces reportin
               |                                  |
               v                                  v
 
-      RTX 3090 Workstation                 Jetson Fleet + Storage
+      RTX 3090 Workstation                 Jetson Fleet + Storage Pi
       Local Principal Developer            Always-On AI Layer
 
       Ornith-1.0-35B                       Repository Memory (ingestion)
-      Coding Agent                         Weaviate / Postgres / MinIO
+      Coding Agent                         Weaviate / Postgres / MinIO (Pi + NVMe)
       LoRA Training                        Background Workers
                                             Utility Models (Ornith-9B)
 

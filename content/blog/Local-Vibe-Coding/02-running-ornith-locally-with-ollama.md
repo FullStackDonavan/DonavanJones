@@ -1,7 +1,7 @@
 ---
 title: "Running Ornith-1.0-35B Locally with Ollama: A Complete Guide"
 description: "A practical walkthrough of running Ornith-1.0-35B locally with Ollama — model selection, quantization, and configuration for coding workloads."
-date: 2026-01-19
+date: 2026-07-12
 lastUpdated: "2026-07-09"
 category: "local-vibe-coding"
 tags:

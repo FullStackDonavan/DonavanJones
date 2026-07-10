@@ -2,7 +2,7 @@
 title: "OpenClaw from Scratch: Installation, Configuration, and First Workflow"
 description: "Building OpenClaw, a self-hosted coding agent loop on top of a local model — installation, configuration, and the first end-to-end workflow."
 date: 2026-02-09
-lastUpdated: "2026-07-09"
+lastUpdated: "2026-07-12"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -58,7 +58,7 @@ The nine steps above describe the control flow, but the first version of OpenCla
 ```
 .claude/skills/
 ├── architecture-review/  # steps 2-3 above — gates structural changes before they reach coding-agent
-├── repository-memory/    # step 4 above — embeddings generated on Jetson #1, indexed in Weaviate on the storage server
+├── repository-memory/    # step 4 above — embeddings generated on Jetson #1, indexed in Weaviate on the storage Pi
 ├── coding-agent/         # steps 5-8 above — Ornith-1.0-35B, 3090-hosted
 ├── code-review/
 ├── security-review/
@@ -96,7 +96,7 @@ The config file is where model routing lives:
 models:
   agent: "hf.co/deepreinforce-ai/Ornith-1.0-35B:Q4_K_M"     # the coding agent, 3090-hosted
   utility: "hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"        # background tasks, Jetson #3-hosted
-  embed: "nomic-embed-text"                                  # embedding generation on Jetson #1, index on the storage server's Weaviate
+  embed: "nomic-embed-text"                                  # embedding generation on Jetson #1, index on the storage Pi's Weaviate
   escalate: "claude-code"                                    # tasks the local agent can't resolve
   endpoint: "http://localhost:11434"
 
