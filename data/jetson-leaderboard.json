@@ -1,0 +1,1444 @@
+{
+ "generated": "2026-11-02",
+ "hardware": "NVIDIA Jetson Orin Nano Super 8 GB (×3)",
+ "runtime": "Ollama, 4k context, temperature 0",
+ "runs": 140,
+ "models": [
+  {
+   "id": "qwen3-0-6b-q4-k-m",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q4_K_M",
+   "params_b": 0.75,
+   "size_gb": 0.48,
+   "tok_s": 67.7,
+   "prompt_tok_s": 110.1,
+   "load_s": 16.8,
+   "gpu_pct": 100.0,
+   "quality": 41.7,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-0-6b-q5-k-m",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q5_K_M",
+   "params_b": 0.75,
+   "size_gb": 0.55,
+   "tok_s": 62.3,
+   "prompt_tok_s": 108.0,
+   "load_s": 17.7,
+   "gpu_pct": 100.0,
+   "quality": 37.5,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-0-6b-q2-k",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q2_K",
+   "params_b": 0.75,
+   "size_gb": 0.35,
+   "tok_s": 60.8,
+   "prompt_tok_s": 757.4,
+   "load_s": 6.3,
+   "gpu_pct": 100.0,
+   "quality": 0.0,
+   "tools": 20.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-0-6b-q6-k",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q6_K",
+   "params_b": 0.75,
+   "size_gb": 0.62,
+   "tok_s": 60.5,
+   "prompt_tok_s": 155.6,
+   "load_s": 16.3,
+   "gpu_pct": 100.0,
+   "quality": 45.8,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-0-6b-q8-0",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q8_0",
+   "params_b": 0.75,
+   "size_gb": 0.8,
+   "tok_s": 58.7,
+   "prompt_tok_s": 166.5,
+   "load_s": 19.5,
+   "gpu_pct": 100.0,
+   "quality": 50.0,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-q4-k-m",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "Q4_K_M",
+   "params_b": 1.24,
+   "size_gb": 0.81,
+   "tok_s": 44.4,
+   "prompt_tok_s": 101.3,
+   "load_s": 16.9,
+   "gpu_pct": 100.0,
+   "quality": 66.7,
+   "tools": 60.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-0-6b-q3-k-m",
+   "name": "Qwen3 0.6B",
+   "family": "Qwen3",
+   "quant": "Q3_K_M",
+   "params_b": 0.75,
+   "size_gb": 0.41,
+   "tok_s": 43.3,
+   "prompt_tok_s": 84.7,
+   "load_s": 24.9,
+   "gpu_pct": 100.0,
+   "quality": 50.0,
+   "tools": 80.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-q5-k-m",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "Q5_K_M",
+   "params_b": 1.24,
+   "size_gb": 0.91,
+   "tok_s": 41.7,
+   "prompt_tok_s": 100.7,
+   "load_s": 17.8,
+   "gpu_pct": 100.0,
+   "quality": 75.0,
+   "tools": 70.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "functiongemma-270m-q8-0",
+   "name": "FunctionGemma 270M",
+   "family": "FunctionGemma",
+   "quant": "Q8_0",
+   "params_b": 0.27,
+   "size_gb": 0.3,
+   "tok_s": 40.5,
+   "prompt_tok_s": 273.1,
+   "load_s": 16.5,
+   "gpu_pct": 100.0,
+   "quality": 0.0,
+   "tools": 43.3,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-iq3-m",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "IQ3_M",
+   "params_b": 1.24,
+   "size_gb": 0.66,
+   "tok_s": 39.5,
+   "prompt_tok_s": 101.6,
+   "load_s": 16.8,
+   "gpu_pct": 100.0,
+   "quality": 66.7,
+   "tools": 40.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-q8-0",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "Q8_0",
+   "params_b": 1.24,
+   "size_gb": 1.32,
+   "tok_s": 38.9,
+   "prompt_tok_s": 157.7,
+   "load_s": 18.1,
+   "gpu_pct": 100.0,
+   "quality": 75.0,
+   "tools": 70.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "lfm2-8b-a1b-iq2-m",
+   "name": "LFM2 8B A1B",
+   "family": "LFM2",
+   "quant": "IQ2_M",
+   "params_b": 8.34,
+   "size_gb": 2.65,
+   "tok_s": 38.8,
+   "prompt_tok_s": 41.3,
+   "load_s": 15.3,
+   "gpu_pct": 100.0,
+   "quality": 93.1,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "lfm2-8b-a1b-q2-k",
+   "name": "LFM2 8B A1B",
+   "family": "LFM2",
+   "quant": "Q2_K",
+   "params_b": 8.34,
+   "size_gb": 2.95,
+   "tok_s": 38.7,
+   "prompt_tok_s": 41.2,
+   "load_s": 19.1,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 76.7,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-q6-k",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "Q6_K",
+   "params_b": 1.24,
+   "size_gb": 1.02,
+   "tok_s": 38.5,
+   "prompt_tok_s": 140.8,
+   "load_s": 17.8,
+   "gpu_pct": 100.0,
+   "quality": 75.0,
+   "tools": 70.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q4-k-m",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q4_K_M",
+   "params_b": 2.03,
+   "size_gb": 1.28,
+   "tok_s": 36.6,
+   "prompt_tok_s": 184.3,
+   "load_s": 18.1,
+   "gpu_pct": 100.0,
+   "quality": 66.7,
+   "tools": 90.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-1b-q3-k-l",
+   "name": "Llama 3.2 1B",
+   "family": "Llama",
+   "quant": "Q3_K_L",
+   "params_b": 1.24,
+   "size_gb": 0.73,
+   "tok_s": 36.4,
+   "prompt_tok_s": 95.3,
+   "load_s": 16.7,
+   "gpu_pct": 100.0,
+   "quality": 79.2,
+   "tools": 60.0,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "lfm2-8b-a1b-q4-k-m",
+   "name": "LFM2 8B A1B",
+   "family": "LFM2",
+   "quant": "Q4_K_M",
+   "params_b": 8.34,
+   "size_gb": 5.05,
+   "tok_s": 35.6,
+   "prompt_tok_s": 19.9,
+   "load_s": 28.1,
+   "gpu_pct": 100.0,
+   "quality": 87.5,
+   "tools": 90.0,
+   "code": null,
+   "boxes": [
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q5-k-m",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q5_K_M",
+   "params_b": 2.03,
+   "size_gb": 1.47,
+   "tok_s": 35.2,
+   "prompt_tok_s": 223.2,
+   "load_s": 15.0,
+   "gpu_pct": 100.0,
+   "quality": 79.2,
+   "tools": 90.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q3-k-m",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q3_K_M",
+   "params_b": null,
+   "size_gb": 0.72,
+   "tok_s": 34.3,
+   "prompt_tok_s": 49.8,
+   "load_s": 18.5,
+   "gpu_pct": 100.0,
+   "quality": 58.3,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q5-k-m",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q5_K_M",
+   "params_b": null,
+   "size_gb": 0.85,
+   "tok_s": 33.9,
+   "prompt_tok_s": 56.4,
+   "load_s": 18.0,
+   "gpu_pct": 100.0,
+   "quality": 66.7,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q4-k-m",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q4_K_M",
+   "params_b": null,
+   "size_gb": 0.81,
+   "tok_s": 33.3,
+   "prompt_tok_s": 57.4,
+   "load_s": 22.0,
+   "gpu_pct": 100.0,
+   "quality": 58.3,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q2-k",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q2_K",
+   "params_b": 2.03,
+   "size_gb": 0.88,
+   "tok_s": 33.0,
+   "prompt_tok_s": 203.6,
+   "load_s": 14.8,
+   "gpu_pct": 100.0,
+   "quality": 34.7,
+   "tools": 80.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-vl-2b-q4-k-m",
+   "name": "Qwen3 VL 2B",
+   "family": "Qwen3",
+   "quant": "Q4_K_M",
+   "params_b": 1.7,
+   "size_gb": 1.93,
+   "tok_s": 32.6,
+   "prompt_tok_s": 121.5,
+   "load_s": 19.1,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q2-k",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q2_K",
+   "params_b": null,
+   "size_gb": 0.69,
+   "tok_s": 32.6,
+   "prompt_tok_s": 62.7,
+   "load_s": 30.9,
+   "gpu_pct": 100.0,
+   "quality": 54.2,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q8-0",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q8_0",
+   "params_b": 2.03,
+   "size_gb": 2.17,
+   "tok_s": 31.7,
+   "prompt_tok_s": 279.3,
+   "load_s": 16.1,
+   "gpu_pct": 100.0,
+   "quality": 75.0,
+   "tools": 90.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q6-k",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q6_K",
+   "params_b": 2.03,
+   "size_gb": 1.67,
+   "tok_s": 30.9,
+   "prompt_tok_s": 261.8,
+   "load_s": 15.3,
+   "gpu_pct": 100.0,
+   "quality": 75.0,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-1-7b-q3-k-m",
+   "name": "Qwen3 1.7B",
+   "family": "Qwen3",
+   "quant": "Q3_K_M",
+   "params_b": 2.03,
+   "size_gb": 1.07,
+   "tok_s": 29.7,
+   "prompt_tok_s": 183.4,
+   "load_s": 18.4,
+   "gpu_pct": 100.0,
+   "quality": 66.7,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "granite-4-0-h-tiny-q2-k",
+   "name": "Granite 4.0 H Tiny",
+   "family": "Granite",
+   "quant": "Q2_K",
+   "params_b": 6.94,
+   "size_gb": 2.59,
+   "tok_s": 29.3,
+   "prompt_tok_s": 52.2,
+   "load_s": 19.0,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": 96.7,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-vl-2b-q8-0",
+   "name": "Qwen3 VL 2B",
+   "family": "Qwen3",
+   "quant": "Q8_0",
+   "params_b": 1.7,
+   "size_gb": 2.66,
+   "tok_s": 27.8,
+   "prompt_tok_s": 160.6,
+   "load_s": 18.7,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q5-k-m",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q5_K_M",
+   "params_b": 1.54,
+   "size_gb": 1.13,
+   "tok_s": 27.8,
+   "prompt_tok_s": 131.0,
+   "load_s": 19.7,
+   "gpu_pct": 100.0,
+   "quality": 87.5,
+   "tools": 80.0,
+   "code": 86.1,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "granite-4-0-h-tiny-q4-k-m",
+   "name": "Granite 4.0 H Tiny",
+   "family": "Granite",
+   "quant": "Q4_K_M",
+   "params_b": 6.94,
+   "size_gb": 4.3,
+   "tok_s": 27.7,
+   "prompt_tok_s": 52.6,
+   "load_s": 35.9,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "lfm2-8b-a1b-q3-k-m",
+   "name": "LFM2 8B A1B",
+   "family": "LFM2",
+   "quant": "Q3_K_M",
+   "params_b": 8.34,
+   "size_gb": 3.82,
+   "tok_s": 27.5,
+   "prompt_tok_s": 42.0,
+   "load_s": 22.2,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q8-0",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q8_0",
+   "params_b": null,
+   "size_gb": 1.07,
+   "tok_s": 27.5,
+   "prompt_tok_s": 108.7,
+   "load_s": 30.8,
+   "gpu_pct": 100.0,
+   "quality": 58.3,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-1b-q6-k",
+   "name": "Gemma 3 1B",
+   "family": "Gemma",
+   "quant": "Q6_K",
+   "params_b": null,
+   "size_gb": 1.01,
+   "tok_s": 27.4,
+   "prompt_tok_s": 80.6,
+   "load_s": 18.4,
+   "gpu_pct": 100.0,
+   "quality": 58.3,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Echo"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q2-k",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q2_K",
+   "params_b": 1.54,
+   "size_gb": 0.68,
+   "tok_s": 27.1,
+   "prompt_tok_s": 106.9,
+   "load_s": 15.3,
+   "gpu_pct": 100.0,
+   "quality": 70.8,
+   "tools": 90.0,
+   "code": 58.3,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q6-k",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q6_K",
+   "params_b": 1.54,
+   "size_gb": 1.27,
+   "tok_s": 26.4,
+   "prompt_tok_s": 134.8,
+   "load_s": 14.8,
+   "gpu_pct": 100.0,
+   "quality": 83.3,
+   "tools": 80.0,
+   "code": 75.0,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q8-0",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q8_0",
+   "params_b": 1.54,
+   "size_gb": 1.65,
+   "tok_s": 25.7,
+   "prompt_tok_s": 157.9,
+   "load_s": 16.1,
+   "gpu_pct": 100.0,
+   "quality": 86.1,
+   "tools": 80.0,
+   "code": 75.0,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "granite-4-0-h-tiny-iq2-m",
+   "name": "Granite 4.0 H Tiny",
+   "family": "Granite",
+   "quant": "IQ2_M",
+   "params_b": 6.94,
+   "size_gb": 2.29,
+   "tok_s": 25.7,
+   "prompt_tok_s": 49.9,
+   "load_s": 15.8,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q4-k-m",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q4_K_M",
+   "params_b": 1.54,
+   "size_gb": 0.99,
+   "tok_s": 22.9,
+   "prompt_tok_s": 127.1,
+   "load_s": 13.8,
+   "gpu_pct": 100.0,
+   "quality": 81.9,
+   "tools": 90.0,
+   "code": 80.6,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-3b-iq3-m",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "IQ3_M",
+   "params_b": 3.21,
+   "size_gb": 1.6,
+   "tok_s": 21.8,
+   "prompt_tok_s": 294.5,
+   "load_s": 13.1,
+   "gpu_pct": 100.0,
+   "quality": 87.5,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-vl-3b-q4-k-m",
+   "name": "Qwen2.5 VL 3B",
+   "family": "Qwen2.5",
+   "quant": "Q4_K_M",
+   "params_b": 3.8,
+   "size_gb": 3.2,
+   "tok_s": 20.9,
+   "prompt_tok_s": 111.9,
+   "load_s": 35.4,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "llama-3-2-3b-q4-k-m",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "Q4_K_M",
+   "params_b": 3.21,
+   "size_gb": 2.02,
+   "tok_s": 20.9,
+   "prompt_tok_s": 301.9,
+   "load_s": 12.4,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "llama-3-2-3b-q5-k-m",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "Q5_K_M",
+   "params_b": 3.21,
+   "size_gb": 2.32,
+   "tok_s": 20.7,
+   "prompt_tok_s": 303.2,
+   "load_s": 14.0,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q4-k-m",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q4_K_M",
+   "params_b": 3.09,
+   "size_gb": 1.93,
+   "tok_s": 20.2,
+   "prompt_tok_s": 107.7,
+   "load_s": 16.1,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 90.0,
+   "code": 91.7,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q5-k-m",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q5_K_M",
+   "params_b": 3.09,
+   "size_gb": 2.22,
+   "tok_s": 19.6,
+   "prompt_tok_s": 108.9,
+   "load_s": 16.6,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 90.0,
+   "code": 91.7,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "granite-4-0-h-tiny-q3-k-m",
+   "name": "Granite 4.0 H Tiny",
+   "family": "Granite",
+   "quant": "Q3_K_M",
+   "params_b": 6.94,
+   "size_gb": 3.29,
+   "tok_s": 19.2,
+   "prompt_tok_s": 40.9,
+   "load_s": 20.1,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": 90.0,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q2-k",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q2_K",
+   "params_b": 3.09,
+   "size_gb": 1.27,
+   "tok_s": 18.6,
+   "prompt_tok_s": 89.9,
+   "load_s": 18.4,
+   "gpu_pct": 100.0,
+   "quality": 83.3,
+   "tools": 90.0,
+   "code": 66.7,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q8-0",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q8_0",
+   "params_b": 3.09,
+   "size_gb": 3.29,
+   "tok_s": 18.1,
+   "prompt_tok_s": 218.2,
+   "load_s": 19.0,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 90.0,
+   "code": 91.7,
+   "boxes": [
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "llama-3-2-3b-q6-k",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "Q6_K",
+   "params_b": 3.21,
+   "size_gb": 2.64,
+   "tok_s": 18.1,
+   "prompt_tok_s": 281.3,
+   "load_s": 16.2,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-1-5b-q3-k-m",
+   "name": "Qwen2.5 Coder 1.5B",
+   "family": "Qwen2.5",
+   "quant": "Q3_K_M",
+   "params_b": 1.54,
+   "size_gb": 0.82,
+   "tok_s": 17.9,
+   "prompt_tok_s": 107.3,
+   "load_s": 14.0,
+   "gpu_pct": 100.0,
+   "quality": 79.2,
+   "tools": 90.0,
+   "code": 75.0,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-4b-2507-q4-k-m",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q4_K_M",
+   "params_b": 4.02,
+   "size_gb": 2.5,
+   "tok_s": 17.8,
+   "prompt_tok_s": 174.2,
+   "load_s": 11.5,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "llama-3-2-3b-q8-0",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "Q8_0",
+   "params_b": 3.21,
+   "size_gb": 3.42,
+   "tok_s": 17.8,
+   "prompt_tok_s": 330.2,
+   "load_s": 15.6,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q6-k",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q6_K",
+   "params_b": 3.09,
+   "size_gb": 2.54,
+   "tok_s": 17.0,
+   "prompt_tok_s": 127.3,
+   "load_s": 23.2,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 90.0,
+   "code": 91.7,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-vl-4b-q4-k-m",
+   "name": "Qwen3 VL 4B",
+   "family": "Qwen3",
+   "quant": "Q4_K_M",
+   "params_b": 4.0,
+   "size_gb": 3.34,
+   "tok_s": 16.9,
+   "prompt_tok_s": 91.0,
+   "load_s": 20.5,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": 100.0,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen3-4b-2507-q5-k-m",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q5_K_M",
+   "params_b": 4.02,
+   "size_gb": 2.89,
+   "tok_s": 16.6,
+   "prompt_tok_s": 168.8,
+   "load_s": 12.6,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "llama-3-2-3b-q3-k-l",
+   "name": "Llama 3.2 3B",
+   "family": "Llama",
+   "quant": "Q3_K_L",
+   "params_b": 3.21,
+   "size_gb": 1.82,
+   "tok_s": 16.4,
+   "prompt_tok_s": 294.2,
+   "load_s": 12.2,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "gemma-3-4b-q4-k-m",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q4_K_M",
+   "params_b": 3.88,
+   "size_gb": 3.34,
+   "tok_s": 16.1,
+   "prompt_tok_s": 130.6,
+   "load_s": 19.9,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen3-4b-2507-q2-k",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q2_K",
+   "params_b": 4.0,
+   "size_gb": 1.67,
+   "tok_s": 16.0,
+   "prompt_tok_s": 141.7,
+   "load_s": 14.2,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-3b-q3-k-m",
+   "name": "Qwen2.5 Coder 3B",
+   "family": "Qwen2.5",
+   "quant": "Q3_K_M",
+   "params_b": 3.09,
+   "size_gb": 1.59,
+   "tok_s": 15.9,
+   "prompt_tok_s": 94.1,
+   "load_s": 15.4,
+   "gpu_pct": 100.0,
+   "quality": 52.8,
+   "tools": 23.3,
+   "code": 47.2,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-4b-q2-k",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q2_K",
+   "params_b": 3.88,
+   "size_gb": 2.58,
+   "tok_s": 15.6,
+   "prompt_tok_s": 115.9,
+   "load_s": 16.8,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "gemma-3-4b-q5-k-m",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q5_K_M",
+   "params_b": 3.88,
+   "size_gb": 3.68,
+   "tok_s": 15.0,
+   "prompt_tok_s": 120.5,
+   "load_s": 20.6,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen3-4b-2507-q6-k",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q6_K",
+   "params_b": 4.02,
+   "size_gb": 3.31,
+   "tok_s": 14.8,
+   "prompt_tok_s": 178.1,
+   "load_s": 18.8,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen3-4b-2507-q3-k-m",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q3_K_M",
+   "params_b": 4.02,
+   "size_gb": 2.08,
+   "tok_s": 13.4,
+   "prompt_tok_s": 151.3,
+   "load_s": 13.6,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "gemma-3-4b-q3-k-m",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q3_K_M",
+   "params_b": 3.88,
+   "size_gb": 2.95,
+   "tok_s": 13.1,
+   "prompt_tok_s": 111.5,
+   "load_s": 17.9,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen3-4b-2507-q8-0",
+   "name": "Qwen3 4B 2507",
+   "family": "Qwen3",
+   "quant": "Q8_0",
+   "params_b": 4.02,
+   "size_gb": 4.28,
+   "tok_s": 13.0,
+   "prompt_tok_s": 119.3,
+   "load_s": 24.6,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen3-8b-iq2-m",
+   "name": "Qwen3 8B",
+   "family": "Qwen3",
+   "quant": "IQ2_M",
+   "params_b": 8.19,
+   "size_gb": 3.05,
+   "tok_s": 12.6,
+   "prompt_tok_s": 153.8,
+   "load_s": 5.0,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-7b-iq2-m",
+   "name": "Qwen2.5 Coder 7B",
+   "family": "Qwen2.5",
+   "quant": "IQ2_M",
+   "params_b": 7.62,
+   "size_gb": 2.78,
+   "tok_s": 11.8,
+   "prompt_tok_s": 73.4,
+   "load_s": 23.0,
+   "gpu_pct": 100.0,
+   "quality": 91.7,
+   "tools": 100.0,
+   "code": 83.3,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-7b-q4-k-m",
+   "name": "Qwen2.5 Coder 7B",
+   "family": "Qwen2.5",
+   "quant": "Q4_K_M",
+   "params_b": 7.62,
+   "size_gb": 4.68,
+   "tok_s": 10.8,
+   "prompt_tok_s": 72.6,
+   "load_s": 26.5,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": 100.0,
+   "code": 100.0,
+   "boxes": [
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-4b-q6-k",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q6_K",
+   "params_b": 3.88,
+   "size_gb": 4.04,
+   "tok_s": 10.4,
+   "prompt_tok_s": 69.0,
+   "load_s": 23.9,
+   "gpu_pct": 77.2,
+   "quality": 100.0,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Charlie",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "qwen2-5-coder-7b-q2-k",
+   "name": "Qwen2.5 Coder 7B",
+   "family": "Qwen2.5",
+   "quant": "Q2_K",
+   "params_b": 7.62,
+   "size_gb": 3.02,
+   "tok_s": 10.1,
+   "prompt_tok_s": 71.2,
+   "load_s": 22.1,
+   "gpu_pct": 100.0,
+   "quality": 95.8,
+   "tools": 100.0,
+   "code": 83.3,
+   "boxes": [
+    "Charlie",
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  },
+  {
+   "id": "gemma-3-4b-q8-0",
+   "name": "Gemma 3 4B",
+   "family": "Gemma",
+   "quant": "Q8_0",
+   "params_b": 3.88,
+   "size_gb": 4.98,
+   "tok_s": 9.7,
+   "prompt_tok_s": 59.6,
+   "load_s": 30.8,
+   "gpu_pct": 83.1,
+   "quality": 95.8,
+   "tools": null,
+   "code": null,
+   "boxes": [
+    "Nova"
+   ],
+   "tested": "2026-11-01"
+  },
+  {
+   "id": "qwen2-5-coder-7b-q3-k-m",
+   "name": "Qwen2.5 Coder 7B",
+   "family": "Qwen2.5",
+   "quant": "Q3_K_M",
+   "params_b": 7.62,
+   "size_gb": 3.81,
+   "tok_s": 7.8,
+   "prompt_tok_s": 53.7,
+   "load_s": 24.6,
+   "gpu_pct": 100.0,
+   "quality": 100.0,
+   "tools": 70.0,
+   "code": 100.0,
+   "boxes": [
+    "Echo",
+    "Nova"
+   ],
+   "tested": "2026-11-02"
+  }
+ ]
+}

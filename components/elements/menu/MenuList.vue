@@ -92,6 +92,10 @@
               <div class="font-medium text-gray-900 dark:text-gray-100">Local Vibe Coding</div>
               <div class="text-sm text-gray-500 dark:text-gray-400">Local models, agent loop, hybrid GPU routing</div>
             </NuxtLink>
+            <NuxtLink to="/jetson-leaderboard" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-t border-gray-100 dark:border-gray-800 mt-1">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Jetson LLM Leaderboard</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">Speed, quality and tool scores on Orin Nano</div>
+            </NuxtLink>
           </div>
         </div>
 
@@ -187,7 +191,7 @@ const isServicesActive = computed(() => {
 
 // Systems
 const isSystemsActive = computed(() => {
-  return route.path.startsWith('/systems')
+  return route.path.startsWith('/systems') || route.path === '/jetson-leaderboard'
 })
 
 // Projects
