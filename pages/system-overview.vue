@@ -25,7 +25,8 @@ useSeoMeta({
     <SystemOverview />
 
     <!-- ── CORE SYSTEMS ──────────────────────────────────────────────── -->
-    <section class="relative w-full bg-slate-50 dark:bg-slate-950 py-16">
+    <section class="isolate overflow-hidden relative w-full bg-slate-50 dark:bg-slate-950 py-16">
+      <HeroBackdrop lazy src="/img/sections/so-core.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -49,15 +50,21 @@ useSeoMeta({
         <div class="grid md:grid-cols-3 gap-5 mb-5">
 
           <div
-            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 hover:border-purple-500/40
                    transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/5"
           >
-            <div
-              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
-                     bg-purple-500/10 border border-purple-500/20"
-            >
-              <Icon name="mdi:brain" class="text-purple-400 text-2xl" />
+            <div class="relative -mx-6 -mt-6 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img src="/img/cards/so-core-ai.jpg" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-11 h-11 rounded-lg flex items-center justify-center
+                         bg-purple-500/10 border border-purple-500/20"
+                >
+                  <Icon name="mdi:brain" class="text-purple-400 text-2xl" />
+                </div>
+              </div>
             </div>
             <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">AI Systems</h3>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -72,15 +79,21 @@ useSeoMeta({
           </div>
 
           <div
-            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 hover:border-emerald-500/40
                    transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/5"
           >
-            <div
-              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
-                     bg-emerald-500/10 border border-emerald-500/20"
-            >
-              <Icon name="mdi:database" class="text-emerald-400 text-2xl" />
+            <div class="relative -mx-6 -mt-6 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img src="/img/cards/so-core-data.jpg" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-11 h-11 rounded-lg flex items-center justify-center
+                         bg-emerald-500/10 border border-emerald-500/20"
+                >
+                  <Icon name="mdi:database" class="text-emerald-400 text-2xl" />
+                </div>
+              </div>
             </div>
             <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Data Layer</h3>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -95,15 +108,21 @@ useSeoMeta({
           </div>
 
           <div
-            class="rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 hover:border-amber-500/40
                    transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/5"
           >
-            <div
-              class="w-11 h-11 rounded-lg flex items-center justify-center mb-4
-                     bg-amber-500/10 border border-amber-500/20"
-            >
-              <Icon name="mdi:harddisk" class="text-amber-400 text-2xl" />
+            <div class="relative -mx-6 -mt-6 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img src="/img/cards/so-core-storage.jpg" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-11 h-11 rounded-lg flex items-center justify-center
+                         bg-amber-500/10 border border-amber-500/20"
+                >
+                  <Icon name="mdi:harddisk" class="text-amber-400 text-2xl" />
+                </div>
+              </div>
             </div>
             <h3 class="text-base font-semibold text-slate-900 dark:text-white mb-2">Storage</h3>
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -124,27 +143,35 @@ useSeoMeta({
 
           <div
             v-for="node in [
-              { icon: 'mdi:raspberry-pi',   color: 'sky',    label: 'ARM64 Cluster',  sub: '4 Raspberry Pis + 3 Jetson Orin Nano Supers running k3s' },
-              { icon: 'mdi:kubernetes',      color: 'purple', label: 'Orchestration',  sub: 'Scheduling, networking, autoscaling' },
-              { icon: 'mdi:source-branch',   color: 'emerald',label: 'CI/CD',          sub: 'Automated builds via Gitea runners' },
-              { icon: 'mdi:chart-line',      color: 'rose',   label: 'Observability',  sub: 'Metrics, logs, dashboards, alerting' },
-              { icon: 'mdi:tools',           color: 'amber',  label: 'Kingdom Tools',  sub: 'Service platform + Jetson AI lab: models, training, benchmarks' },
+              { icon: 'mdi:raspberry-pi',   color: 'sky',    label: 'ARM64 Cluster', image: '/img/cards/so-node-arm64.jpg',  sub: '4 Raspberry Pis + 3 Jetson Orin Nano Supers running k3s' },
+              { icon: 'mdi:kubernetes',      color: 'purple', label: 'Orchestration', image: '/img/cards/so-node-orchestration.jpg',  sub: 'Scheduling, networking, autoscaling' },
+              { icon: 'mdi:source-branch',   color: 'emerald',label: 'CI/CD', image: '/img/cards/so-node-cicd.jpg',          sub: 'Automated builds via Gitea runners' },
+              { icon: 'mdi:chart-line',      color: 'rose',   label: 'Observability', image: '/img/cards/so-node-observability.jpg',  sub: 'Metrics, logs, dashboards, alerting' },
+              { icon: 'mdi:tools',           color: 'amber',  label: 'Kingdom Tools', image: '/img/cards/so-node-kingdom.jpg',  sub: 'Service platform + Jetson AI lab: models, training, benchmarks' },
             ]"
             :key="node.label"
-            class="rounded-2xl p-5 border transition-all duration-200"
+            class="group overflow-hidden rounded-2xl p-5 border transition-all duration-200"
             :class="{
               'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60': true,
             }"
           >
-            <Icon :name="node.icon" class="text-3xl mb-3"
-              :class="{
-                'text-sky-400':    node.color === 'sky',
-                'text-purple-400': node.color === 'purple',
-                'text-emerald-400':node.color === 'emerald',
-                'text-rose-400':   node.color === 'rose',
-                'text-amber-400':  node.color === 'amber',
-              }"
-            />
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="node.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+                  <Icon :name="node.icon" class="text-xl"
+                    :class="{
+                      'text-sky-400':    node.color === 'sky',
+                      'text-purple-400': node.color === 'purple',
+                      'text-emerald-400':node.color === 'emerald',
+                      'text-rose-400':   node.color === 'rose',
+                      'text-amber-400':  node.color === 'amber',
+                    }"
+                  />
+                </div>
+              </div>
+            </div>
             <div class="text-sm font-semibold text-slate-900 dark:text-white">{{ node.label }}</div>
             <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ node.sub }}</div>
           </div>
@@ -155,7 +182,8 @@ useSeoMeta({
     </section>
 
     <!-- ── ARCHITECTURE DIAGRAM ──────────────────────────────────────── -->
-    <section class="w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-diagram.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -182,7 +210,8 @@ useSeoMeta({
     </section>
 
     <!-- ── NARRATIVE ──────────────────────────────────────────────────── -->
-    <section class="w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-narrative.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="grid lg:grid-cols-[1fr_420px] gap-12 items-center">
@@ -251,7 +280,8 @@ useSeoMeta({
     </section>
 
     <!-- ── CLUSTER TOPOLOGY ─────────────────────────────────────────── -->
-    <section class="w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-topology.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
@@ -304,11 +334,17 @@ useSeoMeta({
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
           <!-- Control plane -->
-          <div class="rounded-2xl border border-purple-500/30 bg-purple-500/5 p-5">
-            <div class="flex items-center gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-                <Icon name="mdi:kubernetes" class="text-purple-400 text-sm" />
+          <div class="group overflow-hidden rounded-2xl border border-purple-500/30 bg-purple-500/5 p-5">
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img src="/img/cards/so-pi-control.jpg" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                  <Icon name="mdi:kubernetes" class="text-purple-400 text-sm" />
+                </div>
               </div>
+            </div>
+            <div class="flex items-center gap-2 mb-3">
               <div>
                 <p class="text-xs font-semibold text-slate-900 dark:text-white">Control Plane</p>
                 <p class="text-[10px] text-purple-400">pi-node1</p>
@@ -332,16 +368,22 @@ useSeoMeta({
 
           <!-- Pi worker nodes -->
           <div v-for="n in [
-            { id: 'pi-worker-1', workload: 'App services · Temporal workers · in-cluster data layer' },
-            { id: 'pi-worker-2', workload: 'Redis · Temporal workers · app services' },
-            { id: 'pi-worker-3', workload: 'App services · Temporal workers · batch Jobs' },
+            { id: 'pi-worker-1', image: '/img/cards/so-pi-worker-1.jpg', workload: 'App services · Temporal workers · in-cluster data layer' },
+            { id: 'pi-worker-2', image: '/img/cards/so-pi-worker-2.jpg', workload: 'Redis · Temporal workers · app services' },
+            { id: 'pi-worker-3', image: '/img/cards/so-pi-worker-3.jpg', workload: 'App services · Temporal workers · batch Jobs' },
           ]" :key="n.id"
-            class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
+            class="group overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
           >
-            <div class="flex items-center gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
-                <Icon name="mdi:raspberry-pi" class="text-sky-400 text-sm" />
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="n.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center">
+                  <Icon name="mdi:raspberry-pi" class="text-sky-400 text-sm" />
+                </div>
               </div>
+            </div>
+            <div class="flex items-center gap-2 mb-3">
               <div>
                 <p class="text-xs font-semibold text-slate-900 dark:text-white">Worker Node</p>
                 <p class="text-[10px] text-sky-400">{{ n.id }}</p>
@@ -364,16 +406,22 @@ useSeoMeta({
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div v-for="n in [
-            { id: 'gpu-worker-1', workload: 'image-gen · Dreamer (Stable Diffusion) + Ollama small-model shelf — one big model at a time' },
-            { id: 'gpu-worker-2', workload: 'speech · Kokoro-82M TTS + whisper.cpp STT (0.85 s round trip)' },
-            { id: 'gpu-worker-3', workload: 'llm · Ollama with llama3.2:3b pinned (~21 tok/s, 100% on GPU)' },
+            { id: 'gpu-worker-1', image: '/img/cards/so-jetson-image.jpg', workload: 'image-gen · Dreamer (Stable Diffusion) + Ollama small-model shelf — one big model at a time' },
+            { id: 'gpu-worker-2', image: '/img/cards/so-jetson-speech.jpg', workload: 'speech · Kokoro-82M TTS + whisper.cpp STT (0.85 s round trip)' },
+            { id: 'gpu-worker-3', image: '/img/cards/so-jetson-llm.jpg', workload: 'llm · Ollama with llama3.2:3b pinned (~21 tok/s, 100% on GPU)' },
           ]" :key="n.id"
-            class="rounded-2xl border border-green-500/30 bg-green-500/5 p-5"
+            class="group overflow-hidden rounded-2xl border border-green-500/30 bg-green-500/5 p-5"
           >
-            <div class="flex items-center gap-2 mb-3">
-              <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-                <Icon name="mdi:chip" class="text-green-400 text-sm" />
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="n.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                  <Icon name="mdi:chip" class="text-green-400 text-sm" />
+                </div>
               </div>
+            </div>
+            <div class="flex items-center gap-2 mb-3">
               <div>
                 <p class="text-xs font-semibold text-slate-900 dark:text-white">Jetson Orin Nano Super</p>
                 <p class="text-[10px] text-green-400">{{ n.id }}</p>
@@ -400,7 +448,8 @@ useSeoMeta({
     </section>
 
     <!-- ── MONITORING STACK ─────────────────────────────────────────── -->
-    <section class="w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-monitoring.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
@@ -420,49 +469,55 @@ useSeoMeta({
           <div v-for="tool in [
             {
               icon: 'mdi:chart-scatter-plot', color: 'rose',
-              name: 'Prometheus',
+              name: 'Prometheus', image: '/img/cards/obs-prometheus.jpg',
               role: 'Metrics collection & time-series storage',
               details: ['Scrape interval: 15s', 'Node exporter on every Pi', 'kube-state-metrics', 'Custom Jetson GPU /metrics agent'],
             },
             {
               icon: 'mdi:text-box-search-outline', color: 'sky',
-              name: 'Loki',
+              name: 'Loki', image: '/img/cards/obs-loki.jpg',
               role: 'Log aggregation & querying',
               details: ['Cluster-wide log collection', 'Promtail agent on each node', 'LogQL query language', 'Grafana log explorer'],
             },
             {
               icon: 'mdi:view-dashboard', color: 'amber',
-              name: 'Grafana',
+              name: 'Grafana', image: '/img/cards/obs-grafana.jpg',
               role: 'Unified dashboards & visualization',
               details: ['Cluster resource dashboards', 'AI inference latency panels', 'Log + metrics correlation', 'Storage utilization tracking'],
             },
             {
               icon: 'mdi:bell-ring-outline', color: 'emerald',
-              name: 'Alertmanager',
+              name: 'Alertmanager', image: '/img/cards/obs-alertmanager.jpg',
               role: 'Alert routing & notifications',
               details: ['Node memory thresholds', 'Pod crash-loop detection', 'Service availability alerts', 'Disk pressure warnings'],
             },
           ]" :key="tool.name"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden"
           >
-            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
-              <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
-                :class="{
-                  'bg-rose-500/10 border-rose-500/20': tool.color === 'rose',
-                  'bg-sky-500/10 border-sky-500/20': tool.color === 'sky',
-                  'bg-amber-500/10 border-amber-500/20': tool.color === 'amber',
-                  'bg-emerald-500/10 border-emerald-500/20': tool.color === 'emerald',
-                }"
-              >
-                <Icon :name="tool.icon" class="text-sm"
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="tool.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
                   :class="{
-                    'text-rose-400': tool.color === 'rose',
-                    'text-sky-400': tool.color === 'sky',
-                    'text-amber-400': tool.color === 'amber',
-                    'text-emerald-400': tool.color === 'emerald',
+                    'bg-rose-500/10 border-rose-500/20': tool.color === 'rose',
+                    'bg-sky-500/10 border-sky-500/20': tool.color === 'sky',
+                    'bg-amber-500/10 border-amber-500/20': tool.color === 'amber',
+                    'bg-emerald-500/10 border-emerald-500/20': tool.color === 'emerald',
                   }"
-                />
+                >
+                  <Icon :name="tool.icon" class="text-sm"
+                    :class="{
+                      'text-rose-400': tool.color === 'rose',
+                      'text-sky-400': tool.color === 'sky',
+                      'text-amber-400': tool.color === 'amber',
+                      'text-emerald-400': tool.color === 'emerald',
+                    }"
+                  />
+                </div>
               </div>
+            </div>
+            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
               <span class="text-xs font-semibold text-slate-900 dark:text-white">{{ tool.name }}</span>
             </div>
             <div class="p-5">
@@ -499,7 +554,8 @@ useSeoMeta({
     </section>
 
     <!-- ── CI/CD PIPELINE ───────────────────────────────────────────── -->
-    <section class="w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-cicd.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
@@ -518,33 +574,39 @@ useSeoMeta({
         <!-- Pipeline stages -->
         <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
           <div v-for="(stage, i) in [
-            { icon: 'mdi:source-commit', color: 'sky', step: '01', title: 'Code Push', body: 'Push to main branch in self-hosted Gitea' },
-            { icon: 'mdi:play-circle', color: 'emerald', step: '02', title: 'Pipeline Triggered', body: 'Actions runner picks up the workflow job' },
-            { icon: 'mdi:docker', color: 'sky', step: '03', title: 'Build Image', body: 'Multi-stage Dockerfile builds ARM64 container' },
-            { icon: 'mdi:package-variant', color: 'purple', step: '04', title: 'Import to Nodes', body: 'Image imported on each node with k3s ctr images import' },
-            { icon: 'mdi:rocket-launch', color: 'amber', step: '05', title: 'Rolling Deploy', body: 'Kubernetes rolls out new pods, zero downtime' },
+            { icon: 'mdi:source-commit', color: 'sky', step: '01', title: 'Code Push', image: '/img/cards/so-stage-push.jpg', body: 'Push to main branch in self-hosted Gitea' },
+            { icon: 'mdi:play-circle', color: 'emerald', step: '02', title: 'Pipeline Triggered', image: '/img/cards/so-stage-trigger.jpg', body: 'Actions runner picks up the workflow job' },
+            { icon: 'mdi:docker', color: 'sky', step: '03', title: 'Build Image', image: '/img/cards/so-stage-build.jpg', body: 'Multi-stage Dockerfile builds ARM64 container' },
+            { icon: 'mdi:package-variant', color: 'purple', step: '04', title: 'Import to Nodes', image: '/img/cards/so-stage-import.jpg', body: 'Image imported on each node with k3s ctr images import' },
+            { icon: 'mdi:rocket-launch', color: 'amber', step: '05', title: 'Rolling Deploy', image: '/img/cards/so-stage-deploy.jpg', body: 'Kubernetes rolls out new pods, zero downtime' },
           ]" :key="stage.step"
-            class="relative rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
+            class="group overflow-hidden relative rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
           >
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="stage.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
+                  :class="{
+                    'bg-sky-500/10 border-sky-500/20': stage.color === 'sky',
+                    'bg-emerald-500/10 border-emerald-500/20': stage.color === 'emerald',
+                    'bg-purple-500/10 border-purple-500/20': stage.color === 'purple',
+                    'bg-amber-500/10 border-amber-500/20': stage.color === 'amber',
+                  }"
+                >
+                  <Icon :name="stage.icon" class="text-sm"
+                    :class="{
+                      'text-sky-400': stage.color === 'sky',
+                      'text-emerald-400': stage.color === 'emerald',
+                      'text-purple-400': stage.color === 'purple',
+                      'text-amber-400': stage.color === 'amber',
+                    }"
+                  />
+                </div>
+              </div>
+            </div>
             <div class="flex items-center gap-2 mb-3">
               <span class="text-[10px] font-bold text-slate-400 dark:text-slate-600 tabular-nums">{{ stage.step }}</span>
-              <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
-                :class="{
-                  'bg-sky-500/10 border-sky-500/20': stage.color === 'sky',
-                  'bg-emerald-500/10 border-emerald-500/20': stage.color === 'emerald',
-                  'bg-purple-500/10 border-purple-500/20': stage.color === 'purple',
-                  'bg-amber-500/10 border-amber-500/20': stage.color === 'amber',
-                }"
-              >
-                <Icon :name="stage.icon" class="text-sm"
-                  :class="{
-                    'text-sky-400': stage.color === 'sky',
-                    'text-emerald-400': stage.color === 'emerald',
-                    'text-purple-400': stage.color === 'purple',
-                    'text-amber-400': stage.color === 'amber',
-                  }"
-                />
-              </div>
               <Icon v-if="i < 4" name="mdi:arrow-right" class="text-slate-300 dark:text-slate-700 text-sm absolute -right-2 top-1/2 -translate-y-1/2 hidden lg:block z-10" />
             </div>
             <p class="text-xs font-semibold text-slate-900 dark:text-white mb-1">{{ stage.title }}</p>
@@ -570,7 +632,8 @@ useSeoMeta({
     </section>
 
     <!-- ── STORAGE ARCHITECTURE ─────────────────────────────────────── -->
-    <section class="w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-white dark:bg-slate-900/30 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-storage.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
@@ -588,25 +651,25 @@ useSeoMeta({
         <div class="grid sm:grid-cols-2 gap-5">
           <div v-for="store in [
             {
-              icon: 'mdi:harddisk', color: 'amber', name: 'MinIO', role: 'Object Storage',
+              icon: 'mdi:harddisk', color: 'amber', name: 'MinIO', image: '/img/cards/so-store-minio.jpg', role: 'Object Storage',
               desc: 'S3-compatible object storage for model weights, media assets, document uploads, and AI pipeline artifacts. Pre-signed URLs for secure client access.',
               tags: ['S3-Compatible', 'Pre-signed URLs', 'Multi-bucket', 'ARM64 Native'],
               screenshot: 'minio-dashboard.png',
             },
             {
-              icon: 'mdi:database', color: 'emerald', name: 'PostgreSQL + Apache AGE', role: 'Relational + Graph',
+              icon: 'mdi:database', color: 'emerald', name: 'PostgreSQL + Apache AGE', image: '/img/cards/so-store-postgres.jpg', role: 'Relational + Graph',
               desc: 'Primary application data store with Prisma ORM. Apache AGE extension adds graph traversal for relationship-heavy workloads — no separate graph database needed.',
               tags: ['Prisma ORM', 'Apache AGE', 'Graph Queries', 'JSONB'],
               screenshot: null,
             },
             {
-              icon: 'mdi:lightning-bolt', color: 'rose', name: 'Redis', role: 'Cache + Queue',
+              icon: 'mdi:lightning-bolt', color: 'rose', name: 'Redis', image: '/img/cards/so-store-redis.jpg', role: 'Cache + Queue',
               desc: 'Session caching, API rate limiting, and BullMQ job queue backing store. Handles high-frequency reads that would otherwise hit PostgreSQL on every request.',
               tags: ['BullMQ', 'Session Cache', 'Rate Limiting', 'Pub/Sub'],
               screenshot: null,
             },
             {
-              icon: 'mdi:vector-arrange-above', color: 'purple', name: 'Weaviate', role: 'Vector Database',
+              icon: 'mdi:vector-arrange-above', color: 'purple', name: 'Weaviate', image: '/img/cards/so-store-weaviate.jpg', role: 'Vector Database',
               desc: 'Stores and retrieves dense vector embeddings for RAG pipelines. Hybrid search combines vector similarity with BM25 keyword search for best retrieval quality.',
               tags: ['Vector Search', 'Hybrid BM25', 'Embeddings', 'Schema-based'],
               screenshot: 'weaviate-dashboard.png',
@@ -614,24 +677,30 @@ useSeoMeta({
           ]" :key="store.name"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden"
           >
-            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
-              <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
-                :class="{
-                  'bg-amber-500/10 border-amber-500/20': store.color === 'amber',
-                  'bg-emerald-500/10 border-emerald-500/20': store.color === 'emerald',
-                  'bg-rose-500/10 border-rose-500/20': store.color === 'rose',
-                  'bg-purple-500/10 border-purple-500/20': store.color === 'purple',
-                }"
-              >
-                <Icon :name="store.icon" class="text-sm"
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="store.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center border"
                   :class="{
-                    'text-amber-400': store.color === 'amber',
-                    'text-emerald-400': store.color === 'emerald',
-                    'text-rose-400': store.color === 'rose',
-                    'text-purple-400': store.color === 'purple',
+                    'bg-amber-500/10 border-amber-500/20': store.color === 'amber',
+                    'bg-emerald-500/10 border-emerald-500/20': store.color === 'emerald',
+                    'bg-rose-500/10 border-rose-500/20': store.color === 'rose',
+                    'bg-purple-500/10 border-purple-500/20': store.color === 'purple',
                   }"
-                />
+                >
+                  <Icon :name="store.icon" class="text-sm"
+                    :class="{
+                      'text-amber-400': store.color === 'amber',
+                      'text-emerald-400': store.color === 'emerald',
+                      'text-rose-400': store.color === 'rose',
+                      'text-purple-400': store.color === 'purple',
+                    }"
+                  />
+                </div>
               </div>
+            </div>
+            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
               <div>
                 <span class="text-xs font-semibold text-slate-900 dark:text-white">{{ store.name }}</span>
                 <span class="ml-2 text-[10px] text-slate-400">{{ store.role }}</span>
@@ -653,7 +722,8 @@ useSeoMeta({
     </section>
 
     <!-- ── SCREENSHOTS GALLERY ──────────────────────────────────────── -->
-    <section class="w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-screens.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="mb-10">
@@ -705,7 +775,8 @@ useSeoMeta({
     </section>
 
     <!-- ── SYSTEM CATEGORIES ─────────────────────────────────────────── -->
-    <section class="w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+    <section class="isolate overflow-hidden relative w-full bg-slate-50 dark:bg-slate-950 py-16 border-t border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/so-explore.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">

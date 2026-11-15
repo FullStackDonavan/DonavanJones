@@ -1790,8 +1790,8 @@
  {
   "id": "card:so-pi-control",
   "out": "/img/cards/so-pi-control.jpg",
-  "prompt": "a single small green single-board computer on a raised dark pedestal under a spotlight",
-  "seed": 180254194
+  "prompt": "a small green circuit board standing alone on a dark stone pedestal under a spotlight, macro",
+  "seed": 71874703
  },
  {
   "id": "card:so-pi-worker-1",
@@ -1802,14 +1802,14 @@
  {
   "id": "card:so-pi-worker-2",
   "out": "/img/cards/so-pi-worker-2.jpg",
-  "prompt": "a small green single-board computer beside a glowing red glass cube, dark background",
-  "seed": 241761256
+  "prompt": "a small green circuit board next to a glowing red glass cube on a dark table, macro",
+  "seed": 102210481
  },
  {
   "id": "card:so-pi-worker-3",
   "out": "/img/cards/so-pi-worker-3.jpg",
-  "prompt": "a small green single-board computer beside a neat stack of plain cardboard boxes, dark background",
-  "seed": 221707406
+  "prompt": "a small green circuit board beside a neat stack of plain unmarked cardboard boxes, macro, dark",
+  "seed": 224063864
  },
  {
   "id": "card:so-jetson-image",
@@ -1832,14 +1832,14 @@
  {
   "id": "card:so-stage-push",
   "out": "/img/cards/so-stage-push.jpg",
-  "prompt": "a finger-free view of a glowing enter key on a dark keyboard, single key lit",
-  "seed": 125891248
+  "prompt": "a single brass lever pushed forward on a dark control panel, warm light",
+  "seed": 149968199
  },
  {
   "id": "card:so-stage-trigger",
   "out": "/img/cards/so-stage-trigger.jpg",
-  "prompt": "a row of dominoes on a dark table with the first one just tipping over",
-  "seed": 226015376
+  "prompt": "a match being struck, a small flame igniting, dark background",
+  "seed": 5968385
  },
  {
   "id": "card:so-stage-build",
@@ -1850,8 +1850,8 @@
  {
   "id": "card:so-stage-import",
   "out": "/img/cards/so-stage-import.jpg",
-  "prompt": "plain cardboard boxes being loaded onto small green circuit boards on dark shelves",
-  "seed": 183215434
+  "prompt": "small plain unmarked boxes placed onto dark metal shelves, soft light",
+  "seed": 259213072
  },
  {
   "id": "card:so-stage-deploy",
