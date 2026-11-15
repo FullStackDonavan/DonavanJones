@@ -1,8 +1,8 @@
 ---
 title: "Why Self-Hosted Git"
-description: "Why I run a self-hosted Git service in my homelab — data ownership, CI/CD control, zero rate limits, and deep integration with my Kubernetes cluster."
+description: "Why I self-host Git (Gitea) in my K3s homelab: code ownership, Gitea Actions CI/CD without minute limits, offline resilience, and one source of truth."
 date: 2026-02-18
-lastUpdated: "2026-02-18"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - git
@@ -10,19 +10,20 @@ tags:
 draft: false
 slug: why-self-hosted-git
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/40-why-self-hosted-git.jpg
 ---
 
 # Why Self-Hosted Git
 
 ## Introduction
 
-In a modern homelab environment, especially one built around a Kubernetes-based stack like my Raspberry Pi K3s rack, self-hosting core infrastructure services becomes a natural next step. Instead of relying entirely on external platforms like GitHub or GitLab SaaS, I run my own Git service inside the cluster alongside my CI/CD pipelines, internal tools, and application workloads.
+I self-host Git because it puts my code, my CI/CD pipeline, and my deployment trigger inside the same cluster as the apps they deploy — no external CI minutes, no rate limits, and no dependency on someone else's uptime. In my homelab that means Gitea running in K3s (on the pi-node1 control plane, exposed on NodePort 32080) with self-hosted Gitea Actions runners, where a push to `main` deploys. I still use GitHub publicly; Gitea is the internal source of truth.
 
-For me, self-hosted Git is not just about “owning my code.” It’s about control over my deployment pipeline, tighter integration with my Kubernetes environment, reduced external dependencies, and the ability to experiment freely with infrastructure patterns. My setup includes a mixed homelab rack (Raspberry Pi worker nodes plus a more powerful development machine with an RTX 3090 running containerized AI workloads), which makes local-first development and deployment especially important.
+For me, self-hosted Git is not just about “owning my code.” It’s about control over my deployment pipeline, tighter integration with my Kubernetes environment, reduced external dependencies, and the ability to experiment freely with infrastructure patterns. My setup includes a mixed homelab rack (four Raspberry Pis and three Jetson Orin Nano Super GPU workers in one K3s cluster, plus a development machine with an RTX 3090), which makes local-first development and deployment especially important.
 
 This article breaks down why self-hosting Git fits into that architecture and why it has become a core piece of my system design.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -41,7 +42,7 @@ destinationUrl: "/categories/infrastructure-engineering"
 When Git is self-hosted, CI/CD is no longer constrained by external platform limits. In my setup, Git pushes can directly trigger workflows running inside the same Kubernetes cluster where my applications live. This creates a tight feedback loop:
 
 - Code is pushed to my internal Git server
-- Webhooks trigger CI runners deployed inside K3s
+- Gitea Actions runners pick up the workflow (setup details in [Gitea Runners Pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline))
 - Builds and deployments happen within my infrastructure boundary
 
 This removes reliance on external CI minutes, rate limits, or platform-specific restrictions.
@@ -54,10 +55,10 @@ Because my homelab is Kubernetes-native, self-hosted Git becomes another interna
 
 In my rack architecture:
 - Raspberry Pi nodes handle lightweight workloads and CI runners
-- My main dev machine (with GPU) handles heavier AI/container builds
+- ARM64 images are built with `docker buildx --platform linux/arm64` and imported onto the nodes
 - Services are deployed through Kubernetes manifests stored directly in Git
 
-This turns Git into the “source of truth” for the entire cluster.
+This turns Git into the “source of truth” for the entire cluster. If you want to set it up yourself, start with [Installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes), then follow a full push-to-deploy run in [Deploying an App on the Rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack).
 
 ---
 
@@ -90,7 +91,6 @@ This is especially useful in experimental infrastructure setups where stability 
 
 My Git service is not just for application code. It also stores:
 - Kubernetes manifests
-- Helm charts
 - CI/CD pipeline definitions
 - Infrastructure-as-code configurations
 - Deployment scripts for my rack
@@ -105,7 +105,7 @@ Self-hosting Git enables experimentation that would be harder on SaaS platforms,
 - Custom webhook triggers into Kubernetes services
 - Running AI-assisted CI pipelines using local models on my RTX 3090 machine
 - Testing multi-node distributed build systems across Pi nodes
-- Building internal developer tools that integrate directly with repos
+- Building internal developer tools that integrate directly with repos — my [Kingdom Tools](/projects/kingdom-tools) platform has starter stacks that create a new Gitea repo for each service
 
 This turns Git from a storage system into an active part of the infrastructure runtime.
 
@@ -128,6 +128,7 @@ destinationUrl: "/systems/infrastructure"
 In my current setup:
 - K3s cluster runs core services including Git and CI runners
 - Raspberry Pi nodes distribute workloads
+- Jetson GPU workers handle in-cluster inference
 - Dedicated dev machine handles GPU-heavy workloads and model inference
 - Docker containers are used for isolated services and AI tooling
 
@@ -202,6 +203,15 @@ links:
     description: "Overview of self-hosting web services — the practice that keeps the Git server under full control, enabling custom webhook triggers, AI-assisted CI pipelines, and infrastructure-as-code workflows impossible on SaaS platforms."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Why Local AI Matters](/blog/infrastructureengineering/39-why-local-ai-matters) — previous in the series.
+- [Prometheus on a Pi K3s Cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) — next in the series: monitoring the same cluster.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [AI Coding Without Internet](/blog/local-vibe-coding/04-ai-coding-without-internet) — the offline-first argument applied to AI coding tools.
 
 ---
 

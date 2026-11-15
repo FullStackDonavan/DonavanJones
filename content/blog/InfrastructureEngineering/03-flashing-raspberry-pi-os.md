@@ -2,7 +2,7 @@
 title: "Flashing Raspberry Pi OS"
 description: "How to flash Raspberry Pi OS Lite and configure base settings for a production-ready Kubernetes homelab node from scratch on ARM64 hardware."
 date: 2025-09-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - raspberry-pi
@@ -10,9 +10,12 @@ tags:
 draft: false
 slug: flashing-raspberry-pi-os
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/03-flashing-raspberry-pi-os.jpg
 ---
 
 # Flashing Raspberry Pi OS
+
+To flash Raspberry Pi OS for a cluster node, use Raspberry Pi Imager to write Raspberry Pi OS Lite (64-bit) to an SD card or SSD, and set the hostname, SSH, and user in the Imager's advanced settings before you write. Boot the Pi on Ethernet, confirm you can SSH in, and it's ready to join K3s. Doing it the same way every time is what keeps nodes interchangeable.
 
 ## Introduction
 
@@ -20,7 +23,7 @@ In a Kubernetes-based homelab environment, having consistent and repeatable node
 
 This guide walks through the process of flashing Raspberry Pi OS in a way that aligns with infrastructure-as-code thinking, so each node in the cluster behaves predictably and can be reproduced or replaced without manual drift.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -49,7 +52,7 @@ Insert your SD card or SSD and select it as the target device.
 
 ### 5. Preconfigure Settings (Recommended)
 Before flashing, open advanced settings and configure:
-- Hostname (e.g., `k3s-node-1`, `k3s-node-2`)
+- Hostname (e.g., `pi-worker-1`, `pi-worker-2` — I name nodes by role)
 - Enable SSH
 - Set username and password
 - Configure Wi-Fi (if not using Ethernet in rack setup)
@@ -66,7 +69,7 @@ Insert the storage device into the Raspberry Pi and power it on. The node will b
 ### 8. Verify Network Access
 From your main machine or control node, verify the node is reachable:
 ```bash
-ssh pi@k3s-node-1.local
+ssh pi@pi-worker-1.local
 ```
 
 ::CtaSystemArchitecture
@@ -86,10 +89,10 @@ destinationUrl: "/systems/infrastructure"
 ## Post-Flash Cluster Preparation (Homelab Context)
 
 Once flashed, I integrate the node into my broader homelab stack:
-- Join it to the **K3s cluster** running across the rack
+- Join it to the **K3s cluster** running across the rack (covered in [joining worker nodes to K3s](/blog/infrastructureengineering/06-joining-worker-nodes))
 - Register it with **Gitea CI/CD runners** for automated deployments
-- Install monitoring agents for system observability
-- Label it based on role (compute, AI inference, storage, etc.)
+- Make sure it's picked up by monitoring — in my cluster Promtail runs as a DaemonSet, so a new node's logs flow into [Loki and Promtail](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) automatically
+- Label it based on role (compute, storage, CI, etc.) — see [how I assign node roles](/blog/infrastructureengineering/27-node-roles)
 
 This keeps the system modular, where nodes are interchangeable parts of a larger distributed infrastructure.
 
@@ -160,5 +163,12 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Hardware List and Costs](/blog/infrastructureengineering/02-hardware-list-and-costs) — previous in the series
+- [Static IPs and Networking](/blog/infrastructureengineering/04-static-ips-and-networking) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Raspberry Pi AI Cluster Setup](/blog/ai-homelab-engineering/08-raspberry-pi-ai-cluster-setup) — the AI-focused version of this Pi cluster build
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

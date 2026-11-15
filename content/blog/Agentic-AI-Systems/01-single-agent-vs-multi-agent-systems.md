@@ -1,22 +1,23 @@
 ---
 title: "Single Agent vs Multi-Agent Systems"
-description: "A practical framework for deciding when a single well-designed agent is enough and when a task genuinely benefits from multiple coordinating agents."
-date: 2026-04-13
-lastUpdated: "2026-06-09"
+description: "Single agent vs multi-agent systems: a practical rule for when one well-tooled agent is enough and when a task genuinely needs multiple coordinating agents."
+date: 2026-07-11
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - architecture
-draft: true
+draft: false
 slug: single-agent-vs-multi-agent-systems
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems.jpg
 ---
 
 # Single Agent vs Multi-Agent Systems
 
-Multi-agent systems get disproportionate attention because they're impressive in demos — watching several agents "discuss" a problem and hand work between each other looks like progress. In production, the more useful question is narrower: does this specific task decompose into parts that genuinely benefit from separate agents, or does it just add coordination overhead to a problem a single agent would solve fine?
+Default to a single agent. Move to a multi-agent system only when you can point to a specific failure one agent can't fix — conflicting context between sub-tasks, genuine parallelism, or a fragile step that needs isolation. Multi-agent setups look impressive in demos, but in production every extra agent adds coordination overhead that a single agent doesn't have.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -28,7 +29,7 @@ destinationUrl: "/categories/agentic-ai-systems"
 
 ## The Default Should Be One Agent
 
-A single agent with a well-designed tool set, a clear system prompt, and a solid planning loop handles a surprisingly large share of real tasks. The failure mode I see most often isn't under-using multi-agent architecture — it's reaching for it prematurely, before establishing that a single agent actually can't do the job.
+A single agent with a well-designed tool set, a clear system prompt, and a solid [planning loop](/blog/agentic-ai-systems/02-planning-agents-explained) handles a surprisingly large share of real tasks. The failure mode I see most often isn't under-using multi-agent architecture — it's reaching for it prematurely, before establishing that a single agent actually can't do the job.
 
 Signs a single agent is genuinely struggling, rather than just needing a better prompt or more tools:
 
@@ -48,6 +49,8 @@ Signs a single agent is genuinely struggling, rather than just needing a better 
 
 Coordination is not free. Multiple agents need a way to pass context between each other, a way to resolve conflicting outputs, and — critically — a way to detect when the overall task is actually done versus when individual agents have each concluded their piece but the combination doesn't add up to a coherent result. Every one of these is a new failure surface that a single-agent design doesn't have.
 
+I ran into this on [VerseHub](/projects/versehub): each question originally kicked off three separate Temporal workflows, and most of that orchestration was overhead for small helper calls. Moving those helpers to a direct quick-LLM endpoint and keeping one workflow for the real refine pass made the system simpler and faster to reason about (the full story is in [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production)).
+
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
@@ -58,7 +61,7 @@ destinationUrl: "/systems/agentic-ai"
 
 ## A Practical Decision Rule
 
-Start with one agent. Add a second only when you can point to a specific failure mode — lost context, conflicting prompting needs, or unrealized parallelism — that a single agent demonstrably can't solve. Multi-agent architecture should be a response to an observed problem, not a default starting point.
+Start with one agent. Add a second only when you can point to a specific failure mode — lost context, conflicting prompting needs, or unrealized parallelism — that a single agent demonstrably can't solve. Multi-agent architecture should be a response to an observed problem, not a default starting point. And when you do split work across agents, add an independent [verification agent](/blog/agentic-ai-systems/11-verification-agents-in-production) before trusting the combined result.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -73,7 +76,7 @@ Start with one agent. Add a second only when you can point to a specific failure
   ---
   buttonText: "Read: Planning Agents Explained"
   supportingCopy: "How a single agent decomposes a complex task internally."
-  destinationUrl: "/blog/agentic-ai-systems/planning-agents-explained"
+  destinationUrl: "/blog/agentic-ai-systems/02-planning-agents-explained"
   ---
   :::
 
@@ -101,6 +104,13 @@ links:
     description: "Stanford research on agent architectures with memory, reflection, and planning, relevant to both single- and multi-agent design."
 ---
 ::
+
+## Related reading
+
+- [Planning Agents Explained](/blog/agentic-ai-systems/02-planning-agents-explained) — next in the series: how one agent decomposes a task before acting
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub tying memory, orchestration, and verification together
+- [Agent Orchestration](/blog/ai-engineering/04-agent-orchestration) — orchestration patterns once you do need more than one agent
+- [How I Added Agentic AI to My SaaS Application (VerseHub)](/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub) — a real production example of agents added to a SaaS app
 
 ---
 

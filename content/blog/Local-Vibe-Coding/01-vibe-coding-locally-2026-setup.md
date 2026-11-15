@@ -1,8 +1,8 @@
 ---
 title: "Vibe Coding Locally: My Complete 2026 Setup with Jetson Orin and an RTX 3090"
-description: "Why I stopped treating local AI as a toy and built a production coding assistant on my own Kubernetes cluster: Jetson Orin, RTX 3090, Ollama, repository embeddings, and a multi-model agent pipeline."
+description: "My 2026 local vibe coding setup: Ornith-1.0-35B on one RTX 3090, three Jetson Orin Nano Supers, Ollama, k3s, and Weaviate retrieval for a private coding agent."
 date: 2026-07-06
-lastUpdated: "2026-07-12"
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
@@ -12,24 +12,25 @@ tags:
 draft: false
 slug: vibe-coding-locally-2026-setup
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/01-vibe-coding-locally-2026-setup.jpg
 ---
 
 # Vibe Coding Locally: My Complete 2026 Setup with Jetson Orin and an RTX 3090
 
-I wanted an AI coding assistant that understood my entire codebase, kept my source code private, and didn't cost hundreds of dollars every month. So I stopped treating local AI as a toy and built a production coding assistant that runs on my own Kubernetes cluster: three Jetson Orin Nano Supers running the always-on retrieval and background-agent layer, an RTX 3090 running the actual coding agent, Ollama serving the models, repository embeddings feeding retrieval, and a multi-model agent pipeline tying it all together.
+I wanted an AI coding assistant that understood my entire codebase, kept my source code private, and didn't cost hundreds of dollars every month. So I stopped treating local AI as a toy and built a coding assistant that runs on my own Kubernetes cluster: one RTX 3090 running Ornith-1.0-35B as the coding agent, three Jetson Orin Nano Supers running the always-on small-model, speech, and image services, Ollama serving the models, and repository embeddings in Weaviate feeding retrieval. Claude Code stays in the loop for architecture calls and the failures the local agent can't fix.
 
 "Vibe coding," where you lean on an AI agent for the bulk of the typing while you steer architecture and review output, is normally described as a cloud thing. Claude Code, Cursor, a browser tab open to a hosted model. My version runs on a rack in my office and a desktop under my desk, and after months of daily use it holds up for a real, meaningful slice of my day-to-day work.
 
 This post is the foundation: the hardware, the models, the agent loop, and why I split inference across two very different classes of GPU instead of picking one.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). For the full system map, see the [Local Vibe Coding hub](/systems/local-vibe-coding).*
 
 ## Follow the Build
 
 This isn't a one-off setup tour. It's the first entry in a build log. Everything below is running today, but each piece deserves its own deep-dive, and that's where this series is headed:
 
 1. **Why I'm building my own coding assistant.** This post covers the hardware, the stack, and the reasoning.
-2. **Choosing the base model.** Why Ornith-1.0-35B is the coding agent, and where the Jetson-hosted Ornith-9B fits as a utility model.
+2. **Choosing the base model.** Why Ornith-1.0-35B is the coding agent, and why I retired the Jetson-hosted Ornith-1.0-9B drafter.
 3. **Repository indexing.** Teaching the assistant the shape of a codebase.
 4. **Building embeddings.** The Weaviate retrieval layer that feeds every prompt.
 5. **Tool calling and the skills layer.** How OpenClaw routes a task through the architecture-review, repository-memory, coding-agent, and review skills to read files, run commands, and edit code.
@@ -51,17 +52,17 @@ destinationUrl: "/categories/local-vibe-coding"
 
 I run two distinct tiers, and the split is deliberate rather than accidental — though it took a revision to get the division of labor right. My first version had this backwards.
 
-**A Jetson Orin Nano Super cluster (three nodes)** is the always-on infrastructure layer, not a coding brain. I say "a cluster" carefully here: each node runs its own independent services rather than one model split across the three, so this is a cluster in the always-on-fleet sense, not a distributed-inference one. Each node has a specific job:
+**A [Jetson Orin Nano Super cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) (three nodes)** is the always-on infrastructure layer, not a coding brain. I say "a cluster" carefully here: each 8GB board runs its own independent services rather than one model split across the three, so this is a cluster in the always-on-fleet sense, not a distributed-inference one. Each node has a specific job:
 
-- **Jetson #1 — Repository Memory Worker.** Parses git repos, chunks code, and generates embeddings. It does not hold the vector database itself — that lives elsewhere, on hardware provisioned for storage rather than inference, so a growing index isn't competing with Jetson #1 for the RAM it needs to keep generating embeddings. Jetson #1 does the compute-light, always-on ingestion work and writes into Weaviate; it doesn't hold the index.
-- **Jetson #2 — Agent Workers.** Documentation generation, commit summaries, log analysis, test-report parsing, background security scans — the steady stream of small tasks that don't need a 35B model or a human in the loop.
-- **Jetson #3 — Always-On AI Services.** Whisper, TTS, and smaller utility LLMs, including Ornith-9B, for API-facing and production AI features that don't need the 3090's throughput.
+- **gpu-worker-1 — image generation and the small-model shelf.** Dreamer (my Stable Diffusion service) plus an Ollama shelf of small models such as Qwen2.5-Coder, Qwen3, and `nomic-embed`. One big model or service at a time, because 8GB of unified memory doesn't allow more.
+- **gpu-worker-2 — speech.** Kokoro TTS and whisper.cpp STT. No LLM lives here.
+- **gpu-worker-3 — the always-on utility LLM.** `llama3.2:3b` pinned in memory permanently, at about 21 tok/s. It handles the steady stream of small tasks — summaries, quick classifications, first drafts — that don't need a 35B model or a human in the loop.
 
-**A Raspberry Pi with an NVMe drive** holds Weaviate, PostgreSQL, and MinIO. This isn't an inference node at all — no model runs on it — but it earns its own line in the hardware list rather than getting silently folded into "the Jetson tier." A Pi with NVMe attached is plenty for the data layer: Weaviate and Postgres want steady, reliable I/O more than they want raw compute, and keeping that on its own board means neither the Jetson inference fleet nor the RTX 3090 is sharing disk and RAM with a vector index that keeps growing as I index more repos. Jetson #1 feeds it; the coding agent queries it; it does neither the drafting nor the deciding.
+**The data layer** (Weaviate, PostgreSQL, Redis, MinIO) runs as ordinary in-cluster k3s services, not on the Jetsons or the 3090. That's deliberate: Weaviate and Postgres want steady, reliable I/O more than raw compute, and keeping them off the inference hardware means a vector index that keeps growing as I index more repos never competes with a model for memory. A background indexing job chunks code and writes embeddings into Weaviate; the coding agent queries it; the data layer does neither the drafting nor the deciding.
 
-**RTX 3090 (24GB VRAM)** hosts Ornith-1.0-35B as the local coding agent — the model that owns the actual loop: read the relevant files, plan the change, edit, run tests, and review its own diff before I ever see it. My original design treated the 3090 as a verifier only, reviewing drafts written by the Jetson-hosted 9B. That undersold it. A verifier is reactive — "here's code, find problems with it" — but a coding agent needs repository understanding, planning, multi-file edits, tool use, and iterative fixes, and a 35B model on 24GB of VRAM has enough capacity to actually do that across a multi-step edit, not just critique one. Reserving that capacity for review alone was leaving most of it unused. Ornith-9B didn't go away — it moved to Jetson #3, where it's a utility model for background tasks, not the model doing the coding.
+**RTX 3090 (24GB VRAM)** hosts Ornith-1.0-35B as the local coding agent — the model that owns the actual loop: read the relevant files, plan the change, edit, run tests, and review its own diff before I ever see it. It's a mixture-of-experts model (~35B total, ~3B active); at Q4_K_M in Ollama it uses about 21.2GB of VRAM and generates around 64 tok/s. My original design treated the 3090 as a verifier only, reviewing drafts written by Ornith-1.0-9B on a Jetson. That undersold the 3090, and the 9B drafter didn't hold up either: on an 8GB Jetson it barely fit (≈5.3GB, 4K context max) and ran at roughly 3 tok/s end to end, so the "fast" drafter was the slowest part of the pipeline. I retired it. A coding agent needs repository understanding, planning, multi-file edits, tool use, and iterative fixes, and a 35B model on 24GB of VRAM has enough capacity to do that across a multi-step edit, not just critique one.
 
-The division of labor now maps to *interactive vs. always-on* rather than *fast-and-small vs. big-and-slow*. The coding agent is the one thing that wants a human sitting in front of it waiting on a response, so it gets the GPU that isn't doing anything else. Everything else — indexing, embeddings, background workers, utility inference, and now the data layer itself — runs on hardware built to sit at low power 24/7 without competing with the interactive path.
+The division of labor now maps to *interactive vs. always-on* rather than *fast-and-small vs. big-and-slow*. The coding agent is the one thing that wants a human sitting in front of it waiting on a response, so it gets the GPU that isn't doing anything else. Everything else — indexing, embeddings, background workers, utility inference, speech, and the data layer — runs on hardware built to sit at low power 24/7 without competing with the interactive path.
 
 ## Software Stack
 
@@ -69,16 +70,16 @@ The division of labor now maps to *interactive vs. always-on* rather than *fast-
 |---|---|---|
 | Model runtime | Ollama | Model serving, quantization management, API compatibility |
 | Coding agent | Ornith-1.0-35B (quantized) | Reads, plans, edits, tests, and reviews its own diff, RTX 3090-hosted |
-| Utility models | Ornith-9B (Q4_K_M, ~5.6GB) | Background tasks — docs, commit summaries, log analysis — on Jetson #3 |
+| Utility models | llama3.2:3b + a small-model shelf | Background tasks — docs, commit summaries, log analysis — on the Jetsons, one model per 8GB board |
 | Escalation | Claude Code (External Principal Architect) | Architecture decisions, hard debugging, security review, and whatever the coding agent flags as needing help |
 | Agent layer | OpenClaw (custom) | Router + skills: `architecture-review`, `repository-memory`, `coding-agent`, `code-review`, `security-review`, `test-runner`, `deployment`, `ask-claude-fix` |
-| Orchestration | k3s | Scheduling every workload across the Jetson, desktop, and storage Pi nodes |
+| Orchestration | k3s | Scheduling workloads across four Raspberry Pis and three Jetsons |
 | Ingress | Traefik | Routes requests to services across namespaces |
-| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search — all on the dedicated storage Pi (with NVMe), not the Jetson inference fleet |
+| Data layer | PostgreSQL, Redis, MinIO, Weaviate | Structured storage, `agent_tasks` eval log, caching, object storage, vector search — in-cluster services, kept off the inference hardware |
 | Git + CI | Gitea + Actions runner | Self-hosted repo hosting and pipeline runs, no dependency on GitHub |
 | Observability | Prometheus, Grafana, Loki + Promtail | Metrics, dashboards, and log aggregation across every pod |
 
-Ollama is the layer that made this practical rather than theoretical. It handles model downloading, quantization format management, and exposes an OpenAI-compatible API, which meant the agent layer didn't need custom integration code per model.
+Ollama is the layer that made this practical rather than theoretical. It handles model downloading, quantization format management, and exposes an OpenAI-compatible API, which meant the agent layer didn't need custom integration code per model. One wrinkle: Ollama doesn't report native `tools` capability for Ornith, so tool calls go through a JSON-in-content protocol the agent layer parses itself (more on that in [Running Ornith-1.0-35B Locally with Ollama](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama)).
 
 The "k3s (on the Jetson nodes)" framing undersells it. This is a full cluster, not a scheduler bolted onto a couple of small boards. Metrics and logs flow into Prometheus and Loki regardless of which node a pod lands on, Traefik fronts everything so services don't need to remember node IPs, and Gitea gives the whole setup a private git remote and CI runner instead of pushing code to a third party. None of that is specific to AI workloads. It's the same platform layer I'd want under any self-hosted project, but it's what makes the coding agent feel like a normal part of the cluster instead of a special case bolted on the side.
 
@@ -92,7 +93,7 @@ The obvious question: why not put everything on the 3090 and skip the Jetson clu
 
 ## What "Vibe Coding" Actually Looks Like Here
 
-In practice, a session looks like: OpenClaw's `repository-memory` skill pulls context from Weaviate on the storage Pi (kept current by Jetson #1's ingestion jobs), Ornith-1.0-35B on the 3090 runs the actual loop — read the relevant files, plan the change, edit, run tests, review its own diff — and I review what it produces before it lands. If the agent flags its own diff as uncertain, or I already know up front that the task is the kind that needs an architecture call, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's own agent loop (read, plan, edit, verify), just running on hardware I own, with a human review step in front of the commit either way.
+In practice, a session looks like: OpenClaw's `repository-memory` skill pulls context from Weaviate (kept current by the background indexing job), Ornith-1.0-35B on the 3090 runs the actual loop — read the relevant files, plan the change, edit, run tests, review its own diff — and I review what it produces before it lands. If the agent flags its own diff as uncertain, or I already know up front that the task is the kind that needs an architecture call, it goes to Claude Code instead of grinding through local retries. It's the same shape as Claude Code's own agent loop (read, plan, edit, verify), just running on hardware I own, with a human review step in front of the commit either way.
 
 ## The Router and the Skills Layer
 
@@ -115,8 +116,8 @@ OpenClaw's job isn't running a model — it's deciding which skill handles a tas
                    |
                    v
              Weaviate context
-         (storage Pi, kept current
-          by Jetson #1 ingestion)
+         (in-cluster, kept current
+          by the indexing job)
                    |
                    v
                   coding-agent skill
@@ -169,7 +170,7 @@ The hardware split is a decent story. The bigger differentiator is what happens 
    Better Coding Agent
 ```
 
-The interesting field is `failure_reason`: a short note on what the agent got wrong before `ask-claude-fix` handed the task to Claude. Because the coding agent and the training run share the same 3090, there's no separate training rig to provision — weeks of logged failures become the LoRA dataset, and the fine-tuning happens on the same card that's going to run the improved model. That's the part most local-AI setups miss: running a model locally is table stakes, but a system that turns its own failures into next quarter's training data is a coding agent that gets better on its own schedule instead of only on whatever cadence the upstream model gets updated.
+The interesting field is `failure_reason`: a short note on what the agent got wrong before `ask-claude-fix` handed the task to Claude. Because the coding agent and the training run share the same 3090, there's no separate training rig to provision (the same LoRA workflow took [a 0.6B tool-calling model from 34% to 98%](/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98)) — weeks of logged failures become the LoRA dataset, and the fine-tuning happens on the same card that's going to run the improved model. That's the part most local-AI setups miss: running a model locally is table stakes, but a system that turns its own failures into next quarter's training data is a coding agent that gets better on its own schedule instead of only on whatever cadence the upstream model gets updated.
 
 ## The Full Picture
 
@@ -185,13 +186,13 @@ Zoomed out past the individual skills, the whole system is three pieces reportin
               |                                  |
               v                                  v
 
-      RTX 3090 Workstation                 Jetson Fleet + Storage Pi
+      RTX 3090 Workstation                 Jetson Fleet + Data Layer
       Local Principal Developer            Always-On AI Layer
 
       Ornith-1.0-35B                       Repository Memory (ingestion)
-      Coding Agent                         Weaviate / Postgres / MinIO (Pi + NVMe)
+      Coding Agent                         Weaviate / Postgres / MinIO / Redis
       LoRA Training                        Background Workers
-                                            Utility Models (Ornith-9B)
+                                            Utility Model (llama3.2:3b)
 
               |
               v
@@ -220,7 +221,7 @@ That's exactly why Claude Code isn't a fallback I'm embarrassed about — it's a
 
 ## What I'd Change
 
-If I were starting today, I'd size the 3090 tier around a single well-chosen quantized model rather than experimenting with several. Model swapping costs real time in VRAM load and unload, and I underestimated that early on. I'd also set up power monitoring from day one instead of retrofitting it months in, since the actual cost-per-month question ("Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days") is impossible to answer honestly without real numbers.
+If I were starting today, I'd size the 3090 tier around a single well-chosen quantized model rather than experimenting with several. Model swapping costs real time in VRAM load and unload, and I underestimated that early on. I'd also set up power monitoring from day one instead of retrofitting it months in, since the actual cost-per-month question ([Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days](/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days)) is impossible to answer honestly without real numbers.
 
 ## Where This Is Going
 
@@ -250,7 +251,7 @@ Next up: Ollama configuration in depth, the case for Ornith-1.0-35B specifically
   ---
   buttonText: "Read: Running Ornith-1.0-35B Locally with Ollama"
   supportingCopy: "Continue with the full Ollama setup guide."
-  destinationUrl: "/blog/local-vibe-coding/running-ornith-locally-with-ollama"
+  destinationUrl: "/blog/local-vibe-coding/02-running-ornith-locally-with-ollama"
   ---
   :::
 
@@ -282,6 +283,13 @@ links:
     description: "Background on the quantization techniques that make running large models on consumer GPUs feasible."
 ---
 ::
+
+## Related reading
+
+- [Running Ornith-1.0-35B Locally with Ollama](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama) — next in the series: the exact Ollama setup for the coding agent.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — why the big-GPU / edge-board split works.
+- [Kubernetes for AI Developers: Deploying Local Models with k3s](/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s) — the cluster layer underneath it all.
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Physical Organization"
-description: "How I physically organized my homelab rack — cable management, node placement, switch positioning, power distribution, and lessons from the build."
+description: "How I physically organized my homelab rack: four Raspberry Pis, three Jetson Orin Nanos, switch and cable layout, power, and a separate RTX 3090 box."
 date: 2025-12-09
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - homelab
@@ -10,19 +10,20 @@ tags:
 draft: false
 slug: physical-organization
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/28-physical-organization.jpg
 ---
 
 # Physical Organization
 
 ## Introduction
 
-A homelab is only as reliable as both its architecture and its physical layout. Over time, I realized that clean wiring, proper airflow, and intentional device placement matter just as much as Kubernetes manifests or CI/CD pipelines.
+I organize my homelab rack so the physical layout mirrors the software: the K3s nodes are grouped together on one switch with labeled, short cable runs, power and networking are separated, and the heavy GPU workstation lives outside the rack. Clean wiring, airflow, and intentional placement matter just as much as Kubernetes manifests or CI/CD pipelines, especially when you are debugging a failure.
 
-In my setup, I run a Raspberry Pi–based K3s cluster as the backbone of my infrastructure, with services like Gitea powering my Git workflows and CI/CD pipelines deploying directly into the cluster. Alongside this, I also use a separate development machine with an RTX 3090 running containerized AI models for experimentation and local inference workloads.
+In my setup, a 7-node K3s cluster — four Raspberry Pis (one control plane, three workers) and three Jetson Orin Nano Super GPU workers — is the backbone of my infrastructure, with services like Gitea powering my Git workflows and CI/CD pipelines deploying directly into the cluster. Alongside this, I also use a separate development machine with an RTX 3090 running containerized AI models for experimentation and local inference workloads.
 
 This document breaks down how I physically organized my rack and supporting equipment so that everything stays maintainable, scalable, and easy to debug.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -44,7 +45,8 @@ My rack is designed around three core principles:
 
 At a high level, the rack includes:
 
-- Raspberry Pi nodes forming a K3s Kubernetes cluster
+- Four Raspberry Pi nodes forming the K3s control plane and general worker pool
+- Three Jetson Orin Nano Super 8GB boards as GPU worker nodes (image generation, speech, LLM)
 - Networking switch providing internal cluster communication
 - Router / uplink to external internet services
 - Storage and power distribution components
@@ -72,14 +74,20 @@ The cluster runs:
 
 ---
 
+### Jetson GPU Workers
+
+The three Jetson Orin Nano Super boards sit next to the Pis and join the same K3s cluster as GPU workers. Each boots from NVMe, runs headless, and has a single role — image generation, speech (TTS/STT), or a pinned LLM — because 8 GB of unified memory only fits one real model per board. I cover how those roles were chosen in [Node Roles](/blog/infrastructureengineering/27-node-roles).
+
+---
+
 ### Development Machine (RTX 3090)
 
 My GPU development machine is physically separate from the rack but logically integrated into the ecosystem.
 
 It runs:
 
-- Dockerized AI models
-- Experimental inference workloads
+- The sentence embedder (all-MiniLM-L6-v2 in Docker) used for VerseHub retrieval
+- Larger models like Ornith-1.0-35B in Ollama, plus LoRA training jobs
 - Local development environments
 
 While not inside the rack, it connects over the network and behaves like a high-performance worker node when needed. This separation keeps heat, noise, and power draw isolated from the always-on cluster.
@@ -93,9 +101,9 @@ Networking is one of the most important parts of the physical setup.
 The design is:
 
 - One central switch for internal cluster traffic
-- Dedicated ports for each Raspberry Pi node
+- Dedicated ports for each Raspberry Pi and Jetson node
 - One uplink to the main router
-- Static or reserved IPs for all core infrastructure services
+- Static or reserved IPs for all core infrastructure services (I learned why the hard way — see [recovering after a control plane IP change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change))
 
 Gitea, CI runners, and Kubernetes API endpoints all rely on predictable network paths, so labeling and port consistency is critical.
 
@@ -130,7 +138,7 @@ This makes it possible to trace any node in seconds instead of minutes.
 
 ## Power Distribution
 
-Power reliability is treated as a first-class concern.
+Power reliability is treated as a first-class concern (the tradeoffs are covered in [Power Consumption Tradeoffs](/blog/infrastructureengineering/30-power-consumption-tradeoffs)).
 
 The rack is structured so that:
 
@@ -237,6 +245,15 @@ links:
     description: "Overview of data center design principles — the enterprise practices (airflow planning, power distribution, structured cabling) scaled down and applied to homelab rack organization described in this article."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Node Roles](/blog/infrastructureengineering/27-node-roles) — previous in the series: what each node does.
+- [Pod Layouts](/blog/infrastructureengineering/29-pod-layouts) — next in the series: how workloads land on those nodes.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [My Homelab Architecture for Agentic AI Development](/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai) — the same hardware viewed as an AI platform.
 
 ---
 

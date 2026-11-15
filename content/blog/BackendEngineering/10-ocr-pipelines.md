@@ -1,8 +1,8 @@
 ---
 title: "OCR Pipelines"
-description: "OCR pipeline design for AI microservices."
+description: "Designing an OCR pipeline as an async backend service: preprocessing, engines for print, historical and handwritten text, confidence scoring, and indexing."
 date: 2026-03-22
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - ocr
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: ocr-pipelines
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/10-ocr-pipelines.jpg
 ---
 
 # OCR Pipelines
 
-A Bible study platform that only handles digital text is missing a significant portion of its users' actual workflows. People study from physical Bibles, annotated margins, handwritten journals, printed sermon notes, and scanned pages from centuries-old commentaries. Ignoring that content means the platform cannot surface insights from a user's most personal study material.
+An OCR pipeline is an async, multi-stage job — preprocess, recognize, correct, score confidence, then hand clean text to embedding — that turns photos and scans into searchable text. A Bible study platform that only handles digital text is missing a significant portion of its users' actual workflows. People study from physical Bibles, annotated margins, handwritten journals, printed sermon notes, and scanned pages from centuries-old commentaries. Ignoring that content means the platform cannot surface insights from a user's most personal study material.
 
 OCR — Optical Character Recognition — is how the platform ingests this content. A user photographs a page from their study Bible or uploads a scan of a 19th-century commentary, and the pipeline converts that image to text that can be searched, embedded, and referenced alongside everything else.
 
 This article covers how the OCR pipeline is designed, what makes it reliable, how it handles the specific challenges of religious and historical texts, and how it connects to the rest of the backend.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -58,7 +59,7 @@ Preprocessing steps in order:
 
 **Noise removal.** Old documents and low-quality scans have speckling, bleed-through from the reverse side of the page, and crease shadows. A denoising pass removes small artifacts without blurring text edges.
 
-These steps run sequentially using Sharp (Node.js image processing) for format handling and a Python sidecar process for the ML-based orientation and deskewing steps. The preprocessed image is stored to object storage before the OCR stage — this is the input the OCR engine will actually see, and retaining it means failed OCR jobs can be retried without rerunning preprocessing.
+These steps run sequentially using Sharp (Node.js image processing) for format handling and a Python sidecar process for the ML-based orientation and deskewing steps. The preprocessed image is stored to object storage (MinIO in my setup; see [MinIO storage strategy](/blog/versehub-engineering/08-minio-storage-strategy)) before the OCR stage — this is the input the OCR engine will actually see, and retaining it means failed OCR jobs can be retried without rerunning preprocessing.
 
 ## OCR Engine Selection
 
@@ -66,7 +67,7 @@ The choice of OCR engine depends on the content type:
 
 **Standard printed text** — modern Bible editions, typeset books, printed sermon notes. I use Google Cloud Vision OCR for this category. It handles multiple fonts, varying sizes, and moderate image quality well, and its API makes it easy to get word-level bounding boxes (needed for layout reconstruction).
 
-**Historical and archival documents** — 19th and early 20th century commentaries, old lexicons, manuscripts. These often use typefaces that modern general-purpose OCR engines handle poorly (long-s characters, ligatures, inconsistent spacing). For this category I use Tesseract with a fine-tuned model trained on historical religious texts. The fine-tuned model outperforms the default Tesseract model by roughly 15% on character error rate for 19th-century English religious typography.
+**Historical and archival documents** — 19th and early 20th century commentaries, old lexicons, manuscripts. These often use typefaces that modern general-purpose OCR engines handle poorly (long-s characters, ligatures, inconsistent spacing). For this category Tesseract with a model fine-tuned on historical typography is the better fit; a default model trained mostly on modern fonts struggles with long-s and ligatures. I cover the manuscript side in more depth in [OCR for manuscripts](/blog/ai-engineering/23-ocr-for-manuscripts).
 
 **Handwriting** — personal journal entries, margin annotations. Handwriting recognition is significantly harder than printed text OCR. I use Google Cloud Vision's handwriting mode, which handles legible handwriting reasonably well. Illegible handwriting is flagged with a low confidence score and returned to the user with a warning rather than silently producing poor output.
 
@@ -80,7 +81,7 @@ Raw OCR output is noisy. Even a good engine running on clean input produces erro
 
 Religious texts have a high density of specialized vocabulary that general OCR engines handle poorly: transliterated Hebrew and Greek words, proper names from scripture (Nebuchadnezzar, Bartholomew, Thessalonians), archaic English terms (propitiation, imprecatory, eschatological), and book abbreviations.
 
-I maintain a domain dictionary of ~15,000 terms. After OCR, each word is checked against the dictionary. Words not found in the dictionary or standard English lexicon are run through a fuzzy match against the domain dictionary — if the OCR output "Ncbuchadnezzar" is within edit distance 2 of "Nebuchadnezzar" and no other dictionary word is closer, it is corrected.
+I maintain a domain dictionary of biblical names, transliterations, and theological terms. After OCR, each word is checked against the dictionary. Words not found in the dictionary or standard English lexicon are run through a fuzzy match against the domain dictionary — if the OCR output "Ncbuchadnezzar" is within edit distance 2 of "Nebuchadnezzar" and no other dictionary word is closer, it is corrected.
 
 This is a targeted intervention, not a spell-checker. General spell-checking would aggressively "correct" transliterated Greek and Hebrew terms that are correctly OCR'd but absent from standard dictionaries. The domain dictionary approach only fires on low-confidence words and only substitutes from the religious vocabulary list.
 
@@ -140,7 +141,7 @@ The reassembled document is stored as a single structured document in the databa
 
 ## Connecting to the Rest of the Backend
 
-Once text extraction is complete, the OCR pipeline hands off to the embedding service. Extracted text is chunked using the same rules as commentary content (512-token chunks, 64-token overlap, sentence-boundary splits) and submitted to the embedding service for indexing.
+Once text extraction is complete, the OCR pipeline hands off to the [embedding service](/blog/backendengineering/09-embedding-services). Extracted text is chunked using the same rules as commentary content (512-token chunks, 64-token overlap, sentence-boundary splits) and submitted to the embedding service for indexing.
 
 After indexing, the document is searchable alongside all other platform content. A user who scanned their annotated study Bible margins can search "my notes about covenant" and get results from their handwritten margin notes, their saved digital notes, and retrieved scripture passages — all in the same search result.
 
@@ -188,7 +189,7 @@ destinationUrl: "/hire-me"
 
 ## Performance
 
-OCR is CPU-intensive and slower than most other pipeline stages. Target times per page:
+OCR is CPU-intensive and slower than most other pipeline stages. Rough per-page targets to design around:
 
 | Content Type | Preprocessing | OCR | Post-processing | Total |
 |---|---|---|---|---|
@@ -196,7 +197,7 @@ OCR is CPU-intensive and slower than most other pipeline stages. Target times pe
 | Historical document | 0.8s | 3–5s | 0.5s | ~4–6s |
 | Handwriting | 0.5s | 2–4s | 0.3s | ~3–5s |
 
-A 20-page PDF takes 40–120 seconds end-to-end with pages processed in parallel across four workers. Users are not waiting at a spinner — this is an async job with a notification on completion — so the latency is acceptable.
+At those rates a 20-page PDF is a minute or two of work even with pages processed in parallel across a few [async workers](/blog/backendengineering/12-async-workers). Users are not waiting at a spinner — this is an async job with a notification on completion — so the latency is acceptable.
 
 Workers scale horizontally. During bulk upload events (a user uploading a stack of scanned commentaries), the worker pool expands automatically. Peak load is bounded by the Google Cloud Vision API rate limit, not by local compute.
 
@@ -253,6 +254,14 @@ links:
     description: "The authoritative reference for character encoding — the standard that normalization and post-processing pipelines must conform to when handling mixed-script theological documents."
 ---
 ::
+
+## Related reading
+
+- [Embedding Services](/blog/backendengineering/09-embedding-services) — previous in the series: where the extracted text goes next
+- [Agent Orchestration (Backend)](/blog/backendengineering/11-agent-orchestration) — next in the series
+- [OCR for Manuscripts](/blog/ai-engineering/23-ocr-for-manuscripts) — the AI side of reading historical documents
+- [Chunking Religious Texts](/blog/ai-engineering/10-chunking-religious-texts) — how OCR output is split before embedding
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

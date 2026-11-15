@@ -5,6 +5,7 @@
                     border border-slate-200 dark:border-sky-500/20
                     bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm"
             >
+      <HeroBackdrop src="/img/heroes/system-overview.jpg" />
         <!-- Glow -->
         <div
             class="absolute inset-0
@@ -138,10 +139,10 @@
     </div>
     <div class="px-4 py-3">
       <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/sky:text-sky-600 dark:group-hover/sky:text-sky-400">Cluster</p>
-      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">12</div>
+      <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">7</div>
       <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Kubernetes Nodes</div>
       <div class="flex flex-wrap gap-1.5">
-        <span v-for="t in ['k3s', '8× Pi 5', '4× Jetson']" :key="t"
+        <span v-for="t in ['k3s', '4× Raspberry Pi', '3× Jetson Orin Nano Super']" :key="t"
           class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
           {{ t }}
         </span>
@@ -162,9 +163,9 @@
     <div class="px-4 py-3">
       <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/purple:text-purple-600 dark:group-hover/purple:text-purple-400">Compute</p>
       <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">ARM64</div>
-      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Raspberry Pi 5 Cluster</div>
+      <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Raspberry Pi + Jetson Cluster</div>
       <div class="flex flex-wrap gap-1.5">
-        <span v-for="t in ['Pi 5', '8 Nodes', 'ARM64']" :key="t"
+        <span v-for="t in ['Raspberry Pi', 'Jetson', 'ARM64']" :key="t"
           class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
           {{ t }}
         </span>
@@ -239,7 +240,7 @@
               <div class="px-5 py-4">
                 <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-3">Technology Stack</p>
                 <div class="flex flex-wrap gap-1.5">
-                  <span v-for="t in ['Kubernetes', 'k3s', 'Raspberry Pi 5', 'FastAPI', 'Redis', 'PostgreSQL', 'Apache AGE', 'Weaviate', 'MinIO', 'Gitea', 'Actions Runners', 'LLMs']" :key="t"
+                  <span v-for="t in ['Kubernetes', 'k3s', 'Raspberry Pi', 'Jetson Orin', 'FastAPI', 'Redis', 'PostgreSQL', 'Apache AGE', 'Weaviate', 'MinIO', 'Gitea', 'Actions Runners', 'LLMs']" :key="t"
                     class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
                     {{ t }}
                   </span>

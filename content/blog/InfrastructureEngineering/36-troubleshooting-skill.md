@@ -1,8 +1,8 @@
 ---
 title: "Troubleshooting (Skill)"
-description: "Troubleshooting skills I built running a homelab — diagnosing Kubernetes failures, network issues, storage errors, and node crashes in production."
+description: "Troubleshooting skills I built running a K3s homelab: a layer-by-layer process plus real failures like Jetson OOMs, a ServiceLB outage, and an IP change."
 date: 2026-01-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - troubleshooting
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: troubleshooting-skill
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/36-troubleshooting-skill.jpg
 ---
 
 # Troubleshooting (Skill)
 
 ## Introduction
 
-Troubleshooting has become one of the most valuable skills developed through building and maintaining my infrastructure stack. What started as a simple homelab evolved into a full system built around a Raspberry Pi–based K3s cluster, a dedicated rack setup, CI/CD pipelines using Gitea runners, and a separate development machine running GPU workloads in Docker containers (including AI model experiments on an RTX 3090). Each layer of this system introduced new failure points—networking issues, container orchestration problems, storage inconsistencies, and deployment errors—which forced a practical, hands-on approach to diagnosing and resolving issues quickly and systematically.
+Good infrastructure troubleshooting is a repeatable process: identify the symptom, read the logs, isolate the layer (network, compute, storage, or application), reproduce, fix, and validate across the system. I built that skill by keeping a 7-node K3s homelab running — four Raspberry Pis, three Jetson Orin Nano Super GPU workers, Gitea CI/CD runners, and a separate RTX 3090 workstation. Each layer of this system introduced new failure points—networking issues, container orchestration problems, storage inconsistencies, and deployment errors—which forced a practical, hands-on approach to diagnosing and resolving issues quickly and systematically.
 
 Rather than treating troubleshooting as reactive “fixing,” it has become a structured engineering skill: observing system behavior, isolating variables, reproducing issues, and validating fixes under real workloads.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -41,6 +42,7 @@ Through the process of assembling my rack and expanding my cluster, I learned th
 - Broken CI/CD pipelines from Gitea runners
 - Permission or storage issues with persistent volumes
 - Container runtime failures in Docker workloads
+- GPU memory exhaustion on memory-constrained edge boards
 - Service discovery or DNS issues across the cluster
 
 Each failure became a learning loop. Instead of guessing, I started relying on logs, system state inspection, and controlled testing to pinpoint root causes.
@@ -55,7 +57,8 @@ My rack and homelab environment is intentionally layered:
 - Worker nodes joining and leaving during testing and upgrades
 - Gitea running as the source control and CI/CD backbone
 - Self-hosted runners executing deployment pipelines
-- A separate PC with an RTX 3090 running Docker-based AI workloads and models
+- Three Jetson GPU workers running inference, each with one role
+- A separate PC with an RTX 3090 running embeddings, larger models, and training
 
 Because these systems interact, a failure in one layer often cascades into others. For example, a broken CI pipeline might deploy a misconfigured manifest to Kubernetes, which then causes pod crashes or service outages. Learning to trace these dependencies was a major step in improving my troubleshooting ability.
 
@@ -69,7 +72,7 @@ Over time, I developed a consistent workflow:
    - What is failing vs what is still working?
 
 2. **Check logs first**
-   - Kubernetes logs, container logs, CI logs, systemd logs
+   - Kubernetes logs, container logs, CI logs, systemd logs (centralized with [Loki and Promtail](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster))
 
 3. **Isolate the layer**
    - Is it networking, compute, storage, or application logic?
@@ -110,6 +113,15 @@ Some of the most important lessons came from repeated failures:
 - Logs are more reliable than assumptions
 
 These lessons became more important as the system scaled.
+
+## Real Failures I Had to Work Through
+
+A few incidents shaped the process above more than anything else:
+
+- **Jetson models OOM-ing with "available" memory.** On the Jetsons, `free -h` showed memory available, but model loads still failed. The CUDA allocator can't reclaim page cache on that unified-memory board, so the fix was to stop the old model and drop caches (`sync; echo 3 > /proc/sys/vm/drop_caches`) before loading a new one.
+- **Every LoadBalancer service stopped working.** A single ServiceLB node label plus a port 8080 clash was the cause — written up in [how one node label broke every LoadBalancer service](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers).
+- **The control plane changed IP.** Every agent lost its server; see [recovering a K3s cluster after a control plane IP change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change).
+- **Workflow tasks timing out.** Temporal's default 10-second task timeout bit VerseHub's LLM workflows until I set timeouts deliberately — covered in [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production).
 
 ::CtaContactWork
 ---
@@ -178,6 +190,16 @@ links:
     description: "Overview of distributed systems — the context in which troubleshooting becomes significantly harder, since failures can originate in any layer and propagate across services in ways that obscure the root cause."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Systems Thinking](/blog/infrastructureengineering/35-systems-thinking) — previous in the series.
+- [Why I Built a Homelab](/blog/infrastructureengineering/37-why-i-built-a-homelab) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Networking Issues](/blog/infrastructureengineering/25-networking-issues) — the network-layer version of this checklist.
+- [The Biggest Mistakes I Made Building My AI Homelab](/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab) — more failures from the AI side of the lab.
 
 ---
 

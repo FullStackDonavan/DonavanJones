@@ -1,25 +1,28 @@
 ---
 title: "Voice Narration Pipelines"
-description: "Voice narration pipelines for AI-driven Bible study."
-date: 2026-07-09
-lastUpdated: "2026-06-09"
+description: "Voice narration pipelines for AI Bible study: text preprocessing, pronunciation dictionaries, SSML pacing, chunked text-to-speech, post-processing and caching."
+date: 2026-07-08
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
   - voice
   - pipelines
-draft: true
+draft: false
 slug: voice-narration-pipelines
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/22-voice-narration-pipelines.jpg
 ---
 
 # Voice Narration Pipelines
+
+A voice narration pipeline turns scripture and AI-generated study text into natural audio: normalize the text, fix pronunciation of names and Greek or Hebrew terms, add pacing markup, synthesize speech in chunks, post-process the audio and cache it. Most of the quality comes from the steps before the text-to-speech engine, not the engine itself.
 
 Bible study has always had an oral dimension. Scripture was read aloud in synagogues and churches before most believers could read it themselves. Liturgical traditions build entire worship forms around the spoken word. Even in private study, many readers find that hearing a passage changes how they receive it — the rhythm of the language, the pauses, the weight of individual phrases.
 
 Voice narration on this platform serves two distinct use cases. The first is audio Bible reading: generating high-quality narration of scripture passages for listening during commutes, workouts, or any context where reading is not practical. The second is narrated study content: converting AI-generated study responses, commentary summaries, and word studies into audio format for extended listening sessions. Each use case has different requirements and a different pipeline.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -31,7 +34,7 @@ destinationUrl: "/categories/ai-engineering"
 
 ## The Core TTS Pipeline
 
-Both use cases share a common text-to-speech foundation. The platform uses ElevenLabs for primary narration, with Amazon Polly as a fallback for lower-priority content and cost management.
+Both use cases share a common text-to-speech foundation. On VerseHub that foundation is self-hosted: Kokoro-82M runs on a dedicated Jetson Orin Nano Super (the cluster's speech node) alongside whisper.cpp for speech-to-text, and a Kokoro → Whisper round trip measures about 0.85 seconds ([running speech and LLMs on one local stack](/blog/ai-homelab-engineering/11-local-image-speech-llms-one-stack) covers the hardware side). The stages below are engine-agnostic. The code samples use a hosted API (ElevenLabs) because its SSML and voice settings make each stage easy to see; the same stages apply when the call goes to a local engine.
 
 The basic pipeline:
 
@@ -144,7 +147,7 @@ function applyPronunciationDictionary(text: string): string {
 
 "YHWH" is a special case. The divine name is never pronounced in Jewish tradition; in Christian usage it is conventionally rendered "the LORD." The system substitutes this at preprocessing rather than trying to generate a pronunciation — which matches how it would be read aloud in any liturgical or study setting.
 
-The dictionary has 340 entries covering biblical names, places, Greek and Hebrew terms, and theological vocabulary. Gaps are discovered when users report mispronunciations via the feedback mechanism; new entries are added to the dictionary and the affected audio is regenerated.
+The dictionary covers biblical names, places, Greek and Hebrew terms, and theological vocabulary. Gaps are discovered when users report mispronunciations via the feedback mechanism; new entries are added to the dictionary and the affected audio is regenerated.
 
 ## Stage 3: SSML Generation
 
@@ -216,7 +219,7 @@ destinationUrl: "/systems/ai"
 
 ## Stage 4: TTS API Call and Chunking
 
-ElevenLabs has a character limit per API call (5,000 characters for standard voices). Long texts are chunked before submission:
+Hosted TTS APIs cap the characters per call (ElevenLabs allows 5,000 for standard voices), and small local models like Kokoro also do best on short segments. Long texts are chunked before submission:
 
 ```typescript
 async function generateAudio(
@@ -248,7 +251,7 @@ async function generateAudio(
 
 The chunk split must respect SSML structure — splitting inside a `<prosody>` tag would produce malformed XML that the API rejects. The splitter finds split points at sentence boundaries that are also outside any open SSML tags.
 
-The `stability` setting (0.75) and `similarity_boost` (0.85) are tuned for theological narration: high enough consistency that the voice sounds reliably like the same reader across long passages, without the robotic consistency that comes from maxing both settings. The `style` parameter at 0.3 adds slight expressiveness appropriate for engaged reading without veering into dramatization.
+With ElevenLabs, the `stability` setting (0.75) and `similarity_boost` (0.85) are tuned for theological narration: high enough consistency that the voice sounds reliably like the same reader across long passages, without the robotic consistency that comes from maxing both settings. The `style` parameter at 0.3 adds slight expressiveness appropriate for engaged reading without veering into dramatization.
 
 ## Stage 5: Audio Post-Processing
 
@@ -292,7 +295,7 @@ Waveform data is generated as a 200-point array of amplitude values, used by the
 
 ## Delivery and Caching
 
-Generated audio is stored in S3 with a CDN in front. Cache keys are content hashes — the same scripture passage with the same voice configuration produces the same hash and hits the same cached file:
+Generated audio is stored in S3-compatible object storage with a CDN in front. Cache keys are content hashes — the same scripture passage with the same voice configuration produces the same hash and hits the same cached file:
 
 ```typescript
 function computeAudioCacheKey(
@@ -342,7 +345,7 @@ destinationUrl: "https://versehub.app/register"
 
 ## Streaming for Long Content
 
-For long-form content (full chapter narrations, extended study guides), audio is streamed rather than delivered as a complete file. This gets the first chunk of audio to the user in under two seconds while the rest is still generating:
+For long-form content (full chapter narrations, extended study guides), audio is [streamed](/blog/backendengineering/06-streaming) rather than delivered as a complete file. This gets the first chunk of audio to the user in under two seconds while the rest is still generating:
 
 ```typescript
 async function* streamAudioGeneration(
@@ -373,7 +376,7 @@ The platform offers four voice configurations:
 
 Users set a default voice in preferences; individual pieces of content can override the default. The Liturgical voice uses different SSML settings — slower pace, longer pauses between verses, slightly more formal prosody — than the Study voice, which reads at conversational speed with less structural pause.
 
-Voice preference is stored in procedural memory and respected across sessions. A user who prefers the Liturgical voice for scripture but the Study voice for commentary does not have to set this repeatedly.
+Voice preference is stored in [procedural memory](/blog/ai-engineering/19-memory-systems) and respected across sessions. A user who prefers the Liturgical voice for scripture but the Study voice for commentary does not have to set this repeatedly.
 
 ## Quality Monitoring
 
@@ -383,7 +386,7 @@ Audio quality issues that escape the automated pipeline surface through user fee
 
 **Pronunciation report**: a specific feedback path for pronunciation errors that captures the term, the clip, and optionally the user's description of the correct pronunciation. High-frequency reports on the same term trigger automatic dictionary updates.
 
-**Quality metrics**: the audio generation pipeline emits metrics to the monitoring system: generation latency, API error rate, chunk count per request, post-processing duration. Elevated error rates (ElevenLabs API errors, post-processing failures) trigger alerts.
+**Quality metrics**: the audio generation pipeline emits metrics to the [monitoring system](/blog/infrastructureengineering/41-prometheus-on-pi-cluster): generation latency, API error rate, chunk count per request, post-processing duration. Elevated error rates (TTS engine errors, post-processing failures) trigger alerts.
 
 The combination of user feedback and automated metrics keeps the narration quality at a level where users actually use the feature. Voice narration that mispronounces "Gethsemane" or "propitiation" will be trusted less than audio that gets these right — and trust, once lost, is not easily regained. Getting the preprocessing and pronunciation right is the work that makes the feature usable for the users it is built to serve.
 
@@ -438,6 +441,14 @@ links:
     description: "Foundational field covering text normalization, tokenization, and linguistic processing — the preprocessing layer that prepares theological text for TTS rendering."
 ---
 ::
+
+## Related reading
+
+- [Debate Agents](/blog/ai-engineering/21-debate-agents) — previous in the AI Engineering series
+- [OCR for Manuscripts](/blog/ai-engineering/23-ocr-for-manuscripts) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Local Image Generation, Speech, and LLMs in One Stack](/blog/ai-homelab-engineering/11-local-image-speech-llms-one-stack) — running speech and LLMs on the same local stack
+- [Streaming](/blog/backendengineering/06-streaming) — streaming responses to the client
 
 ---
 

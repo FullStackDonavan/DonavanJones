@@ -1,8 +1,8 @@
 ---
 title: "Loki and Promtail on a Pi K3s Cluster"
-description: "Deploying Loki for log aggregation and Promtail as a DaemonSet on an ARM64 Raspberry Pi k3s cluster — including the troubleshooting steps needed to get pod log collection working."
-date: 2026-07-03
-lastUpdated: "2026-07-03"
+description: "Deploying Loki and a Promtail DaemonSet on an ARM64 Raspberry Pi K3s cluster, plus the troubleshooting it took to get pod log collection working."
+date: 2026-07-28
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - loki
@@ -12,10 +12,11 @@ tags:
   - arm64
   - raspberry-pi
   - k3s
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: loki-promtail-on-pi-cluster
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster.jpg
 ---
 
 Loki handles log aggregation the same way Prometheus handles metrics — it ingests, indexes, and stores log streams from across the cluster so they can be queried in Grafana. Promtail is the collection agent: a DaemonSet that runs on every node, reads pod log files from the host filesystem, and ships them to Loki. This article covers the deployment and the non-obvious troubleshooting required to get Promtail collecting logs on k3s.
@@ -24,7 +25,7 @@ Loki handles log aggregation the same way Prometheus handles metrics — it inge
 
 Cluster-wide log aggregation on ARM64 using Loki for storage and Promtail as a node-level collection DaemonSet.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -62,7 +63,7 @@ Promtail reads log files directly from the host filesystem rather than using the
 
 - K3s cluster with ARM64 nodes
 - `local-path` storage provisioner
-- Grafana deployed (see [Grafana on a Pi K3s Cluster](/blog/infrastructure-engineering/grafana-on-pi-cluster))
+- Grafana deployed (see [Grafana on a Pi K3s Cluster](/blog/infrastructureengineering/42-grafana-on-pi-cluster))
 
 ---
 
@@ -296,7 +297,7 @@ destinationUrl: "/hire-me"
 
 Loki and Promtail on k3s works well once two issues are resolved: the control plane toleration so every node gets a Promtail pod, and the `privileged: true` security context so Promtail can actually read from `/var/log/pods/`. The static glob scrape config is simpler and more reliable than the kubernetes SD path-building approach for this version of Promtail on k3s.
 
-With all three components running — Prometheus, Loki, and Grafana — the cluster has full observability: metrics and logs from every pod on every node queryable from a single Grafana instance.
+With all three components running — Prometheus, Loki, and Grafana — the cluster has full observability: metrics and logs from every pod on every node queryable from a single Grafana instance. Having every node's logs in one place matters most for failures that don't look like failures — for example, the outage in [how one node label broke every LoadBalancer service](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers), where every pod looked healthy. For the debugging process I use with these tools, see [Troubleshooting (Skill)](/blog/infrastructureengineering/36-troubleshooting-skill).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -345,6 +346,15 @@ links:
     description: "Overview of the ARM processor architecture — the ARM64 hardware platform on which both Loki and Promtail run as multi-arch container images on Raspberry Pi nodes."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Grafana on a Pi K3s Cluster](/blog/infrastructureengineering/42-grafana-on-pi-cluster) — previous in the series: where these logs are queried.
+- [Recovering a K3s Cluster After a Control Plane IP Change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — an example of the workloads whose logs end up here.
 
 ---
 

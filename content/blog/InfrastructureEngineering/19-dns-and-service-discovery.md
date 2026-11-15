@@ -2,7 +2,7 @@
 title: "DNS and Service Discovery"
 description: "How DNS and service discovery work inside a Kubernetes cluster — CoreDNS configuration, service naming, and resolving inter-pod communication issues."
 date: 2025-11-10
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -10,17 +10,20 @@ tags:
 draft: false
 slug: dns-and-service-discovery
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/19-dns-and-service-discovery.jpg
 ---
 
 # DNS and Service Discovery
 
+Kubernetes service discovery works through DNS. Every Service gets a stable name like `my-service.my-namespace.svc.cluster.local`, CoreDNS resolves it to the Service's cluster IP, and the Service forwards traffic to whichever pods currently match its label selector. Pods never need to know another pod's IP. K3s ships CoreDNS by default, so this works out of the box.
+
 ## Introduction
 
-In a Kubernetes-based homelab, DNS and service discovery are what make the entire system feel “alive” instead of just a collection of isolated containers. In my own setup—running a K3s cluster across a small rack of machines and Raspberry Pi nodes, along with heavier workloads offloaded to a separate RTX 3090 development machine—service discovery is the backbone that allows everything to communicate without hardcoding IPs.
+In a Kubernetes-based homelab, DNS and service discovery are what make the entire system feel “alive” instead of just a collection of isolated containers. In my own setup—running a K3s cluster across four Raspberry Pis and three Jetson Orin GPU workers, along with heavier workloads offloaded to a separate RTX 3090 development machine—service discovery is the backbone that allows everything to communicate without hardcoding IPs.
 
 As the cluster grows to include services like my Bible app, Gitea CI runners, AI microservices, and backend APIs, DNS becomes essential for keeping communication stable even when pods restart, scale, or move between nodes. Instead of chasing IP addresses, services simply find each other by name.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -43,7 +46,7 @@ For example:
 
 This means any pod can reach another service using a consistent name instead of an unstable IP address.
 
-In my homelab rack, this is especially useful because nodes can reboot, pods reschedule, and workloads shift between ARM-based Pis and more powerful x86 machines. DNS abstracts all of that complexity away.
+In my homelab rack, this is especially useful because nodes can reboot and pods reschedule between Pi workers, and AI services live on specific Jetson GPU workers. DNS abstracts all of that complexity away.
 
 ---
 
@@ -57,7 +60,8 @@ Service discovery in Kubernetes happens through Services, Endpoints, and labels.
 
 In my setup, this is what allows things like:
 
-- The Bible app frontend talking to backend APIs without knowing where they are running
+- The [VerseHub](/projects/versehub) frontend talking to backend APIs without knowing where they are running
+- Workers reaching Redis, PostgreSQL, Weaviate, and MinIO by service name, wherever those pods are scheduled
 - AI services in Docker containers on my dev machine being reachable from cluster workloads when exposed properly
 - CI/CD runners in Gitea picking up jobs and routing them correctly across nodes
 
@@ -81,7 +85,7 @@ destinationUrl: "/systems/infrastructure"
 
 My setup isn’t a pure cloud-native cluster—it’s hybrid:
 
-- K3s running on a small homelab rack (multiple nodes)
+- K3s running on a small homelab rack (seven nodes: four Pis, three Jetsons)
 - A separate development machine with an RTX 3090 running AI containers
 - Gitea running inside the cluster acting as the glue for CI/CD
 - Services deployed via manifests pushed through repositories
@@ -92,7 +96,7 @@ To make this work, I rely on a combination of:
 
 - Cluster DNS (CoreDNS)
 - Internal service names (`*.svc.cluster.local`)
-- External service mappings when needed (NodePorts / Ingress)
+- External service mappings when needed (NodePorts / Ingress — Grafana, Prometheus, and Gitea are NodePorts in my cluster; the ingress side is in [ingress setup on K3s](/blog/infrastructureengineering/08-ingress-setup))
 - Consistent naming conventions across deployments
 
 ---
@@ -113,7 +117,7 @@ Typical debugging tools:
 - `nslookup` or `dig` inside a debug pod
 - Checking CoreDNS logs
 
-In a multi-node rack setup like mine, it’s also important to verify node networking, especially when mixing ARM nodes and a more powerful x86 machine.
+In a multi-node rack setup like mine, it’s also important to verify node networking underneath DNS, especially node IPs. Service names can't help if the nodes themselves can't find the server: my control plane's IP changed once, and the cluster needed a full recovery (see [recovering after a control plane IP change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change)).
 
 ---
 
@@ -200,5 +204,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Cost vs Performance Tradeoffs](/blog/infrastructureengineering/18-cost-vs-performance-tradeoffs) — previous in the series
+- [Future Expansion Plans](/blog/infrastructureengineering/20-future-expansion-plans) — next in the series
+- [Networking Issues](/blog/infrastructureengineering/25-networking-issues) — networking failures I have actually debugged
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — the services that rely on this discovery layer
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

@@ -21,6 +21,7 @@
 
     <!-- Hero -->
     <ProductHero
+      :image="seoDoc.excerptImage"
       :title="seoDoc.title"
       :tagline="seoDoc.tagline || ''"
       :description="seoDoc.description"
@@ -183,7 +184,8 @@
           </div>
 
           <!-- CTA -->
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-5">
+          <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-5">
+            <HeroBackdrop lazy :src="seoDoc.excerptImage || '/img/heroes/products.jpg'" side="full" />
             <p class="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Ready to dive in?</p>
             <p class="text-xs text-slate-400 dark:text-slate-500 mb-4 leading-relaxed">
               All the diagrams, code, and references in one place.
@@ -231,8 +233,10 @@
                    hover:shadow-lg hover:shadow-sky-500/5
                    transition-all duration-200"
           >
-            <div class="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800">
-              <Icon :name="p.badgeIcon || 'mdi:package-variant-closed'" class="text-xl text-slate-400 dark:text-slate-500" />
+            <div class="flex-shrink-0 w-24 aspect-[3/2] overflow-hidden rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+              <img v-if="p.excerptImage" :src="p.excerptImage" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <Icon v-else :name="p.badgeIcon || 'mdi:package-variant-closed'" class="text-xl text-slate-400 dark:text-slate-500" />
             </div>
             <div class="flex-1 min-w-0">
               <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-sky-400 transition-colors mb-0.5">
@@ -304,6 +308,8 @@ const pageTitle = computed(() =>
   seoDoc.value?.title ? `${seoDoc.value.title} — Donavan Jones` : 'Donavan Jones'
 )
 const pageDescription = computed(() => seoDoc.value?.description || '')
+const _abs = useAbsoluteUrl()
+const pageImage = computed(() => _abs(seoDoc.value?.excerptImage) || `${SITE}/img/logo.png`)
 
 useSeoMeta({
   title: pageTitle,
@@ -311,12 +317,12 @@ useSeoMeta({
   description: pageDescription,
   ogDescription: pageDescription,
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: pageImage,
   ogUrl: () => `${SITE}${route.path}`,
   twitterCard: 'summary_large_image',
   twitterTitle: pageTitle,
   twitterDescription: pageDescription,
-  twitterImage: `${SITE}/img/logo.png`,
+  twitterImage: pageImage,
   canonical: () => `${SITE}${route.path}`,
 })
 

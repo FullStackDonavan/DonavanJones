@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ctaImage } from '~/utils/ctaImage'
 withDefaults(defineProps<{
   buttonText: string
   supportingCopy: string
@@ -12,10 +13,11 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    class="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
+    class="relative isolate overflow-hidden flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
            border-rose-500/20 dark:border-rose-500/20
            bg-rose-50/60 dark:bg-rose-500/5 p-5 sm:p-6"
   >
+    <HeroBackdrop lazy :src="ctaImage(destinationUrl)" />
     <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
                 bg-rose-500/10 border border-rose-500/20">
       <Icon name="mdi:handshake-outline" class="text-xl text-rose-500" />

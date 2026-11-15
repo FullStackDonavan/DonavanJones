@@ -1,8 +1,8 @@
 ---
 title: "Hallucination Reduction"
-description: "Techniques for reducing hallucinations in theological AI retrieval."
+description: "How to reduce LLM hallucinations in a theological RAG system: retrieval grounding, prompt constraints, post-generation verse checks and confidence calibration."
 date: 2026-05-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,17 +12,20 @@ draft: false
 cluster: "ai-engineering"
 slug: hallucination-reduction
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/14-hallucination-reduction.jpg
 ---
 
 # Hallucination Reduction
 
-The previous article covered citation grounding — ensuring that claims in AI responses are traceable to specific retrieved sources. This article covers the broader problem that citation grounding is one response to: hallucination.
+Reducing hallucinations in a theological AI is layered work: retrieve the real verse text and lexicon entries before generating, constrain the prompt so claims must come from that context, then check quotes, cross-references and attributions after generation. No single layer eliminates hallucination; together they make it rare and visible.
+
+The previous article covered [citation grounding](/blog/ai-engineering/13-citation-grounding) — ensuring that claims in AI responses are traceable to specific retrieved sources. This article covers the broader problem that citation grounding is one response to: hallucination.
 
 Hallucination is when a model generates content that is confidently stated but factually wrong or unsupported. In a general-purpose AI assistant, hallucinations are annoying and sometimes harmful. In a theological AI system where users are trying to understand what the Bible actually says, hallucinations are a category error. A model that invents a verse reference, misquotes a passage, attributes a theological position to the wrong tradition, or synthesizes a doctrine from partial evidence is not helping users understand scripture — it is creating false beliefs about scripture while wearing the authority of a knowledgeable guide.
 
 The engineering response to this is not to find a model that never hallucinates — no such model exists. It is to design a system where hallucinations are structurally prevented where possible, detected when they occur, and surfaced transparently when they cannot be corrected.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -52,7 +55,9 @@ Each category requires different prevention strategies.
 
 The most effective hallucination prevention is not post-generation checking — it is ensuring the model has accurate information before generating. A model that generates from a context window containing the actual verse text, the actual lexical definition, and the actual cross-references will hallucinate less than one generating from training memory, regardless of how capable the model is.
 
-This is the core argument for RAG in theological AI: not that it makes the model smarter, but that it reduces the circumstances under which the model must rely on imperfect training memory.
+This is the core argument for [RAG](/blog/ai-engineering/17-retrieval-augmented-generation) in theological AI: not that it makes the model smarter, but that it reduces the circumstances under which the model must rely on imperfect training memory.
+
+The failure mode I learned the hard way is retrieval that fails silently. VerseHub's retrieval once swallowed an error and returned an empty list, and the model went on to produce confident answers with no evidence behind them. Retrieval failures now raise instead of returning `[]` — an empty context is worse than an error, and [verification agents](/blog/agentic-ai-systems/11-verification-agents-in-production) can't catch what was never retrieved.
 
 Specific retrieval design decisions that reduce hallucinations:
 
@@ -342,6 +347,14 @@ links:
     description: "Methodology for measuring hallucination at the atomic claim level — the evaluation approach applied to detect doctrinal and textual errors."
 ---
 ::
+
+## Related reading
+
+- [Citation Grounding](/blog/ai-engineering/13-citation-grounding) — previous in the AI Engineering series
+- [AI Pipelines for Bible Study](/blog/ai-engineering/15-ai-pipelines-for-bible-study) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production) — verification agents in production
+- [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs) — VerseHub's verification pipeline
 
 ---
 

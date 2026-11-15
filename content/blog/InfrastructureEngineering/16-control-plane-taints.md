@@ -2,7 +2,7 @@
 title: "Control Plane Taints"
 description: "How control plane taints work in Kubernetes and why preventing workload scheduling on the control plane keeps your cluster stable and performant."
 date: 2025-11-02
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -10,15 +10,18 @@ tags:
 draft: false
 slug: control-plane-taints
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/16-control-plane-taints.jpg
 ---
 
 # Control Plane Taints
 
+A control plane taint, usually `node-role.kubernetes.io/control-plane:NoSchedule`, tells the Kubernetes scheduler to keep ordinary pods off the control plane node unless they carry a matching toleration. It protects the API server, scheduler, and datastore from noisy workloads. One K3s-specific catch: K3s does not add this taint to server nodes by default, so on a fresh K3s cluster your pods can land on the control plane until you taint it yourself.
+
 When I started building out my rack with K3s, I assumed scheduling would be simple: add a node, deploy a pod, and let Kubernetes handle the rest. In practice, the control plane changes that story. Once you understand how taints work, it becomes much easier to see why some workloads stay pending, why certain pods avoid the master node, and why cluster stability depends on keeping the control plane protected. In a homelab like mine—where I may be running core Kubernetes services, Gitea runners, AI workloads, databases, and other self-hosted tools—this separation matters a lot.
 
-Control plane taints are one of the small Kubernetes features that can save you from big problems later. A taint tells the scheduler that a node should repel certain pods unless those pods explicitly tolerate the taint. On control plane nodes, this usually exists by default so critical cluster components are not competing with regular application workloads.
+Control plane taints are one of the small Kubernetes features that can save you from big problems later. A taint tells the scheduler that a node should repel certain pods unless those pods explicitly tolerate the taint. On kubeadm-style clusters, this exists by default so critical cluster components are not competing with regular application workloads. On K3s you add it yourself, either with `kubectl taint` or by installing the server with `--node-taint node-role.kubernetes.io/control-plane:NoSchedule`.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -49,7 +52,7 @@ That means the scheduler will not place normal workloads on the node unless the 
 
 Without a taint, regular workloads could land on the control plane and compete with the very processes that keep the cluster running. That creates avoidable risk. If a database, AI service, video workload, or CI job starts consuming too much memory or CPU on the control plane, the entire cluster can become unstable.
 
-In a small rack setup, the problem is even more noticeable. If you are running K3s across a few Raspberry Pis and a main machine, every node matters. The control plane should stay as predictable as possible so the rest of the system can keep working.
+In a small rack setup, the problem is even more noticeable. If you are running K3s across a few Raspberry Pis and a handful of small GPU boards, like my four Pis and three Jetson Orin workers, every node matters. The control plane should stay as predictable as possible so the rest of the system can keep working.
 
 ## How to Check for Taints
 
@@ -125,7 +128,9 @@ tolerations:
 
 That tells Kubernetes the pod is allowed on the control plane, even though the taint still exists.
 
-For a setup like mine, that can be useful for lightweight system tools, monitoring components, or other support services that do not put much pressure on the node.
+For a setup like mine, that can be useful for lightweight system tools, monitoring components, or other support services that do not put much pressure on the node. My control plane, pi-node1, is a good example: it hosts Prometheus, Grafana, and Gitea alongside the K3s server, while application workloads go to the Pi workers and AI work goes to the Jetsons. If you do taint the control plane, DaemonSets like Promtail need a matching toleration to keep collecting its logs (see [Loki and Promtail on a Pi K3s cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster)).
+
+Taints keep pods *off* nodes. To pull GPU pods *onto* the right Jetson, you use node labels and selectors, which is covered in [GPU allocation](/blog/backendengineering/13-gpu-allocation).
 
 ## When to Keep the Control Plane Separate
 
@@ -215,5 +220,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Consumer Hardware Usage](/blog/infrastructureengineering/15-consumer-hardware-usage) — previous in the series
+- [Cooling and Power Setup](/blog/infrastructureengineering/17-cooling-and-power-setup) — next in the series
+- [Node Roles](/blog/infrastructureengineering/27-node-roles) — how scheduling maps to node roles
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — scheduling models onto memory-constrained GPU nodes
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

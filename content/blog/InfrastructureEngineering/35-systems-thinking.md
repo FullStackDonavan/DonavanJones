@@ -1,8 +1,8 @@
 ---
 title: "Systems Thinking"
-description: "How systems thinking applies to infrastructure design — understanding failure modes, feedback loops, and building homelabs for long-term reliability."
+description: "Systems thinking applied to my K3s homelab: feedback loops, failure domains, scaling by composition, and observability, with the real failures behind each."
 date: 2026-01-14
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - systems
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: systems-thinking
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/35-systems-thinking.jpg
 ---
 
 # Systems Thinking
 
 ## Introduction
 
-Building infrastructure is often treated as a collection of individual tools—Kubernetes, Docker, CI/CD pipelines, databases, and services—but real stability comes from understanding how those parts interact as a unified system. In my own homelab, especially with a Raspberry Pi-based K3s cluster, a separate development machine with an RTX 3090, and supporting services like Gitea and CI runners, I’ve learned that every component has ripple effects across the entire architecture. A change in one layer—compute, networking, storage, or deployment—inevitably affects the others.
+Systems thinking in infrastructure means designing for the relationships between components — dependencies, feedback loops, and failure domains — rather than for each tool in isolation. Real stability comes from understanding how Kubernetes, CI/CD, storage, and services behave together under load and failure. In my own homelab — a 7-node K3s cluster of Raspberry Pis and Jetson GPU workers, a separate RTX 3090 workstation, and supporting services like Gitea and CI runners — I’ve learned that every component has ripple effects across the entire architecture. A change in one layer—compute, networking, storage, or deployment—inevitably affects the others.
 
 This mindset shift is what systems thinking is about: designing not just for functionality, but for relationships, dependencies, and failure modes. Instead of asking “does this service work?”, I started asking “how does this service behave under load, failure, or change, and what else does it impact?”
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -35,7 +36,8 @@ destinationUrl: "/categories/infrastructure-engineering"
 My homelab evolved from a simple cluster into a multi-layered system:
 
 - A **K3s Raspberry Pi cluster** handling container orchestration and lightweight workloads
-- A **separate development machine with an RTX 3090** running local models in Docker containers
+- **Three Jetson Orin Nano Super GPU workers** inside the cluster, each owning one AI role (image-gen, speech, LLM)
+- A **separate development machine with an RTX 3090** running embeddings, larger models, and training
 - A **Gitea instance running inside the cluster**, acting as the central code and CI/CD hub
 - **CI runners deployed into Kubernetes**, acting as the bridge between code commits and deployments
 - A growing set of **microservices and applications**, including parts of my Bible app ecosystem
@@ -62,11 +64,14 @@ Another key principle is isolation. In a poorly designed system, one failure cas
 In my setup:
 
 - The GPU dev machine is isolated from the cluster so heavy inference workloads don’t disrupt orchestration
+- Each Jetson runs one role, so an out-of-memory model load on one board can't take down speech or the LLM on another
 - Kubernetes namespaces separate experimental workloads from core services
 - CI runners are treated as disposable infrastructure, not critical stateful components
 - Storage and stateful services are carefully separated from stateless application layers
 
 This separation allows me to experiment aggressively without risking the entire system collapsing.
+
+The failures that taught me the most were silent ones. In [VerseHub](/projects/versehub), a retrieval failure used to return an empty list instead of an error — and the model happily produced confident answers with no evidence behind them. The fix was a systems fix, not a model fix: retrieval now raises, and a verification step checks every citation against what was actually retrieved (more in [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production)).
 
 ## Scaling Through Composition
 
@@ -99,7 +104,7 @@ destinationUrl: "/systems/infrastructure"
 
 In systems thinking, you can’t improve what you can’t see. Observability has become a core part of my infrastructure design.
 
-Logs, metrics, and deployment feedback loops across my cluster help me understand:
+In my cluster that means Prometheus and Grafana for metrics (including Jetson GPU load from a small custom `/metrics` agent) and Loki with Promtail for logs from every node — see [Prometheus on a Pi K3s cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster). Logs, metrics, and deployment feedback loops help me understand:
 
 - Where bottlenecks occur in CI/CD pipelines
 - How workloads behave under resource pressure on the Pi cluster
@@ -173,6 +178,15 @@ links:
     description: "Overview of infrastructure as code — the practice that operationalizes systems thinking, making infrastructure declarative and reproducible so every component's intended state is version-controlled and auditable."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Storage Strategy](/blog/infrastructureengineering/34-storage-strategy) — previous in the series.
+- [Troubleshooting (Skill)](/blog/infrastructureengineering/36-troubleshooting-skill) — next in the series: the debugging side of the same mindset.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [The Biggest Mistakes I Made Building My AI Homelab](/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab) — the failures behind these lessons.
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Hardware List and Costs"
-description: "Full hardware list and cost breakdown for my ARM64 homelab Kubernetes cluster — Raspberry Pis, switches, storage, and rack components included."
+description: "Hardware list and cost breakdown for my homelab K3s cluster — four Raspberry Pis, three Jetson Orin Nano Supers, an RTX 3090 box, networking, and storage."
 date: 2025-09-13
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - hardware
@@ -10,17 +10,20 @@ tags:
 draft: false
 slug: hardware-list-and-costs
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/02-hardware-list-and-costs.jpg
 ---
 
 # Hardware List and Costs
 
+My homelab runs on a seven-node K3s cluster — four Raspberry Pis (one control plane, three workers) and three NVIDIA Jetson Orin Nano Super 8GB boards as GPU workers — plus one Windows desktop with a single RTX 3090 (24 GB) for the heaviest models. The Pis handle always-on services, the Jetsons handle small-model inference, image generation, and speech, and the 3090 handles big models and training. The cost table below covers the Pi side, the 3090 box, networking, and storage.
+
 ## Introduction
 
-This document breaks down the hardware powering my homelab Kubernetes cluster, including both the edge compute nodes and my development machine setup. The goal of this infrastructure is to support a distributed system that can handle AI workloads, CI/CD pipelines, container orchestration with k3s, and experimental services for my Bible app ecosystem.
+This document breaks down the hardware powering my homelab Kubernetes cluster, including both the edge compute nodes and my development machine setup. The goal of this infrastructure is to support a distributed system that can handle AI workloads, CI/CD pipelines, container orchestration with k3s, and the backend for [VerseHub](/projects/versehub), my Bible study app.
 
-My setup is intentionally hybrid: lightweight Raspberry Pi nodes form the backbone of the Kubernetes cluster, while a dedicated RTX 3090 machine handles heavier AI workloads and model inference in Docker containers. On top of this, I run supporting services like Gitea for source control and CI runners for automated deployments, creating a fully self-hosted development environment.
+My setup is intentionally hybrid: lightweight Raspberry Pi nodes form the backbone of the Kubernetes cluster, three Jetson Orin boards add GPU inference inside the cluster, and a dedicated RTX 3090 machine handles the heaviest AI workloads in Docker containers. On top of this, I run supporting services like Gitea for source control and CI runners for automated deployments, creating a fully self-hosted development environment.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -36,13 +39,20 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 These are the primary nodes running k3s in my homelab rack:
 
-- Raspberry Pi 5 16gb nodes (k3s workers + control plane)
+- 4x Raspberry Pi 5 16gb nodes (pi-node1 control plane + pi-worker-1, -2, -3)
   - Role: Container orchestration, lightweight services, API workloads
   - OS: Linux (lightweight server distro)
   - Cluster: k3s (lightweight Kubernetes distribution)
   - Purpose: Always-on services, APIs, small microservices, and system tooling
 
 > These nodes form the backbone of the distributed system and handle most production-like workloads in the cluster.
+
+- 3x NVIDIA Jetson Orin Nano Super 8GB (gpu-worker-1, -2, -3, k3s GPU workers)
+  - Boot: NVMe, headless, JetPack 6.x in MAXN_SUPER power mode
+  - Memory: 8 GB unified (CPU and GPU share it), roughly 7.4 GiB usable
+  - Roles: image generation plus a shelf of small models (gpu-worker-1), speech TTS/STT (gpu-worker-2), and an always-loaded llama3.2:3b LLM (gpu-worker-3)
+
+> The Jetsons are the in-cluster GPU tier. Each board fits one ~4–5 GB model at a time, so I assign one job per board rather than sharing. The [three-Jetson AI cluster write-up](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) covers what each one runs.
 
 ---
 
@@ -57,7 +67,7 @@ These are the primary nodes running k3s in my homelab rack:
     - Experimental AI agents (memory + tool use)
     - Build/testing environment for AI pipelines
 
-> This machine acts as the “heavy compute layer” of the system, complementing the Kubernetes cluster.
+> This machine acts as the “heavy compute layer” of the system, complementing the Kubernetes cluster. It's a single RTX 3090 (24 GB), and as of November 2026 I'm rebuilding it into a headless Linux training box (Ryzen 9 5900XT, 64 GB RAM) for fine-tuning small models that run on the Jetsons.
 
 ---
 
@@ -65,7 +75,7 @@ These are the primary nodes running k3s in my homelab rack:
 
 - Gitea Server (self-hosted in cluster)
   - Role: Git hosting, version control, and automation triggers
-  - Integrated with CI runners deployed in the cluster
+  - Integrated with CI runners deployed in the cluster (see [how the Gitea runners pipeline works](/blog/infrastructureengineering/21-gitea-runners-pipeline))
 
 - CI Runners
   - Role: Build, test, and deploy pipelines
@@ -98,7 +108,8 @@ These are the primary nodes running k3s in my homelab rack:
 
 - Local NVMe/SSD storage on Pi nodes (light workloads)
 - Local NVMe/SSD storage on RTX 3090 machine
-- Shared storage strategy (planned/expanding):
+- In-cluster MinIO for S3-compatible object storage (including a training-datasets bucket)
+- Shared storage strategy (expanding):
   - Distributed storage for persistent workloads
   - Backup system for critical application data
 
@@ -127,7 +138,7 @@ destinationUrl: "/systems/infrastructure"
 | Power & Cooling | PSU, cooling, rack power | $130 - $150 |
 | Miscellaneous | Cases, mounts, accessories | $200 - $250 |
 
-> Note: Costs vary depending on sourcing (new vs used hardware), storage capacity, GPU pricing, and networking equipment quality.
+> Note: The Jetson Orin boards aren't itemized in this table. Costs vary depending on sourcing (new vs used hardware), storage capacity, GPU pricing, and networking equipment quality.
 
 ---
 
@@ -198,5 +209,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [K3s on Raspberry Pis](/blog/infrastructureengineering/01-k3s-on-raspberry-pis) — previous in the series
+- [Flashing Raspberry Pi OS](/blog/infrastructureengineering/03-flashing-raspberry-pi-os) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — how the 3090 and the Jetsons split AI work
+- [Hardware ROI for AI Development](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development) — whether this hardware pays for itself against API spend
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

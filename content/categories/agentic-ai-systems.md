@@ -7,13 +7,13 @@ description:
   - "This series covers the production patterns behind real agentic systems: multi-agent workflows built on Temporal, event-driven agents wired through Kafka, memory architectures backed by Redis and vector databases, and the planning and verification layers that keep autonomous agents from quietly going off the rails."
   - "Every pattern here is drawn from systems actually running in production, including the agent layer behind this site's AI homelab and the VerseHub platform."
 featuredArticles:
-  - path: "/blog/agentic-ai-systems/single-agent-vs-multi-agent-systems"
+  - path: "/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems"
     label: "Start Here"
     reason: "The foundational decision every agentic system starts from"
-  - path: "/blog/agentic-ai-systems/building-multi-agent-workflows-with-temporal"
+  - path: "/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal"
     label: "Core Pattern"
     reason: "The orchestration engine behind reliable long-running agent workflows"
-  - path: "/blog/agentic-ai-systems/verification-agents-in-production"
+  - path: "/blog/agentic-ai-systems/11-verification-agents-in-production"
     label: "Production Discipline"
     reason: "The pattern that separates a demo agent from one you can trust unattended"
 learningPath:

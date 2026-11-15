@@ -2,7 +2,7 @@
 title: "Gitea Runners Pipeline"
 description: "How CI/CD pipeline execution works using Gitea runners inside my homelab Kubernetes cluster — job routing, runner registration, and pipeline design."
 date: 2025-11-15
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - gitea
@@ -11,17 +11,20 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: gitea-runners-pipeline
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/21-gitea-runners-pipeline.jpg
 ---
 
 # Gitea Runners Pipeline
+
+My CI/CD pipeline runs on self-hosted Gitea Actions: a push to `main` triggers a runner, which builds an ARM64 image with `docker buildx --platform linux/arm64`, imports it onto the cluster nodes with `k3s ctr images import`, and rolls out the Deployment. Pods use `imagePullPolicy: Never`, so there's no registry pull at deploy time. Nothing leaves my network.
 
 ## Introduction
 
 This document explains how my CI/CD pipeline is structured using Gitea runners inside my homelab environment. The goal is to create a fully self-hosted development workflow where code can be pushed, built, tested, and deployed automatically without relying on external CI services.
 
-My setup is built around a Kubernetes (K3s) cluster running on a small rack of machines, including Raspberry Pi nodes and a dedicated x86 machine used for heavier workloads. In addition, I use a separate development machine with an RTX 3090 for local AI workloads and testing before deployment. Gitea acts as the central source control system, while runners handle automation tasks across the cluster.
+My setup is built around a Kubernetes (K3s) cluster with seven ARM64 nodes: four Raspberry Pis and three Jetson Orin Nano Super GPU workers. In addition, I use a separate development machine with an RTX 3090 for local AI workloads and testing before deployment. Gitea acts as the central source control system, while runners handle automation tasks across the cluster.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -42,8 +45,8 @@ My CI/CD pipeline is designed to be lightweight, distributed, and reproducible a
 - Branch-based workflows are used (main, dev, feature branches).
 
 ### 2. Gitea Trigger
-- A webhook triggers the CI pipeline when a push event occurs.
-- The event is picked up by a Gitea runner registered in the cluster.
+- A push to `main` triggers a Gitea Actions workflow defined in the repository.
+- The job is picked up by a Gitea runner registered in the cluster.
 
 ### 3. Runner Execution (K3s Cluster)
 - Runners are deployed as pods inside my Kubernetes (K3s) cluster.
@@ -52,18 +55,19 @@ My CI/CD pipeline is designed to be lightweight, distributed, and reproducible a
   - Unit tests
   - Linting
   - Build steps (Docker images or binaries)
-- Lightweight workloads run on Raspberry Pi nodes.
-- Heavier builds are scheduled on x86 nodes for performance efficiency.
+- Every node in the cluster is ARM64, so images are built natively for `linux/arm64` with `docker buildx` — no cross-architecture emulation in the deploy path (see [ARM64 considerations](/blog/infrastructureengineering/12-arm64-considerations)).
 
-### 4. Artifact Build & Storage
-- Successful builds generate Docker images or packaged artifacts.
-- Images are pushed to a private container registry inside the cluster.
-- Version tags follow commit SHA or semantic versioning.
+### 4. Artifact Build & Distribution
+- Successful builds generate Docker images.
+- Instead of pushing to a registry, the image is exported and imported directly into each node's containerd with `k3s ctr images import`.
+- Deployments set `imagePullPolicy: Never`, so pods always use the locally imported image.
 
 ### 5. Deployment Stage
 - If tests pass, the pipeline triggers a deployment step.
-- Kubernetes manifests or Helm charts are applied automatically.
+- Kubernetes manifests are applied automatically.
 - Services are rolled out using rolling updates to avoid downtime.
+
+A full walkthrough of this path for one service is in [deploying an app on the rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack).
 
 ::CtaSystemArchitecture
 ---
@@ -80,8 +84,8 @@ destinationUrl: "/systems/infrastructure"
 ---
 
 ### 6. Observability
-- Logs from runners are collected and stored for debugging.
-- Cluster monitoring is handled through internal tooling and dashboards.
+- Logs from runners are collected by Promtail and stored in Loki for debugging.
+- Cluster monitoring is handled through Prometheus and Grafana dashboards.
 - Failed builds are traced back through Gitea logs and CI output.
 
 ---
@@ -90,11 +94,14 @@ destinationUrl: "/systems/infrastructure"
 
 This system is designed to act as the “glue” of my infrastructure:
 
-- **Gitea** → Source of truth for all code and automation triggers  
+- **Gitea** → Source of truth for all code and automation triggers (installed as in [installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes))
 - **K3s Cluster** → Execution layer for builds and deployments  
 - **Raspberry Pi Nodes** → Lightweight distributed CI workers  
-- **x86 Machine (Dev / RTX 3090 box)** → Heavy compute + local AI experimentation  
-- **Container Registry** → Stores versioned builds for deployment  
+- **Jetson GPU Workers** → Deployment targets for GPU services (image generation, speech, LLM)  
+- **x86 Machine (Dev / RTX 3090 box)** → Heavy compute + local AI experimentation, outside the cluster  
+- **Node-local image store** → Images imported per node with `k3s ctr`, no registry in the loop  
+
+[Kingdom Tools](/projects/kingdom-tools), my internal platform, uses the same pipeline: its starter stacks create a Gitea repo for a new service so it deploys this way from the first push.
 
 This setup allows me to iterate quickly while keeping everything fully self-hosted and portable.
 
@@ -167,5 +174,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Future Expansion Plans](/blog/infrastructureengineering/20-future-expansion-plans) — previous in the series
+- [Infrastructure Design](/blog/infrastructureengineering/22-infrastructure-design) — next in the series
+- [Kubernetes for AI Developers: Deploying Local Models with k3s](/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s) — the same deploy flow applied to model services
+- [Why Self-Hosted Git](/blog/infrastructureengineering/40-why-self-hosted-git) — why I host Git myself in the first place
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

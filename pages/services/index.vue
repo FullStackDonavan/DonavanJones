@@ -10,7 +10,7 @@ useSeoMeta({
   ogDescription:
     'AI lead capture, workflow automation, and custom SaaS development for small businesses. Production systems delivered end-to-end.',
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: `${SITE}/img/heroes/services.jpg`,
   ogUrl: `${SITE}/services`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Services — Donavan Jones',
@@ -53,6 +53,7 @@ const services = [
     icon: 'mdi:robot-outline',
     color: 'sky',
     title: 'AI Automation for Business',
+    image: '/img/heroes/services-ai-automation.jpg',
     desc: 'AI lead capture, after-hours agents, and workflow automation. Stop losing leads — let AI handle calls, bookings, and follow-ups 24/7.',
     to: '/services/ai-automation',
     tags: ['Lead Capture', 'AI Agents', 'Workflow Automation'],
@@ -61,6 +62,7 @@ const services = [
     icon: 'mdi:code-braces',
     color: 'purple',
     title: 'Custom Web & SaaS Development',
+    image: '/img/heroes/services-web-development.jpg',
     desc: 'Full-stack web applications, multi-role dashboards, SaaS platforms with billing and auth — built from scratch and handed over.',
     to: '/services/web-development',
     tags: ['SaaS', 'Dashboards', 'APIs', 'Payments'],
@@ -69,9 +71,19 @@ const services = [
     icon: 'mdi:store-outline',
     color: 'amber',
     title: 'Local Business AI Tools',
+    image: '/img/heroes/services-local-business-ai.jpg',
     desc: 'AI-powered systems built specifically for service businesses in Central Florida — roofing, HVAC, law firms, med spas, and more.',
     to: '/services/local-business-ai',
     tags: ['Central Florida', 'Local SEO', 'AI Chatbots'],
+  },
+  {
+    icon: 'mdi:chip',
+    color: 'sky',
+    title: 'Local AI Infrastructure — Research & Advisory',
+    image: '/img/heroes/services-local-ai-infrastructure.jpg',
+    desc: 'For AI hardware, agent-OS, and inference-runtime teams: research interviews, design-partner testing, advisory, and contract work from someone who runs a 7-node K3s + Jetson Orin cluster daily.',
+    to: '/services/local-ai-infrastructure',
+    tags: ['Edge Inference', 'Jetson Orin', 'Agent Orchestration'],
   },
 ]
 </script>
@@ -80,7 +92,8 @@ const services = [
   <PatternSection>
 
     <!-- Hero -->
-    <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop src="/img/heroes/services.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center">
 
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
@@ -120,10 +133,11 @@ const services = [
     </section>
 
     <!-- Service Cards -->
-    <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/services-cards.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
-        <div class="grid md:grid-cols-3 gap-5">
+        <div class="grid md:grid-cols-2 gap-5">
           <NuxtLink
             v-for="s in services"
             :key="s.title"
@@ -140,23 +154,38 @@ const services = [
               <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">service.details</span>
             </div>
 
-            <div class="p-5 flex flex-col flex-1">
-              <div
-                class="w-10 h-10 rounded-xl flex items-center justify-center border mb-4"
-                :class="{
-                  'bg-sky-500/10 border-sky-500/20':     s.color === 'sky',
-                  'bg-purple-500/10 border-purple-500/20': s.color === 'purple',
-                  'bg-amber-500/10 border-amber-500/20': s.color === 'amber',
-                }"
-              >
-                <Icon :name="s.icon" class="text-xl"
+            <!-- Same art as the service page's hero -->
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img
+                :src="s.image"
+                alt=""
+                width="600"
+                height="315"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-xl bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-10 h-10 rounded-xl flex items-center justify-center border"
                   :class="{
-                    'text-sky-400':    s.color === 'sky',
-                    'text-purple-400': s.color === 'purple',
-                    'text-amber-400':  s.color === 'amber',
+                    'bg-sky-500/10 border-sky-500/20':     s.color === 'sky',
+                    'bg-purple-500/10 border-purple-500/20': s.color === 'purple',
+                    'bg-amber-500/10 border-amber-500/20': s.color === 'amber',
                   }"
-                />
+                >
+                  <Icon :name="s.icon" class="text-xl"
+                    :class="{
+                      'text-sky-400':    s.color === 'sky',
+                      'text-purple-400': s.color === 'purple',
+                      'text-amber-400':  s.color === 'amber',
+                    }"
+                  />
+                </div>
               </div>
+            </div>
+
+            <div class="p-5 flex flex-col flex-1">
 
               <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2 group-hover:text-sky-400 transition-colors">
                 {{ s.title }}
@@ -219,7 +248,8 @@ const services = [
     <!-- CTA -->
     <section class="bg-white dark:bg-slate-950 py-16">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+        <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+          <HeroBackdrop lazy src="/img/cards/cta-projects.jpg" side="full" />
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
             Ready to talk about your project?
           </h2>

@@ -10,7 +10,7 @@ useSeoMeta({
   ogDescription:
     'AI lead capture, workflow automation, and custom SaaS development. Production systems delivered end-to-end for small businesses.',
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: `${SITE}/img/heroes/home.jpg`,
   ogUrl: `${SITE}/`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Donavan Jones — AI Automation & Custom Software',
@@ -135,6 +135,7 @@ const focuses = [
     icon: 'mdi:robot-outline',
     color: 'sky',
     title: 'AI Lead Capture & Automation',
+    image: '/img/cards/lead-capture.jpg',
     desc: 'AI answers calls, captures leads, books appointments, and sends follow-ups — 24/7, without extra staff.',
     to: '/services/ai-automation',
   },
@@ -142,6 +143,7 @@ const focuses = [
     icon: 'mdi:code-braces',
     color: 'purple',
     title: 'Custom Web Apps & SaaS',
+    image: '/img/cards/web-apps.jpg',
     desc: 'Full-stack web applications with dashboards, billing, auth, and real-time features — built from scratch and handed over.',
     to: '/services/web-development',
   },
@@ -149,6 +151,7 @@ const focuses = [
     icon: 'mdi:cog-sync-outline',
     color: 'amber',
     title: 'Workflow & Admin Automation',
+    image: '/img/cards/workflow-automation.jpg',
     desc: 'Automate quote generation, intake processing, follow-up emails, and review requests — no more manual busywork.',
     to: '/services/ai-automation',
   },
@@ -156,6 +159,7 @@ const focuses = [
     icon: 'mdi:server-network',
     color: 'emerald',
     title: 'Infrastructure & Deployment',
+    image: '/img/cards/infrastructure.jpg',
     desc: 'Kubernetes, CI/CD, cloud deployment, and production monitoring — your system runs reliably from day one.',
     to: '/services/web-development',
   },
@@ -164,6 +168,7 @@ const focuses = [
 const systems = [
   {
     to: '/categories/ai-engineering',
+    image: '/img/categories/ai-engineering.jpg',
     icon: 'mdi:brain',
     color: 'purple',
     title: 'AI Systems',
@@ -171,6 +176,7 @@ const systems = [
   },
   {
     to: '/categories/backend-engineering',
+    image: '/img/categories/backend-engineering.jpg',
     icon: 'mdi:api',
     color: 'sky',
     title: 'Backend',
@@ -178,10 +184,11 @@ const systems = [
   },
   {
     to: '/categories/infrastructure-engineering',
+    image: '/img/categories/infrastructure-engineering.jpg',
     icon: 'mdi:server-network',
     color: 'emerald',
     title: 'Infrastructure',
-    tags: ['k3s', 'Raspberry Pi 5', 'Gitea', 'Prometheus'],
+    tags: ['k3s', 'Jetson Orin', 'Gitea', 'Prometheus'],
   },
 ]
 
@@ -204,7 +211,8 @@ function formatDate(dateStr: string): string {
   <PatternSection>
 
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
-    <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop src="/img/heroes/home.jpg" />
       <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
 
         <div class="grid lg:grid-cols-[1fr_380px] gap-12 lg:gap-16 items-center">
@@ -274,7 +282,7 @@ function formatDate(dateStr: string): string {
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Production AI systems</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900 dark:text-white">75+</p>
+                <p class="text-2xl font-bold text-slate-900 dark:text-white">150+</p>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Technical articles</p>
               </div>
             </div>
@@ -300,8 +308,8 @@ function formatDate(dateStr: string): string {
 
                 <div class="rounded-xl px-4 py-3 border border-sky-500/20 bg-sky-500/5">
                   <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-1">Client Platform</p>
-                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">92 Businesses</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Automated enrollment platform</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">$10.8M Processed</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">8,490 applications · 1,859 agents</p>
                 </div>
 
                 <div class="rounded-xl px-4 py-3 border border-emerald-500/20 bg-emerald-500/5">
@@ -311,15 +319,15 @@ function formatDate(dateStr: string): string {
                 </div>
 
                 <div class="rounded-xl px-4 py-3 border border-purple-500/20 bg-purple-500/5">
-                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-1">AI Performance</p>
-                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">37K+ Docs Indexed</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">RAG retrieval under 200ms</p>
+                  <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-1">AI Infrastructure I Run</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">7-Node K3s Cluster</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">4 Raspberry Pis + 3 Jetson Orin Nano Super, plus an RTX 3090 · Prometheus/Grafana/Loki</p>
                 </div>
 
                 <div class="rounded-xl px-4 py-3 border border-amber-500/20 bg-amber-500/5">
-                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-1">Cost Reduction</p>
-                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">70% Savings</p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Local inference vs. cloud routing</p>
+                  <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-1">Verified AI Answers</p>
+                  <p class="text-2xl font-bold text-slate-900 dark:text-white leading-none">Temporal RAG</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">VerseHub checks every citation against retrieved evidence</p>
                 </div>
 
               </div>
@@ -352,25 +360,38 @@ function formatDate(dateStr: string): string {
             v-for="f in focuses"
             :key="f.title"
             :to="f.to"
-            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
+            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 overflow-hidden hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-sky-500/10 border-sky-500/20':     f.color === 'sky',
-                'bg-purple-500/10 border-purple-500/20': f.color === 'purple',
-                'bg-emerald-500/10 border-emerald-500/20': f.color === 'emerald',
-                'bg-amber-500/10 border-amber-500/20': f.color === 'amber',
-              }"
-            >
-              <Icon :name="f.icon" class="text-xl"
-                :class="{
-                  'text-sky-400':    f.color === 'sky',
-                  'text-purple-400': f.color === 'purple',
-                  'text-emerald-400':f.color === 'emerald',
-                  'text-amber-400':  f.color === 'amber',
-                }"
+            <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img
+                :src="f.image"
+                alt=""
+                width="600"
+                height="315"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                  :class="{
+                    'bg-sky-500/10 border-sky-500/20':     f.color === 'sky',
+                    'bg-purple-500/10 border-purple-500/20': f.color === 'purple',
+                    'bg-emerald-500/10 border-emerald-500/20': f.color === 'emerald',
+                    'bg-amber-500/10 border-amber-500/20': f.color === 'amber',
+                  }"
+                >
+                  <Icon :name="f.icon" class="text-xl"
+                    :class="{
+                      'text-sky-400':    f.color === 'sky',
+                      'text-purple-400': f.color === 'purple',
+                      'text-emerald-400':f.color === 'emerald',
+                      'text-amber-400':  f.color === 'amber',
+                    }"
+                  />
+                </div>
+              </div>
             </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">{{ f.title }}</h3>
@@ -460,9 +481,9 @@ function formatDate(dateStr: string): string {
               </div>
               <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-sky-500 transition-colors">Business Benefit Alliance</h2>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                Full-stack group insurance enrollment platform. 92 businesses onboarded. Enrollment workflows
-                reduced from hours to minutes. Multi-role dashboards, digital signature capture, automated PDF
-                generation, and audit trails. Built end-to-end as sole developer and architect.
+                Production insurance platform: 8,490 enrollment applications, $10.8M in card and ACH premiums
+                processed, 1,859 agents, and about 2,000 monthly active users. Covers billing, commissions, group
+                quoting, and 834 EDI carrier feeds. Built end-to-end as sole developer and architect.
               </p>
 
               <div class="mt-4 flex flex-wrap gap-2">
@@ -663,28 +684,42 @@ function formatDate(dateStr: string): string {
             v-for="sys in systems"
             :key="sys.to"
             :to="sys.to"
-            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 flex flex-col gap-4 transition-all duration-200 hover:shadow-lg"
+            class="group rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 flex flex-col gap-4 overflow-hidden transition-all duration-200 hover:shadow-lg"
             :class="{
               'hover:border-purple-500/40 hover:shadow-purple-500/5': sys.color === 'purple',
               'hover:border-sky-500/40 hover:shadow-sky-500/5':       sys.color === 'sky',
               'hover:border-emerald-500/40 hover:shadow-emerald-500/5': sys.color === 'emerald',
             }"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
-                'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
-              }"
-            >
-              <Icon :name="sys.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': sys.color === 'purple',
-                  'text-sky-400':    sys.color === 'sky',
-                  'text-emerald-400':sys.color === 'emerald',
-                }"
+            <!-- Same art as the category page it links to -->
+            <div class="relative -mx-5 -mt-5 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img
+                :src="sys.image"
+                alt=""
+                width="600"
+                height="315"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                  :class="{
+                    'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
+                    'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
+                    'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
+                  }"
+                >
+                  <Icon :name="sys.icon" class="text-xl"
+                    :class="{
+                      'text-purple-400': sys.color === 'purple',
+                      'text-sky-400':    sys.color === 'sky',
+                      'text-emerald-400':sys.color === 'emerald',
+                    }"
+                  />
+                </div>
+              </div>
             </div>
             <div class="flex-1">
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
@@ -712,8 +747,18 @@ function formatDate(dateStr: string): string {
       </div>
     </section>
 
+    <!-- ── JETSON LEADERBOARD ─────────────────────────────────────────── -->
+    <section class="bg-white dark:bg-slate-950 pb-4 border-b border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-6">
+        <JetsonLeaderboardCard
+          title="Live benchmarks: local LLMs on a Jetson Orin Nano Super"
+        />
+      </div>
+    </section>
+
     <!-- ── RECRUITER STRIP (condensed) ───────────────────────────────────── -->
-    <section class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/cards/open-roles.jpg" />
       <div class="max-w-7xl mx-auto px-6 py-8">
 
         <div class="flex flex-wrap items-center gap-2 mb-5">
@@ -774,7 +819,8 @@ function formatDate(dateStr: string): string {
         <div class="grid md:grid-cols-2 gap-5">
 
           <!-- Freelance CTA -->
-          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-8 sm:p-10 text-center">
+          <div class="relative isolate overflow-hidden rounded-2xl border border-sky-500/20 bg-sky-500/5 p-8 sm:p-10 text-center">
+            <HeroBackdrop lazy src="/img/cards/cta-projects.jpg" side="full" />
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
               <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
               Available for projects
@@ -804,7 +850,8 @@ function formatDate(dateStr: string): string {
           </div>
 
           <!-- Recruiter CTA -->
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-10 text-center">
+          <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-10 text-center">
+            <HeroBackdrop lazy src="/img/cards/cta-hire.jpg" side="full" />
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
               <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
               Open to new roles

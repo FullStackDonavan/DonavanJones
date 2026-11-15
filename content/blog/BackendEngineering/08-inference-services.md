@@ -1,8 +1,8 @@
 ---
 title: "Inference Services"
-description: "Design and implementation of inference services in AI backends."
+description: "Inside an LLM inference service: prompt construction, token budgets, model routing and fallback, output validation, async jobs, caching, and spend control."
 date: 2026-03-18
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - inference
@@ -11,15 +11,16 @@ draft: false
 cluster: "backend-engineering"
 slug: inference-services
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/08-inference-services.jpg
 ---
 
 # Inference Services
 
-The inference service is where a user's question becomes an answer. Every other service in the backend — authentication, retrieval, embeddings, search — exists to support this moment. Getting the inference service right means everything that depends on it works well. Getting it wrong means no amount of good architecture elsewhere saves the user experience.
+An inference service turns a task into a validated model response: it builds the prompt within a token budget, picks the model, streams or queues the work, and checks the output before anything leaves the service. It is where a user's question becomes an answer — every other service in the backend (authentication, retrieval, embeddings, search) exists to support this moment. Getting the inference service right means everything that depends on it works well. Getting it wrong means no amount of good architecture elsewhere saves the user experience.
 
-Earlier in this series I covered AI services at a high level and streaming as a transport mechanism. This article goes one layer deeper: the internal design of the inference service itself — how prompts are constructed, how requests are routed, how outputs are validated, how long-running jobs are handled, and how the service scales without burning through API budget.
+Earlier in this series I covered [AI services](/blog/backendengineering/02-ai-services) at a high level and [streaming](/blog/backendengineering/06-streaming) as a transport mechanism. This article goes one layer deeper: the internal design of the inference service itself — how prompts are constructed, how requests are routed, how outputs are validated, how long-running jobs are handled, and how the service scales without burning through API budget.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -85,6 +86,8 @@ The 70/30 split between context and history is a tunable default. Tasks with no 
 
 Different tasks need different models. The inference service owns model selection — callers specify a task type, not a model name. This keeps callers insulated from model changes and lets routing logic evolve without touching every consumer.
 
+The table below shows the pattern with hosted Claude models. In VerseHub's live answer path the same idea maps onto local hardware: a fast draft from llama3.2:3b on a Jetson Orin Nano (about 21 tok/s), then a refine pass that runs as a Temporal `ScholarWorkflow` (retrieve → score → generate → verify) on the Pi workers. Callers never know which one answered.
+
 | Task Type | Model | Max Tokens | Streaming |
 |---|---|---|---|
 | `verse_explanation` | claude-haiku-4-5 | 512 | Yes |
@@ -136,7 +139,7 @@ async function validateStudyGuide(raw: string): Promise<StudyGuide> {
 }
 ```
 
-**Citation grounding** applies to responses that reference scripture. The validator extracts all verse references from the response (regex matching standard citation formats) and checks each against the list of passages provided in the retrieved context. References to passages not in the context are flagged as potential hallucinations. Flagged responses are either retried (if the hallucination rate is high) or returned with a warning annotation (if a single spurious citation slips through).
+**Citation grounding** applies to responses that reference scripture (the full version is in [VerseHub's verification pipeline](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs)). The validator extracts all verse references from the response (regex matching standard citation formats) and checks each against the list of passages provided in the retrieved context. References to passages not in the context are flagged as potential hallucinations. Flagged responses are either retried (if the hallucination rate is high) or returned with a warning annotation (if a single spurious citation slips through).
 
 **Length validation** catches responses that are suspiciously short. A `study_guide` task that returns 50 tokens almost certainly failed silently — the model stopped early, hit a content filter, or misunderstood the task. Responses below a minimum token threshold for their task type are retried once.
 
@@ -207,6 +210,8 @@ RETURNING *;
 
 Failed jobs are retried up to three times with exponential backoff before being marked `failed`. Permanent failures (invalid input, content policy rejection) are marked `failed` immediately without retrying.
 
+A Postgres jobs table is enough for simple, single-step jobs. Once a job has several dependent model calls, a workflow engine earns its keep; VerseHub's multi-step answers run on [Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal). Two lessons from that move: Temporal's default 10-second task timeout will kill slow LLM calls until you set explicit timeouts, and launching three workflows per question for small helper calls was wasteful — those now go to a direct quick-LLM endpoint.
+
 ## Prompt Caching
 
 Many inference requests are structurally similar. The system instructions are identical across all requests of the same task type. The retrieved context for a popular passage (John 3:16, Romans 8:28) is the same for every user who asks about it. Repeating these tokens in every API call wastes money.
@@ -222,7 +227,7 @@ Anthropic's prompt caching feature allows marking prompt prefixes as cacheable. 
 
 System instructions are marked cacheable and never change within a model version. Retrieved context is marked cacheable and keyed by the set of passage IDs — the same passages retrieved for Romans 8:28 by any user produce the same cache hit. Only the user-specific tail of the prompt (history + query) is uncached.
 
-In practice, cache hits on system instructions occur on nearly every request. Cache hits on retrieved context occur on popular passages, which represent a disproportionate share of traffic. Combined, prompt caching reduces input token costs by 40–60% in steady-state operation.
+In practice, cache hits on system instructions occur on nearly every request, and cache hits on retrieved context occur on popular passages, which tend to be a disproportionate share of traffic. Because cache reads are billed at a fraction of the normal input price, this is one of the cheapest cost levers available. For local models, a Redis response cache plays the same role.
 
 ## Rate Limiting and Spend Control
 
@@ -317,6 +322,14 @@ links:
     description: "The original RAG paper — the architecture that makes inference quality dependent on retrieval quality, motivating the context budget management described in this article."
 ---
 ::
+
+## Related reading
+
+- [Notifications](/blog/backendengineering/07-notifications) — previous in the series: delivering async job results
+- [Embedding Services](/blog/backendengineering/09-embedding-services) — next in the series
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — keeping local inference models warm
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — how VerseHub runs multi-step inference
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

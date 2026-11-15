@@ -2,7 +2,7 @@
 title: "Future Expansion Plans"
 description: "My plans for expanding my homelab infrastructure — additional nodes, GPU workloads, expanded storage, and the next phase of the Kubernetes cluster."
 date: 2025-11-12
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - homelab
@@ -10,28 +10,32 @@ tags:
 draft: false
 slug: future-expansion-plans
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/20-future-expansion-plans.jpg
 ---
 
 # Future Expansion Plans
 
+My expansion plan for the homelab has three phases. Short term is reliability: stable CI/CD, secrets management, and observability. Mid term is better use of GPU compute: smarter model scheduling and fine-tuned small models. Long term is a fully self-hosted AI and application platform with redundancy, so no single device can take down core services. Since I first wrote this, some items have already shipped. I've noted which ones below.
+
 ## Introduction
 
-My homelab has evolved from a simple learning environment into a distributed infrastructure that now supports real workloads, including Kubernetes-based deployments, AI services, and the backend systems powering my Bible application. With a Raspberry Pi-based K3s cluster forming the core compute layer, a separate development machine equipped with an RTX 3090 handling model workloads, and services like Gitea and CI runners already integrated, the next phase is about stability, scalability, and tighter automation between all components.
+My homelab has evolved from a simple learning environment into a distributed infrastructure that now supports real workloads, including Kubernetes-based deployments, AI services, and the backend systems powering my Bible application, [VerseHub](/projects/versehub). With a Raspberry Pi-based K3s cluster forming the core compute layer, three Jetson Orin GPU workers in the cluster, a separate development machine with an RTX 3090 handling large-model workloads, and services like Gitea and CI runners already integrated, the next phase is about stability, scalability, and tighter automation between all components.
 
 ## Current Architecture Overview
 
-Right now, my setup is split into a few key layers:
+Right now (updated November 2026), my setup is split into a few key layers:
 
-- A K3s cluster running on Raspberry Pi nodes acting as lightweight production compute
-- A dedicated development machine running Docker containers for AI models (including GPU workloads on an RTX 3090)
-- A Gitea instance hosted within the cluster for source control and internal repositories
-- CI/CD runners connected to the cluster for automated deployments
-- Services for my Bible app including API backend, social features, and AI integration (Bible Logic)
-- Supporting infrastructure such as PostgreSQL, Redis caching, and vector search systems
+- A seven-node K3s cluster: four Raspberry Pis (one control plane, three workers) as lightweight production compute
+- Three Jetson Orin Nano Super 8GB boards in the same cluster as GPU workers (image generation, speech, and an always-on llama3.2:3b)
+- A dedicated development machine with a single RTX 3090 running large models like Ornith-1.0-35B
+- A Gitea instance hosted within the cluster for source control, with Gitea Actions deploying on every push to main
+- Services for my Bible app including API backend, social features, and AI integration (BibleLogic)
+- Supporting infrastructure: PostgreSQL, Redis, Weaviate for vectors, and MinIO for object storage
+- Prometheus, Grafana, and Loki for metrics, dashboards, and logs
 
 This separation allows me to iterate quickly while still maintaining a production-like environment in the cluster.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -45,9 +49,9 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 In the near term, I want to improve reliability and automation:
 
-- Fully stabilize CI/CD pipelines between Gitea and the K3s cluster
+- Fully stabilize CI/CD pipelines between Gitea and the K3s cluster (done: push to main now deploys via Gitea Actions — see the [Gitea runners pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline))
 - Improve secret management across services (likely via sealed secrets or external vault system)
-- Add better observability (metrics, logs, and tracing) across all services
+- Add better observability (metrics, logs, and tracing) across all services (metrics and logs done with Prometheus, Grafana, and Loki; tracing still to come)
 - Optimize resource allocation on the Raspberry Pi nodes to prevent bottlenecks
 - Improve deployment consistency for AI microservices and Bible Logic integrations
 
@@ -55,10 +59,10 @@ In the near term, I want to improve reliability and automation:
 
 The next stage is scaling functionality and compute efficiency:
 
-- Integrate the RTX 3090 machine more directly into the cluster as a hybrid compute node for AI workloads
+- Add GPU compute to the cluster (done differently than planned: three Jetson Orin boards joined as GPU workers, while the RTX 3090 stays outside the cluster and is being rebuilt into a headless Linux training box for fine-tuning small models for the Jetsons)
 - Expand AI microservices architecture (retrieval systems, theological search, agent memory systems)
 - Improve vector database performance for semantic search in Bible/Quran comparison tools
-- Introduce workload scheduling between local cluster and GPU machine depending on task type
+- Introduce workload scheduling between local cluster and GPU machine depending on task type (partly done: [Kingdom Tools](/projects/kingdom-tools) can load, unload, and benchmark models on each Jetson)
 - Begin separating services into more independent, scalable microservices
 
 ::CtaSystemArchitecture
@@ -95,7 +99,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-The goal of my homelab is no longer just experimentation—it is becoming a production-grade ecosystem that supports real users, real applications, and real AI workloads. By combining lightweight Kubernetes on Raspberry Pi hardware with a powerful GPU-backed development machine and a growing CI/CD and AI tooling stack, I am building a system that can evolve with my Bible app, AI agents, and future projects. The focus now is refinement: making everything more automated, resilient, and scalable while keeping full control of the stack.
+The goal of my homelab is no longer just experimentation—it is becoming a production-grade ecosystem that supports real users, real applications, and real AI workloads. By combining lightweight Kubernetes on Raspberry Pi hardware, Jetson GPU workers, and a powerful GPU-backed development machine and a growing CI/CD and AI tooling stack, I am building a system that can evolve with my Bible app, AI agents, and future projects. The focus now is refinement: making everything more automated, resilient, and scalable while keeping full control of the stack.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -150,5 +154,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [DNS and Service Discovery](/blog/infrastructureengineering/19-dns-and-service-discovery) — previous in the series
+- [Gitea Runners Pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Scaling VerseHub with Local AI Infrastructure](/blog/versehub-engineering/09-scaling-versehub-with-local-ai-infrastructure) — the app this roadmap mostly serves
+- [Complete Guide: Building a Production-Ready Local AI Development Platform](/blog/ai-homelab-engineering/16-complete-guide-production-ready-local-ai-platform) — the end-state platform this roadmap is heading toward
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

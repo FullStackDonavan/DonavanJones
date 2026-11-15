@@ -1,8 +1,8 @@
 ---
 title: "Separation of Workloads"
-description: "How I separate workloads in my homelab Kubernetes cluster using namespaces, taints, and node affinity to improve reliability and resource isolation."
+description: "How I separate workloads in my K3s homelab: Pi nodes for services, Jetson GPU workers for small models, an RTX 3090 for heavy compute, and node affinity."
 date: 2026-01-10
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - workloads
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: separation-of-workloads
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/33-separation-of-workloads.jpg
 ---
 
 # Separation of Workloads
 
 ## Introduction
 
-In a homelab environment, especially one built around a mixed setup like a Raspberry Pi-based K3s cluster combined with a separate development machine running Docker containers and GPU workloads (RTX 3090), workload separation is what keeps everything stable and scalable. Without clear boundaries, services start competing for CPU, memory, storage, and network resources, which leads to unpredictable behavior and harder debugging.
+I separate workloads by putting each one where it fits: always-on services on Raspberry Pi nodes, small always-on AI models on Jetson GPU workers, and heavy compute on a single RTX 3090 machine outside the cluster — then enforce the boundaries with namespaces, resource limits, and node labels. That separation is what keeps a mixed homelab stable. Without clear boundaries, services start competing for CPU, memory, storage, and network resources, which leads to unpredictable behavior and harder debugging.
 
-My setup is intentionally split across multiple layers: lightweight services run in a K3s Kubernetes cluster on Raspberry Pis, while heavier compute workloads like AI models, embeddings, and local inference run on a dedicated development machine with a GPU. On top of that, tools like Gitea and CI runners act as the glue between code, deployment, and infrastructure automation. This separation allows me to iterate quickly without breaking production-like services running in the cluster.
+My setup is intentionally split across multiple layers: lightweight services run in a K3s cluster on Raspberry Pis, three Jetson Orin Nano Supers in the same cluster each own one AI role (image-gen, speech, LLM), and heavier workloads like embeddings, large models, and LoRA training run on a dedicated development machine with an RTX 3090. On top of that, tools like Gitea and CI runners act as the glue between code, deployment, and infrastructure automation. This separation allows me to iterate quickly without breaking production-like services running in the cluster.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -38,6 +39,7 @@ The main idea behind my architecture is simple: every workload should live where
 
 - Lightweight services → K3s cluster (Raspberry Pi nodes)
 - CI/CD pipelines → Gitea runners (inside cluster or dedicated nodes)
+- Small always-on models → Jetson GPU workers, one role per board
 - GPU-heavy workloads → RTX 3090 development machine
 - Persistent infrastructure services → Dedicated Kubernetes namespaces or nodes
 
@@ -53,11 +55,11 @@ My K3s cluster acts as the backbone of the homelab. It is where I deploy most al
 - Bible app backend components
 - Gitea instance (self-hosted Git platform)
 - CI runners for automated deployments
-- Lightweight databases or cache layers when appropriate
+- Data services: PostgreSQL, Redis, MinIO, and Weaviate
 
 Each service is isolated using namespaces and resource limits. This ensures that one service cannot silently consume all available resources on a Pi node.
 
-I also use node labeling and scheduling rules to control where workloads land. For example, database workloads are pinned to nodes with better storage performance, while stateless services can float across the cluster.
+I also use node labeling and scheduling rules to control where workloads land. For example, database workloads are pinned to nodes with better storage performance, Redis lives on pi-worker-2, GPU pods are pinned to the Jetson whose role matches, and stateless services can float across the Pi workers. The node-by-node breakdown is in [Node Roles](/blog/infrastructureengineering/27-node-roles).
 
 ---
 
@@ -70,7 +72,7 @@ My separate development machine with an RTX 3090 is intentionally kept outside t
 - Embedding generation pipelines
 - Local fine-tuning and data processing tasks
 
-This separation is important because GPU workloads are unpredictable and resource-intensive. Keeping them off the cluster prevents latency spikes and instability for user-facing services.
+This separation is important because heavy GPU workloads are unpredictable and resource-intensive. The same logic applies inside the cluster: a Jetson has 8 GB of unified memory, so only one ~4–5 GB model fits per board — mixing roles on one Jetson is how you get out-of-memory failures (more in [Running Multiple Local Models Without Melting Your GPU](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu)). Keeping them off the cluster prevents latency spikes and instability for user-facing services.
 
 Instead of trying to force Kubernetes to manage everything, I treat this machine as a specialized compute node that integrates through APIs, queues, or CI pipelines.
 
@@ -83,11 +85,11 @@ Gitea is the central coordination point in my workflow. It connects development 
 - Code is pushed to repositories in Gitea
 - CI runners inside the cluster pick up jobs
 - Deployment manifests are applied to K3s
-- Docker builds or model updates are triggered on the GPU machine when needed
+- ARM64 images are built and imported onto the nodes as part of the pipeline
 
 This creates a clean separation between writing code and deploying systems. I don’t manually SSH into nodes to deploy services; everything flows through pipelines.
 
-This is also where infrastructure-as-code becomes powerful. My cluster state is reproducible through manifests, Helm charts, and deployment scripts.
+This is also where infrastructure-as-code becomes powerful. My cluster state is reproducible through manifests and deployment scripts, and [Kingdom Tools](/projects/kingdom-tools) — my internal platform — tracks the service catalog and flags drift.
 
 ::CtaSystemArchitecture
 ---
@@ -209,6 +211,15 @@ links:
     description: "Overview of containerization — the isolation layer that makes workload separation practical, ensuring each service runs in its own environment with controlled resource limits and network access."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Real Deployed Workloads](/blog/infrastructureengineering/32-real-deployed-workloads) — previous in the series: what actually runs.
+- [Storage Strategy](/blog/infrastructureengineering/34-storage-strategy) — next in the series: how data is separated.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads) — scheduling AI pods on the same cluster.
 
 ---
 

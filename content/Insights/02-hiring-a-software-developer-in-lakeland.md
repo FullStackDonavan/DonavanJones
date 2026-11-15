@@ -13,6 +13,7 @@ tags:
 draft: false
 slug: hiring-a-software-developer-in-lakeland
 author: Donavan Jones
+excerptImage: /img/insights/02-hiring-a-software-developer-in-lakeland.jpg
 ---
 
 # Hiring a Software Developer in Lakeland: What to Look For
@@ -43,7 +44,7 @@ Each option has different tradeoffs for a Lakeland business:
 
 You do not need to understand the code to evaluate a developer. What you can evaluate:
 
-**Can they explain their previous work in plain language?** A developer who built something real can describe what problem it solved, what technical challenges came up, and what they would do differently. Vague answers ("I built a lot of web apps") are a red flag. Specific answers ("I built a group insurance enrollment platform that processes applications, generates signed PDFs, and routes them through an approval workflow for three different user roles") tell you they understand the system they built, not just the tools they used.
+**Can they explain their previous work in plain language?** A developer who built something real can describe what problem it solved, what technical challenges came up, and what they would do differently. Vague answers ("I built a lot of web apps") are a red flag. Specific answers ("I built an insurance enrollment platform that has processed $10.8M in premium payments, generates signed PDFs, and sends enrollment files to carriers as 834 EDI over SFTP") tell you they understand the system they built, not just the tools they used.
 
 **Do they ask clarifying questions before quoting you?** A developer who gives you a price in the first fifteen minutes of a conversation either does not understand the scope or is not being honest about it. Good developers ask questions — a lot of them — before estimating anything.
 
@@ -73,7 +74,7 @@ The answers to these questions will tell you more about whether the engagement w
 
 There is a real advantage to working with a developer based in Lakeland or Central Florida. Proximity to your business means context that a remote contractor in a different time zone rarely has — familiarity with local compliance requirements, the ability to meet in person when that matters, and a stake in a local professional reputation that creates accountability that anonymous remote work does not.
 
-I am a Lakeland-based full-stack developer who has built production software — including a live insurance enrollment platform used by 92 businesses — and I work directly with business owners from requirements through deployment. [My resume](/resume) and [project work](/projects/overview) are publicly available if you want to evaluate fit before reaching out.
+I am a Lakeland-based full-stack developer who has built production software — including a live insurance platform that has taken 8,490 enrollment applications and processed $10.8M in premium payments — and I work directly with business owners from requirements through deployment. [My resume](/resume) and [project work](/projects/overview) are publicly available if you want to evaluate fit before reaching out.
 
 [Contact me to talk through your project](mailto:donavanjones79@gmail.com).
 

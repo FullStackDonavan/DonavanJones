@@ -10,7 +10,7 @@ useSeoMeta({
   ogDescription:
     'AI automation for roofing, HVAC, law firms, med spas, and more. Custom-built systems for local businesses in Central Florida.',
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: `${SITE}/img/heroes/services-local-business-ai.jpg`,
   ogUrl: `${SITE}/services/local-business-ai`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'AI for Local Businesses — Central Florida | Donavan Jones',
@@ -44,32 +44,32 @@ useHead({
 const industries = [
   {
     icon: 'mdi:home-roof',
-    title: 'Roofing & Contractors',
+    title: 'Roofing & Contractors', image: '/img/cards/industry-roofing.jpg',
     desc: 'AI answers after-hours calls, captures storm damage leads, and auto-sends follow-up quotes. No more lost callbacks.',
   },
   {
     icon: 'mdi:air-conditioner',
-    title: 'HVAC & Plumbing',
+    title: 'HVAC & Plumbing', image: '/img/cards/industry-hvac-plumbing.jpg',
     desc: 'Emergency call routing, automated service reminders, and review request sequences that run without your team lifting a finger.',
   },
   {
     icon: 'mdi:scale-balance',
-    title: 'Law Firms',
+    title: 'Law Firms', image: '/img/cards/industry-law-firms.jpg',
     desc: 'AI intake assistant that collects case details, qualifies leads, and books consultations — 24/7, even when your office is closed.',
   },
   {
     icon: 'mdi:spa-outline',
-    title: 'Med Spas & Dental',
+    title: 'Med Spas & Dental', image: '/img/cards/industry-med-spas-dental.jpg',
     desc: 'Website chatbot that answers treatment questions, pushes visitors to book, and syncs with your scheduling system automatically.',
   },
   {
     icon: 'mdi:shield-account',
-    title: 'Insurance Brokers',
+    title: 'Insurance Brokers', image: '/img/cards/industry-insurance.jpg',
     desc: 'Enrollment automation, document generation with digital signatures, and multi-role dashboards that replace spreadsheet chaos.',
   },
   {
     icon: 'mdi:home-city-outline',
-    title: 'Real Estate',
+    title: 'Real Estate', image: '/img/cards/industry-real-estate.jpg',
     desc: 'AI lead capture from property listings, automated showing scheduling, and follow-up email sequences that keep buyers engaged.',
   },
 ]
@@ -94,7 +94,8 @@ const outcomes = [
   <PatternSection>
 
     <!-- Hero -->
-    <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop src="/img/heroes/services-local-business-ai.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center">
 
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-medium">
@@ -150,7 +151,8 @@ const outcomes = [
     </section>
 
     <!-- Industry sections -->
-    <section class="bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/lba-industries.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -162,11 +164,17 @@ const outcomes = [
           <div
             v-for="ind in industries"
             :key="ind.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 flex flex-col gap-3 hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200"
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 flex flex-col gap-3 hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-200"
           >
-            <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-              <Icon :name="ind.icon" class="text-amber-400 text-xl" />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="ind.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                    <Icon :name="ind.icon" class="text-amber-400 text-xl" />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ ind.title }}</h3>
               <p class="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ ind.desc }}</p>
@@ -189,7 +197,7 @@ const outcomes = [
               </h2>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
                 I'm not an agency pitching from across the country. I'm a local engineer who built a production
-                enrollment platform for Amerus Financial Group (92 businesses, Lakeland-based), and I'm applying
+                insurance platform for Business Benefit Alliance in Lakeland (8,490 applications, $10.8M in payments processed), and I'm applying
                 the same approach to AI automation for local service businesses.
               </p>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -211,7 +219,8 @@ const outcomes = [
     </section>
 
     <!-- Related Insights -->
-    <section class="bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/lba-insights.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6">
 
         <div class="mb-8">
@@ -226,7 +235,8 @@ const outcomes = [
             :to="insight.to"
             class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 hover:border-amber-500/40 transition-all duration-200"
           >
-            <Icon name="mdi:text-box-outline" class="text-amber-400 text-lg flex-shrink-0" />
+            <img :src="`/img${insight.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                 class="w-20 shrink-0 aspect-[3/2] rounded-lg object-cover" />
             <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-amber-500 transition-colors flex-1">
               {{ insight.title }}
             </span>
@@ -270,7 +280,8 @@ const outcomes = [
     <!-- CTA -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+        <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+          <HeroBackdrop lazy src="/img/cards/cta-contact.jpg" side="full" />
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
             Let's build your AI system
           </h2>

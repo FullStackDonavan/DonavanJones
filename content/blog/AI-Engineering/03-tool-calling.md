@@ -1,8 +1,8 @@
 ---
 title: "Tool Calling"
-description: "How AI agents use tool calling for enhanced capabilities."
+description: "How LLM tool calling works: tool definitions as contracts, JSON Schema arguments, the execution layer, the agentic loop, and the failure modes to plan for."
 date: 2026-04-25
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,9 +12,12 @@ draft: false
 cluster: "ai-engineering"
 slug: tool-calling
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/03-tool-calling.jpg
 ---
 
 # Tool Calling
+
+Tool calling is how a language model asks your application to run a function — look up a verse, search an index, save a note — and then continues with the result. The model only proposes the call as structured JSON; your code validates the arguments, executes it and returns the output, so reliability depends mostly on tool descriptions and the execution layer.
 
 A language model on its own is a text transformer. It takes text in, produces text out. It cannot look up a Bible verse, search a knowledge base, save a note, or check what the current date is. Its knowledge is frozen at training time. Its awareness of the world extends only as far as the context window it is given.
 
@@ -22,7 +25,7 @@ Tool calling changes this. It is the mechanism by which a model steps outside th
 
 This article covers how tool calling works at the API level, how to design tools that models use reliably, the failure modes specific to tool-based systems, and how the tool layer is structured on this platform.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -206,7 +209,7 @@ destinationUrl: "/systems/ai"
 
 ## The Tool Execution Layer
 
-Tool definitions live in the model's prompt. Tool implementations live in the application. The boundary between them is where most tool calling bugs originate.
+Tool definitions live in the model's prompt. Tool implementations live in the application. The boundary between them is where most tool calling bugs originate. (For the same loop running entirely on local models, see [building an offline AI coding agent](/blog/local-vibe-coding/06-first-offline-ai-coding-agent).)
 
 The tool router maps tool names to handler functions and manages execution:
 
@@ -321,7 +324,7 @@ Multiple tool calls in a single response are executed in parallel (`Promise.all`
 
 ## Failure Modes Specific to Tool Calling
 
-**Argument hallucination**: the model constructs plausible-looking but wrong arguments. A verse reference like "Romans 5:3-5" is correct; "Romans 5:3-7" for the same passage is also plausible but incorrect. The tool handler must validate arguments rigorously — checking that a verse reference actually exists in the database, not just that it matches a pattern.
+**Argument hallucination**: the model constructs plausible-looking but wrong arguments. A verse reference like "Romans 5:3-5" is correct; "Romans 5:3-7" for the same passage is also plausible but incorrect. The tool handler must validate arguments rigorously — checking that a verse reference actually exists in the database, not just that it matches a pattern. The same lesson shaped the resolve-and-validate gates around my [fine-tuned 0.6B tool-calling model](/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98).
 
 **Tool choice confusion**: given multiple tools with overlapping descriptions, the model picks the wrong one. Most common when tool descriptions are vague or do not include the "do not use when" guidance. Fix: sharpen the boundary conditions in descriptions and add negative instructions.
 
@@ -398,6 +401,22 @@ links:
     description: "Overview of software agent concepts — the broader category that tool-calling AI agents belong to."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: tools
+blurb: "Measured tool-calling accuracy of small local models: right tool, right arguments, or no call when none fits."
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Vector Databases](/blog/ai-engineering/02-vector-databases) — previous in the AI Engineering series
+- [Agent Orchestration](/blog/ai-engineering/04-agent-orchestration) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [From 34% to 98%: Teaching a 0.6B Model to Run My Homelab](/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98) — fine-tuning a 0.6B model to make reliable tool calls
+- [Building Your First AI Coding Agent That Runs Completely Offline](/blog/local-vibe-coding/06-first-offline-ai-coding-agent) — a tool-using agent that runs fully offline
 
 ---
 

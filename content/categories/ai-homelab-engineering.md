@@ -7,13 +7,13 @@ description:
   - "This series documents a complete, production-oriented AI homelab: a hybrid architecture combining a Jetson Orin Nano Super cluster with an RTX 3090, orchestrated with k3s, storing models and artifacts on MinIO, and networked to run multiple local models without contention."
   - "This is the most differentiated series on this site — few developers document a full, real, production-ready AI homelab end to end, including the mistakes, the actual power bill, and the security tradeoffs of running AI infrastructure at home."
 featuredArticles:
-  - path: "/blog/ai-homelab-engineering/my-homelab-architecture-for-agentic-ai"
+  - path: "/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai"
     label: "Start Here"
     reason: "The full architecture this entire series is built around"
-  - path: "/blog/ai-homelab-engineering/complete-guide-production-ready-local-ai-platform"
+  - path: "/blog/ai-homelab-engineering/16-complete-guide-production-ready-local-ai-platform"
     label: "Complete Guide"
     reason: "The end-to-end build, from bare metal to a running platform"
-  - path: "/blog/ai-homelab-engineering/biggest-mistakes-building-ai-homelab"
+  - path: "/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab"
     label: "Learn From My Mistakes"
     reason: "What went wrong, and what I'd do differently starting over"
 learningPath:

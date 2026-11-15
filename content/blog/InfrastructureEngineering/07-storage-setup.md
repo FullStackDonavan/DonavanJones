@@ -1,8 +1,8 @@
 ---
 title: "Storage Setup"
-description: "How to configure persistent storage for a Raspberry Pi Kubernetes cluster using local volumes, NFS mounts, and Longhorn distributed storage."
+description: "How I set up storage on a Raspberry Pi K3s cluster — local-path PVCs, in-cluster MinIO object storage, backups, and when NFS or Longhorn is worth it."
 date: 2025-10-10
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - storage
@@ -11,9 +11,12 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: storage-setup
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/07-storage-setup.jpg
 ---
 
 # Storage Setup
+
+For a Raspberry Pi K3s cluster, the simplest storage setup that holds up is K3s's built-in local-path provisioner for databases and app state, an object store for files and datasets, and regular backups. In my cluster that object store is MinIO, running in-cluster next to PostgreSQL, Redis, and Weaviate. NFS, Longhorn, and Ceph are options to add later, not starting points.
 
 ## Introduction
 
@@ -23,7 +26,7 @@ In my rack setup—which includes multiple Raspberry Pi nodes running K3s alongs
 
 This setup focuses on balancing simplicity and practicality while leaving room for scaling later.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -45,13 +48,13 @@ Before choosing a solution, I defined a few core goals:
 - Works well with K3s without complex external dependencies  
 - Flexible enough to support databases, file uploads, and application state  
 
-Given my stack (FastAPI services, PostgreSQL, Redis, and app media storage), storage needs to support both structured and unstructured data.
+Given my stack (FastAPI services, PostgreSQL, Redis, Weaviate for vectors, and MinIO for objects), storage needs to support both structured and unstructured data.
 
 ---
 
 ## Storage Architecture Overview
 
-My current homelab storage architecture is split into three layers:
+My current homelab storage architecture is split into a few layers:
 
 ### 1. Local Node Storage (Primary Layer)
 
@@ -86,7 +89,11 @@ Typical path on nodes:
 ```
 
 
-This approach keeps everything lightweight and avoids needing external storage systems like NFS or Ceph.
+This approach keeps everything lightweight and avoids needing external storage systems like NFS or Ceph. The details of claims and binding are in [persistent volumes on K3s](/blog/infrastructureengineering/09-persistent-volumes).
+
+### Object Storage Layer (MinIO)
+
+For files, model artifacts, and datasets, I run MinIO inside the cluster as S3-compatible object storage, including a bucket for training datasets. Services talk to it with ordinary S3 clients, so code doesn't care whether it's pointed at MinIO or a cloud bucket.
 
 ::CtaSystemArchitecture
 ---
@@ -157,7 +164,7 @@ kubectl exec postgres-pod -- pg_dumpall > backup.sql
 
 ## Storage for the Bible App Ecosystem
 
-A large part of this setup is designed around my Bible app infrastructure.
+A large part of this setup is designed around my Bible app infrastructure, [VerseHub](/projects/versehub).
 
 Storage is used for:
 
@@ -171,14 +178,13 @@ The system is designed so that Kubernetes handles orchestration, while storage i
 
 ## Scaling Considerations
 
-As the cluster grows beyond Raspberry Pi nodes, I may introduce:
+MinIO is already in place. As the cluster grows, I may introduce:
 
 - NFS server on a dedicated node or mini-NAS
 - Longhorn for distributed block storage
-- MinIO for S3-compatible object storage
 - Ceph (only if the cluster becomes significantly larger)
 
-For now, simplicity wins. K3s + local-path provisioner keeps everything understandable and debuggable.
+For now, simplicity wins. K3s + local-path provisioner + MinIO keeps everything understandable and debuggable. The longer-term plan is in my [storage strategy for the rack](/blog/infrastructureengineering/34-storage-strategy).
 
 ## Operational Notes
 
@@ -257,5 +263,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Joining Worker Nodes](/blog/infrastructureengineering/06-joining-worker-nodes) — previous in the series
+- [Ingress Setup](/blog/infrastructureengineering/08-ingress-setup) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage) — how MinIO fits into AI storage on the cluster
+- [MinIO Storage Strategy](/blog/versehub-engineering/08-minio-storage-strategy) — the MinIO strategy behind VerseHub
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

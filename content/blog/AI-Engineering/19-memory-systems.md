@@ -1,7 +1,8 @@
 ---
 title: "Memory Systems"
-description: "Memory systems in AI pipelines for Bible study."
+description: "Implementing memory for an AI Bible study app: working, episodic, semantic and procedural memory, with extraction, decay, retrieval and privacy controls."
 date: 2026-06-26
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,15 +12,18 @@ draft: false
 cluster: "ai-engineering"
 slug: memory-systems
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/19-memory-systems.jpg
 ---
 
 # Memory Systems
 
-The first article in this series introduced the four memory types on this platform — episodic, semantic, procedural, and working — and described the retrieval pipeline that assembles them into a user context before generation. That article was conceptual. This one is implementation-focused: how each memory type is extracted, stored, aged, and retrieved, what goes wrong in practice, and what makes memory for theological AI different from memory in general-purpose AI systems.
+Memory for an AI Bible study app is four layers with different jobs: working memory for the current session, episodic memory of past sessions, semantic memory of what the user knows and believes, and procedural memory of how they like to study. The hard part is extraction and decay — storing enough to be useful without burying the signal.
+
+The [first article in this series](/blog/ai-engineering/01-persistent-memory-systems) introduced the four memory types on this platform — episodic, semantic, procedural, and working — and described the retrieval pipeline that assembles them into a user context before generation. That article was conceptual. This one is implementation-focused: how each memory type is extracted, stored, aged, and retrieved, what goes wrong in practice, and what makes memory for theological AI different from memory in general-purpose AI systems.
 
 The central tension in memory system design is between completeness and precision. A memory system that stores everything is noisy — relevant facts are buried in the accumulated record of every session. A memory system that stores only what it is confident about is sparse — it misses nuance and gradual shifts that no single extraction event captures cleanly. The engineering work is finding the operating point between these extremes that serves actual users in actual study sessions.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -36,8 +40,8 @@ Each memory type stores different things and is retrieved under different condit
 | Layer | What it stores | Storage | Retention |
 |---|---|---|---|
 | Working | Current session state, active task context | Redis | Session lifetime |
-| Episodic | Session summaries, specific exchanges | Postgres + Qdrant | Configurable (default: permanent) |
-| Semantic | Distilled user knowledge, theological positions | Postgres + Qdrant | Permanent with decay weighting |
+| Episodic | Session summaries, specific exchanges | Postgres + Weaviate | Configurable (default: permanent) |
+| Semantic | Distilled user knowledge, theological positions | Postgres + Weaviate | Permanent with decay weighting |
 | Procedural | Study patterns, preferences, interaction habits | Postgres | Permanent |
 
 These are not redundant — each layer retrieves under different conditions with different latency requirements. Working memory is accessed on every turn (Redis, <5ms). Episodic memory is retrieved when a topic echoes a prior session (vector search, ~100ms). Semantic memory is retrieved when the question touches on something the user has studied in depth (vector search + keyword, ~120ms). Procedural memory is loaded at session start and rarely queried mid-session (Postgres, ~30ms).
@@ -63,7 +67,7 @@ interface WorkingMemory {
 }
 ```
 
-Working memory is stored in Redis with a TTL of 24 hours after the last activity — long enough to survive a browser close and return, short enough to not persist indefinitely. When the TTL expires, the session is closed and its content is processed into the longer-term memory layers via the extraction pipeline.
+Working memory is stored in [Redis](/blog/versehub-engineering/05-redis-memory-layer-design) with a TTL of 24 hours after the last activity — long enough to survive a browser close and return, short enough to not persist indefinitely. When the TTL expires, the session is closed and its content is processed into the longer-term memory layers via the extraction pipeline.
 
 The conversation history in working memory is not the full verbatim transcript. After each turn, the history is checked against a token budget:
 
@@ -136,7 +140,7 @@ ${formatTurns(turns)}`,
 }
 ```
 
-The extraction runs asynchronously — the user is not waiting for it. Records are written to Postgres, then queued for embedding; the Qdrant vector index is updated within a few seconds.
+The extraction runs asynchronously — the user is not waiting for it. Records are written to Postgres, then queued for embedding; the Weaviate index is updated within a few seconds.
 
 ### Storage
 
@@ -151,7 +155,7 @@ CREATE TABLE episodic_memory (
   questions_explored TEXT[],
   conclusions TEXT,
   open_questions TEXT[],
-  embedding   VECTOR(1536),
+  embedding   VECTOR(384),   -- all-MiniLM-L6-v2
   access_count INTEGER DEFAULT 0,
   last_accessed TIMESTAMPTZ
 );
@@ -176,9 +180,9 @@ async function retrieveEpisodicContext(
   limit = 3
 ): Promise<EpisodicRecord[]> {
   const [semantic, explicit] = await Promise.all([
-    qdrant.search("episodic_memory", {
+    vectorStore.search("episodic_memory", {
       vector: queryEmbedding,
-      filter: { must: [{ key: "user_id", match: { value: userId } }] },
+      filter: { user_id: { $eq: userId } },
       limit,
       score_threshold: 0.72,
     }),
@@ -228,7 +232,7 @@ Not every piece of episodic information graduates to semantic memory. The extrac
 - **Repeated engagement**: a topic the user has visited in three or more sessions gets a semantic record
 - **Explicit conclusion**: a session where the user reached a stated position or expressed deep understanding
 - **Stored note**: passages the user annotated in their study notes (strong signal of significance)
-- **Position formation**: any session where the theological position memory (article 18) was updated
+- **Position formation**: any session where the theological position memory ([article 18](/blog/ai-engineering/18-theological-consistency)) was updated
 
 ```typescript
 async function extractSemanticMemory(
@@ -374,7 +378,7 @@ async function updateProceduralMemory(userId: string): Promise<void> {
 
 ## Memory Retrieval at Query Time
 
-At query time, the memory assembly runs in parallel with retrieval as described in article 15. The assembled memory context has a token budget (20% of the context window) and a priority ordering:
+At query time, the memory assembly runs in parallel with retrieval as described in [article 15](/blog/ai-engineering/15-ai-pipelines-for-bible-study). The assembled memory context has a token budget (20% of the context window) and a priority ordering:
 
 ```typescript
 function assembleMemoryContext(
@@ -459,11 +463,11 @@ Users have complete control over their memory data. The platform exposes four op
 
 **Correct**: users can edit any stored memory. If a semantic summary misrepresents their understanding, they can correct it in place. The corrected summary is immediately re-embedded for accurate retrieval.
 
-**Delete**: users can delete individual memories or clear all memory for a topic or session. Deletion cascades through Postgres (record removed) and Qdrant (embedding deleted) within the same transaction.
+**Delete**: users can delete individual memories or clear all memory for a topic or session. Deletion cascades through Postgres (record removed) and Weaviate (embedding deleted) within the same transaction.
 
 **Export**: all memory data is exportable as JSON in a structured format that other systems could import. This is not just a legal requirement — it is a promise that the platform does not hold user knowledge hostage.
 
-The privacy architecture ensures that memory data is never used for training or surfaced to other users. Each user's memory is queryable only by that user's session. The user ID is part of every Qdrant filter — there is no code path that retrieves memory without an explicit user ID bound.
+The privacy architecture ensures that memory data is never used for training or surfaced to other users. Each user's memory is queryable only by that user's session. The user ID is part of every vector-store filter — there is no code path that retrieves memory without an explicit user ID bound.
 
 ## Memory System Evaluation
 
@@ -534,6 +538,14 @@ links:
     description: "Stanford research on agents with episodic memory and reflection pipelines — the architecture that the memory formation and extraction design is modeled on."
 ---
 ::
+
+## Related reading
+
+- [Theological Consistency](/blog/ai-engineering/18-theological-consistency) — previous in the AI Engineering series
+- [Moderation](/blog/ai-engineering/20-moderation) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Redis Memory Layer Design](/blog/versehub-engineering/05-redis-memory-layer-design) — the Redis layer behind working memory
+- [Storing AI Memory with Redis and Vector Databases](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) — Redis plus vector storage for agent memory
 
 ---
 

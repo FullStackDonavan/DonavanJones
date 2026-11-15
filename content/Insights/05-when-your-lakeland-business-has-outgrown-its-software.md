@@ -13,6 +13,7 @@ tags:
 draft: false
 slug: when-your-lakeland-business-has-outgrown-its-software
 author: Donavan Jones
+excerptImage: /img/insights/05-when-your-lakeland-business-has-outgrown-its-software.jpg
 ---
 
 # Signs Your Lakeland Business Has Outgrown Its Software

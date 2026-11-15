@@ -1,8 +1,8 @@
 ---
 title: "GPU Allocation"
-description: "Strategies for GPU allocation in AI backend systems."
+description: "GPU allocation on real AI hardware: one model per Jetson, sharing an RTX 3090, VRAM budgeting, unified-memory gotchas, batching, warm-up, and monitoring."
 date: 2026-03-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - gpu
@@ -10,17 +10,16 @@ tags:
 draft: false
 slug: gpu-allocation
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/13-gpu-allocation.jpg
 ---
 
 # GPU Allocation
 
-Most of this platform's AI workloads run against managed APIs — Anthropic for inference, OpenAI for embeddings. In that model, GPU allocation is the provider's problem. You send a request, they route it to hardware, you pay per token. Simple.
+GPU allocation is deciding which model or service gets which GPU memory, and when, so latency-sensitive work is never starved and no device runs out of VRAM. On memory-constrained hardware the rule that matters most is simple: budget memory first, then batch to keep the GPU busy.
 
-But managed APIs are not the right answer for everything. Some workloads benefit from running closer to the application: the OCR preprocessing pipeline, local embedding models for latency-sensitive retrieval, the Tesseract fine-tuned model for historical documents, image processing for uploaded scans. These workloads need compute — and for some of them, GPU compute specifically.
+With a managed API, GPU allocation is the provider's problem. On my setup it is mine: VerseHub and my other services run on one RTX 3090 (24 GB) workstation and three Jetson Orin Nano Super 8GB boards in my K3s cluster, with hosted APIs used for some work. This article covers how I divide that hardware, why GPU allocation is a distinct engineering problem from CPU allocation, and the strategies that keep utilization high without running out of memory.
 
-This article covers how GPU resources are allocated and managed for the workloads that run locally, why GPU allocation is a distinct engineering problem from CPU allocation, and the strategies I use to keep utilization high without over-provisioning.
-
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend). The hardware itself is covered in the [AI homelab hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -34,21 +33,25 @@ destinationUrl: "/categories/backend-engineering"
 
 A CPU handles one task at a time per core. Modern CPUs have 8–128 cores, each handling a different thread. CPU allocation is well-understood: give each container a CPU share, the OS scheduler handles contention, and horizontal scaling adds more cores.
 
-GPUs work differently. A modern GPU (NVIDIA A10G, L4, etc.) has thousands of streaming multiprocessors — but they execute the same operation in parallel across large batches of data (SIMD). A GPU is not fast at one thing at a time; it is fast at many instances of the same operation at once. A batch of 64 embedding computations takes roughly the same time as a batch of 1 on a GPU, because the hardware processes all 64 in parallel. This is the fundamental reason batching matters for GPU workloads in a way it does not for CPU workloads.
+GPUs work differently. A modern GPU has thousands of CUDA cores grouped into streaming multiprocessors — but they execute the same operation in parallel across large batches of data (SIMD). A GPU is not fast at one thing at a time; it is fast at many instances of the same operation at once. For a small model, a batch of 64 embedding computations can take not much longer than a batch of 1, because the hardware processes them in parallel. This is the fundamental reason batching matters for GPU workloads in a way it does not for CPU workloads.
 
 Allocation decisions for GPUs therefore cannot treat GPU time the same as CPU time. The right question is not "how much of the GPU does this task consume?" but "how do I structure work so the GPU is doing useful computation rather than waiting?"
 
 ## The GPU Workloads
 
-On this platform, GPU-resident workloads fall into three categories:
+On my hardware, GPU-resident workloads fall into a few categories:
 
-**Local embedding model** — a self-hosted `sentence-transformers` model running on GPU for latency-sensitive embedding operations. Currently this is a backup path used when the managed API is rate-limited or unavailable; the primary path is the managed OpenAI API. When the local model is active, it runs on a dedicated GPU instance.
+**Embedding model** — all-MiniLM-L6-v2 in a Docker container on the RTX 3090. It is the only embedder VerseHub uses, so it is in the request path for every search.
 
-**OCR preprocessing** — the deskewing, denoising, and layout analysis steps in the OCR pipeline use GPU-accelerated image processing via CUDA-backed OpenCV. These are not neural network workloads — they are classical image operations that benefit from GPU parallelism but do not require the full VRAM of a modern AI accelerator. They run on a GPU-enabled CPU instance (one with a modest GPU like an NVIDIA T4) rather than a dedicated AI accelerator.
+**Fast-draft LLM** — llama3.2:3b in Ollama on one Jetson, pinned in memory permanently so it never cold-starts. It produces VerseHub's first-pass answers at about 21 tok/s.
 
-**Historical OCR model** — the fine-tuned Tesseract model for historical religious documents runs inference on GPU when available. This is a batch workload: individual OCR jobs are queued and processed in batches to amortize GPU initialization overhead.
+**Speech** — Kokoro-82M TTS and whisper.cpp STT on a second Jetson, with no LLM on that board.
 
-**Local reranker** — the cross-encoder reranker used in the two-stage retrieval pipeline (covered in the vector search article) runs as a local model. Reranking is latency-sensitive in the request path, and GPU inference is significantly faster than CPU for the input sizes involved (20 candidate passages, each a few hundred tokens).
+**Image generation and model experiments** — a Stable Diffusion service and a shelf of small Ollama models on the third Jetson, one large model or service at a time.
+
+**Large models and training** — Ornith-1.0-35B (about 21 GB of VRAM) and LoRA training on the 3090, which is why the 3090's schedule is the one I watch most closely.
+
+Classical image work like OCR preprocessing (deskewing, denoising) usually does not need a GPU at all, and Tesseract runs on CPU — those stay on CPU workers.
 
 ## Dedicated vs Shared GPU Instances
 
@@ -56,18 +59,18 @@ The first allocation decision is whether a workload gets a dedicated GPU instanc
 
 **Dedicated** means the GPU is allocated exclusively to one workload. No other process competes for VRAM or compute. The upside is predictable latency and zero interference. The downside is cost — a dedicated GPU instance is expensive when the workload is bursty and utilization is low.
 
-**Shared** means multiple workloads run on the same GPU. NVIDIA's MIG (Multi-Instance GPU) technology allows partitioning a GPU into isolated slices, each with guaranteed VRAM and compute. A single A10G can be partitioned into seven 1g.6gb instances, each running a separate workload with no cross-contamination.
+**Shared** means multiple workloads run on the same GPU. On datacenter cards (A100, H100, A30), NVIDIA's MIG (Multi-Instance GPU) partitions one GPU into isolated slices with guaranteed memory and compute. Consumer GPUs and Jetsons do not have MIG, so sharing means co-locating processes and budgeting memory yourself.
 
-My allocation:
+My allocation is mostly "one role per device":
 
-| Workload | Allocation | Reason |
+| Device | Role | Why |
 |---|---|---|
-| Local embedding model | Dedicated (1× A10G) | Latency-sensitive, primary fallback path |
-| Reranker | MIG slice (1g.6gb) | Small model, low VRAM, latency-sensitive |
-| Historical OCR | MIG slice (2g.12gb) | Medium model, batch workload |
-| Image preprocessing | GPU-enabled CPU instance | Classical ops, no VRAM requirements |
+| Jetson Orin Nano Super #1 | Image generation + small-model shelf | One big model or service at a time |
+| Jetson Orin Nano Super #2 | Speech (Kokoro TTS + Whisper STT) | Both small; measured 0.85 s TTS→STT round trip |
+| Jetson Orin Nano Super #3 | llama3.2:3b, pinned | Latency-sensitive drafts, never unloaded |
+| RTX 3090 (24 GB) | Embedder, Ornith-35B, LoRA training | Shared; large jobs scheduled around each other |
 
-The reranker and historical OCR model share the same A10G using MIG, reducing the cost of running both versus two dedicated instances.
+Dedicating a whole 8 GB board to one role sounds wasteful until you try to fit two models on it. More on that below, and in [Running Multiple Local Models Without Melting Your GPU](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu).
 
 ## VRAM as the Primary Constraint
 
@@ -79,12 +82,15 @@ VRAM planning before deploying a model:
 |---|---|---|---|
 | sentence-transformers/all-MiniLM-L6-v2 | 22M | FP16 | ~0.5 GB |
 | cross-encoder/ms-marco-MiniLM-L-6-v2 | 22M | FP16 | ~0.5 GB |
-| Tesseract (fine-tuned) | — | — | ~1.5 GB |
+| Ornith-1.0-9B (measured on a Jetson) | 9B | Quantized GGUF | ~5.3 GB, 4K context max |
+| Ornith-1.0-35B (measured on the 3090) | 35B MoE | Q4_K_M GGUF | ~21.2 GB |
 | Activation memory (batched inference) | — | — | 2–4× model size |
 
 Activation memory — the intermediate tensors generated during a forward pass — scales with batch size and sequence length. A model that occupies 1 GB of VRAM in weights might require 4–6 GB total during inference on a large batch. VRAM allocation must account for peak activation memory, not just model weights.
 
-The rule I follow: allocate a MIG slice with at least 2× the model's weight size as headroom for activations, then test at the largest expected batch size before production deployment to confirm it fits.
+The rule I follow: budget at least 2× the model's weight size as headroom for activations and KV cache, then test at the largest expected batch size and context length before deploying to confirm it fits.
+
+**Unified memory has its own trap.** A Jetson's 8 GB is shared between CPU and GPU, with about 7.4 GiB usable. The CUDA allocator there cannot reclaim the Linux page cache, so a model can fail to load with out-of-memory even when `free -h` says plenty is "available." My fix before every model swap: stop the old model, then `sync; echo 3 > /proc/sys/vm/drop_caches`, then load. In practice only one ~4–5 GB model fits per board — Ornith-9B at 5.3 GB barely fit, crawled at about 3 tok/s end to end, and I retired it.
 
 ## Dynamic Batching for GPU Workloads
 
@@ -98,15 +104,15 @@ Max batch size:   32      (VRAM and latency tradeoff)
 Min batch size:   1       (do not hold a request waiting when load is low)
 ```
 
-The batch size limit of 32 is empirically determined. Above 32, the activation memory for the reranker approaches the VRAM ceiling of the MIG slice, and latency increases non-linearly as the GPU begins swapping. Below 32, throughput is proportionally lower but latency stays flat. The sweet spot for this model on this hardware is 16–24 requests per batch during normal load.
+Treat the max batch size as something to measure, not guess. Raise it until activation memory approaches your VRAM budget or latency starts climbing non-linearly, then back off. The right number depends on the model, the sequence lengths, and how much memory the device has left after everything else on it.
 
 GPU utilization during a batch is near 100%. GPU utilization between batches is near 0%. The batcher's job is to minimize the gap between batches — to keep the GPU busy rather than idle.
 
 ## Model Warm-Up and Cold Start
 
-Loading a model from disk into GPU VRAM takes time — 2–10 seconds depending on model size and storage speed. A cold-start penalty of 10 seconds on the first request after a deployment or restart is unacceptable for a latency-sensitive service.
+Loading a model from disk into GPU VRAM takes time — seconds, depending on model size and storage speed. On my Jetson, llama3.2:3b takes about 5.1 s to load from NVMe. A cold-start penalty like that on the first request after a deployment or restart is unacceptable for a latency-sensitive service, which is why that model is pinned in memory permanently.
 
-I handle this with explicit warm-up:
+For services that do restart, I use explicit warm-up:
 
 ```typescript
 async function startModelServer(modelPath: string) {
@@ -128,7 +134,7 @@ The service only registers with the load balancer after warm-up completes. This 
 
 ## Preemption and Priority
 
-When a GPU is shared (via MIG or via a scheduling layer), competing workloads need priority rules. Not all GPU work is equally urgent:
+When a GPU is shared (via MIG on datacenter cards, or via a scheduling layer on everything else), competing workloads need priority rules. Not all GPU work is equally urgent:
 
 - A reranker call in the request path, blocking a user's search result: **high priority**
 - A historical OCR batch job running in the background: **low priority**
@@ -154,7 +160,7 @@ destinationUrl: "/systems/backend"
 
 ## Monitoring GPU Utilization
 
-GPU utilization is reported differently from CPU utilization, and the difference matters for interpretation:
+GPU utilization is reported differently from CPU utilization, and the difference matters for interpretation. On my cluster, the Jetsons expose GPU load through a small custom agent `/metrics` endpoint that [Prometheus](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) scrapes, and model load/unload/benchmark controls live on the Devices page of [Kingdom Tools](/projects/kingdom-tools), my internal platform.
 
 **SM utilization** — the fraction of streaming multiprocessors active at a given moment. High SM utilization during inference, near zero between batches. A time-averaged SM utilization of 40–60% is reasonable for a bursty workload; sustained >90% suggests the GPU is a bottleneck.
 
@@ -189,13 +195,13 @@ destinationUrl: "/hire-me"
 
 ## Cost vs Performance Tradeoffs
 
-GPU instances cost more than CPU instances — often 5–10× for equivalent core count. Every GPU allocation decision has a cost dimension.
+GPU capacity costs more than CPU capacity, whether you rent it by the hour or buy it and share a few boards across every workload. Every GPU allocation decision has a cost dimension.
 
 The question I ask before allocating GPU for a workload: **what is the latency cost of running on CPU instead?**
 
-For the reranker, CPU inference on a 22M parameter model takes ~200ms per batch of 20. GPU inference takes ~8ms. The reranker is in the request path for search queries. A 200ms latency penalty on search is noticeable; 8ms is not. GPU is justified.
+For anything in the request path — the embedder that every search waits on, the draft model a user is watching stream — a GPU-vs-CPU gap of hundreds of milliseconds is noticeable, so GPU is justified.
 
-For the historical OCR model, CPU inference takes ~4s per page; GPU takes ~0.8s. OCR is an async background job — the user is not waiting. The latency difference is real but the user experience impact is low. Whether GPU is justified depends on throughput requirements, not latency. At current OCR volume, the throughput difference does not require GPU — the CPU workers keep up. If volume doubles, GPU becomes worth it.
+For background work like OCR, the user is not waiting. The latency difference is real but the user experience impact is low, so whether GPU is justified depends on throughput: if the CPU workers keep up, leave it on CPU and keep the GPU free for interactive work.
 
 This cost-versus-latency analysis is the right framework for GPU allocation decisions. The answer is not always GPU, and it is not always the biggest GPU available. It is the smallest allocation that meets the latency and throughput requirements for the workload, at the point in the scaling curve where the workload actually is today.
 
@@ -250,6 +256,21 @@ links:
     description: "Background on GPU memory — understanding VRAM constraints and activation memory overhead is central to the MIG slice sizing decisions described in this article."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: all
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Async Workers](/blog/backendengineering/12-async-workers) — previous in the series
+- [Batching](/blog/backendengineering/14-batching) — next in the series: keeping the GPU busy
+- [Using Three Jetson Orin Nano Supers as an AI Cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) — the hardware these allocations run on
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — why the big GPU and the edge boards split the work
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

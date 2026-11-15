@@ -175,7 +175,8 @@
         <!-- CONTENT WRAPPER (THIS IS THE FIX) -->
         <div class="max-w-7xl mx-auto px-4 py-12">
 
-     
+          <!-- AT A GLANCE: status, stack, source, deployments, docs -->
+          <ProjectFacts :doc="seoDoc" class="mb-12" />
 
           <!-- CONTENT -->
           <ContentRenderer
@@ -206,6 +207,7 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const SITE = (config.public.appDomain as string) || 'https://donavanjones.com'
 const backLink = ref('/projects/overview')
+const _abs = useAbsoluteUrl()
 
 // Fetch doc server-side for SEO head tags
 const { data: seoDoc } = await useAsyncData(
@@ -224,12 +226,12 @@ useSeoMeta({
   description: pageDescription,
   ogDescription: pageDescription,
   ogType: 'website',
-  ogImage: computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`),
+  ogImage: computed(() => _abs(seoDoc.value?.excerptImage) || `${SITE}/img/logo.png`),
   ogUrl: () => `${SITE}${route.path}`,
   twitterCard: 'summary_large_image',
   twitterTitle: pageTitle,
   twitterDescription: pageDescription,
-  twitterImage: computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`),
+  twitterImage: computed(() => _abs(seoDoc.value?.excerptImage) || `${SITE}/img/logo.png`),
   canonical: () => `${SITE}${route.path}`,
 })
 
@@ -267,8 +269,24 @@ useHead({
           ...(doc.liveSite ? { installUrl: doc.liveSite } : {}),
           ...(doc.github ? { codeRepository: doc.github } : {}),
           isPartOf: { '@id': `${SITE}/#website` },
-          image: doc.excerptImage || undefined,
+          image: _abs(doc.excerptImage),
           mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+        })
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: computed(() => {
+        const doc = seoDoc.value
+        if (!doc) return '{}'
+        return JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+            { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE}/projects/overview` },
+            { '@type': 'ListItem', position: 3, name: doc.title, item: `${SITE}${route.path}` },
+          ],
         })
       }),
     },

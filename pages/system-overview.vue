@@ -1,18 +1,19 @@
 <script setup lang="ts">
+import { ctaImage } from '~/utils/ctaImage'
 // ArchitectureDiagram is registered globally via Nuxt auto-imports
 const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Private AI Cloud — Donavan Jones | System Architecture',
-  description: 'How I designed and operate a private AI cloud: 8-node ARM64 Kubernetes cluster running LLM inference, RAG pipelines, Prometheus, Loki, Grafana monitoring, Gitea CI/CD, and self-hosted storage.',
+  description: 'How I designed and operate a private AI cloud: a 7-node K3s cluster (4 Raspberry Pis + 3 Jetson Orin Nano Super) plus an RTX 3090 workstation, running local LLM inference, RAG, Prometheus/Grafana/Loki, and Gitea CI/CD.',
   ogTitle: 'Private AI Cloud — Donavan Jones | System Architecture',
-  ogDescription: 'Architecture deep-dive: 8-node ARM64 Kubernetes cluster with LLM inference, RAG pipelines, Prometheus, Loki, Grafana, Gitea CI/CD, MinIO, and Weaviate vector search.',
+  ogDescription: 'Architecture deep-dive: 7-node ARM64 K3s cluster (4 Raspberry Pis + 3 Jetson Orin Nano Super) with local LLM inference, RAG, Prometheus, Loki, Grafana, Gitea CI/CD, MinIO, and Weaviate.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/system-overview.jpg`,
   ogUrl: `${_SITE}/system-overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Private AI Cloud — Donavan Jones',
-  twitterDescription: '8-node ARM64 Kubernetes cluster: LLM inference, RAG pipelines, Grafana, Gitea CI/CD, MinIO, and Weaviate — all self-hosted.',
+  twitterDescription: '7-node ARM64 K3s cluster (4 Pis + 3 Jetsons) plus an RTX 3090: LLM inference, RAG, Grafana, Gitea CI/CD, MinIO, and Weaviate — all self-hosted.',
   canonical: `${_SITE}/system-overview`,
 })
 </script>
@@ -123,11 +124,11 @@ useSeoMeta({
 
           <div
             v-for="node in [
-              { icon: 'mdi:raspberry-pi',   color: 'sky',    label: 'ARM64 Cluster',  sub: '8 Raspberry Pi 5 nodes running k3s' },
+              { icon: 'mdi:raspberry-pi',   color: 'sky',    label: 'ARM64 Cluster',  sub: '4 Raspberry Pis + 3 Jetson Orin Nano Supers running k3s' },
               { icon: 'mdi:kubernetes',      color: 'purple', label: 'Orchestration',  sub: 'Scheduling, networking, autoscaling' },
               { icon: 'mdi:source-branch',   color: 'emerald',label: 'CI/CD',          sub: 'Automated builds via Gitea runners' },
               { icon: 'mdi:chart-line',      color: 'rose',   label: 'Observability',  sub: 'Metrics, logs, dashboards, alerting' },
-              { icon: 'mdi:tools',           color: 'amber',  label: 'Kingdom Tools',  sub: 'Service catalog, provisioning & drift detection' },
+              { icon: 'mdi:tools',           color: 'amber',  label: 'Kingdom Tools',  sub: 'Service platform + Jetson AI lab: models, training, benchmarks' },
             ]"
             :key="node.label"
             class="rounded-2xl p-5 border transition-all duration-200"
@@ -202,10 +203,11 @@ useSeoMeta({
                 wrote the CI/CD pipelines, and wired up the monitoring from scratch.
               </p>
               <p>
-                The platform runs production AI workloads — LLM inference with Llama 3.2, RAG
-                pipelines backed by Weaviate, async job queues, and multi-model routing. The cluster
-                is heterogeneous by design: 8 Raspberry Pi 5 nodes handle general services, while
-                4 NVIDIA Jetson Orin Nano Supers run GPU-accelerated inference with CUDA. No vendor
+                The platform runs production AI workloads — LLM inference with Llama 3.2 3B, RAG
+                pipelines backed by Weaviate, Temporal workflows, and model scheduling under tight memory. The cluster
+                is heterogeneous by design: 4 Raspberry Pis handle the control plane and general services, while
+                3 NVIDIA Jetson Orin Nano Super 8GB boards run CUDA inference, speech, and image generation.
+                A separate RTX 3090 (24 GB) workstation handles embeddings, LoRA training, and the larger Ornith-1.0-35B model. No vendor
                 lock-in. No managed services. Just documented decisions and real operational experience.
               </p>
               <p>
@@ -227,12 +229,13 @@ useSeoMeta({
             </div>
             <div class="p-5 space-y-4">
               <div v-for="spec in [
-                { label: 'General Nodes', value: '8× Raspberry Pi 5 (ARM64)', color: 'sky' },
-                { label: 'GPU Nodes', value: '4× Jetson Orin Nano Super', color: 'green' },
-                { label: 'Total Nodes', value: '12 (1 control plane + 11 workers)', color: 'sky' },
+                { label: 'General Nodes', value: '4× Raspberry Pi (ARM64)', color: 'sky' },
+                { label: 'GPU Nodes', value: '3× Jetson Orin Nano Super 8GB', color: 'green' },
+                { label: 'Total Nodes', value: '7 (1 control plane + 6 workers)', color: 'sky' },
+                { label: 'Workstation', value: '1× RTX 3090 24GB (off-cluster)', color: 'green' },
                 { label: 'Orchestration', value: 'k3s — Lightweight Kubernetes', color: 'purple' },
                 { label: 'Networking', value: 'Flannel CNI · Cloudflare Tunnel', color: 'purple' },
-                { label: 'AI Inference', value: 'Llama 3.2 · CUDA · Weaviate · RAG', color: 'green' },
+                { label: 'AI Inference', value: 'Ollama · Llama 3.2 3B · CUDA · Weaviate · RAG', color: 'green' },
                 { label: 'Storage', value: 'MinIO S3 · PostgreSQL · Redis', color: 'emerald' },
                 { label: 'Observability', value: 'Prometheus · Loki · Grafana', color: 'rose' },
                 { label: 'CI/CD', value: 'Gitea · Actions Runners · Auto Deploy', color: 'amber' },
@@ -258,8 +261,8 @@ useSeoMeta({
           </div>
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Cluster Node Layout</h2>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
-            12-node heterogeneous cluster: 8 Raspberry Pi 5 nodes handle general workloads, and
-            4 NVIDIA Jetson Orin Nano Supers run GPU-accelerated AI inference. All nodes communicate
+            7-node heterogeneous cluster: 4 Raspberry Pis handle the control plane and general workloads, and
+            3 NVIDIA Jetson Orin Nano Super 8GB boards each own one AI role (LLM, speech, image generation). All nodes communicate
             over a private LAN; external traffic enters through a Cloudflare Tunnel.
           </p>
         </div>
@@ -281,7 +284,7 @@ useSeoMeta({
                 { icon: 'mdi:shield-check', label: 'Cloudflare Tunnel', color: 'text-orange-400' },
                 { icon: 'mdi:router-network', label: 'Ingress Controller', color: 'text-sky-400' },
                 { icon: 'mdi:kubernetes', label: 'k3s Control Plane', color: 'text-purple-400' },
-                { icon: 'mdi:server', label: '7 Worker Nodes', color: 'text-emerald-400' },
+                { icon: 'mdi:server', label: '6 Worker Nodes', color: 'text-emerald-400' },
                 { icon: 'mdi:brain', label: 'AI / Data Services', color: 'text-rose-400' },
               ]" :key="step.label" class="flex items-center gap-2">
                 <div class="flex flex-col items-center gap-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 min-w-[80px] text-center">
@@ -296,7 +299,7 @@ useSeoMeta({
 
         <!-- ── Raspberry Pi 5 tier ── -->
         <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-3">
-          Raspberry Pi 5 — General Workers
+          Raspberry Pi — Control Plane + General Workers
         </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
@@ -308,17 +311,17 @@ useSeoMeta({
               </div>
               <div>
                 <p class="text-xs font-semibold text-slate-900 dark:text-white">Control Plane</p>
-                <p class="text-[10px] text-purple-400">node-00</p>
+                <p class="text-[10px] text-purple-400">pi-node1</p>
               </div>
             </div>
             <div class="space-y-1.5 text-[11px]">
               <div class="flex justify-between gap-2">
                 <span class="text-slate-500 dark:text-slate-400 shrink-0">Role</span>
-                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">API Server · Scheduler · etcd</span>
+                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">K3s server · Prometheus · Grafana · Gitea</span>
               </div>
               <div class="flex justify-between gap-2">
                 <span class="text-slate-500 dark:text-slate-400 shrink-0">Hardware</span>
-                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">Raspberry Pi 5</span>
+                <span class="text-slate-700 dark:text-slate-300 font-medium text-right">Raspberry Pi</span>
               </div>
               <div class="flex justify-between gap-2">
                 <span class="text-slate-500 dark:text-slate-400 shrink-0">Arch</span>
@@ -329,13 +332,9 @@ useSeoMeta({
 
           <!-- Pi worker nodes -->
           <div v-for="n in [
-            { id: 'node-01', workload: 'FastAPI · Nitro · App Services' },
-            { id: 'node-02', workload: 'PostgreSQL · Redis · Apache AGE' },
-            { id: 'node-03', workload: 'MinIO Object Storage' },
-            { id: 'node-04', workload: 'Weaviate · Vector Search' },
-            { id: 'node-05', workload: 'Gitea · Actions Runners' },
-            { id: 'node-06', workload: 'Prometheus · Loki · Grafana · Alerts' },
-            { id: 'node-07', workload: 'General Worker · Overflow' },
+            { id: 'pi-worker-1', workload: 'App services · Temporal workers · in-cluster data layer' },
+            { id: 'pi-worker-2', workload: 'Redis · Temporal workers · app services' },
+            { id: 'pi-worker-3', workload: 'App services · Temporal workers · batch Jobs' },
           ]" :key="n.id"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
           >
@@ -363,12 +362,11 @@ useSeoMeta({
             CUDA · 1024 cores
           </span>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div v-for="n in [
-            { id: 'jetson-01', workload: 'Llama 3.2 · LLM Inference' },
-            { id: 'jetson-02', workload: 'Embeddings · Model Serving' },
-            { id: 'jetson-03', workload: 'RAG Pipeline Worker · AI Tasks' },
-            { id: 'jetson-04', workload: 'Multi-model Routing · Overflow' },
+            { id: 'gpu-worker-1', workload: 'image-gen · Dreamer (Stable Diffusion) + Ollama small-model shelf — one big model at a time' },
+            { id: 'gpu-worker-2', workload: 'speech · Kokoro-82M TTS + whisper.cpp STT (0.85 s round trip)' },
+            { id: 'gpu-worker-3', workload: 'llm · Ollama with llama3.2:3b pinned (~21 tok/s, 100% on GPU)' },
           ]" :key="n.id"
             class="rounded-2xl border border-green-500/30 bg-green-500/5 p-5"
           >
@@ -389,6 +387,15 @@ useSeoMeta({
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="w-full bg-slate-50 dark:bg-slate-950 pb-4">
+      <div class="max-w-6xl mx-auto px-6">
+        <JetsonLeaderboardCard
+          title="What actually runs well on these Jetsons?"
+          blurb="Every model I have loaded on the three GPU workers, benchmarked the same way: speed, accuracy, tool calling and coding."
+        />
       </div>
     </section>
 
@@ -415,7 +422,7 @@ useSeoMeta({
               icon: 'mdi:chart-scatter-plot', color: 'rose',
               name: 'Prometheus',
               role: 'Metrics collection & time-series storage',
-              details: ['Scrape interval: 15s', 'Node exporter on every Pi', 'kube-state-metrics', 'Custom service metrics'],
+              details: ['Scrape interval: 15s', 'Node exporter on every Pi', 'kube-state-metrics', 'Custom Jetson GPU /metrics agent'],
             },
             {
               icon: 'mdi:text-box-search-outline', color: 'sky',
@@ -503,8 +510,8 @@ useSeoMeta({
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">CI/CD Pipeline</h2>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400 max-w-2xl">
             Self-hosted Gitea runs the version control and pipeline orchestration. On push to main, an
-            Actions runner inside the cluster picks up the job, builds the container image, pushes to
-            the private registry, and rolls out the new deployment — zero manual steps.
+            Actions runner picks up the job, builds an ARM64 image with docker buildx, imports it into
+            each node with k3s ctr (imagePullPolicy: Never), and rolls out the new deployment.
           </p>
         </div>
 
@@ -514,7 +521,7 @@ useSeoMeta({
             { icon: 'mdi:source-commit', color: 'sky', step: '01', title: 'Code Push', body: 'Push to main branch in self-hosted Gitea' },
             { icon: 'mdi:play-circle', color: 'emerald', step: '02', title: 'Pipeline Triggered', body: 'Actions runner picks up the workflow job' },
             { icon: 'mdi:docker', color: 'sky', step: '03', title: 'Build Image', body: 'Multi-stage Dockerfile builds ARM64 container' },
-            { icon: 'mdi:package-variant', color: 'purple', step: '04', title: 'Push Registry', body: 'Image pushed to private cluster registry' },
+            { icon: 'mdi:package-variant', color: 'purple', step: '04', title: 'Import to Nodes', body: 'Image imported on each node with k3s ctr images import' },
             { icon: 'mdi:rocket-launch', color: 'amber', step: '05', title: 'Rolling Deploy', body: 'Kubernetes rolls out new pods, zero downtime' },
           ]" :key="stage.step"
             class="relative rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-5"
@@ -553,15 +560,10 @@ useSeoMeta({
               <span class="w-2.5 h-2.5 rounded-full bg-yellow-400/70"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-green-400/70"></span>
             </div>
-            <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">gitea — Actions Pipeline</span>
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">gitea — Actions deploy run</span>
           </div>
-          <div class="relative bg-slate-900 min-h-[220px] flex items-center justify-center">
-            <div class="text-center py-14 px-6">
-              <Icon name="mdi:monitor-screenshot" class="text-slate-600 text-5xl mb-3" />
-              <p class="text-sm font-medium text-slate-400">Gitea Actions Pipeline Screenshot</p>
-              <p class="text-xs text-slate-600 mt-1">Add screenshot to <code class="text-sky-500">public/img/screenshots/gitea-pipeline.png</code></p>
-            </div>
-          </div>
+          <img src="/img/screenshots/gitea-pipeline.jpg" alt="Gitea Actions deploy run: checks job steps all passing, then deploy" width="1440" height="640" loading="lazy" decoding="async"
+               class="block w-full h-auto bg-slate-900" />
         </div>
 
       </div>
@@ -667,14 +669,11 @@ useSeoMeta({
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           <div v-for="shot in [
-            { tool: 'Grafana', desc: 'Cluster resource dashboard', file: 'grafana-dashboard.png', color: 'amber', icon: 'mdi:view-dashboard' },
-            { tool: 'Prometheus', desc: 'Metrics explorer & query UI', file: 'prometheus-metrics.png', color: 'rose', icon: 'mdi:chart-scatter-plot' },
-            { tool: 'Loki', desc: 'Log aggregation & LogQL explorer', file: 'loki-logs.png', color: 'sky', icon: 'mdi:text-box-search-outline' },
-            { tool: 'Gitea Pipelines', desc: 'CI/CD Actions pipeline run', file: 'gitea-pipeline.png', color: 'emerald', icon: 'mdi:source-branch' },
-            { tool: 'Kubernetes', desc: 'k3s dashboard / node view', file: 'kubernetes-dashboard.png', color: 'sky', icon: 'mdi:kubernetes' },
-            { tool: 'MinIO', desc: 'Object storage bucket browser', file: 'minio-dashboard.png', color: 'amber', icon: 'mdi:harddisk' },
-            { tool: 'Weaviate', desc: 'Vector database & schema view', file: 'weaviate-dashboard.png', color: 'purple', icon: 'mdi:vector-arrange-above' },
-            { tool: 'Kingdom Tools', desc: 'Service catalog, provisioning & drift detection', file: 'kingdom-tools-dashboard.png', color: 'amber', icon: 'mdi:tools' },
+            { tool: 'Grafana', desc: 'Node dashboard: load, context switches, time sync, network', src: '/img/screenshots/grafana-dashboard.jpg', color: 'amber', icon: 'mdi:view-dashboard' },
+            { tool: 'Prometheus', desc: 'Per-node CPU over six hours', src: '/img/screenshots/prometheus-metrics.jpg', color: 'rose', icon: 'mdi:chart-scatter-plot' },
+            { tool: 'Prometheus targets', desc: 'Every node, Jetson agent and k8s endpoint up', src: '/img/screenshots/prometheus-targets.jpg', color: 'rose', icon: 'mdi:target' },
+            { tool: 'Gitea Actions', desc: 'A deploy run: checks, then deploy', src: '/img/screenshots/gitea-pipeline.jpg', color: 'emerald', icon: 'mdi:source-branch' },
+            { tool: 'Kingdom Tools', desc: 'Jetson devices: loaded models, GPU and memory', src: '/img/projects/kingdom-tools/devices.png', color: 'amber', icon: 'mdi:tools' },
           ]" :key="shot.tool"
             class="rounded-2xl border border-slate-200 dark:border-slate-700/50 overflow-hidden bg-white dark:bg-slate-900/60"
           >
@@ -688,36 +687,11 @@ useSeoMeta({
               <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">{{ shot.tool.toLowerCase().replace(/\s+/g, '-') }}</span>
             </div>
 
-            <!-- Placeholder (replace div with img once screenshot exists) -->
-            <div class="relative bg-slate-900 aspect-video flex items-center justify-center">
-              <div class="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center border"
-                  :class="{
-                    'bg-amber-500/10 border-amber-500/20': shot.color === 'amber',
-                    'bg-rose-500/10 border-rose-500/20': shot.color === 'rose',
-                    'bg-emerald-500/10 border-emerald-500/20': shot.color === 'emerald',
-                    'bg-sky-500/10 border-sky-500/20': shot.color === 'sky',
-                    'bg-purple-500/10 border-purple-500/20': shot.color === 'purple',
-                  }"
-                >
-                  <Icon :name="shot.icon" class="text-lg"
-                    :class="{
-                      'text-amber-400': shot.color === 'amber',
-                      'text-rose-400': shot.color === 'rose',
-                      'text-emerald-400': shot.color === 'emerald',
-                      'text-sky-400': shot.color === 'sky',
-                      'text-purple-400': shot.color === 'purple',
-                    }"
-                  />
-                </div>
-                <p class="text-xs font-medium text-slate-300">{{ shot.tool }}</p>
-                <p class="text-[10px] text-slate-600">{{ shot.desc }}</p>
-                <code class="text-[9px] text-slate-700 mt-1">public/img/screenshots/{{ shot.file }}</code>
-              </div>
+            <!-- Real screenshot from the homelab -->
+            <div class="relative bg-slate-900 aspect-video overflow-hidden">
+              <img :src="shot.src" :alt="`${shot.tool}: ${shot.desc}`" width="1440" height="900" loading="lazy" decoding="async"
+                   class="w-full h-full object-cover object-top" />
             </div>
-            <!-- Once screenshot exists, replace the div above with:
-              <img :src="`/img/screenshots/${shot.file}`" :alt="`${shot.tool} screenshot`" class="w-full h-full object-cover" />
-            -->
 
             <!-- Caption -->
             <div class="px-4 py-3">
@@ -771,8 +745,8 @@ useSeoMeta({
                 color: 'emerald',
                 title: 'Infrastructure',
                 sub: 'Kubernetes · ARM64 · Homelab · CI/CD',
-                desc: 'k3s cluster across 8 Raspberry Pi 5 nodes with Gitea CI/CD, Prometheus, and Grafana.',
-                tags: ['k3s', 'Raspberry Pi 5', 'Gitea', 'Prometheus'],
+                desc: '7-node k3s cluster (4 Raspberry Pis + 3 Jetson Orin Nano Supers) with Gitea CI/CD, Prometheus, Grafana, and Loki.',
+                tags: ['k3s', 'Raspberry Pi', 'Gitea', 'Prometheus'],
               },
               {
                 to: '/systems/agentic-ai',
@@ -781,7 +755,7 @@ useSeoMeta({
                 title: 'Agentic AI Systems',
                 sub: 'Planning · Memory · Orchestration · Verification',
                 desc: 'Autonomous agent loops — task planning, layered memory, durable orchestration, and output verification before it reaches a user.',
-                tags: ['Temporal', 'Kafka', 'Weaviate', 'Verification Agents'],
+                tags: ['Temporal', 'Redis', 'Weaviate', 'Verification Agents'],
               },
               {
                 to: '/systems/ai-homelab',
@@ -798,13 +772,13 @@ useSeoMeta({
                 color: 'indigo',
                 title: 'Local Vibe Coding',
                 sub: 'Models · Agent Loop · Retrieval · Hardware',
-                desc: 'A local AI coding environment — Ornith-1.0-35B, a custom agent loop, and hybrid GPU routing, replacing hosted subscriptions.',
+                desc: 'A local AI coding environment — Ornith-1.0-35B on an RTX 3090, a custom agent loop, and small models on Jetsons, alongside hosted tools.',
                 tags: ['Ornith-1.0-35B', 'Ollama', 'OpenClaw', 'RTX 3090'],
               },
             ]"
             :key="sys.to"
             :to="sys.to"
-            class="group flex flex-col rounded-2xl border transition-all duration-200
+            class="group flex flex-col overflow-hidden rounded-2xl border transition-all duration-200
                    border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60
                    hover:shadow-lg"
@@ -817,30 +791,37 @@ useSeoMeta({
               'hover:border-indigo-500/40 hover:shadow-indigo-500/5': sys.color === 'indigo',
             }"
           >
+            <!-- Same art as the system page it opens; icon sits on the image -->
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="ctaImage(sys.to)" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-11 h-11 rounded-lg flex items-center justify-center border"
+                  :class="{
+                    'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
+                    'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
+                    'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
+                    'bg-amber-500/10 border-amber-500/20':   sys.color === 'amber',
+                    'bg-rose-500/10 border-rose-500/20':     sys.color === 'rose',
+                    'bg-indigo-500/10 border-indigo-500/20': sys.color === 'indigo',
+                  }"
+                >
+                  <Icon :name="sys.icon" class="text-2xl"
+                    :class="{
+                      'text-purple-400': sys.color === 'purple',
+                      'text-sky-400':    sys.color === 'sky',
+                      'text-emerald-400':sys.color === 'emerald',
+                      'text-amber-400':  sys.color === 'amber',
+                      'text-rose-400':   sys.color === 'rose',
+                      'text-indigo-400': sys.color === 'indigo',
+                    }"
+                  />
+                </div>
+              </div>
+            </div>
             <div class="p-6 flex flex-col flex-1">
 
-              <div
-                class="w-11 h-11 rounded-lg flex items-center justify-center mb-4 border"
-                :class="{
-                  'bg-purple-500/10 border-purple-500/20': sys.color === 'purple',
-                  'bg-sky-500/10 border-sky-500/20':       sys.color === 'sky',
-                  'bg-emerald-500/10 border-emerald-500/20': sys.color === 'emerald',
-                  'bg-amber-500/10 border-amber-500/20':   sys.color === 'amber',
-                  'bg-rose-500/10 border-rose-500/20':     sys.color === 'rose',
-                  'bg-indigo-500/10 border-indigo-500/20': sys.color === 'indigo',
-                }"
-              >
-                <Icon :name="sys.icon" class="text-2xl"
-                  :class="{
-                    'text-purple-400': sys.color === 'purple',
-                    'text-sky-400':    sys.color === 'sky',
-                    'text-emerald-400':sys.color === 'emerald',
-                    'text-amber-400':  sys.color === 'amber',
-                    'text-rose-400':   sys.color === 'rose',
-                    'text-indigo-400': sys.color === 'indigo',
-                  }"
-                />
-              </div>
 
               <div class="mb-3">
                 <h3 class="text-base font-semibold text-slate-900 dark:text-white

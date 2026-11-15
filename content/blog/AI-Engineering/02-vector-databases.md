@@ -1,8 +1,8 @@
 ---
 title: "Vector Databases"
-description: "Role of vector databases in AI agent memory and retrieval."
+description: "Why AI agent memory needs a vector database: collection design, payload filtering, embedding alignment, and how Weaviate and Postgres split the work."
 date: 2026-04-23
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,17 +12,20 @@ draft: false
 cluster: "ai-engineering"
 slug: vector-databases
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/02-vector-databases.jpg
 ---
 
 # Vector Databases
 
-The previous article described persistent memory as a system with four distinct types — episodic, semantic, procedural, working. Two of those types (episodic and semantic) rely heavily on a specific kind of storage that relational databases handle poorly: retrieval by meaning rather than by identifier.
+A vector database stores embeddings and answers "what is closest in meaning to this?" quickly, which is exactly the lookup an agent's episodic and semantic memory needs. It sits beside Postgres rather than replacing it: Postgres is the system of record, and the vector store (Weaviate, on this platform) is a rebuildable retrieval index.
+
+The [previous article](/blog/ai-engineering/01-persistent-memory-systems) described persistent memory as a system with four distinct types — episodic, semantic, procedural, working. Two of those types (episodic and semantic) rely heavily on a specific kind of storage that relational databases handle poorly: retrieval by meaning rather than by identifier.
 
 A relational database retrieves by equality or range: give me the row where `id = 42`, or give me all rows where `created_at > last_week`. It has no native concept of "give me the rows that mean something similar to this sentence." Vector databases fill this gap. They are purpose-built to store high-dimensional vectors and answer similarity queries efficiently at scale.
 
 This article covers what vector databases are, why they are the right tool for AI agent memory specifically, how to think about collection design, and how a vector database fits into the broader memory architecture alongside relational storage.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -42,7 +45,7 @@ This is the operation that makes AI agents useful for knowledge retrieval. An ag
 
 ## Why Not Just Use Postgres?
 
-The `pgvector` extension adds vector similarity search to Postgres. For small datasets and moderate query volumes, it works well. The Backend Engineering series uses a dedicated vector store (Qdrant) rather than pgvector, and the reasoning is worth revisiting from the AI engineering perspective.
+The `pgvector` extension adds vector similarity search to Postgres. For small datasets and moderate query volumes, it works well. My stack uses a dedicated vector store (Weaviate) rather than pgvector — the [vector search article](/blog/backendengineering/05-vector-search) in the Backend Engineering series covers the service side — and the reasoning is worth revisiting from the AI engineering perspective.
 
 The question is not just "can Postgres store vectors?" but "what does the vector database need to do in an AI agent context?"
 
@@ -134,7 +137,7 @@ const profile = await vectorStore.search("user_semantic_profiles", {
 });
 ```
 
-The filter syntax above is Qdrant's filter language. The principle — metadata predicates applied during ANN traversal — is common across all major vector stores, though the syntax differs.
+The filter syntax above is simplified pseudocode; Weaviate expresses the same thing with `where` filters, and Qdrant, Pinecone and pgvector each have their own syntax. The principle — metadata predicates applied during ANN traversal — is common across all major vector stores, though the syntax differs.
 
 ## Embedding Alignment Across Collections
 
@@ -142,7 +145,7 @@ Every query against every collection uses the same embedding model. This is a ha
 
 Similarity search compares a query vector against stored vectors using geometric distance. If the query is embedded with model A and the stored vectors were produced by model B, the distance computation is meaningless — the vectors occupy different spaces. A high similarity score from a cross-model comparison tells you nothing.
 
-On this platform, all five collections use the same model: `text-embedding-3-small` from OpenAI. This means:
+On this platform, all five collections use the same model: `all-MiniLM-L6-v2`, a small sentence-transformer (384-dimensional vectors) that I self-host in Docker on my RTX 3090 workstation. This means:
 
 - Every piece of text that enters any collection is embedded with this model
 - Every query embedding is generated with this model
@@ -156,7 +159,7 @@ There is one legitimate exception: collections with fundamentally different cont
 
 Collections are populated through two distinct flows:
 
-**Bulk indexing** — loading the static corpus (Bible verses, commentary, reference works). This is a one-time or infrequent operation that processes tens of thousands of documents. It runs through the async job pipeline at controlled throughput, respecting embedding API rate limits. The Bible verse collection (31,102 verses × 4 translations = ~124,000 vectors) takes roughly 20 minutes to index from scratch.
+**Bulk indexing** — loading the static corpus (Bible verses, commentary, reference works). This is a one-time or infrequent operation that processes tens of thousands of documents. It runs through the async job pipeline at controlled throughput, batching requests so the embedding service is never overwhelmed. The Bible verse collection (31,102 verses × 4 translations = ~124,000 vectors) is the largest of these jobs.
 
 **Real-time indexing** — adding new content as users create it (study notes, highlighted passages, session events). This happens in the foreground with a soft latency budget. A user saving a note expects it to appear in search within a few seconds — the embedding and upsert must complete before the session ends, even if the acknowledgment to the user is optimistic.
 
@@ -225,7 +228,7 @@ It is one component of the memory system. The full picture from article 01:
 
 - **Vector store**: handles semantic and episodic retrieval (finding relevant content by meaning)
 - **Postgres**: stores the authoritative record of all events, preferences, and semantic facts
-- **Redis**: manages working memory for active sessions
+- **Redis**: manages [working memory for active sessions](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases)
 - **The extraction pipeline**: converts episodic events into semantic memories
 
 The vector store knows how to find things by similarity. It does not know how to maintain consistency, enforce relationships, run aggregations, or handle the relational structure of user accounts and preferences. Postgres handles all of that.
@@ -289,6 +292,14 @@ links:
     description: "Influential work on approximate nearest neighbor indexing strategies that underpin modern vector store ANN engines."
 ---
 ::
+
+## Related reading
+
+- [Persistent Memory Systems](/blog/ai-engineering/01-persistent-memory-systems) — previous in the AI Engineering series
+- [Tool Calling](/blog/ai-engineering/03-tool-calling) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Vector Search](/blog/backendengineering/05-vector-search) — the service side of vector search
+- [Storing AI Memory with Redis and Vector Databases](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) — pairing Redis and a vector store for agent memory
 
 ---
 

@@ -5,6 +5,7 @@
              border border-slate-200 dark:border-sky-500/20
              bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm"
     >
+      <HeroBackdrop src="/img/heroes/systems-agentic-ai.jpg" />
       <div
         class="absolute inset-0
                bg-gradient-to-r from-sky-200/20 via-purple-200/10 to-amber-200/10
@@ -143,7 +144,7 @@
                 <p class="text-[10px] uppercase tracking-widest text-amber-500 font-semibold mb-2 transition-colors duration-200 group-hover/amber:text-amber-600 dark:group-hover/amber:text-amber-400">Orchestration</p>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Durable workflows, event-driven agents</p>
                 <div class="flex flex-wrap gap-1.5">
-                  <span v-for="t in ['Temporal', 'Kafka', 'Retries']" :key="t"
+                  <span v-for="t in ['Temporal', 'Redis pub/sub', 'Retries']" :key="t"
                     class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-amber-500/10 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400">
                     {{ t }}
                   </span>
@@ -188,7 +189,7 @@
             <div class="px-5 py-4">
               <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-3">Agentic Stack</p>
               <div class="flex flex-wrap gap-1.5">
-                <span v-for="t in ['Temporal', 'Kafka', 'Redis', 'Weaviate', 'Tool Calling', 'RAG', 'Verification Agents', 'Python']" :key="t"
+                <span v-for="t in ['Temporal', 'Redis', 'Weaviate', 'Tool Calling', 'RAG', 'Verification Agents', 'Python']" :key="t"
                   class="text-[11px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
                   {{ t }}
                 </span>

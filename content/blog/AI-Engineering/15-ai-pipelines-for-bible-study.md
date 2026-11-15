@@ -1,8 +1,8 @@
 ---
 title: "AI Pipelines for Bible Study"
-description: "Designing AI pipelines for Bible study and theological research."
+description: "How AI pipelines for Bible study are built: context assembly, query analysis, streamed generation, citation verification, memory extraction and tracing."
 date: 2026-06-03
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,6 +12,7 @@ draft: false
 cluster: "ai-engineering"
 slug: ai-pipelines-for-bible-study
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/15-ai-pipelines-for-bible-study.jpg
 ---
 
 # AI Pipelines for Bible Study
@@ -26,7 +27,7 @@ The case for multi-step pipelines over single-shot generation comes down to one 
 
 Pipeline design is mostly the engineering work of making sure the model has the right inputs at the right time, structured in a way that surfaces what matters and suppresses what does not.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -233,7 +234,7 @@ The generation stage is a single model call with the full assembled context. The
 [User's question]
 ```
 
-The key constraint in the system prompt is the citation instruction from article 13: every theological claim must be supported by a `[CITE: ref]` marker pointing to retrieved content. This constraint is enforced structurally — the generation is only trusted if claims are citable.
+The key constraint in the system prompt is the citation instruction from [article 13](/blog/ai-engineering/13-citation-grounding): every theological claim must be supported by a `[CITE: ref]` marker pointing to retrieved content. This constraint is enforced structurally — the generation is only trusted if claims are citable.
 
 Token budget for the generation itself is computed from what is left after the context window is assembled. If the context window consumed 60,000 tokens of a 100,000 token context limit, generation gets approximately 4,000 tokens (leaving a buffer). In practice, most responses stay within 1,000–2,000 tokens; the budget is rarely binding.
 
@@ -261,6 +262,8 @@ async function* streamStudyResponse(
 ```
 
 Post-processing runs asynchronously after streaming completes — the user does not wait for citation verification to start reading.
+
+In VerseHub's production path, the [streamed](/blog/backendengineering/06-streaming) draft comes from llama3.2:3b on a Jetson Orin Nano Super (about 21 tokens/second), while a refine pass runs as a Temporal `ScholarWorkflow` — retrieve → score → generate → verify — on the Raspberry Pi workers. Running it there taught me a few things the hard way: Temporal's default 10-second timeout killed slower steps until I set timeouts deliberately; an early design started three workflows per question, so the small helper calls moved to a direct quick-LLM endpoint; and a Redis pub/sub replay bug once interleaved two streams, splicing text every 18 characters. The workflow details are in [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production).
 
 ## Stage 4: Post-Processing
 
@@ -392,7 +395,7 @@ destinationUrl: "https://versehub.app/register"
 
 ## Observability in the Pipeline
 
-Each pipeline stage emits structured events that are captured in distributed tracing. A complete pipeline trace shows:
+Each pipeline stage emits structured events that are captured in distributed tracing. A complete pipeline trace looks like this (an illustrative breakdown, not a benchmark):
 
 ```
 Total: 1,847ms
@@ -416,7 +419,7 @@ Total: 1,847ms
     └─ Memory extraction:     105ms
 ```
 
-The trace surfaces where time is going. Commentary retrieval is consistently the slowest retrieval step because cross-encoder reranking is CPU-bound. This is the obvious first target if generation latency becomes a user experience issue — either cache aggressively or run the reranker on dedicated hardware.
+The trace surfaces where time is going. In a breakdown like this, commentary retrieval is typically the slowest retrieval step because cross-encoder reranking is CPU-bound. This is the obvious first target if generation latency becomes a user experience issue — either cache aggressively or run the reranker on dedicated hardware.
 
 Post-processing latency does not appear in the user-facing critical path because it runs after streaming begins. The user starts reading at TTFT (723ms); citation annotations arrive at 1,952ms — well within the time the user spends reading the response.
 
@@ -491,6 +494,14 @@ links:
     description: "Overview of the Biblical canon, translations, and textual structure — the source corpus the study pipeline is designed to index and retrieve."
 ---
 ::
+
+## Related reading
+
+- [Hallucination Reduction](/blog/ai-engineering/14-hallucination-reduction) — previous in the AI Engineering series
+- [Prompt Engineering](/blog/ai-engineering/16-prompt-engineering) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — running the refine pass as a Temporal workflow
+- [AI Pipeline Design](/blog/versehub-engineering/04-ai-pipeline-design) — VerseHub's pipeline design
 
 ---
 

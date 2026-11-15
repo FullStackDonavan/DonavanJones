@@ -1,8 +1,8 @@
 ---
 title: "Tool-Based Reasoning"
-description: "Tool-based reasoning approaches in AI agent frameworks."
+description: "Tool-based reasoning in LLM agents: ReAct-style hypothesize-retrieve-refine loops, tool sequencing, conflicting evidence, and prompting models to investigate."
 date: 2026-05-06
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,15 +11,18 @@ tags:
 draft: false
 slug: tool-based-reasoning
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/08-tool-based-reasoning.jpg
 ---
 
 # Tool-Based Reasoning
 
-Article 03 covered the mechanics of tool calling — the API, tool definitions, the agentic loop. This article covers the reasoning dimension: how models actually use tools to think, the patterns that emerge when a model has access to external information, why tool-based reasoning produces better answers than pure in-context reasoning for knowledge-intensive tasks, and how to structure tools and prompts to elicit the reasoning behavior you want.
+Tool-based reasoning is when a model uses tools as part of its thinking — forming a hypothesis, retrieving evidence, checking it and retrieving again — instead of making one mechanical lookup. It produces better-grounded answers on knowledge-heavy questions, and it is shaped largely by how tools are described and how the prompt asks the model to reason.
+
+[Article 03](/blog/ai-engineering/03-tool-calling) covered the mechanics of tool calling — the API, tool definitions, the agentic loop. This article covers the reasoning dimension: how models actually use tools to think, the patterns that emerge when a model has access to external information, why tool-based reasoning produces better answers than pure in-context reasoning for knowledge-intensive tasks, and how to structure tools and prompts to elicit the reasoning behavior you want.
 
 The distinction matters. A model that calls tools mechanically — retrieving exactly what was asked for, nothing more — is less valuable than a model that uses tools as part of an active reasoning process: forming a hypothesis, retrieving evidence, evaluating it, refining the hypothesis, retrieving more targeted evidence, and synthesizing a grounded answer. The difference between these behaviors is partly model capability, but it is significantly shaped by how tools are defined and how reasoning is prompted.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -219,9 +222,9 @@ These behaviors are partly model capability and partly prompted. Explicitly inst
 
 ## Tool Call Sequencing Strategies
 
-For complex reasoning tasks, the sequence in which tools are called matters. Different strategies suit different question types.
+For complex reasoning tasks, the sequence in which tools are called matters ([planning agents](/blog/agentic-ai-systems/02-planning-agents-explained) make that sequencing explicit). Different strategies suit different question types.
 
-**Breadth-first**: search broadly across multiple collections before going deep into any one. Good for exploratory questions where the relevant territory is not known in advance.
+**Breadth-first**: search broadly across [multiple collections](/blog/ai-engineering/09-retrieval-systems-for-theology) before going deep into any one. Good for exploratory questions where the relevant territory is not known in advance.
 
 ```
 1. search_passages(broad query, multiple books)
@@ -335,6 +338,14 @@ links:
     description: "According to information retrieval research, evidence-based lookup is more reliable than memory-based generation for factual claims."
 ---
 ::
+
+## Related reading
+
+- [Local Agent Systems](/blog/ai-engineering/07-local-agent-systems) — previous in the AI Engineering series
+- [Retrieval Systems for Theology](/blog/ai-engineering/09-retrieval-systems-for-theology) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Planning Agents Explained](/blog/agentic-ai-systems/02-planning-agents-explained) — planning agents that sequence tool calls explicitly
+- [From 34% to 98%: Teaching a 0.6B Model to Run My Homelab](/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98) — tool calling with a tiny fine-tuned model
 
 ---
 

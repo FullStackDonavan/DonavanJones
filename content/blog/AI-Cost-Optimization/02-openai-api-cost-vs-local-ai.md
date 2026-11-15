@@ -1,22 +1,23 @@
 ---
 title: "OpenAI API Cost vs Local AI"
-description: "Comparing OpenAI API spend against the cost of running an equivalent workload on local hardware."
-date: 2026-05-13
-lastUpdated: "2026-06-09"
+description: "OpenAI API cost vs local AI: a reusable formula comparing per-token API spend with hardware amortization and electricity, and why model quality decides it."
+date: 2026-07-21
+lastUpdated: "2026-11-14"
 category: "ai-cost-optimization"
 tags:
   - ai-cost-optimization
   - openai
-draft: true
+draft: false
 slug: openai-api-cost-vs-local-ai
 author: Donavan Jones
+excerptImage: /img/blog/ai-cost-optimization/02-openai-api-cost-vs-local-ai.jpg
 ---
 
 # OpenAI API Cost vs Local AI
 
-OpenAI's API is priced the same fundamental way as Claude's — per-token, split between input and output, varying by model tier — so the comparison against local inference follows the same shape as the Claude comparison elsewhere in this series, with the actual dollar figures shifting based on which model tier is in play.
+Local AI beats the OpenAI API on cost only when your request volume is high and a local model is good enough for the task. OpenAI prices per token, split between input and output, just like Claude, so the comparison uses the same formula as the [Claude API cost breakdown](/blog/ai-cost-optimization/01-claude-api-cost-breakdown): hosted per-token spend versus hardware amortization plus electricity.
 
-*Part of the [AI Cost Optimization series](/categories/ai-cost-optimization).*
+*Part of the [AI Cost Optimization series](/categories/ai-cost-optimization). For the hardware these numbers are based on, see the [AI homelab systems hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -35,14 +36,14 @@ Monthly hosted cost = (requests/day × avg input tokens × input $/token
                         + requests/day × avg output tokens × output $/token) × 30
 
 Monthly local cost = hardware amortization (purchase price / expected useful life in months)
-                      + electricity (see the dedicated breakdown elsewhere in this series)
+                      + electricity (see the electricity breakdown in this series)
 ```
 
-Whichever model class — OpenAI's or Claude's — the hosted side of this equation, plug in the current published rate for the specific model tier in use. The local side of the equation barely changes regardless of which hosted API you're comparing against, since it's driven by hardware and electricity, not by which vendor's model you'd otherwise be calling.
+Whichever model class — OpenAI's or Claude's — the hosted side of this equation, plug in the current published rate for the specific model tier in use. The local side of the equation barely changes regardless of which hosted API you're comparing against, since it's driven by hardware and electricity, not by which vendor's model you'd otherwise be calling. For reference, my local side is one RTX 3090 running Ornith-1.0-35B at about 64 tok/s, plus three Jetson Orin Nano Supers for small models; the per-request power math is in [Electricity vs API Pricing](/blog/ai-cost-optimization/03-electricity-vs-api-pricing), and amortization is in [Hardware ROI for AI Development](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development).
 
 ## Where the Comparison Actually Diverges
 
-The meaningful difference between comparing against OpenAI versus Claude isn't the cost math — it's model-quality parity. A locally-run model needs to be evaluated against whichever specific hosted model it's meant to replace for a given task, and that quality bar (not the pricing) is usually what decides whether the cost savings are worth taking. See the [Local Vibe Coding series](/categories/local-vibe-coding) for a concrete quality comparison against Claude Code specifically.
+The meaningful difference between comparing against OpenAI versus Claude isn't the cost math — it's model-quality parity. A locally-run model needs to be evaluated against whichever specific hosted model it's meant to replace for a given task, and that quality bar (not the pricing) is usually what decides whether the cost savings are worth taking. See [Ornith-1.0-35B vs Claude Code](/blog/local-vibe-coding/11-ornith-vs-claude-code) for a concrete quality comparison against a hosted coding tool.
 
 ## Multi-Vendor Hosted Spend
 
@@ -52,7 +53,7 @@ For teams or individuals using both OpenAI and Claude APIs for different tasks (
 ---
 buttonText: "See The Full System"
 supportingCopy: "See how model routing and cost optimization fit into a full hybrid architecture."
-destinationUrl: "/systems/ai-cost-optimization"
+destinationUrl: "/systems/ai-homelab"
 ---
 ::
 
@@ -73,7 +74,7 @@ Don't chase precise cost-comparison numbers against a moving pricing target — 
   ---
   buttonText: "Read: Electricity vs API Pricing"
   supportingCopy: "The local side of this comparison, worked out in detail."
-  destinationUrl: "/blog/ai-cost-optimization/electricity-vs-api-pricing"
+  destinationUrl: "/blog/ai-cost-optimization/03-electricity-vs-api-pricing"
   ---
   :::
 
@@ -101,6 +102,13 @@ links:
     description: "Official, current pricing reference for Claude API model tiers, for the comparable framework."
 ---
 ::
+
+## Related reading
+
+- [Claude API Cost Breakdown](/blog/ai-cost-optimization/01-claude-api-cost-breakdown) — previous: how Claude's per-token pricing works
+- [Electricity vs API Pricing](/blog/ai-cost-optimization/03-electricity-vs-api-pricing) — next: converting GPU power draw into cost per request
+- [AI Homelab systems hub](/systems/ai-homelab) — the local hardware behind the comparison
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — how the 3090 and Jetsons split the work
 
 ---
 

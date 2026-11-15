@@ -1,8 +1,8 @@
 ---
 title: "Retrieval Systems for Theology"
-description: "AI retrieval systems for theological texts and arguments."
+description: "Retrieval systems for theology: five strategies (reference lookup, semantic search, cross-references, lexicons, commentary) and how to evaluate retrieval."
 date: 2026-05-08
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,6 +12,7 @@ draft: false
 cluster: "ai-engineering"
 slug: retrieval-systems-for-theology
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/09-retrieval-systems-for-theology.jpg
 ---
 
 # Retrieval Systems for Theology
@@ -20,7 +21,7 @@ Retrieval is the evidence-gathering half of a RAG system — the part that deter
 
 Theological content breaks this simplicity in instructive ways. Scripture is not a generic knowledge corpus. It is a structured, cross-referenced, multiply-interpreted body of texts with specific linguistic properties, a complex internal relationship graph, and a centuries-long tradition of commentary that must be handled alongside the primary texts. Retrieval systems that treat it like a Wikipedia dump get mediocre results. Systems designed for its specific characteristics get dramatically better ones.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -87,6 +88,8 @@ The reference parser handles common formats: "Romans 5:1", "Rom 5:1", "Rom. 5:1"
 ### 2. Semantic Similarity Search
 
 The workhorse for topical and conceptual queries. "What does the Bible say about forgiveness?" has no specific reference — it needs semantic search across the full verse corpus.
+
+One real bug is worth naming here. For a while, the scripture path in [VerseHub](/projects/versehub) wasn't sending the query vector to Weaviate at all, so "semantic" search quietly returned verses in insertion order. The results looked plausible enough to miss by eye, which is exactly why the evaluation set below exists.
 
 The design decisions for theological semantic search differ from generic corpora:
 
@@ -275,7 +278,7 @@ destinationUrl: "https://versehub.app/register"
 
 ## Evaluation: Does Retrieval Actually Work?
 
-Retrieval quality is measured against a ground-truth evaluation set of 300 query/result pairs built from actual platform usage and manually annotated:
+Retrieval quality is measured against a ground-truth evaluation set of query/result pairs, built from real study questions and annotated by hand:
 
 ```json
 {
@@ -306,7 +309,7 @@ Metrics tracked:
 
 **Negative recall**: does the system correctly avoid the `should_not_appear` passages? These are passages that are semantically similar but contextually wrong — Romans 8:28 ("all things work for good") appearing in anxiety queries is a retrieval error even though it is thematically adjacent.
 
-The evaluation runs weekly in production and after any change to the retrieval pipeline (new embedding model, changed chunking, updated cross-reference data). A recall@5 drop of more than 3 points triggers a review before the change ships to production.
+The evaluation should run on a schedule and after any change to the retrieval pipeline (new embedding model, changed chunking, updated cross-reference data). A recall@5 drop of more than 3 points triggers a review before the change ships to production.
 
 ## What Good Retrieval Enables
 
@@ -314,7 +317,7 @@ The quality ceiling for RAG-based theological responses is determined by retriev
 
 Retrieval engineering is not glamorous work. Tuning query expansion vocabulary, calibrating cross-reference boost weights, evaluating tier weighting for commentary — none of it feels like building AI. But the hours spent on retrieval quality compound directly into the quality of every answer the platform produces. It is the most leverage-rich engineering work in the system.
 
-The next two articles go deeper into two components of this pipeline: chunking strategies for religious texts (article 10) and semantic retrieval techniques (article 12).
+The next two articles go deeper into two components of this pipeline: chunking strategies for religious texts ([article 10](/blog/ai-engineering/10-chunking-religious-texts)) and semantic retrieval techniques ([article 12](/blog/ai-engineering/12-semantic-retrieval)).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -367,6 +370,14 @@ links:
     description: "The study of word meaning — directly relevant to theological retrieval where single Greek or Hebrew terms carry dense, contested meaning."
 ---
 ::
+
+## Related reading
+
+- [Tool-Based Reasoning](/blog/ai-engineering/08-tool-based-reasoning) — previous in the AI Engineering series
+- [Chunking Religious Texts](/blog/ai-engineering/10-chunking-religious-texts) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [AI Pipeline Design](/blog/versehub-engineering/04-ai-pipeline-design) — how retrieval feeds VerseHub's answer pipeline
+- [Vector Search](/blog/backendengineering/05-vector-search) — the vector search service underneath
 
 ---
 

@@ -83,14 +83,17 @@ watch(
       Hire Me
     </NuxtLink>
 
-    <span
-      class="md:block"
-      @click="setColorTheme($colorMode.preference == 'dark' ? 'light' : 'dark')"
+    <!-- CSS-swapped icons: same SSR and client markup (see IconList.vue). -->
+    <button
+      type="button"
+      class="md:block rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+      aria-label="Toggle dark mode"
+      @click="setColorTheme($colorMode.value == 'dark' ? 'light' : 'dark')"
     >
       <svg
-        v-if="$colorMode.value == 'dark'"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 text-gray-50 lg:block hover:dark:text-yellow-400 hover:text-yellow-400"
+        aria-hidden="true"
+        class="hidden dark:block h-6 w-6 text-gray-50 hover:dark:text-yellow-400 hover:text-yellow-400"
         viewBox="0 0 20 20"
         fill="currentColor"
       >
@@ -99,9 +102,9 @@ watch(
         />
       </svg>
       <svg
-        v-if="$colorMode.value == 'light'"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6 lg:block hover:dark:text-yellow-400 hover:text-yellow-400"
+        aria-hidden="true"
+        class="block dark:hidden h-6 w-6 hover:dark:text-yellow-400 hover:text-yellow-400"
         viewBox="0 0 20 20"
         fill="currentColor "
       >
@@ -111,7 +114,7 @@ watch(
           clip-rule="evenodd"
         />
       </svg>
-    </span>
+    </button>
     <!-- <User :isLoggedIn="isLoggedIn" class="md:block" /> -->
   </div>
 </template>

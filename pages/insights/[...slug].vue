@@ -8,7 +8,8 @@ const { data: doc } = await useAsyncData(
   () => queryContent(route.path).findOne()
 )
 
-const pageImage = computed(() => doc.value?.excerptImage || `${SITE}/img/logo.png`)
+const _abs = useAbsoluteUrl()
+const pageImage = computed(() => _abs(doc.value?.excerptImage) || `${SITE}/img/logo.png`)
 const pageUrl   = computed(() => `${SITE}${route.path}`)
 
 useSeoMeta({
@@ -55,6 +56,18 @@ function isoDate(d: string | undefined) {
             />
 
             <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden mb-8">
+
+              <!-- Header art (decorative; also the article's og:image) -->
+              <img
+                v-if="doc?.excerptImage"
+                :src="doc.excerptImage"
+                alt=""
+                width="1200"
+                height="630"
+                fetchpriority="high"
+                decoding="async"
+                class="block w-full aspect-[2/1] sm:aspect-[3/1] object-cover border-b border-slate-200 dark:border-slate-800"
+              />
 
               <!-- Chrome header -->
               <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">

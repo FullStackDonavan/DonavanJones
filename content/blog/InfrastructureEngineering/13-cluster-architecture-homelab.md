@@ -2,7 +2,7 @@
 title: "Cluster Architecture (Homelab)"
 description: "Deep dive into the architecture of my homelab Kubernetes cluster — control plane design, worker node layout, networking, and storage topology explained."
 date: 2025-10-26
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -11,15 +11,18 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: cluster-architecture-homelab
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/13-cluster-architecture-homelab.jpg
 ---
 
 # Cluster Architecture (Homelab)
+
+My homelab cluster is a seven-node K3s cluster. One Raspberry Pi (pi-node1) runs the control plane, three Raspberry Pi workers run services and data stores, and three Jetson Orin Nano Super 8GB boards serve as GPU workers for image generation, speech, and a small always-on LLM. A separate RTX 3090 workstation outside the cluster runs the large models. Gitea Actions deploys to it on every push to main, and Prometheus, Grafana, and Loki watch all of it.
 
 My homelab cluster is the foundation behind nearly everything I build — from AI services and theological search systems to livestreaming infrastructure and my Bible platform. The environment is designed around low-cost, scalable hardware using Kubernetes, allowing me to experiment with distributed systems, CI/CD pipelines, self-hosted tooling, vector search, AI agents, and cloud-native development practices from home.
 
 The rack combines ARM nodes, self-hosted services, storage, networking, and GPU-assisted AI workloads into a single ecosystem that I can continuously expand and refine over time.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -62,7 +65,16 @@ Key benefits:
 
 ## Hardware Layout
 
-The rack currently consists of multiple low-power nodes running cluster workloads along with a separate GPU development machine.
+The rack currently consists of seven cluster nodes and one separate GPU development machine.
+
+| Node | Hardware | Role |
+|------|----------|------|
+| pi-node1 | Raspberry Pi | K3s server (v1.34.x); Prometheus, Grafana, Gitea via NodePort |
+| pi-worker-1, -3 | Raspberry Pi | Services, background workers |
+| pi-worker-2 | Raspberry Pi | Services + Redis |
+| gpu-worker-1 | Jetson Orin Nano Super 8GB | Image generation (Dreamer SD) + small-model shelf in Ollama |
+| gpu-worker-2 | Jetson Orin Nano Super 8GB | Speech: Kokoro TTS + whisper.cpp STT |
+| gpu-worker-3 | Jetson Orin Nano Super 8GB | LLM: llama3.2:3b pinned in memory |
 
 ### Cluster Nodes
 
@@ -78,18 +90,17 @@ The Kubernetes nodes handle:
 
 ### GPU Development Machine
 
-Outside the cluster, I run local AI models inside Docker containers on a dedicated development machine with an RTX 3090.
+Outside the cluster, I run larger AI models on a dedicated Windows machine with a single RTX 3090 (24 GB).
 
 This system is used for:
 
-- Running local LLMs
-- Embedding generation
-- AI experimentation
+- Running large local LLMs (Ornith-1.0-35B in Ollama, about 64 tok/s using 21.2 GB of VRAM)
+- Embedding generation (the all-MiniLM-L6-v2 embedder for VerseHub, in Docker)
+- LoRA training
 - Agent workflows
 - Model testing
-- Retrieval pipelines
 
-Long term, the plan is to integrate the GPU machine more tightly into the cluster for shared orchestration and scheduling.
+GPU work inside the cluster happens on the Jetsons. The 3090 box is being rebuilt (November 2026) into a headless Linux training machine for fine-tuning small models that then run on those Jetsons. How the two GPU tiers divide the work is in [RTX 3090 + Jetson Orin: a hybrid AI architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture).
 
 ::CtaSystemArchitecture
 ---
@@ -132,7 +143,7 @@ Persistent workloads use mounted storage volumes for:
 - Application data
 - Logs
 
-Assets such as videos, game files, and uploaded media are stored externally on Amazon S3.
+Assets such as videos, game files, and uploaded media are stored externally on Amazon S3, while MinIO provides S3-compatible object storage inside the cluster, including a bucket for training datasets.
 
 ## Databases
 
@@ -160,7 +171,7 @@ Used for:
 
 ### Vector Storage
 
-Vector search infrastructure is used for retrieval systems and AI workflows involving:
+Vector search runs on Weaviate in the cluster and is used for retrieval systems and AI workflows involving:
 
 - Theology datasets
 - Semantic search
@@ -186,7 +197,7 @@ The infrastructure supports:
 
 ### Bible Logic
 
-One of the core systems connected to the infrastructure is Bible Logic, an AI assistant integrated into my Bible platform.
+One of the core systems connected to the infrastructure is BibleLogic, the AI assistant in [VerseHub](/projects/versehub). A fast draft comes from llama3.2:3b on a Jetson (about 21 tok/s), then a Temporal `ScholarWorkflow` running on the Pi workers retrieves evidence from Weaviate, scores it, generates a refined answer, and verifies citations against the retrieved evidence. The orchestration side is covered in [Temporal workflows in production](/blog/versehub-engineering/07-temporal-workflows-in-production).
 
 The broader goal is building infrastructure capable of supporting persistent AI systems with memory, retrieval, tools, and orchestration.
 
@@ -213,7 +224,7 @@ CI runners automate:
 - Infrastructure updates
 - Kubernetes rollouts
 
-This allows code pushed to repositories to automatically deploy into the cluster.
+This allows code pushed to repositories to automatically deploy into the cluster. CI runs on self-hosted Gitea Actions: images are built with `docker buildx --platform linux/arm64` and imported on each node with `k3s ctr images import`, so there's no registry pull at deploy time.
 
 ## Application Hosting
 
@@ -246,8 +257,8 @@ The main goals of the homelab are:
 Planned improvements include:
 
 - More cluster nodes
-- GPU integration into Kubernetes
-- Improved observability
+- A dedicated Linux training box (the rebuilt 3090 machine) feeding fine-tuned small models to the Jetsons
+- Tracing on top of the existing Prometheus, Grafana, and Loki stack
 - Dedicated storage systems
 - High availability services
 - Expanded AI orchestration
@@ -322,5 +333,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [ARM64 Considerations](/blog/infrastructureengineering/12-arm64-considerations) — previous in the series
+- [Cluster Topology](/blog/infrastructureengineering/14-cluster-topology) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [My Homelab Architecture for Agentic AI Development](/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai) — the same cluster viewed as an agentic AI platform
+- [Scaling VerseHub with Local AI Infrastructure](/blog/versehub-engineering/09-scaling-versehub-with-local-ai-infrastructure) — how VerseHub uses this infrastructure
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

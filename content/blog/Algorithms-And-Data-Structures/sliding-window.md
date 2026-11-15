@@ -2,7 +2,7 @@
 title: "Sliding Window"
 description: "Understanding the Sliding Window pattern in JavaScript — how it solves subarray and substring problems in O(n) with contiguous data structure examples."
 date: 2025-09-06
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: sliding-window
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/sliding-window.jpg
 ---
 
 # Sliding Window
@@ -26,7 +27,7 @@ This technique is especially useful for:
 
 Using a sliding window can often reduce a brute-force solution from O(n²) to O(n).
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -211,6 +212,8 @@ The pattern is useful when:
 - Repeated calculations happen in loops
 - You need better performance than nested loops
 
+The same idea runs in production rate limiters: track usage inside a moving time window and drop entries as they fall out of it, like the sliding-window token limiter in my [embedding services](/blog/backendengineering/09-embedding-services) article.
+
 ## Final Thoughts
 
 The Sliding Window pattern is one of the most important optimization techniques in algorithm design. It appears frequently in coding interviews, competitive programming, and real-world applications involving streams, arrays, and strings.
@@ -269,6 +272,13 @@ links:
     description: "The algorithmic paradigm that shares the sliding window's core insight: avoid redundant work by reusing previously computed results."
 ---
 ::
+
+## Related reading
+
+- [Recursion](/blog/algorithms-and-data-structures/recursion) — previous in the series
+- [Multiple Pointers](/blog/algorithms-and-data-structures/multiple-pointers) — the two-pointer technique sliding window builds on
+- [Embedding Services](/blog/backendengineering/09-embedding-services) — a sliding-window rate limiter in a real service
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

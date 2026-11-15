@@ -2,7 +2,7 @@
 title: "Cluster Topology"
 description: "How I designed the cluster topology for my homelab Kubernetes setup — node placement, workload zones, networking boundaries, and failure domains."
 date: 2025-10-28
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - cluster
@@ -10,15 +10,16 @@ tags:
 draft: false
 slug: cluster-topology
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/14-cluster-topology.jpg
 ---
 
 # Cluster Topology
 
 A good cluster topology starts with understanding what you are optimizing for: reliability, simplicity, performance, or cost. In a homelab rack, that usually means balancing lightweight ARM nodes with more powerful systems for storage, databases, AI workloads, and development. The goal is not just to make the cluster work, but to make it scalable, maintainable, and resilient as more services are added over time.
 
-My current setup focuses on separating workloads across different systems while still keeping everything connected through Kubernetes and containerized services. The cluster handles infrastructure, deployments, self-hosted tooling, databases, and application services, while heavier AI models currently run on a separate development machine with an RTX 3090. This separation allows the rack to stay stable while still giving access to high-performance inference and development workflows.
+My current topology has three tiers. A single Raspberry Pi control plane plus three Pi workers run infrastructure, self-hosted tooling, databases, and application services. Three Jetson Orin Nano Super boards join the same K3s cluster as GPU workers, each dedicated to one job: image generation, speech, or a small always-on LLM. The largest models run outside the cluster on one RTX 3090 workstation. Keeping those tiers separate keeps the rack stable while still giving me GPU inference both inside and outside Kubernetes.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -50,15 +51,18 @@ The rack is designed around a lightweight but expandable K3s environment. Smalle
 
 The overall architecture currently looks something like this:
 
-- K3s cluster running core infrastructure
+- K3s cluster running core infrastructure (pi-node1 control plane, pi-worker-1 to -3)
+- Jetson GPU workers inside the cluster (gpu-worker-1 to -3)
 - Gitea for source control
 - CI/CD runners connected to deployments
-- PostgreSQL and Redis services
+- PostgreSQL, Redis, Weaviate, and MinIO services
 - AI microservices
 - Self-hosted applications
-- External GPU development machine for model workloads
+- External RTX 3090 machine for large-model workloads
 - S3-backed storage for application assets
 - Docker-based AI containers outside the cluster
+
+The [node roles](/blog/infrastructureengineering/27-node-roles) post goes through what each machine is responsible for.
 
 This setup keeps the Kubernetes cluster responsive while allowing AI experimentation without exhausting cluster resources.
 
@@ -76,7 +80,7 @@ The control plane manages:
 - Networking coordination
 - Deployment orchestration
 
-In larger environments, dedicated control plane nodes improve stability. In smaller homelabs, combining control plane and worker functionality is often acceptable to reduce hardware requirements.
+In larger environments, dedicated control plane nodes improve stability. In smaller homelabs, combining control plane and worker functionality is often acceptable to reduce hardware requirements. Mine is a middle ground: pi-node1 is the single K3s server, and besides the control plane it hosts Prometheus, Grafana, and Gitea. The tradeoffs are in [control plane taints](/blog/infrastructureengineering/16-control-plane-taints).
 
 ### Worker Nodes
 
@@ -124,7 +128,7 @@ More powerful x86 systems are better suited for:
 - Build pipelines
 - GPU acceleration
 
-My topology separates these responsibilities so the cluster remains efficient instead of forcing every workload onto the same hardware class.
+My topology separates these responsibilities so the cluster remains efficient instead of forcing every workload onto the same hardware class. One caveat: "ARM means no AI" is outdated. The Jetson Orin boards are ARM64 with CUDA GPUs, and gpu-worker-3 serves llama3.2:3b at about 20.8 tok/s, entirely on the GPU. The only x86 machine in my setup is the RTX 3090 workstation.
 
 ::CtaSystemArchitecture
 ---
@@ -177,7 +181,7 @@ Examples include:
 - AI embeddings
 - Vector databases
 
-My setup currently uses S3-backed storage for uploaded assets while keeping databases closer to the cluster itself. This reduces local storage pressure and simplifies scaling application services.
+My setup currently uses S3-backed storage for uploaded assets while keeping databases (PostgreSQL, Redis, Weaviate) and MinIO object storage inside the cluster. This reduces local storage pressure and simplifies scaling application services.
 
 Future improvements may include:
 
@@ -185,7 +189,6 @@ Future improvements may include:
 - Dedicated NAS integration
 - Replicated persistent volumes
 - Backup nodes
-- Object storage inside the cluster
 
 ## CI/CD Integration
 
@@ -214,7 +217,7 @@ Large models can consume:
 - Storage bandwidth
 - Network throughput
 
-Instead of forcing these workloads directly into the cluster immediately, my current setup uses a separate RTX 3090 development machine running Docker containers for models and experimentation.
+My setup splits GPU work two ways. Small models run inside the cluster on the three Jetson GPU workers, one job per board, because each has 8 GB of unified memory (about 7.4 GiB usable) and fits only one ~4–5 GB model at a time. Large models like Ornith-1.0-35B run outside the cluster on the RTX 3090 machine, in Ollama.
 
 This approach provides several benefits:
 
@@ -224,7 +227,7 @@ This approach provides several benefits:
 - Keeps inference isolated
 - Reduces orchestration complexity
 
-Later, GPU nodes can be added directly into the Kubernetes cluster if needed.
+Loading, unloading, and benchmarking models on each Jetson goes through [Kingdom Tools](/projects/kingdom-tools), my internal platform for this cluster.
 
 ## Future Expansion
 
@@ -232,7 +235,7 @@ A topology should be designed with growth in mind.
 
 Possible future additions include:
 
-- Dedicated GPU nodes
+- More GPU nodes
 - High availability control planes
 - Distributed storage layers
 - Separate staging environments
@@ -252,7 +255,7 @@ destinationUrl: "/hire-me"
 ---
 ::
 
-# Conclusion
+## Conclusion
 
 Cluster topology is less about building the biggest rack possible and more about creating clear separation between workloads, responsibilities, and resource usage. A small but well-designed cluster is often far more useful than a large cluster with poor organization.
 
@@ -311,6 +314,14 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Cluster Architecture (Homelab)](/blog/infrastructureengineering/13-cluster-architecture-homelab) — previous in the series
+- [Consumer Hardware Usage](/blog/infrastructureengineering/15-consumer-hardware-usage) — next in the series
+- [Network Topology](/blog/infrastructureengineering/24-network-topology) — the network side of the same layout
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — how the 3090 and Jetsons split AI work
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*
 

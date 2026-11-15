@@ -1,8 +1,8 @@
 ---
 title: "Why I Built a Homelab"
-description: "Why I built a personal homelab — learning production infrastructure hands-on, reducing cloud costs, and running AI workloads with full control."
+description: "Why I built a homelab: to learn production infrastructure hands-on, cut cloud costs for experiments, and run VerseHub and local AI on hardware I control."
 date: 2026-01-25
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - homelab
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: why-i-built-a-homelab
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/37-why-i-built-a-homelab.jpg
 ---
 
 # Why I Built a Homelab
 
 ## Introduction
 
-My homelab didn’t start as a “cool tech project” — it started out of necessity. I needed a space where I could learn, build, break, and deploy systems without depending on expensive cloud services or being limited by external platforms. Over time, it evolved into something much bigger: a personal infrastructure stack that powers my development work, experiments with AI systems, and even parts of my Bible app ecosystem.
+I built my homelab because I needed somewhere to learn, build, break, and deploy real systems without paying cloud prices for every experiment or being limited by someone else's platform. It didn't start as a “cool tech project” — it started out of necessity. Over time, it evolved into something much bigger: a personal infrastructure stack that powers my development work, experiments with AI systems, and even parts of my Bible app ecosystem.
 
-What began as a few machines running locally has grown into a structured rack-based environment with a Raspberry Pi K3s cluster, a separate development machine with an RTX 3090 running containerized models, and a CI/CD pipeline powered by Gitea. This setup gives me full control over how I build and deploy software — from backend services to AI workflows and game systems.
+What began as a few machines running locally has grown into a structured rack-based environment: a 7-node K3s cluster (four Raspberry Pis and three Jetson Orin Nano Super GPU workers), a separate development machine with a single RTX 3090, and a CI/CD pipeline powered by Gitea. This setup gives me full control over how I build and deploy software — from backend services to AI workflows and game systems.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -46,12 +47,13 @@ I was building real systems — AI pipelines, a Bible app with social features, 
 
 The turning point was organizing everything into a rack-based homelab.
 
-At the core of the setup is a **Raspberry Pi K3s Kubernetes cluster**, which handles lightweight workloads, services, and deployments. This cluster acts as the backbone for my infrastructure experiments — everything from APIs to internal tools runs here in containers.
+At the core of the setup is a **Raspberry Pi K3s Kubernetes cluster**, which handles lightweight workloads, services, and deployments. This cluster acts as the backbone for my infrastructure experiments — everything from APIs to internal tools like [Kingdom Tools](/projects/kingdom-tools), my own platform for provisioning and managing services, runs here in containers. Three Jetson Orin Nano Supers joined later as GPU workers, so small models, speech, and image generation now run inside the cluster too.
 
 Alongside it, I run a **separate development machine with an RTX 3090**, which handles heavier workloads like AI model inference and Dockerized ML services. Instead of pushing everything to the cluster, I split responsibilities:
 
 - Cluster → orchestration, services, CI/CD, APIs  
-- Dev machine → AI models, experimentation, compute-heavy workloads  
+- Jetson GPU workers → always-on small models, speech, image generation
+- Dev machine → large models, embeddings, training, compute-heavy workloads  
 
 This separation gives me flexibility and keeps the system stable even when I’m experimenting aggressively.
 
@@ -64,7 +66,7 @@ Every time I push code:
 - Repositories live in Gitea inside the cluster  
 - Runners handle builds and deployments  
 - Kubernetes updates services automatically  
-- Docker images are rebuilt and distributed across nodes  
+- ARM64 Docker images are rebuilt and imported onto the nodes  
 
 This setup turned my homelab into something closer to a real production environment. It also forces me to think in terms of infrastructure-as-code, repeatability, and reliability.
 
@@ -93,13 +95,13 @@ Cloud platforms are powerful, but they come with tradeoffs that don’t align wi
 - Harder to simulate real distributed systems locally  
 - Vendor constraints on architecture decisions  
 
-My homelab solves that by giving me **ownership of the entire stack**, from hardware to orchestration. If something breaks, I fix it. If I want to test a new architecture, I can deploy it immediately.
+I dig into the actual numbers in [How I Built a Local AI Stack for Less Than a Year of Claude Max](/blog/ai-cost-optimization/07-local-ai-stack-vs-year-of-claude-max). My homelab solves that by giving me **ownership of the entire stack**, from hardware to orchestration. If something breaks, I fix it. If I want to test a new architecture, I can deploy it immediately.
 
 That freedom is what makes iteration fast.
 
 ## How It Connects to My Bible App and AI Work
 
-A big reason I built this system was to support the larger ecosystem I’m building — especially my Bible app.
+A big reason I built this system was to support the larger ecosystem I’m building — especially my Bible app, [VerseHub](/projects/versehub).
 
 Inside that ecosystem, I have:
 
@@ -111,7 +113,7 @@ Inside that ecosystem, I have:
 
 The homelab lets me run all of this locally or semi-locally before scaling anything outward. Even AI features like agents, retrieval systems, and embeddings can be tested on my own infrastructure before going to production.
 
-It also allows me to integrate models directly through Docker containers on my RTX 3090 machine while still orchestrating services through Kubernetes.
+Today VerseHub's answers start with a fast draft from llama3.2:3b on a Jetson (about 21 tok/s) and are refined by a Temporal workflow on the Pi workers — all on this hardware. The full story is in [Scaling VerseHub with Local AI Infrastructure](/blog/versehub-engineering/09-scaling-versehub-with-local-ai-infrastructure).
 
 ## What I’ve Learned So Far
 
@@ -137,7 +139,7 @@ destinationUrl: "/hire-me"
 
 This homelab is not just a technical setup — it’s the foundation of how I build everything now.
 
-It gives me a controlled environment to experiment, fail, and iterate quickly while still simulating real-world production systems. The Raspberry Pi K3s cluster handles orchestration, the RTX 3090 machine handles heavy AI workloads, and Gitea ties everything together into a continuous deployment pipeline.
+It gives me a controlled environment to experiment, fail, and iterate quickly while still simulating real-world production systems. The Raspberry Pi nodes handle orchestration, the Jetsons handle always-on inference, the RTX 3090 machine handles heavy AI workloads, and Gitea ties everything together into a continuous deployment pipeline.
 
 More importantly, it represents independence. Instead of renting infrastructure, I’m building it. Instead of being limited by platforms, I’m designing my own.
 
@@ -194,6 +196,15 @@ links:
     description: "Overview of infrastructure as code — the practice that transforms a homelab from manual configuration into a reproducible, version-controlled system that mirrors real production engineering workflows."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Troubleshooting (Skill)](/blog/infrastructureengineering/36-troubleshooting-skill) — previous in the series.
+- [Why Lightweight Kubernetes Matters](/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters) — next in the series: why K3s instead of full Kubernetes.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [My Homelab Architecture for Agentic AI Development](/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai) — the AI side of the same lab.
 
 ---
 

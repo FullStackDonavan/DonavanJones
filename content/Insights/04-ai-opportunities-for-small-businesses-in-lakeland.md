@@ -13,6 +13,7 @@ tags:
 draft: false
 slug: ai-opportunities-for-small-businesses-in-lakeland
 author: Donavan Jones
+excerptImage: /img/insights/04-ai-opportunities-for-small-businesses-in-lakeland.jpg
 ---
 
 # AI Opportunities for Small Businesses in Lakeland
@@ -60,7 +61,7 @@ AI implementation for a small business does not have to be expensive. The spectr
 
 **Configured integrations** (AI tools connected to your existing systems via APIs) — moderate cost, more specific capability. Suitable for straightforward automation where your data is already structured.
 
-**Custom AI systems** (built specifically for your workflow, integrated with your data and tools) — higher upfront cost, highest return over time. Appropriate when the problem is specific enough that off-the-shelf tools genuinely do not fit. I have built production AI systems for clients — including a [retrieval-augmented platform that searches tens of thousands of data points](/projects/bible-verse) and serves real users daily — and the cost curve for a focused implementation is lower than most small business owners expect.
+**Custom AI systems** (built specifically for your workflow, integrated with your data and tools) — higher upfront cost, highest return over time. Appropriate when the problem is specific enough that off-the-shelf tools genuinely do not fit. I have built production AI systems — including [VerseHub, a retrieval-augmented platform that checks every citation against the evidence it retrieved](/projects/versehub) — and the cost curve for a focused implementation is lower than most small business owners expect.
 
 The right starting point is not "how much does AI cost" — it is "what specific problem am I trying to solve, and what would solving it be worth to my business." That answer determines what kind of implementation is justified.
 

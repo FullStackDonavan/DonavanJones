@@ -1,23 +1,24 @@
 ---
 title: "Building Your First AI Coding Agent That Runs Completely Offline"
-description: "A minimal, from-first-principles guide to building a tool-calling coding agent against a fully local model stack."
-date: 2026-02-16
-lastUpdated: "2026-07-09"
+description: "Build your first offline AI coding agent: a minimal Python loop with three tools (read, write, run) against a local Ollama model, and where it breaks at scale."
+date: 2026-09-07
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - agents
   - offline
-draft: true
+draft: false
 slug: first-offline-ai-coding-agent
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/06-first-offline-ai-coding-agent.jpg
 ---
 
 # Building Your First AI Coding Agent That Runs Completely Offline
 
-You don't need OpenClaw's full feature set to have a working offline coding agent by this afternoon. The minimum viable version is under 150 lines of Python: a loop, three tools, and a local model. This is that version, stripped to its essentials so the pattern is obvious.
+An offline AI coding agent is just a loop: send the task to a local model, execute whatever tool it asks for (read a file, write a file, run a command), feed the result back, and stop when it returns a final answer. You don't need OpenClaw's full feature set to have one working by this afternoon; the minimum viable version is under 150 lines of Python. This is that version, stripped to its essentials so the pattern is obvious.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -61,8 +62,9 @@ TOOLS = {
     "write_file": write_file,
     "run_command": run_command,
 }
+# TOOL_SCHEMAS: one JSON-schema function definition per tool above (omitted for brevity)
 
-def agent_loop(task, model="hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"):
+def agent_loop(task, model="qwen3:4b"):  # any Ollama model that reports the `tools` capability
     messages = [{"role": "user", "content": task}]
     for _ in range(10):  # hard cap prevents runaway loops
         response = ollama.chat(model=model, messages=messages, tools=TOOL_SCHEMAS)
@@ -76,6 +78,8 @@ def agent_loop(task, model="hf.co/deepreinforce-ai/Ornith-9B:Q4_K_M"):
 ```
 
 The iteration cap matters more than it looks — a small local model is more prone than a frontier model to getting stuck in a loop (re-reading the same file, re-running the same failing command) without a hard stop.
+
+One caveat: this uses Ollama's native `tools` parameter, which only works for models whose template supports it (`ollama show <model>` lists the capability). Ornith-1.0-35B, the model I actually use for coding, doesn't report it, so in OpenClaw the model returns a JSON object in its message content and the loop parses that instead. The [Ollama setup post](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama) shows that protocol, and [Tool Calling](/blog/ai-engineering/03-tool-calling) covers the general pattern.
 
 ## Where This Breaks Down at Scale
 
@@ -106,7 +110,7 @@ Using this minimal loop directly in production is a bad idea — but building it
   ---
   buttonText: "Read: Connecting Ornith to Your Own Codebase"
   supportingCopy: "Add real codebase context to this minimal loop."
-  destinationUrl: "/blog/local-vibe-coding/connecting-ornith-to-your-codebase"
+  destinationUrl: "/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase"
   ---
   :::
 
@@ -134,6 +138,13 @@ links:
     description: "The tool/function-calling schema format that Ollama and most local models implement compatibly."
 ---
 ::
+
+## Related reading
+
+- [OpenClaw from Scratch](/blog/local-vibe-coding/05-openclaw-from-scratch) — previous in the series: the full version of this loop.
+- [Connecting Ornith to Your Own Codebase](/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase) — next: giving the loop real codebase context.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [Local Agent Systems](/blog/ai-engineering/07-local-agent-systems) — the same idea applied beyond coding.
 
 ---
 

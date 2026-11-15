@@ -8,6 +8,10 @@ nuxtApp.hook("page:finish", () => {
 });
 
 useHead({
+  // Most pages already put "— Donavan Jones" in their own title; only suffix
+  // the ones that don't, so titles never read "X — Donavan Jones — Donavan Jones".
+  titleTemplate: (title?: string) =>
+    !title ? "Donavan Jones" : /Donavan Jones/.test(title) ? title : `${title} — Donavan Jones`,
   link: [{ rel: "icon", type: "image/x-icon", href: "/img/favicon.ico" }],
 });
 

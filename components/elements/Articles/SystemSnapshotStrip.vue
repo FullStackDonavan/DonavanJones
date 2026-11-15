@@ -38,12 +38,12 @@ defineProps({
     default: () => [
       {
         title: "Scripture Engine",
-        subtitle: "37K+ verses · Weaviate RAG",
+        subtitle: "Weaviate RAG · cited & verified",
         icon: "mdi:book-open-page-variant"
       },
       {
         title: "AI Reasoning",
-        subtitle: "80% local · <200ms retrieval",
+        subtitle: "Jetson draft · Temporal refine",
         icon: "mdi:brain"
       },
       {
@@ -53,7 +53,7 @@ defineProps({
       },
       {
         title: "Self-Hosted Infra",
-        subtitle: "12-node k3s · Jetson GPU tier",
+        subtitle: "7-node k3s · Jetson GPU tier",
         icon: "mdi:server-network"
       }
     ]

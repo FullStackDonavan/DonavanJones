@@ -1,8 +1,8 @@
 ---
 title: "Embedding Strategies"
-description: "Embedding strategies for semantic retrieval in theology."
+description: "Embedding strategies for theological RAG: asymmetric queries, HyDE, query rewriting, glossary normalization, instruction prefixes and fine-tuned embeddings."
 date: 2026-05-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,15 +11,18 @@ tags:
 draft: false
 slug: embedding-strategies
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/11-embedding-strategies.jpg
 ---
 
 # Embedding Strategies
 
-Earlier articles in this series covered what embeddings are (article 02), how the embedding service is built (Backend Engineering article 09), and how retrieval systems for theology are structured (article 09). This article sits between those layers: the specific decisions about how theological content is embedded that determine what the retrieval system can and cannot find.
+An embedding strategy is the set of choices about what text becomes a vector and how: which model, what the query vector represents (the raw question, a rewritten query or a hypothetical answer), what the document vector represents, and how domain vocabulary is handled. For theological content, those choices decide what retrieval can and cannot find.
+
+Earlier articles in this series covered what embeddings are ([article 02](/blog/ai-engineering/02-vector-databases)), how the embedding service is built ([Backend Engineering article 09](/blog/backendengineering/09-embedding-services)), and how retrieval systems for theology are structured ([article 09](/blog/ai-engineering/09-retrieval-systems-for-theology)). This article sits between those layers: the specific decisions about how theological content is embedded that determine what the retrieval system can and cannot find.
 
 Embedding strategies are the choices made at the interface between text and vector: which model, which representation of the text, how to handle domain-specific vocabulary, how to embed asymmetric queries vs documents, and how to evaluate whether the strategy is working for the specific domain. Generic embedding strategies work for generic content. Theological content has properties that reward domain-specific choices.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -237,7 +240,7 @@ const queryEmbedding = await embed(`${queryInstruction} ${userQuery}`);
 
 The instruction helps the model apply the right transformation for the content type. For theological content, instruction-prefixed models consistently outperform bare embedding on retrieval benchmarks when the instruction is domain-specific.
 
-This is only available for models that support it. The `text-embedding-3` family does not use instruction prefixes. `intfloat/instructor-xl` and `BAAI/bge-large-en-v1.5` do. The choice of instruction-capable vs non-instruction model is a significant design decision in the embedding strategy.
+This is only available for models that support it. The `text-embedding-3` family does not use instruction prefixes, and neither does `all-MiniLM-L6-v2`, the model this platform runs today. `intfloat/instructor-xl` and `BAAI/bge-large-en-v1.5` do. The choice of instruction-capable vs non-instruction model is a significant design decision in the embedding strategy.
 
 ### Fine-Tuned Embeddings
 
@@ -255,7 +258,7 @@ Fine-tuning data format (contrastive triplets):
 
 The model learns to pull queries and their relevant passages closer in vector space, and push non-relevant passages further.
 
-Fine-tuning is not currently deployed on this platform — the cost of building a high-quality training set (thousands of annotated query-passage pairs) and the operational complexity of running a self-hosted model have not yet been justified by the incremental quality improvement over `text-embedding-3-small` with the normalization and instruction strategies above. It is the next logical step if retrieval quality plateaus at the current ceiling.
+Fine-tuning is not currently deployed on this platform — the cost of building a high-quality training set (thousands of annotated query-passage pairs) has not yet been justified by the incremental quality improvement over the stock `all-MiniLM-L6-v2` embedder (self-hosted in Docker on the RTX 3090) with the normalization strategies above. It is the next logical step if retrieval quality plateaus — and more practical now that the 3090 workstation is being rebuilt as a dedicated Linux box for training small models.
 
 ## Multi-Vector Representations
 
@@ -342,6 +345,14 @@ links:
     description: "The distance metric underlying most embedding retrieval — understanding it is necessary to reason about why certain queries fail to retrieve relevant content."
 ---
 ::
+
+## Related reading
+
+- [Chunking Religious Texts](/blog/ai-engineering/10-chunking-religious-texts) — previous in the AI Engineering series
+- [Semantic Retrieval](/blog/ai-engineering/12-semantic-retrieval) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Embedding Services](/blog/backendengineering/09-embedding-services) — running the embedding model as a service
+- [Embeddings](/blog/backendengineering/04-embeddings) — embedding fundamentals
 
 ---
 

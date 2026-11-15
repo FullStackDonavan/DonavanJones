@@ -1,23 +1,24 @@
 ---
 title: "Why I Stopped Paying for Claude: Building a Local AI Development Environment"
-description: "The reasoning behind moving day-to-day coding work off a hosted subscription and onto a self-hosted model stack — and what actually changed."
-date: 2026-03-09
-lastUpdated: "2026-07-09"
+description: "Why I moved most day-to-day coding off a Claude subscription onto a local AI development environment on hardware I owned, and what stayed on Claude Code."
+date: 2026-10-11
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - cost
   - privacy
-draft: true
+draft: false
 slug: why-i-stopped-paying-for-claude
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/09-why-i-stopped-paying-for-claude.jpg
 ---
 
 # Why I Stopped Paying for Claude: Building a Local AI Development Environment
 
-This isn't an anti-Claude post. Claude Code is genuinely excellent, and it stayed in my toolchain for the hardest problems even after this move. But paying a recurring subscription for a tool I was using dozens of times a day, for work that was mostly pattern-following rather than genuinely hard reasoning, started to feel like the wrong trade once I actually sat down and did the math.
+I moved most of my day-to-day coding off a hosted subscription because the work was mostly pattern-following, and I already owned an RTX 3090 and a Jetson cluster that could handle it. This isn't an anti-Claude post: Claude Code is genuinely excellent, and it stayed in my toolchain for the hardest problems. But paying a recurring subscription for a tool I used dozens of times a day, for work that rarely needed frontier reasoning, started to feel like the wrong trade once I sat down and did the math.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -29,19 +30,19 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## The Question That Started This
 
-I already owned a Jetson Orin cluster and an RTX 3090 for other projects — the AI homelab covered elsewhere on this site. The question wasn't "should I buy hardware to do this," it was "am I underusing hardware I already own by paying separately for a capability it can mostly provide." That reframing changed the math entirely — this wasn't a from-zero hardware purchase decision, it was a utilization decision.
+I already owned three Jetson Orin Nano Supers and one RTX 3090 for other projects — the [AI homelab](/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai) covered elsewhere on this site, which also runs [VerseHub's](/projects/versehub) inference. The question wasn't "should I buy hardware to do this," it was "am I underusing hardware I already own by paying separately for a capability it can mostly provide." That reframing changed the math entirely — this wasn't a from-zero hardware purchase decision, it was a utilization decision.
 
 ## What Actually Moved
 
-**Boilerplate and pattern-following work** — CRUD endpoints, test scaffolding, straightforward refactors, anything where I already know the shape of the solution and just need it typed out — moved to the local stack (Ornith-1.0-35B as the coding agent on the 3090, OpenClaw tying it together) almost entirely.
+**Boilerplate and pattern-following work** — CRUD endpoints, test scaffolding, straightforward refactors, anything where I already know the shape of the solution and just need it typed out — moved to the local stack (Ornith-1.0-35B as the coding agent on the 3090, at about 64 tok/s, with OpenClaw tying it together) almost entirely.
 
 **Hard reasoning work** — unfamiliar codebases, subtle bugs, architecture decisions with real tradeoffs — stayed on Claude Code. The local agent is good, not frontier-good, and pretending otherwise on the tasks where it actually matters would be a false economy. In practice that shows up as tasks the 35B's own self-review flags as uncertain — those go straight to Claude Code rather than a retry loop.
 
 ## What I Didn't Expect
 
-The privacy angle turned out to matter more in practice than I predicted going in. Client work under NDA, personal projects I hadn't decided whether to make public yet — knowing none of that code left my network removed a category of judgment call ("is this sensitive enough that I shouldn't paste it into a hosted tool") that I'd been making dozens of times a week without fully noticing.
+The privacy angle turned out to matter more in practice than I predicted going in. Code covered by confidentiality obligations, personal projects I hadn't decided whether to make public yet — knowing none of that code left my network removed a category of judgment call ("is this sensitive enough that I shouldn't paste it into a hosted tool") that I'd been making dozens of times a week without fully noticing.
 
-The operational overhead also turned out to be real, in a way cost calculators don't capture. I am now the person responsible for the inference stack staying up, the models staying current, and the agent loop not silently breaking after an Ollama update. That's a genuine cost, paid in my own time rather than dollars, and it's worth being honest about rather than pretending local AI is a free lunch.
+The operational overhead also turned out to be real, in a way cost calculators don't capture. I am now the person responsible for the inference stack staying up, the models staying current, and the agent loop not silently breaking after an Ollama update. Some of that is genuinely fiddly: on the 8GB Jetsons, a model can fail to load with out-of-memory errors even when `free -h` says memory is available, because the CUDA allocator can't reclaim page cache — I now drop caches before every model swap. That's a genuine cost, paid in my own time rather than dollars, and it's worth being honest about rather than pretending local AI is a free lunch.
 
 ::CtaSystemArchitecture
 ---
@@ -70,7 +71,7 @@ The full numbers — actual cost comparison, actual speed comparison, actual pri
   ---
   buttonText: "Read: Local AI vs Claude Code — 30 Days"
   supportingCopy: "See the actual cost, speed, and privacy numbers."
-  destinationUrl: "/blog/local-vibe-coding/local-ai-vs-claude-code-30-days"
+  destinationUrl: "/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days"
   ---
   :::
 
@@ -95,9 +96,16 @@ links:
   - label: "Non-Disclosure Agreement — Wikipedia"
     url: "https://en.wikipedia.org/wiki/Non-disclosure_agreement"
     type: "wikipedia"
-    description: "Background on the NDA-bound client work that made the privacy angle concrete rather than theoretical."
+    description: "Background on the confidentiality obligations that make the privacy angle concrete rather than theoretical."
 ---
 ::
+
+## Related reading
+
+- [Building Your Own Coding Assistant](/blog/local-vibe-coding/08-building-your-own-coding-assistant) — previous in the series: how the pieces fit together.
+- [Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days](/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days) — next: the numbers.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [How I Built a Local AI Stack for Less Than a Year of Claude Max](/blog/ai-cost-optimization/07-local-ai-stack-vs-year-of-claude-max) — the hardware cost side of the same decision.
 
 ---
 

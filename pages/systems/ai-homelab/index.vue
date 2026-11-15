@@ -3,17 +3,43 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'AI Homelab Engineering — Donavan Jones',
-  description: 'A production-ready AI homelab — a hybrid Jetson Orin / RTX 3090 cluster orchestrated with k3s, distributed MinIO storage, segmented networking, and real operational discipline.',
+  description: 'AI homelab engineering — a 7-node K3s cluster (4 Raspberry Pis + 3 Jetson Orin Nano Super 8GB) plus an RTX 3090 workstation, model scheduling under tight memory, MinIO storage, and real cost tradeoffs.',
   ogTitle: 'AI Homelab Engineering — Donavan Jones',
-  ogDescription: 'Hybrid GPU cluster architecture, k3s orchestration, MinIO storage, and the real security and cost tradeoffs of running AI infrastructure at home.',
+  ogDescription: 'Jetson Orin Nano Super + RTX 3090 homelab architecture, k3s orchestration, MinIO storage, and the real security and cost tradeoffs of running AI infrastructure at home.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/systems-ai-homelab.jpg`,
   ogUrl: `${_SITE}/systems/ai-homelab`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'AI Homelab Engineering — Donavan Jones',
   twitterDescription: 'A production-ready AI homelab — hybrid GPU tiers, k3s, MinIO, and real operational discipline.',
   canonical: `${_SITE}/systems/ai-homelab`,
 })
+
+// Curated entry points into this topic cluster (all URLs verified against published posts)
+const startHere = [
+  { to: '/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai', title: 'My homelab architecture for agentic AI', desc: 'The full layout: Pis, Jetsons, the 3090, and what runs where.' },
+  { to: '/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster', title: 'Three Jetson Orin Nano Supers as an AI cluster', desc: 'One role per 8GB board: LLM, speech, image generation.' },
+  { to: '/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture', title: 'RTX 3090 + Jetson Orin hybrid architecture', desc: 'Splitting work between one big GPU and small edge boards.' },
+  { to: '/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu', title: 'Running multiple local models without melting your GPU', desc: 'Model scheduling and swapping under tight memory.' },
+  { to: '/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s', title: 'Kubernetes for AI developers with k3s', desc: 'Deploying local models onto a lightweight cluster.' },
+  { to: '/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab', title: 'The biggest mistakes building my AI homelab', desc: 'What went wrong and what I would do differently.' },
+  { to: '/blog/ai-homelab-engineering/16-complete-guide-production-ready-local-ai-platform', title: 'Building a production-ready local AI platform', desc: 'The complete guide, end to end.' },
+  { to: '/blog/ai-cost-optimization/07-local-ai-stack-vs-year-of-claude-max', title: 'A local AI stack vs a year of Claude Max', desc: 'Hardware cost compared with a hosted subscription.' },
+  { to: '/blog/ai-cost-optimization/05-when-to-buy-a-gpu-instead-of-api-fees', title: 'When to buy a GPU instead of paying API fees', desc: 'A break-even framework for local hardware.' },
+  { to: '/blog/ai-cost-optimization/03-electricity-vs-api-pricing', title: 'Electricity vs API pricing', desc: 'How to estimate running costs for always-on AI hardware.' },
+]
+
+const relatedLinks = [
+  { to: '/categories/ai-cost-optimization', label: 'All AI cost optimization articles' },
+  { to: '/systems/infrastructure', label: 'Infrastructure Engineering' },
+  { to: '/systems/local-vibe-coding', label: 'Local Vibe Coding' },
+  { to: '/systems/ai', label: 'AI Systems Engineering' },
+  { to: '/systems/agentic-ai', label: 'Agentic AI Systems' },
+  { to: '/jetson-leaderboard', label: 'Jetson Orin Nano LLM leaderboard' },
+  { to: '/projects/kingdom-tools', label: 'Kingdom Tools platform' },
+  { to: '/projects/versehub', label: 'VerseHub case study' },
+  { to: '/services/local-ai-infrastructure', label: 'Local AI infrastructure consulting & research' },
+]
 
 const principles = [
   { icon: 'mdi:layers-triple',   color: 'amber',   text: 'Match hardware tier to workload — always-on low-power vs. bursty high-throughput' },
@@ -25,27 +51,27 @@ const principles = [
 const areas = [
   {
     icon: 'mdi:expansion-card', color: 'purple',
-    title: 'Compute',
-    desc: 'A hybrid RTX 3090 / Jetson Orin Nano Super tier, scheduled by workload profile.',
+    title: 'Compute', image: '/img/cards/homelab-compute.jpg',
+    desc: 'Three Jetson Orin Nano Super 8GB boards (LLM, speech, image generation) plus one RTX 3090 24GB workstation for embeddings, LoRA training, and Ornith-1.0-35B.',
     tags: ['RTX 3090', 'Jetson Orin', 'CUDA'],
   },
   {
     icon: 'mdi:kubernetes', color: 'sky',
-    title: 'Orchestration',
-    desc: 'k3s across ARM64 and x86 nodes, with node affinity and priority-based scheduling.',
-    tags: ['k3s', 'Affinity', 'Priority Classes'],
+    title: 'Orchestration', image: '/img/cards/homelab-orchestration.jpg',
+    desc: 'k3s across 7 ARM64 nodes (4 Raspberry Pis + 3 Jetsons), with node labels and selectors pinning each AI role to its board.',
+    tags: ['k3s', 'Node Labels', 'ARM64'],
   },
   {
     icon: 'mdi:database', color: 'amber',
-    title: 'Storage',
-    desc: 'MinIO in distributed, erasure-coded mode for models, embeddings, and artifacts.',
-    tags: ['MinIO', 'S3-Compatible', 'Erasure Coding'],
+    title: 'Storage', image: '/img/cards/homelab-storage.jpg',
+    desc: 'MinIO object storage for models, training datasets, and artifacts, alongside PostgreSQL, Redis, and Weaviate in-cluster.',
+    tags: ['MinIO', 'S3-Compatible', 'Datasets'],
   },
   {
     icon: 'mdi:shield-check', color: 'emerald',
-    title: 'Security',
-    desc: 'Segmented VLANs, no public exposure, and WireGuard-gated remote access.',
-    tags: ['VLANs', 'WireGuard', 'Patching'],
+    title: 'Security', image: '/img/cards/homelab-security.jpg',
+    desc: 'Keep cluster services off the public internet, segment the network, and gate remote access.',
+    tags: ['Segmentation', 'Private Access', 'Patching'],
   },
 ]
 
@@ -57,15 +83,15 @@ const failures = [
 ]
 
 const clusterMetrics = [
-  { value: '4',      label: 'Inference-capable nodes' },
-  { value: '24GB',   label: 'VRAM on the heaviest tier' },
-  { value: '~$19',   label: 'Illustrative monthly electricity (see cost breakdown)' },
-  { value: '100Gi',  label: 'Distributed MinIO storage per node' },
+  { value: '7',      label: 'K3s nodes (4 Raspberry Pis + 3 Jetsons)' },
+  { value: '8GB',    label: 'Unified memory per Jetson (~7.4 GiB usable)' },
+  { value: '~21',    label: 'tok/s llama3.2:3b on a Jetson, 100% on GPU' },
+  { value: '24GB',   label: 'VRAM on the single RTX 3090 workstation' },
 ]
 
 const stack = [
   'k3s', 'RTX 3090', 'NVIDIA Jetson Orin Nano Super', 'Raspberry Pi', 'MinIO',
-  'Redis', 'PostgreSQL', 'WireGuard', 'Prometheus', 'CUDA',
+  'Redis', 'PostgreSQL', 'Ollama', 'Prometheus', 'Grafana', 'Loki', 'CUDA',
 ]
 
 const faqs = [
@@ -201,34 +227,41 @@ useHead({
 
       </div>
 
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/homelab-areas.jpg" side="full" />
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Areas</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="area in areas"
             :key="area.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 flex flex-col gap-3
                    hover:border-amber-500/40 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
-                'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
-                'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
-              }"
-            >
-              <Icon :name="area.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': area.color === 'purple',
-                  'text-sky-400':    area.color === 'sky',
-                  'text-amber-400':  area.color === 'amber',
-                  'text-emerald-400':area.color === 'emerald',
-                }"
-              />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="area.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                    :class="{
+                      'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
+                      'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
+                      'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
+                      'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
+                    }"
+                  >
+                    <Icon :name="area.icon" class="text-xl"
+                      :class="{
+                        'text-purple-400': area.color === 'purple',
+                        'text-sky-400':    area.color === 'sky',
+                        'text-amber-400':  area.color === 'amber',
+                        'text-emerald-400':area.color === 'emerald',
+                      }"
+                    />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ area.title }}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ area.desc }}</p>
@@ -246,7 +279,8 @@ useHead({
         </div>
       </section>
 
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/homelab-metrics.jpg" side="full" />
         <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-6">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
@@ -268,9 +302,10 @@ useHead({
             </div>
           </div>
           <p class="mt-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Four inference-capable nodes under one k3s control plane, backed by distributed
-            MinIO storage and segmented, VPN-gated networking — the same infrastructure
-            this site's Local Vibe Coding and Agentic AI systems run on.
+            Seven nodes under one k3s control plane: four Raspberry Pis plus three Jetson Orin Nano Supers, each Jetson
+            owning one role because only one ~4-5 GB model fits per board. Jetson's CUDA allocator cannot reclaim page cache,
+            so models are swapped deliberately (stop, drop caches, load). An RTX 3090 workstation sits beside the cluster —
+            the same infrastructure this site's Local Vibe Coding and Agentic AI systems run on.
           </p>
         </div>
       </section>
@@ -293,14 +328,57 @@ useHead({
         </div>
       </section>
 
+      <!-- START HERE -->
+      <section class="mb-10">
+        <JetsonLeaderboardCard metric="all" />
+      </section>
+
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/homelab-start.jpg" side="full" />
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Start Here: Key AI Homelab & Cost Articles</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 max-w-3xl leading-relaxed">How the Jetson + RTX 3090 homelab is put together, how models share tight memory, and what local AI really costs compared with APIs.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <NuxtLink
+            v-for="post in startHere" :key="post.to" :to="post.to"
+            class="group flex items-start gap-3 rounded-xl p-3 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200"
+          >
+            <div class="w-24 shrink-0 aspect-[3/2] overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+              <img :src="`/img${post.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">{{ post.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ post.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- RELATED SYSTEMS & PROJECTS -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-4">Related Systems &amp; Projects</h2>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="r in relatedLinks" :key="r.to" :to="r.to"
+            class="px-3 py-1.5 rounded-lg text-sm border
+                   bg-slate-100 dark:bg-slate-800
+                   text-slate-600 dark:text-slate-300
+                   border-slate-200 dark:border-slate-700/50
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+          >{{ r.label }}</NuxtLink>
+        </div>
+      </section>
+
       <section class="mb-10">
         <NuxtLink
           to="/categories/ai-homelab-engineering"
-          class="flex items-center justify-between gap-6 rounded-2xl p-6
+          class="relative isolate overflow-hidden flex items-center justify-between gap-6 rounded-2xl p-6
                  border border-amber-500/20 bg-amber-500/5
                  hover:border-amber-500/40 hover:bg-amber-500/10
                  transition-all duration-200 group"
         >
+          <HeroBackdrop lazy src="/img/categories/ai-homelab-engineering.jpg" />
           <div>
             <p class="text-xs font-medium text-amber-500 uppercase tracking-wider mb-1">Knowledge Base</p>
             <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-400 transition-colors">

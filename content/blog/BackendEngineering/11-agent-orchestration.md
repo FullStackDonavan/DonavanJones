@@ -1,8 +1,8 @@
 ---
 title: "Agent Orchestration (Backend)"
-description: "Orchestrating agents in backend engineering."
+description: "How to orchestrate bounded AI agents in a backend: task graphs, tool validation, LLM fan-out, durable state, failure handling, tracing, and Temporal."
 date: 2026-03-26
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - orchestration
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: agent-orchestration-backend
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/11-agent-orchestration.jpg
 ---
 
 # Agent Orchestration (Backend)
 
-Single-call inference — send a prompt, get a response — handles most user-facing interactions on this platform. A user asks about a passage, the inference service builds a prompt with retrieved context, calls the model once, and streams the answer back. The interaction is complete in a few seconds.
+Backend agent orchestration means executing a predefined graph of LLM calls and tool calls with durable state, bounded retries, and a full execution trace, rather than letting a model improvise its own plan. Single-call inference — send a prompt, get a response — handles most user-facing interactions on this platform. A user asks about a passage, the inference service builds a prompt with retrieved context, calls the model once, and streams the answer back. The interaction is complete in a few seconds.
 
 But some tasks cannot be completed in a single inference call. A full study guide requires multiple passes: an outline pass to establish structure, a content pass for each section, a cross-reference pass to find supporting passages, and a review pass to check consistency. A research agent that answers a complex theological question might need to search different collections, synthesize conflicting commentary, and produce a structured argument. These tasks require coordinating multiple model calls, tool uses, and services over a longer time horizon.
 
 That coordination is agent orchestration. This article covers how it is implemented in the backend: the task graph model, how agents use tools, how failures are handled, and what makes multi-step agent execution different from the single-call inference patterns covered earlier.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -36,7 +37,7 @@ The word "agent" carries a lot of baggage. In the context of this backend, an ag
 
 Agents are not autonomous. They do not decide on their own what tasks to pursue. A user or a backend process triggers an agent with a specific goal and a defined set of tools. The agent executes toward that goal, using the model to make decisions at each step, until it either produces the output or fails.
 
-This is a deliberate constraint. Fully autonomous agents that decide their own goals are interesting research but poor production engineering — they are hard to reason about, hard to bound in terms of cost and time, and hard to debug when they go wrong. Bounded agents with explicit task graphs and observable state are what I actually ship.
+This is a deliberate constraint. Fully autonomous agents that decide their own goals are interesting research but poor production engineering — they are hard to reason about, hard to bound in terms of cost and time, and hard to debug when they go wrong. Bounded agents with explicit task graphs and observable state are what I actually ship. (I compare the two approaches in [single agent vs multi-agent systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems).)
 
 ## The Task Graph Model
 
@@ -91,6 +92,8 @@ Core responsibilities:
 **Context propagation.** Each step's output is written to a shared execution context keyed by step ID. Downstream steps read their inputs from this context using the `stepId.outputField` notation from the graph definition. The context is the only communication channel between steps — there are no direct step-to-step calls.
 
 **State persistence.** Execution state is written to the database after each step completes. If the orchestrator process crashes mid-execution, the job can be resumed from the last completed step. This is the same durability pattern used in the OCR pipeline and inference job queue — progress is never lost to a process restart.
+
+You do not have to build this engine yourself. In VerseHub, the production answer path runs on [Temporal](/blog/versehub-engineering/07-temporal-workflows-in-production): a `ScholarWorkflow` with retrieve → score → generate → verify activities, executed by workers on the Raspberry Pi nodes of my K3s cluster. Each node in the graph above maps to a Temporal activity, and Temporal gives you persistence, retries, and resume for free. The trade-off is that you must set timeouts deliberately — Temporal's 10-second default task timeout killed slow LLM activities until I did.
 
 ```typescript
 async function executeStep(job: AgentJob, step: TaskStep): Promise<void> {
@@ -221,11 +224,11 @@ Job: study_guide_job_01HX...
 Total: 47.3s | 12,530 tokens | $0.09
 ```
 
-This trace is stored with the job record and accessible from the platform's admin interface. When a user reports that their study guide is wrong, the trace shows exactly which retrieval results were used, which model generated which section, and whether any validation retries occurred. Debugging without this would mean reading logs from five different services and reconstructing the sequence manually.
+(The numbers above are illustrative.) This trace is stored with the job record and accessible from the platform's admin interface. When a user reports that their study guide is wrong, the trace shows exactly which retrieval results were used, which model generated which section, and whether any validation retries occurred. Debugging without this would mean reading logs from five different services and reconstructing the sequence manually.
 
 ## Cost Accounting
 
-Multi-step agents can be expensive. A full study guide generation costs $0.08–0.15 in model API spend at current pricing — manageable per user, but significant at scale. Unlike single-call inference where the token count is predictable from the task type, agent jobs have variable token counts depending on retrieved context, outline length, and section depth.
+Multi-step agents can be expensive. On a hosted API, a full study guide generation is on the order of cents — manageable per user, but significant at scale. On local hardware the cost shows up as GPU time that other requests cannot use. Unlike single-call inference where the token count is predictable from the task type, agent jobs have variable token counts depending on retrieved context, outline length, and section depth.
 
 I track cost at the job level, not just the service level. Each LLM step records its token consumption, the cost is computed at step completion, and the job total is available immediately on completion. This feeds the same spend dashboards used for the inference service, and the same circuit breakers apply — if an agent job would push daily spend over budget, it is queued for execution during off-peak hours rather than running immediately.
 
@@ -241,7 +244,7 @@ destinationUrl: "/hire-me"
 
 Single-call inference is a request/response: send a prompt, get a completion, validate, return. Agents are stateful, multi-step processes that run for minutes rather than seconds, consume multiple services, and produce partial state that needs to be handled gracefully when things go wrong.
 
-The patterns that make agents tractable in production are not unique to agents — they are the same patterns that make any complex async process manageable: durable state, explicit failure modes, observable execution, and bounded resource consumption. The model is just one component inside a larger system. Building it as a system, not as a series of model calls with some glue code, is what makes it reliable.
+The patterns that make agents tractable in production are not unique to agents — they are the same patterns that make any complex async process manageable: durable state, explicit failure modes, observable execution, and bounded resource consumption. The model is just one component inside a larger system. Building it as a system, not as a series of model calls with some glue code, is what makes it reliable — and the final step should be [verification against evidence](/blog/agentic-ai-systems/11-verification-agents-in-production), not trust.
 
 The next article covers async workers more broadly — the infrastructure layer that underlies agent execution, job queues, and every other async process in the backend.
 
@@ -296,6 +299,14 @@ links:
     description: "Overview of workflow systems — the conceptual model behind the task graph: explicit steps, dependencies, and state transitions that define how multi-step agent jobs execute."
 ---
 ::
+
+## Related reading
+
+- [OCR Pipelines](/blog/backendengineering/10-ocr-pipelines) — previous in the series
+- [Async Workers](/blog/backendengineering/12-async-workers) — next in the series: the worker layer underneath agent jobs
+- [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) — the same orchestration ideas on Temporal
+- [Agent Orchestration](/blog/ai-engineering/04-agent-orchestration) — the AI-engineering view of the same problem
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

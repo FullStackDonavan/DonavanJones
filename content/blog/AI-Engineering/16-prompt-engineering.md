@@ -1,8 +1,8 @@
 ---
 title: "Prompt Engineering"
-description: "Prompt engineering for retrieval-augmented generation in theology."
+description: "Prompt engineering for theological RAG: system prompt architecture, intent-specific variants, prompting for uncertainty, labeled context and prompt testing."
 date: 2026-06-06
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: prompt-engineering
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/16-prompt-engineering.jpg
 ---
 
 # Prompt Engineering
@@ -19,7 +20,7 @@ Prompt engineering for a theological AI system is different from prompt engineer
 
 This article is about how prompts are built on this platform: the system prompt architecture, instruction patterns that work, patterns that fail, how prompts adapt to context, and how they get evaluated. Not theory — the specific design decisions that emerged from building and operating a production theological AI system.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -80,7 +81,7 @@ Constraints:
 
 Each constraint exists because the failure mode it prevents actually occurred in testing without it. "Base all theological claims on provided context" prevents training-data drift. "Where traditions disagree, present the disagreement" prevents the model from defaulting to one tradition's reading of a passage. "Do not claim consensus" prevents false certainty on contested questions. "If the question cannot be answered, say so" prevents low-confidence generation from sparse context.
 
-The explicit constraint against quoting from memory is the most operationally impactful. Without it, the model quotes verses from training data — usually close but not exact, often the right verse but a paraphrase rather than the actual translation. With it, the model quotes only text that is in its context window, which is also the text that gets citation-verified.
+The explicit constraint against quoting from memory is the most operationally impactful. Without it, the model [quotes verses from training data](/blog/ai-engineering/14-hallucination-reduction) — usually close but not exact, often the right verse but a paraphrase rather than the actual translation. With it, the model quotes only text that is in its context window, which is also the text that gets citation-verified.
 
 ### Citation Requirements
 
@@ -97,7 +98,7 @@ Example: "Paul argues that justification is by faith alone [CITE: rom_3_28]."
   "This interpretation is not supported by the passages in context."
 ```
 
-This is reproduced here from article 13 — it belongs in the system prompt, not just in the article about citation grounding.
+This is reproduced here from [article 13](/blog/ai-engineering/13-citation-grounding) — it belongs in the system prompt, not just in the article about citation grounding.
 
 ### Response Format
 
@@ -270,7 +271,7 @@ Labels do two things. They tell the model what to trust and how to weight eviden
 
 ### The Retrieval Quality Header
 
-Immediately before the user's question, the prompt includes a retrieval quality signal:
+Immediately before the user's question, the prompt includes a [retrieval](/blog/ai-engineering/12-semantic-retrieval) quality signal:
 
 ```
 RETRIEVAL SUMMARY
@@ -369,6 +370,14 @@ links:
     description: "Anthropic research on using explicit principles in prompts to constrain model behavior — the approach adapted for theological epistemic constraints."
 ---
 ::
+
+## Related reading
+
+- [AI Pipelines for Bible Study](/blog/ai-engineering/15-ai-pipelines-for-bible-study) — previous in the AI Engineering series
+- [Retrieval Augmented Generation](/blog/ai-engineering/17-retrieval-augmented-generation) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [How I Added Agentic AI to My SaaS Application (VerseHub)](/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub) — the agentic features these prompts drive
+- [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) — prompting with retrieved project context
 
 ---
 

@@ -7,7 +7,7 @@ useSeoMeta({
   ogTitle: 'Products — Donavan Jones',
   ogDescription: 'Paid guides and starter kits distilled from the engineering blog — Raspberry Pi clusters, self-hosted AI, and production API boilerplates.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/products.jpg`,
   ogUrl: `${_SITE}/products/overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Products — Donavan Jones',
@@ -32,7 +32,8 @@ function truncate(text: string, max = 140): string {
     <div class="w-full">
 
       <!-- ── HERO ───────────────────────────────────────────────────── -->
-      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <HeroBackdrop src="/img/heroes/products.jpg" side="full" />
         <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
                       bg-sky-500/10 border border-sky-500/20 text-sky-500 dark:text-sky-400 text-xs font-medium">
@@ -80,8 +81,18 @@ function truncate(text: string, max = 140): string {
             >
 
               <!-- Top banner -->
-              <div class="relative h-32 flex items-center justify-center bg-slate-100 dark:bg-slate-800">
-                <Icon :name="product.badgeIcon || 'mdi:package-variant-closed'" class="text-5xl text-slate-300 dark:text-slate-600" />
+              <div class="relative h-40 overflow-hidden flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+                <img
+                  v-if="product.excerptImage"
+                  :src="product.excerptImage"
+                  alt=""
+                  width="600"
+                  height="315"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+                <Icon v-else :name="product.badgeIcon || 'mdi:package-variant-closed'" class="text-5xl text-slate-300 dark:text-slate-600" />
 
                 <div
                   v-if="product.price"

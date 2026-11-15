@@ -22,7 +22,7 @@
           </p>
 
           <div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            Based in Florida 🇺🇸
+            Based in Lakeland, Florida
           </div>
         </div>
 
@@ -35,9 +35,11 @@
           <ul class="mt-4 space-y-2 text-sm">
             <li><NuxtLink to="/" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Home</NuxtLink></li>
             <li><NuxtLink to="/services" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Services</NuxtLink></li>
-            <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Case Studies</NuxtLink></li>
+            <li><NuxtLink to="/projects/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Projects</NuxtLink></li>
             <li><NuxtLink to="/blog/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</NuxtLink></li>
             <li><NuxtLink to="/insights/overview" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Insights</NuxtLink></li>
+            <li><NuxtLink to="/tools" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">LLM Hardware Calculators</NuxtLink></li>
+            <li><NuxtLink to="/jetson-leaderboard" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Jetson LLM Leaderboard</NuxtLink></li>
             <li><NuxtLink to="/about" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</NuxtLink></li>
           </ul>
         </div>
@@ -49,6 +51,7 @@
           </h3>
 
           <ul class="mt-4 space-y-2 text-sm">
+            <li><NuxtLink to="/services/local-ai-infrastructure" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Local AI Infrastructure</NuxtLink></li>
             <li><NuxtLink to="/services/ai-automation" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">AI Automation</NuxtLink></li>
             <li><NuxtLink to="/services/web-development" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Web Development</NuxtLink></li>
             <li><NuxtLink to="/services/local-business-ai" class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Local Business AI</NuxtLink></li>

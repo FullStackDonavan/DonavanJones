@@ -26,3 +26,43 @@
     animation-play-state: paused;
   }
 }
+
+/* ── Design system primitives ──────────────────────────────────────────────
+   One place for the surface, border, text and focus treatments used by the
+   Ui* components (components/ui) and the tools/projects pages. Palette: slate
+   neutrals + a single sky accent; status colours only carry meaning
+   (emerald = ok, amber = caution, rose = problem). See docs/DESIGN_SYSTEM.md. */
+@layer components {
+  .ds-container { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .ds-surface   { @apply bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-xl; }
+  .ds-subtle    { @apply bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-lg; }
+  .ds-eyebrow   { @apply text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400; }
+  .ds-h1        { @apply text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white; }
+  .ds-h2        { @apply text-xl sm:text-2xl font-semibold tracking-tight text-slate-900 dark:text-white; }
+  .ds-h3        { @apply text-base font-semibold text-slate-900 dark:text-slate-100; }
+  .ds-body      { @apply text-sm leading-relaxed text-slate-600 dark:text-slate-400; }
+  .ds-muted     { @apply text-xs text-slate-500 dark:text-slate-400; }
+  .ds-label     { @apply block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5; }
+  .ds-focus     { @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950; }
+  .ds-input {
+    @apply block w-full h-9 rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950
+           px-3 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400
+           focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 tabular-nums;
+  }
+  .ds-input[aria-invalid='true'] { @apply border-rose-500 focus:border-rose-500 focus:ring-rose-500; }
+  .ds-btn {
+    @apply inline-flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-md text-sm font-medium transition-colors ds-focus
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .ds-btn-primary   { @apply ds-btn bg-sky-600 text-white hover:bg-sky-500; }
+  .ds-btn-secondary { @apply ds-btn border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800; }
+  .ds-btn-ghost     { @apply ds-btn text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800; }
+  .ds-link          { @apply text-sky-600 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300 underline-offset-2 hover:underline ds-focus rounded-sm; }
+  .ds-table th { @apply px-3 py-2 text-left text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap; }
+  .ds-table td { @apply px-3 py-2 text-sm text-slate-700 dark:text-slate-300 tabular-nums whitespace-nowrap; }
+  .ds-table tbody tr { @apply border-t border-slate-100 dark:border-slate-800; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

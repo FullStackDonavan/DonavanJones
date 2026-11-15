@@ -1,8 +1,8 @@
 ---
 title: "AI Services"
-description: "Overview of AI services in a microservices backend."
+description: "How AI services differ from normal backend services: latency, per-call cost, probabilistic failures, model routing, and the validation layer I use in VerseHub."
 date: 2026-02-27
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - ai
@@ -10,17 +10,20 @@ tags:
 draft: false
 slug: ai-services
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/02-ai-services.jpg
 ---
 
 # AI Services
 
-In the previous article I described how I split a monolith into distinct services. The most consequential splits were the AI-specific ones — not because they were technically harder to extract, but because AI services have fundamentally different operational characteristics than everything else in a backend.
+AI services (inference, embeddings, moderation) belong in their own deployables because they are slow, expensive per call, and fail probabilistically rather than with clean errors. Design them like any other service, but with streaming, token budgets, caching, and output validation built in.
+
+In the [previous article](/blog/backendengineering/01-monolith-vs-microservices) I described how I split a monolith into distinct services. The most consequential splits were the AI-specific ones — not because they were technically harder to extract, but because AI services have fundamentally different operational characteristics than everything else in a backend.
 
 Standard backend services are CPU-light, stateless, and fast. An auth service responds in single-digit milliseconds. An AI inference service might take 5–30 seconds, consume a GPU, stream tokens back incrementally, and cost real money per request. Treating these the same way is how you build systems that are either expensive or broken.
 
 This article covers how AI services fit into a distributed backend, what makes them different, and the design patterns I use to make them reliable.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -64,13 +67,13 @@ This means the inference service is long-lived per request. Connection managemen
 
 ### Cost is per-call, not per-instance
 
-Standard services cost money when you run them. AI services cost money every time they do anything. A single LLM call to generate a study guide section might cost $0.05–0.20 depending on the model and token count. At scale, uncontrolled inference spend will ruin your unit economics before you notice.
+Standard services cost money when you run them. AI services cost money every time they do anything — in API fees for a hosted model, or in GPU time and contention for a local one. A single hosted LLM call to generate a study guide section can cost cents depending on the model and token count. At scale, uncontrolled inference spend will ruin your unit economics before you notice.
 
 I handle this with three controls:
 
 **Token budgeting.** Every prompt is constructed with a maximum context window in mind. Retrieved passages, conversation history, and system instructions are trimmed to fit within a defined token budget. I never let user-supplied input drive unbounded token consumption.
 
-**Request caching.** Identical or near-identical prompts (common for standard study questions against the same verse) return cached completions. I cache at the prompt hash level with a TTL that balances freshness against cost.
+**Request caching.** Identical or near-identical prompts (common for standard study questions against the same verse) return cached completions. In VerseHub this is a Redis-backed LLM response cache keyed on the prompt hash, with a TTL that balances freshness against cost.
 
 **Rate limiting per user.** Each user has a daily inference quota enforced at the API gateway before the request reaches the inference service. Hard quota = request rejected. Soft quota = downgraded to a smaller model.
 
@@ -81,7 +84,7 @@ A database either returns data or it throws an error. An LLM returns something �
 My inference service wraps every response in a validation layer before it leaves the service boundary:
 
 - **Schema validation**: if the prompt asked for a JSON-structured response, parse and validate it before returning it downstream
-- **Grounding check**: compare citations in the response against the retrieved source passages to detect hallucinated verse references
+- **Grounding check**: compare citations in the response against the retrieved source passages to detect hallucinated verse references (I cover this in depth in [verification agents in production](/blog/agentic-ai-systems/11-verification-agents-in-production))
 - **Retry on malformed output**: if the model returns unparseable JSON, retry with an explicit correction instruction before surfacing an error to the client
 
 This validation happens inside the inference service, not in the calling service. Every consumer gets a clean, validated response or an explicit error — never raw, unverified model output.
@@ -142,7 +145,7 @@ destinationUrl: "/systems/backend"
 
 ## Model Selection as a Service Concern
 
-Not every request needs the most capable — and most expensive — model. I treat model selection as a first-class routing decision inside the inference service, not something callers control directly.
+Not every request needs the most capable — and most expensive — model. I treat model selection as a first-class routing decision inside the inference service, not something callers control directly. In VerseHub, for example, a fast draft comes from llama3.2:3b on a Jetson (about 21 tok/s) and a slower refine pass runs as a Temporal workflow.
 
 The inference service selects a model based on task type, user tier, and current system load:
 
@@ -179,7 +182,7 @@ destinationUrl: "/hire-me"
 
 If I were starting over, I would introduce the **embedding service earlier**. I built it after the inference service and had to retrofit semantic retrieval into prompts that were already in production. The retrieval quality improvement was significant enough that I should have treated it as foundational from day one.
 
-I would also set up cost monitoring on day one rather than week four. The first month of development had several experiments that generated significant API spend that I only noticed after the fact. A daily budget alert with a hard cutoff would have caught it immediately.
+I would also set up cost and usage monitoring on day one. Experiments against a hosted API can quietly run up spend, and experiments against local GPUs can quietly starve other workloads. A daily budget alert with a hard cutoff catches the first; [Prometheus metrics on the cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) catch the second.
 
 AI services are not special — they are just services with unusual performance characteristics. Design them like any other service: clear boundaries, explicit contracts, graceful degradation, and observable internals. The model is an implementation detail inside the service, not something the rest of the system should know about.
 
@@ -234,6 +237,14 @@ links:
     description: "Definition of AI hallucination — the failure mode that output validation and citation grounding in the inference service are designed to detect and prevent."
 ---
 ::
+
+## Related reading
+
+- [Monolith vs Microservices](/blog/backendengineering/01-monolith-vs-microservices) — previous in the series: why these services were split out
+- [Authentication](/blog/backendengineering/03-authentication) — next in the series: the auth service every request passes through
+- [Inference Services](/blog/backendengineering/08-inference-services) — a deeper look at the inference service itself
+- [How I Added Agentic AI to VerseHub](/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub) — these services in a real product
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

@@ -1,6 +1,6 @@
 import { serverQueryContent } from '#content/server'
 
-const SITE_URL = process.env.APP_DOMAIN || 'https://donavanjones.com'
+const SITE_URL = (process.env.APP_DOMAIN || 'https://donavanjones.com').replace(/\/+$/, '')
 
 function makeUrl(loc: string, lastmod?: string | null, changefreq = 'weekly', priority = '0.7'): string {
   return [
@@ -40,7 +40,10 @@ export default defineEventHandler(async (event) => {
 
   // Content pages (blog posts, projects)
   const contentUrls = docs.map((doc) => {
-    const lastmod = doc.lastUpdated || doc.date
+    // Never report a modified date earlier than the publish date
+    const lastmod = [doc.lastUpdated, doc.date]
+      .filter(Boolean)
+      .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0]
     const priority = doc._path?.startsWith('/projects') ? '0.9' : '0.7'
     const changefreq = doc._path?.startsWith('/projects') ? 'monthly' : 'weekly'
     return makeUrl(`${SITE_URL}${doc._path}`, lastmod, changefreq, priority)
@@ -62,6 +65,21 @@ export default defineEventHandler(async (event) => {
     { path: '/systems/backend',       priority: '0.8', changefreq: 'monthly' },
     { path: '/systems/ai',            priority: '0.8', changefreq: 'monthly' },
     { path: '/systems/infrastructure',priority: '0.8', changefreq: 'monthly' },
+    { path: '/systems/ai-homelab',    priority: '0.9', changefreq: 'weekly'  },
+    { path: '/systems/agentic-ai',    priority: '0.9', changefreq: 'weekly'  },
+    { path: '/systems/local-vibe-coding', priority: '0.8', changefreq: 'weekly' },
+    { path: '/services',              priority: '0.8', changefreq: 'monthly' },
+    { path: '/services/local-ai-infrastructure', priority: '1.0', changefreq: 'monthly' },
+    { path: '/services/ai-automation',priority: '0.7', changefreq: 'monthly' },
+    { path: '/services/web-development', priority: '0.7', changefreq: 'monthly' },
+    { path: '/services/local-business-ai', priority: '0.7', changefreq: 'monthly' },
+    { path: '/hire-me',               priority: '0.9', changefreq: 'monthly' },
+    { path: '/insights/overview',     priority: '0.7', changefreq: 'weekly'  },
+    { path: '/jetson-leaderboard',    priority: '0.8', changefreq: 'monthly' },
+    { path: '/tools',                 priority: '0.9', changefreq: 'monthly' },
+    { path: '/tools/vram-calculator', priority: '0.9', changefreq: 'monthly' },
+    { path: '/tools/kv-cache-calculator', priority: '0.8', changefreq: 'monthly' },
+    { path: '/tools/gpu-comparison',  priority: '0.8', changefreq: 'monthly' },
   ]
   const staticUrls = staticPages.map((p) => makeUrl(`${SITE_URL}${p.path}`, null, p.changefreq, p.priority))
 

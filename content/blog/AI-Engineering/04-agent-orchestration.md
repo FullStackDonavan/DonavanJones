@@ -1,8 +1,8 @@
 ---
 title: "Agent Orchestration"
-description: "Managing and orchestrating multiple AI agents."
+description: "Agent orchestration patterns for LLM systems: sequential pipelines, plan-and-execute, critique loops, per-agent model selection, memory and tracing."
 date: 2026-04-27
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,17 +12,20 @@ draft: false
 cluster: "ai-engineering"
 slug: agent-orchestration
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/04-agent-orchestration.jpg
 ---
 
 # Agent Orchestration
 
-The previous article covered tool calling — the mechanism by which a single model call steps outside its context window to retrieve information or take action. Tool calling makes a single agent more capable. Orchestration makes multiple agents work together toward a goal that no single agent call could accomplish alone.
+Agent orchestration is the code that coordinates several model calls — planners, writers, critics, summarizers — so together they produce a result no single call could. Three patterns cover most real systems: sequential pipelines, plan-and-execute, and reflection/critique loops, with each agent running on the cheapest model that can do its job.
+
+The previous article covered [tool calling](/blog/ai-engineering/03-tool-calling) — the mechanism by which a single model call steps outside its context window to retrieve information or take action. Tool calling makes a single agent more capable. Orchestration makes multiple agents work together toward a goal that no single agent call could accomplish alone.
 
 The distinction matters. Tool calling is about depth: one model, reasoning through a problem, invoking tools to gather what it needs. Orchestration is about breadth and composition: multiple model calls, each specialized or scoped, coordinated to produce something more complex than any single call could generate. The study guide that requires a planning pass, multiple section generations, a cross-reference pass, and a final review is an orchestration problem, not a tool calling problem.
 
 This article covers orchestration patterns — how to structure multi-agent workflows, how agents communicate, how to decompose complex tasks, and how to maintain coherence across multiple model calls.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -228,7 +231,7 @@ My preference: specialized agents for well-defined stages with stable input/outp
 
 Not every agent in a pipeline needs the same model. Different tasks have different capability requirements, and using an expensive model everywhere multiplies cost without proportional quality gain.
 
-On this platform, the same orchestration pipeline uses three different model tiers:
+Here is what that tiering looks like with a hosted model family (Claude's three tiers):
 
 | Agent Role | Model | Reason |
 |---|---|---|
@@ -241,7 +244,9 @@ On this platform, the same orchestration pipeline uses three different model tie
 
 The user-visible output (section content) uses the most capable model. Internal pipeline steps that process or structure information use lighter models. A retrieval summarizer that compresses 10 passages to 2 for context injection does not need Opus — it needs to be fast and cheap.
 
-This tiering reduces inference cost for the same pipeline by 40–60% while delivering essentially the same final output quality, because the quality-sensitive steps still use the best model.
+Tiering like this cuts inference cost substantially while delivering essentially the same final output quality, because the quality-sensitive steps still use the best model.
+
+The same principle drives VerseHub's production path, just on local hardware: the fast tier is llama3.2:3b pinned in memory on a Jetson Orin Nano Super (about 21 tokens/second), which drafts an answer immediately, and the refine pass runs as a Temporal `ScholarWorkflow` — retrieve → score → generate → verify — on the Raspberry Pi workers. The workflow side is written up in [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production).
 
 ## Memory Integration
 
@@ -347,6 +352,14 @@ links:
     description: "General principles of workflow design and task sequencing — the conceptual model behind agent pipeline orchestration."
 ---
 ::
+
+## Related reading
+
+- [Tool Calling](/blog/ai-engineering/03-tool-calling) — previous in the AI Engineering series
+- [State Management](/blog/ai-engineering/05-state-management) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) — durable orchestration with Temporal
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — the orchestration that runs VerseHub's answers
 
 ---
 

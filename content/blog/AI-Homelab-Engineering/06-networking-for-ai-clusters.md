@@ -1,22 +1,23 @@
 ---
 title: "Networking for AI Clusters"
-description: "Networking design for a multi-node home AI cluster — static IPs, service discovery, and keeping inference traffic off the same segment as everything else."
-date: 2026-02-18
-lastUpdated: "2026-06-09"
+description: "Networking for a home AI cluster: static IPs, k3s service discovery, ServiceLB pitfalls, segmentation, and keeping inference endpoints off the public internet."
+date: 2026-09-13
+lastUpdated: "2026-11-14"
 category: "ai-homelab-engineering"
 tags:
   - ai-homelab-engineering
   - networking
-draft: true
+draft: false
 slug: networking-for-ai-clusters
 author: Donavan Jones
+excerptImage: /img/blog/ai-homelab-engineering/06-networking-for-ai-clusters.jpg
 ---
 
 # Networking for AI Clusters
 
-Networking is the layer of a homelab cluster that's easy to get away with ignoring at first and expensive to retrofit later. Static addressing, sane service discovery, and segmentation decisions made early save real pain once the cluster has more than two or three nodes talking to each other constantly.
+Networking for an AI cluster comes down to four decisions: give every node a static address, let cluster DNS handle service discovery, understand how your load balancer publishes ports, and keep inference endpoints off the public internet. It's the layer that's easy to ignore at first and expensive to retrofit — I've had to recover my k3s cluster after a control-plane IP change, so this is written from experience.
 
-*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering).*
+*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering). For the full system map, see the [AI homelab architecture hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -28,7 +29,7 @@ destinationUrl: "/categories/ai-homelab-engineering"
 
 ## Static IPs, Not DHCP Leases
 
-Every cluster node gets a static IP reservation at the router level, keyed to its MAC address. A cluster where node IPs can silently change on DHCP lease renewal is a cluster where the k3s control plane's node registry, service configs, and any hardcoded references break unpredictably — and debugging "why did the cluster fall over overnight" is much worse than the ten minutes it takes to set static reservations up front.
+Every cluster node gets a static IP reservation at the router level, keyed to its MAC address. A cluster where node IPs can silently change on DHCP lease renewal is a cluster where the k3s control plane's node registry, service configs, and any hardcoded references break unpredictably — and debugging "why did the cluster fall over overnight" is much worse than the ten minutes it takes to set static reservations up front. When my control plane's IP did change, recovering took real work — the steps are in [recovering a K3s cluster after a control plane IP change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change).
 
 ## Internal Service Discovery
 
@@ -45,13 +46,17 @@ spec:
     - port: 11434
 ```
 
+## LoadBalancers and NodePorts in k3s
+
+k3s ships ServiceLB (Klipper) for `LoadBalancer` services, and the node label `svccontroller.k3s.cattle.io/enablelb` decides which nodes publish those ports. Get that label wrong and services stop answering in confusing ways — it broke every LoadBalancer in my cluster once, via a port 8080 clash, which I wrote up in [how one node label broke every LoadBalancer service](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers). For the admin tools I keep it simpler: Prometheus (:30909), Grafana (:30300), and Gitea (:32080) are plain NodePorts on the control plane, reachable from the LAN.
+
 ## Segmenting Cluster Traffic
 
-The cluster's internal traffic — model inference requests, storage replication between MinIO nodes, agent-to-agent communication — sits on its own VLAN, separate from general home network traffic. This isn't primarily a security measure (though it helps); it's about not having a video call or a large file transfer on the general network segment introduce latency jitter into inference requests that are sensitive to it.
+A cluster's internal traffic — model inference requests, storage traffic, agent-to-agent communication — is worth putting on its own VLAN, separate from general home network traffic. This isn't primarily a security measure (though it helps); it's about not having a video call or a large file transfer on the general network segment introduce latency jitter into inference requests that are sensitive to it.
 
 ## Exposing Services Externally (Carefully)
 
-Nothing in this cluster is directly exposed to the public internet. Access from outside the home network goes through a VPN (WireGuard) back into the home network first — inference endpoints are never bound to a public-facing interface, which closes off an entire category of exposure that "just open a port" setups create.
+Inference endpoints, dashboards, and admin tools should never be bound to a public-facing interface. Remote access goes through a VPN (WireGuard is the simple choice) back into the home network first, which closes off an entire category of exposure that "just open a port" setups create.
 
 ::CtaSystemArchitecture
 ---
@@ -63,7 +68,7 @@ destinationUrl: "/systems/ai-homelab"
 
 ## Bandwidth Between Nodes
 
-For the Jetson tier specifically, gigabit Ethernet (not wifi) between nodes matters more than it seems for anything involving distributed storage — MinIO's erasure coding replicates data across nodes, and a slow or unreliable link between them shows up as degraded read/write performance across the whole storage layer, not just on the affected node.
+For the Jetson tier specifically, gigabit Ethernet (not wifi) between nodes matters more than it seems for anything involving distributed storage — if MinIO runs in distributed mode, erasure coding spreads data across nodes, and a slow or unreliable link between them shows up as degraded read/write performance across the whole storage layer, not just on the affected node.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -78,7 +83,7 @@ For the Jetson tier specifically, gigabit Ethernet (not wifi) between nodes matt
   ---
   buttonText: "Read: MinIO and Distributed AI Storage"
   supportingCopy: "The storage layer that depends on this networking design."
-  destinationUrl: "/blog/ai-homelab-engineering/minio-and-distributed-ai-storage"
+  destinationUrl: "/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage"
   ---
   :::
 
@@ -106,6 +111,14 @@ links:
     description: "The VPN protocol used for secure external access into the home network without exposing services directly."
 ---
 ::
+
+## Related reading
+
+- [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads) — previous in the series: scheduling on top of this network.
+- [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage) — next: the storage layer that depends on it.
+- [AI Homelab architecture hub](/systems/ai-homelab) — the interactive system diagram.
+- [Static IPs and Networking](/blog/infrastructureengineering/04-static-ips-and-networking) — the step-by-step Pi networking setup.
+- [DNS and Service Discovery](/blog/infrastructureengineering/19-dns-and-service-discovery) — CoreDNS in more depth.
 
 ---
 

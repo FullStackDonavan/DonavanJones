@@ -9,7 +9,10 @@ const _cfg = useRuntimeConfig()
 const _SITE = (_cfg.public.appDomain as string) || 'https://donavanjones.com'
 const TITLE = 'Jetson Orin Nano LLM Leaderboard'
 const DESC = `Speed, quality, tool-calling and coding scores for ${new Set(board.models.map(m => m.name)).size} local LLMs and ${board.models.length} quantizations, measured on NVIDIA Jetson Orin Nano Super 8 GB boards with Ollama.`
+const _abs = useAbsoluteUrl()
 useSeoMeta({
+  ogImage: _abs('/img/heroes/jetson-leaderboard.jpg'),
+  twitterImage: _abs('/img/heroes/jetson-leaderboard.jpg'),
   title: TITLE,
   description: DESC,
   ogTitle: TITLE,
@@ -109,12 +112,68 @@ const totals = computed(() => [
   { value: Math.max(...board.models.map(m => m.tok_s ?? 0)).toFixed(0), label: 'Top tok/s' },
 ])
 const tested = new Date(`${board.generated}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+
+// One-paragraph direct answer built from the data (quoted by AI answer engines and search snippets)
+const answer = computed(() => {
+  const f = champ('tok_s'), q = champ('quality'), t = champ('tools'), c = champ('code')
+  const parts = [
+    f && `${f.name} (${f.quant}) is the fastest at ${f.tok_s} tok/s`,
+    q && `${q.name} (${q.quant}) is the most accurate at ${Math.round(q.quality!)}% on short-answer questions`,
+    t && `${t.name} (${t.quant}) is the most reliable tool caller at ${Math.round(t.tools!)}%`,
+    c && `${c.name} (${c.quant}) writes the most passing code at ${Math.round(c.code!)}%`,
+  ].filter(Boolean)
+  return `On an 8 GB Jetson Orin Nano Super running Ollama, ${parts.join('; ')}. There is no single best model: pick by the job, and stay with models that fit 100% on the GPU.`
+})
+
+const related = [
+  { to: '/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster', kicker: 'Hardware', title: 'Using three Jetson Orin Nano Supers as an AI cluster' },
+  { to: '/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu', kicker: 'Memory', title: 'Running multiple local models without melting your GPU' },
+  { to: '/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98', kicker: 'Fine-tuning', title: 'From 34% to 98%: teaching a 0.6B model to run my homelab' },
+  { to: '/blog/local-vibe-coding/03-best-local-models-for-coding', kicker: 'Coding', title: 'Best local models for coding' },
+  { to: '/blog/ai-engineering/03-tool-calling', kicker: 'Agents', title: 'Tool calling, explained from production' },
+  { to: '/blog/backendengineering/16-model-loading-strategies', kicker: 'Serving', title: 'Model loading strategies' },
+  { to: '/projects/kingdom-tools', kicker: 'Where the data comes from', title: 'Kingdom Tools: Devices page, benchmarks and model shelves' },
+  { to: '/systems/ai-homelab', kicker: 'Hub', title: 'AI Homelab Engineering: the whole system' },
+]
+
+useHead({
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Dataset',
+          '@id': `${_SITE}/jetson-leaderboard#dataset`,
+          name: TITLE,
+          description: DESC,
+          url: `${_SITE}/jetson-leaderboard`,
+          creator: { '@id': `${_SITE}/#person` },
+          dateModified: board.generated,
+          isAccessibleForFree: true,
+          keywords: ['Jetson Orin Nano Super', 'local LLM benchmark', 'Ollama', 'edge AI', 'tool calling', 'quantization', 'tokens per second'],
+          measurementTechnique: 'Ollama on NVIDIA Jetson Orin Nano Super 8GB, 4k context, temperature 0, page cache cleared before each load',
+          variableMeasured: ['Generation speed (tokens/s)', 'Short-answer accuracy (%)', 'Tool-calling accuracy (%)', 'Coding pass rate (%)'],
+        },
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: _SITE },
+            { '@type': 'ListItem', position: 2, name: 'AI Homelab', item: `${_SITE}/systems/ai-homelab` },
+            { '@type': 'ListItem', position: 3, name: TITLE, item: `${_SITE}/jetson-leaderboard` },
+          ],
+        },
+      ],
+    }),
+  }],
+})
 </script>
 
 <template>
   <div class="min-h-screen bg-white dark:bg-slate-950">
     <!-- Hero -->
-    <section class="bg-slate-900 border-b border-slate-800">
+    <section class="relative isolate overflow-hidden bg-slate-900 border-b border-slate-800">
+      <HeroBackdrop src="/img/heroes/jetson-leaderboard.jpg" tone="dark" />
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium mb-6">
           <Icon name="mdi:chip" class="text-sm" />
@@ -140,7 +199,8 @@ const tested = new Date(`${board.generated}T12:00:00`).toLocaleDateString('en-US
 
     <!-- Champions -->
     <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-12">
-      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Category winners</h2>
+      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Category winners</h2>
+      <p class="text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl mb-6">{{ answer }}</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div v-for="h in highlights" :key="h.title" class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-5">
           <div class="flex items-center justify-between">
@@ -259,10 +319,21 @@ const tested = new Date(`${board.generated}T12:00:00`).toLocaleDateString('en-US
         </div>
       </div>
 
+      <h2 class="mt-12 text-xl font-bold text-slate-900 dark:text-white mb-4">Related reading</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <NuxtLink
+          v-for="r in related" :key="r.to" :to="r.to"
+          class="group rounded-xl border border-slate-200 dark:border-slate-800 p-5 hover:border-sky-400 transition-colors"
+        >
+          <div class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">{{ r.kicker }}</div>
+          <div class="mt-1 font-semibold text-slate-900 dark:text-white group-hover:text-sky-500">{{ r.title }}</div>
+        </NuxtLink>
+      </div>
+
       <div class="mt-8 grid gap-4 sm:grid-cols-2">
-        <NuxtLink to="/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98" class="group rounded-xl border border-slate-200 dark:border-slate-800 p-5 hover:border-sky-400 transition-colors">
-          <div class="text-sm text-slate-500 dark:text-slate-400">Read</div>
-          <div class="mt-1 font-semibold text-slate-900 dark:text-white group-hover:text-sky-500">From 34% to 98%: teaching a 0.6B model to run my homelab</div>
+        <NuxtLink to="/services/local-ai-infrastructure" class="group rounded-xl border border-sky-500/30 bg-sky-500/5 p-5 hover:border-sky-400 transition-colors">
+          <div class="text-sm text-slate-500 dark:text-slate-400">Building local AI hardware or an agent runtime?</div>
+          <div class="mt-1 font-semibold text-slate-900 dark:text-white group-hover:text-sky-500">See how I work with product and research teams</div>
         </NuxtLink>
         <NuxtLink to="/hire-me" class="group rounded-xl border border-slate-200 dark:border-slate-800 p-5 hover:border-sky-400 transition-colors">
           <div class="text-sm text-slate-500 dark:text-slate-400">Running models on your own hardware?</div>

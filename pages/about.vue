@@ -8,7 +8,7 @@ useSeoMeta({
   ogTitle: 'About — Donavan Jones | AI Systems Engineer',
   ogDescription: 'AI Systems Engineer building production RAG pipelines, Kubernetes-hosted LLMs, and full-stack SaaS platforms. Learn the story behind the work.',
   ogType: 'profile',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/about.jpg`,
   ogUrl: `${_SITE}/about`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'About — Donavan Jones | AI Systems Engineer',
@@ -87,6 +87,7 @@ const focuses = [
     desc: 'RAG pipelines, LLM orchestration, agent frameworks, hybrid model routing, and production inference infrastructure.',
     tags: ['Weaviate', 'Llama 3.2', 'OpenAI', 'RAG', 'Agents'],
     link: '/systems/ai',
+    image: '/img/heroes/systems-ai.jpg',
   },
   {
     icon: 'mdi:server',
@@ -95,14 +96,16 @@ const focuses = [
     desc: 'Scalable APIs, async job queues, domain-driven service layers, and typed data pipelines in Node.js and FastAPI.',
     tags: ['Nuxt 3', 'BullMQ', 'Prisma', 'PostgreSQL', 'Redis'],
     link: '/systems/backend',
+    image: '/img/heroes/systems-backend.jpg',
   },
   {
     icon: 'mdi:cloud-braces',
     color: 'emerald',
     title: 'Infrastructure',
-    desc: 'Self-hosted Kubernetes on ARM64, CI/CD with GitHub Actions, MinIO object storage, and secure Cloudflare routing.',
-    tags: ['Kubernetes', 'Docker', 'GitHub Actions', 'MinIO'],
+    desc: 'A self-hosted 7-node K3s cluster on ARM64, Gitea Actions CI/CD, Prometheus/Grafana/Loki observability, MinIO object storage, and secure Cloudflare routing.',
+    tags: ['Kubernetes', 'Docker', 'Gitea Actions', 'MinIO'],
     link: '/systems/infrastructure',
+    image: '/img/heroes/systems-infrastructure.jpg',
   },
   {
     icon: 'mdi:view-dashboard',
@@ -111,6 +114,7 @@ const focuses = [
     desc: 'End-to-end product development — from data model and auth to UI, real-time features, and payments.',
     tags: ['Vue 3', 'Nuxt 3', 'Stripe', 'WebSockets', 'Auth'],
     link: '/projects/overview',
+    image: '/img/heroes/projects.jpg',
   },
 ]
 
@@ -118,21 +122,21 @@ const techStack = {
   'Frontend': ['Vue 3', 'Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Pinia'],
   'Backend': ['Node.js', 'Nitro', 'FastAPI', 'Zod', 'BullMQ'],
   'Data': ['PostgreSQL', 'Prisma', 'Redis', 'Weaviate', 'MinIO'],
-  'AI': ['Llama 3.2', 'OpenAI API', 'Whisper', 'ElevenLabs', 'Stable Diffusion'],
-  'Infrastructure': ['Kubernetes', 'Docker', 'GitHub Actions', 'Cloudflare', 'ARM64'],
+  'AI': ['Llama 3.2', 'Ollama', 'Temporal', 'OpenAI API', 'Whisper', 'Kokoro TTS', 'Stable Diffusion'],
+  'Infrastructure': ['Kubernetes (k3s)', 'Docker', 'Gitea Actions', 'Prometheus', 'Grafana', 'Loki', 'Cloudflare', 'ARM64'],
 }
 
 const milestones = [
   {
     year: '2024–Now',
     title: 'Building VerseHub',
-    desc: '37K+ verses indexed · RAG retrieval under 200ms · 80% of requests served by local Llama 3.2 on self-hosted Jetson GPU nodes · ~70% inference cost reduction · 5 bounded domains.',
+    desc: 'Fast llama3.2:3b draft on a Jetson (~21 tok/s) · Temporal-orchestrated RAG on the Pi workers (retrieve → score → generate → verify) · citations checked against Weaviate evidence · Kokoro + Whisper voice on a Jetson.',
     color: 'purple',
   },
   {
     year: '2023–Now',
     title: 'Self-Hosted Kubernetes Cluster',
-    desc: 'Designed and deployed a private ARM64 Kubernetes cluster running production AI workloads, CI/CD pipelines, and object storage.',
+    desc: 'Designed and operate a 7-node K3s cluster (4 Raspberry Pis + 3 Jetson Orin Nano Super 8GB) plus an RTX 3090 workstation — Gitea Actions CI/CD, Prometheus/Grafana/Loki, MinIO, and Kingdom Tools, my internal platform for provisioning services and managing models.',
     color: 'emerald',
   },
   {
@@ -195,22 +199,33 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             with real retrieval quality, run local LLM inference on self-hosted Kubernetes, and ship full-stack
             SaaS platforms that are observable and maintainable from day one. Currently building
             <NuxtLink to="/projects/versehub" class="text-purple-400 hover:text-purple-300 font-medium transition-colors">VerseHub</NuxtLink>
-            — 37,000+ verses indexed, RAG retrieval under 200ms, 80% of inference served locally on Jetson GPU nodes,
-            and ~70% cost reduction vs. full cloud routing.
+            — a fast draft from llama3.2:3b on a Jetson, refined by a Temporal workflow that retrieves, scores, generates, and
+            verifies every citation against the evidence it retrieved.
           </p>
           <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-            At Amerus Financial Group, I served as the sole architect and lead developer for a production
-            benefits enrollment platform that automated workflows for 92 businesses. That meant more than
+            Underneath it is hardware I run myself: a 7-node K3s cluster — 4 Raspberry Pis and 3 NVIDIA Jetson Orin Nano
+            Super 8GB boards — plus an RTX 3090 workstation. Each Jetson owns one role (LLM, speech, image generation)
+            because only one ~4-5 GB model fits in 8GB of unified memory, so model scheduling and swapping is deliberate work.
+            Everything is monitored with Prometheus, Grafana, and Loki, deployed through self-hosted Gitea Actions, and managed through
+            <NuxtLink to="/projects/kingdom-tools" class="text-amber-500 hover:text-amber-400 font-medium transition-colors">Kingdom Tools</NuxtLink>,
+            my internal platform for provisioning services and loading, benchmarking, and fine-tuning models.
+          </p>
+          <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+            At Business Benefit Alliance, I am the sole architect and lead developer of a production insurance
+            platform used by 1,859 agents and about 2,000 users a month. It has taken 8,490 enrollment
+            applications and processed $10.8M in premium payments. That meant more than
             writing code — I gathered requirements directly from business stakeholders, presented architecture
             decisions and tradeoffs to non-technical leadership, coordinated with contributors, and trained
-            end users and administrators after launch. Enrollment workflows that previously required hours and
-            5–10 support emails per cycle now take minutes. Ten spreadsheets replaced by a single auditable
-            system. That's the gap I close: between what a business needs and what actually runs in production.
+            end users and administrators after launch. It started by replacing an enrollment process that took hours and
+            5–10 support emails per cycle. It now also runs billing, commissions, group quoting, and carrier
+            data feeds from one auditable system. That's the gap I close: between what a business needs and what actually runs in production.
           </p>
           <p class="mt-4 text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
             I'm looking for senior IC roles where AI engineering, backend systems, and infrastructure intersect —
             where I can own technical direction, work closely with stakeholders, and ship systems that stay
-            running. Remote. Companies building production AI — not vaporware.
+            running. Remote. Companies building production AI — not vaporware. AI hardware, agent-OS, and inference-runtime
+            teams can also bring me in for
+            <NuxtLink to="/services/local-ai-infrastructure" class="text-sky-500 hover:text-sky-400 font-medium transition-colors">research interviews, advisory, or contract work on local AI infrastructure</NuxtLink>.
           </p>
 
           <!-- Socials + Resume -->
@@ -258,14 +273,14 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700"></span>
                 </div>
-                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">verses.indexed</span>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-1">versehub.workflow</span>
               </div>
               <div class="px-4 py-3">
                 <p class="text-[10px] uppercase tracking-widest text-purple-500 font-semibold mb-2 transition-colors duration-200 group-hover/verses:text-purple-600 dark:group-hover/verses:text-purple-400">Bible Logic</p>
-                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">37K+</div>
-                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Verses Indexed</div>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">4-step</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Verified RAG Workflow</div>
                 <div class="flex flex-wrap gap-1.5">
-                  <span v-for="t in ['RAG', 'Weaviate', 'Search']" :key="t"
+                  <span v-for="t in ['Temporal', 'Weaviate', 'Verify']" :key="t"
                     class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-purple-500/10 hover:border-purple-500/40 hover:text-purple-600 dark:hover:text-purple-400">
                     {{ t }}
                   </span>
@@ -285,10 +300,10 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
               </div>
               <div class="px-4 py-3">
                 <p class="text-[10px] uppercase tracking-widest text-sky-500 font-semibold mb-2 transition-colors duration-200 group-hover/models:text-sky-600 dark:group-hover/models:text-sky-400">AI Models</p>
-                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">5</div>
-                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">In Production</div>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">3</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Jetson AI Nodes</div>
                 <div class="flex flex-wrap gap-1.5">
-                  <span v-for="t in ['Llama', 'OpenAI', 'Whisper']" :key="t"
+                  <span v-for="t in ['Llama 3.2', 'Kokoro', 'Whisper']" :key="t"
                     class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-600 dark:hover:text-sky-400">
                     {{ t }}
                   </span>
@@ -308,10 +323,10 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
               </div>
               <div class="px-4 py-3">
                 <p class="text-[10px] uppercase tracking-widest text-emerald-500 font-semibold mb-2 transition-colors duration-200 group-hover/k8s:text-emerald-600 dark:group-hover/k8s:text-emerald-400">Cluster</p>
-                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">K8s</div>
-                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Self-Hosted</div>
+                <div class="text-3xl font-bold text-slate-900 dark:text-white leading-none mb-1">7</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Self-Hosted K3s Nodes</div>
                 <div class="flex flex-wrap gap-1.5">
-                  <span v-for="t in ['k3s', 'ARM64', 'Pi 5']" :key="t"
+                  <span v-for="t in ['4× Pi', '3× Jetson', 'k3s']" :key="t"
                     class="text-[10px] px-2 py-0.5 rounded border bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700/50 cursor-default transition-all duration-150 hover:bg-emerald-500/10 hover:border-emerald-500/40 hover:text-emerald-600 dark:hover:text-emerald-400">
                     {{ t }}
                   </span>
@@ -357,29 +372,35 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
             v-for="f in focuses"
             :key="f.title"
             :to="f.link"
-            class="group flex flex-col rounded-2xl p-5 border
+            class="group flex flex-col overflow-hidden rounded-2xl p-5 border
                    border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60
                    hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5
                    transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border mb-4"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': f.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       f.color === 'sky',
-                'bg-emerald-500/10 border-emerald-500/20': f.color === 'emerald',
-                'bg-amber-500/10 border-amber-500/20':   f.color === 'amber',
-              }"
-            >
-              <Icon :name="f.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': f.color === 'purple',
-                  'text-sky-400':    f.color === 'sky',
-                  'text-emerald-400':f.color === 'emerald',
-                  'text-amber-400':  f.color === 'amber',
-                }"
-              />
+            <div class="relative -mx-5 -mt-5 mb-4 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="f.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div
+                  class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                  :class="{
+                    'bg-purple-500/10 border-purple-500/20': f.color === 'purple',
+                    'bg-sky-500/10 border-sky-500/20':       f.color === 'sky',
+                    'bg-emerald-500/10 border-emerald-500/20': f.color === 'emerald',
+                    'bg-amber-500/10 border-amber-500/20':   f.color === 'amber',
+                  }"
+                >
+                  <Icon :name="f.icon" class="text-xl"
+                    :class="{
+                      'text-purple-400': f.color === 'purple',
+                      'text-sky-400':    f.color === 'sky',
+                      'text-emerald-400':f.color === 'emerald',
+                      'text-amber-400':  f.color === 'amber',
+                    }"
+                  />
+                </div>
+              </div>
             </div>
             <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
               {{ f.title }}
@@ -552,7 +573,8 @@ const { data: projects } = await useFetch('/api/projects-list', { key: 'about-pr
 
       <!-- CTA -->
       <section>
-        <div class="rounded-2xl p-8 border border-sky-500/20 bg-sky-500/5 text-center">
+        <div class="relative isolate overflow-hidden rounded-2xl p-8 border border-sky-500/20 bg-sky-500/5 text-center">
+          <HeroBackdrop lazy src="/img/cards/cta-hire.jpg" side="full" />
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-medium">
             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
             Available for new opportunities

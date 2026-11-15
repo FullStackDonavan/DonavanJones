@@ -12,7 +12,7 @@ useSeoMeta({
   ogTitle: 'Insights — Donavan Jones',
   ogDescription: 'Practical articles for Lakeland and Central Florida businesses on AI automation, custom software, and hiring developers.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/insights.jpg`,
   ogUrl: `${_SITE}/insights/overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Insights — Donavan Jones',
@@ -70,7 +70,8 @@ function formatDate(dateStr: string): string {
     <div class="w-full">
 
       <!-- ── HERO ───────────────────────────────────────────────────── -->
-      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <HeroBackdrop src="/img/heroes/insights.jpg" side="full" />
         <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
 
           <!-- Label -->

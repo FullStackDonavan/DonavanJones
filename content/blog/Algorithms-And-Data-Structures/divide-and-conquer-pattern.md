@@ -2,7 +2,7 @@
 title: "Divide And Conquer Pattern"
 description: "Understanding the Divide and Conquer pattern in JavaScript — how it splits problems into subproblems, with complexity analysis and practical examples."
 date: 2025-08-21
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: divide-and-conquer-pattern
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/divide-and-conquer-pattern.jpg
 ---
 
 # Divide And Conquer Pattern
@@ -19,7 +20,7 @@ The Divide And Conquer pattern is a problem-solving approach where a large probl
 
 This pattern is commonly used in efficient algorithms like binary search, merge sort, and quicksort. Instead of looping through every value one by one, the algorithm repeatedly reduces the size of the problem, which often improves time complexity significantly.
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -120,6 +121,8 @@ Divide And Conquer is heavily used in:
 - AI and machine learning algorithms
 - Distributed systems and parallel computing
 
+A concrete backend example: splitting a multi-page document into independent per-page jobs, processing them in parallel, and reassembling the result is divide and conquer applied to an [OCR pipeline](/blog/backendengineering/10-ocr-pipelines).
+
 ## Conclusion
 
 The Divide And Conquer pattern is one of the most important algorithmic strategies in software engineering. By repeatedly splitting problems into smaller pieces, developers can build solutions that are significantly faster and more scalable than brute-force approaches.
@@ -178,6 +181,13 @@ links:
     description: "The formal notation for expressing algorithm complexity — required for analyzing the performance gains divide-and-conquer provides over brute-force approaches."
 ---
 ::
+
+## Related reading
+
+- [Binary Search](/blog/algorithms-and-data-structures/binary-search) — previous in the series: the simplest divide and conquer algorithm
+- [Recursion](/blog/algorithms-and-data-structures/recursion) — next in the series: the mechanism most divide and conquer code uses
+- [OCR Pipelines](/blog/backendengineering/10-ocr-pipelines) — split, process in parallel, recombine in a real service
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

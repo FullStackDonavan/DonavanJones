@@ -7,6 +7,9 @@ const _seoConfig = useRuntimeConfig();
 const _SITE = (_seoConfig.public.appDomain as string) || "https://donavanjones.com";
 
 const categoryName = computed(() => route.params.name as string);
+// Generated cover art exists only for the nine blog categories (scripts/image-subjects.json).
+const COVERED = new Set(['ai-engineering', 'algorithms', 'backend-engineering', 'infrastructure-engineering', 'local-vibe-coding', 'agentic-ai-systems', 'ai-homelab-engineering', 'ai-cost-optimization', 'versehub-engineering']);
+const categoryCover = computed(() => (COVERED.has(categoryName.value) ? `/img/categories/${categoryName.value}.jpg` : null));
 
 // ── Hub content + featured articles (SSR via server API) ─────────────────────
 const { data: categoryData } = await useFetch(
@@ -22,7 +25,7 @@ const featuredWithData = computed(() => {
   return hub.value.featuredArticles
     .map((f: any) => {
       const doc = docs.find((d: any) => d._path === f.path);
-      return doc ? { ...f, title: doc.title, description: doc.description } : null;
+      return doc ? { ...f, title: doc.title, description: doc.description, excerptImage: doc.excerptImage } : null;
     })
     .filter(Boolean);
 });
@@ -53,7 +56,8 @@ useSeoMeta({
     hub.value?.tagline ||
     `Browse ${totalArticlesCount.value ?? 0} ${categoryName.value} articles on donavanjones.com.`,
   ogType: "website",
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: () => `${_SITE}${categoryCover.value || '/img/logo.png'}`,
+  twitterImage: () => `${_SITE}${categoryCover.value || '/img/logo.png'}`,
   ogUrl: () => `${_SITE}${route.path}`,
   twitterCard: "summary_large_image",
   twitterTitle: () => hub.value?.title || `${categoryName.value} — Donavan Jones`,
@@ -141,7 +145,8 @@ const phaseColors = [
     <div class="w-full">
 
       <!-- ── HERO ─────────────────────────────────────────────────────────── -->
-      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <HeroBackdrop v-if="categoryCover" :src="categoryCover" side="full" />
         <div class="max-w-4xl mx-auto px-6 py-16 sm:py-20 text-center">
 
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6
@@ -212,12 +217,24 @@ const phaseColors = [
               v-for="(article, i) in featuredWithData"
               :key="article.path"
               :to="article.path"
-              class="group flex flex-col rounded-2xl border p-6
+              class="group flex flex-col rounded-2xl border p-6 overflow-hidden
                      bg-white dark:bg-slate-900/60
                      border-slate-200 dark:border-slate-700/50
                      hover:border-sky-500/40 dark:hover:border-sky-500/30
                      transition-all duration-200 hover:shadow-lg hover:shadow-sky-500/5"
             >
+              <!-- Post art, bled to the card edges -->
+              <div v-if="article.excerptImage" class="-mx-6 -mt-6 mb-5 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img
+                  :src="article.excerptImage"
+                  alt=""
+                  width="600"
+                  height="315"
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
               <!-- Label badge -->
               <span :class="[
                 'inline-flex self-start items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full border mb-4',

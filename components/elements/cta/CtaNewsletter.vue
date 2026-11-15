@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ctaImage } from '~/utils/ctaImage'
 const props = withDefaults(defineProps<{
   buttonText: string
   supportingCopy: string
@@ -30,9 +31,10 @@ async function submit() {
 
 <template>
   <div
-    class="flex flex-col h-full rounded-2xl border border-violet-500/20 dark:border-violet-500/20
+    class="relative isolate overflow-hidden flex flex-col h-full rounded-2xl border border-violet-500/20 dark:border-violet-500/20
            bg-violet-50/60 dark:bg-violet-500/5 p-5 sm:p-6"
   >
+    <HeroBackdrop lazy :src="ctaImage('/newsletter')" side="full" />
     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4
                 bg-violet-500/10 border border-violet-500/20">
       <Icon name="mdi:email-outline" class="text-xl text-violet-400" />

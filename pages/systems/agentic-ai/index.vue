@@ -3,17 +3,38 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Agentic AI Systems — Donavan Jones',
-  description: 'Production agentic AI patterns — planning agents, durable multi-agent orchestration with Temporal and Kafka, memory architecture, and independent verification before output ships.',
+  description: 'Agentic AI systems engineering — planning agents, durable orchestration with Temporal, memory architecture, and verifying agent output against evidence before it ships.',
   ogTitle: 'Agentic AI Systems — Donavan Jones',
-  ogDescription: 'Agent orchestration patterns — planning, memory, Temporal/Kafka-based durable workflows, and verification agents in production.',
+  ogDescription: 'Agent orchestration patterns — planning, memory, Temporal-based durable workflows, and verification agents in production.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/systems-agentic-ai.jpg`,
   ogUrl: `${_SITE}/systems/agentic-ai`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Agentic AI Systems — Donavan Jones',
   twitterDescription: 'Production agent orchestration, memory, and verification patterns.',
   canonical: `${_SITE}/systems/agentic-ai`,
 })
+
+// Curated entry points into this topic cluster (all URLs verified against published posts)
+const startHere = [
+  { to: '/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems', title: 'Single agent vs multi-agent systems', desc: 'When one well-designed agent is enough, and when it is not.' },
+  { to: '/blog/agentic-ai-systems/02-planning-agents-explained', title: 'Planning agents explained', desc: 'Task decomposition and replanning instead of purely reactive loops.' },
+  { to: '/blog/agentic-ai-systems/04-agent-memory-architectures', title: 'Agent memory architectures', desc: 'Working, session, and long-term memory scopes.' },
+  { to: '/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag', title: 'Teaching agents about your project with RAG', desc: 'Grounding an agent in your own code and documents.' },
+  { to: '/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal', title: 'Multi-agent workflows with Temporal', desc: 'Durable, checkpointed orchestration for agent steps.' },
+  { to: '/blog/agentic-ai-systems/09-long-running-agent-workflows', title: 'Long-running agent workflows', desc: 'Keeping agents alive across restarts, deploys, and timeouts.' },
+  { to: '/blog/agentic-ai-systems/11-verification-agents-in-production', title: 'Verification agents in production', desc: 'Checking agent output against evidence before it ships.' },
+  { to: '/blog/versehub-engineering/07-temporal-workflows-in-production', title: 'Temporal workflows in production (VerseHub)', desc: 'The real bugs: task timeouts, workflow fan-out, and streaming replay.' },
+]
+
+const relatedLinks = [
+  { to: '/systems/ai', label: 'AI Systems Engineering' },
+  { to: '/systems/backend', label: 'Backend Systems' },
+  { to: '/systems/ai-homelab', label: 'AI Homelab Engineering' },
+  { to: '/projects/versehub', label: 'VerseHub case study' },
+  { to: '/projects/kingdom-tools', label: 'Kingdom Tools platform' },
+  { to: '/services/local-ai-infrastructure', label: 'Local AI infrastructure consulting & research' },
+]
 
 const principles = [
   { icon: 'mdi:compass',        color: 'sky',     text: 'Default to a single well-designed agent; add agents only for a proven, specific reason' },
@@ -25,25 +46,25 @@ const principles = [
 const areas = [
   {
     icon: 'mdi:clipboard-text', color: 'sky',
-    title: 'Planning',
+    title: 'Planning', image: '/img/cards/agentic-planning.jpg',
     desc: 'Task decomposition into ordered, revisable steps rather than pure reactive execution.',
     tags: ['Decomposition', 'Replanning', 'ReAct'],
   },
   {
     icon: 'mdi:memory', color: 'purple',
-    title: 'Memory',
+    title: 'Memory', image: '/img/cards/agentic-memory.jpg',
     desc: 'Working, session, and long-term memory scopes, each with its own storage and promotion path.',
     tags: ['Redis', 'Vector DB', 'Promotion'],
   },
   {
     icon: 'mdi:sitemap', color: 'amber',
-    title: 'Orchestration',
-    desc: 'Durable, checkpointed multi-step workflows (Temporal) and event-driven agents (Kafka).',
-    tags: ['Temporal', 'Kafka', 'Retries'],
+    title: 'Orchestration', image: '/img/cards/agentic-orchestration.jpg',
+    desc: 'Durable, checkpointed multi-step workflows on Temporal, with timeouts and retries set deliberately.',
+    tags: ['Temporal', 'Timeouts', 'Retries'],
   },
   {
     icon: 'mdi:shield-check', color: 'emerald',
-    title: 'Verification',
+    title: 'Verification', image: '/img/cards/agentic-verification.jpg',
     desc: 'A separate agent checking output against explicit criteria before it reaches a user.',
     tags: ['Rubrics', 'Bounded Retry', 'Confirmation'],
   },
@@ -57,14 +78,14 @@ const failures = [
 ]
 
 const productionMetrics = [
-  { value: '25',    label: 'Max concurrent agent threads' },
+  { value: '4',     label: 'Workflow stages: retrieve → score → generate → verify' },
+  { value: '~21',   label: 'tok/s fast draft (llama3.2:3b on a Jetson)' },
   { value: '3',     label: 'Distinct memory scopes' },
-  { value: '10',    label: 'Default agent-loop iteration cap' },
-  { value: '2',     label: 'Orchestration backbones (Temporal + Kafka)' },
+  { value: '1',     label: 'Orchestration backbone (Temporal)' },
 ]
 
 const stack = [
-  'Temporal', 'Apache Kafka', 'Redis', 'Weaviate', 'Tool Calling',
+  'Temporal', 'Redis', 'Weaviate', 'Tool Calling',
   'RAG', 'Verification Agents', 'Python', 'PostgreSQL',
 ]
 
@@ -201,34 +222,41 @@ useHead({
 
       </div>
 
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/agentic-areas.jpg" side="full" />
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Areas</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="area in areas"
             :key="area.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 flex flex-col gap-3
                    hover:border-sky-500/40 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
-                'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
-                'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
-                'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
-              }"
-            >
-              <Icon :name="area.icon" class="text-xl"
-                :class="{
-                  'text-sky-400':    area.color === 'sky',
-                  'text-purple-400': area.color === 'purple',
-                  'text-amber-400':  area.color === 'amber',
-                  'text-emerald-400':area.color === 'emerald',
-                }"
-              />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="area.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                    :class="{
+                      'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
+                      'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
+                      'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
+                      'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
+                    }"
+                  >
+                    <Icon :name="area.icon" class="text-xl"
+                      :class="{
+                        'text-sky-400':    area.color === 'sky',
+                        'text-purple-400': area.color === 'purple',
+                        'text-amber-400':  area.color === 'amber',
+                        'text-emerald-400':area.color === 'emerald',
+                      }"
+                    />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ area.title }}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ area.desc }}</p>
@@ -246,7 +274,8 @@ useHead({
         </div>
       </section>
 
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/agentic-metrics.jpg" side="full" />
         <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-6">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
@@ -268,9 +297,9 @@ useHead({
             </div>
           </div>
           <p class="mt-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Multi-step and multi-agent workflows run on Temporal for durability, with Kafka
-            handling event-driven triggers — every meaningful step checkpointed and every
-            output independently verified before it's trusted.
+            In VerseHub, a fast draft comes from llama3.2:3b on a Jetson, then a Temporal ScholarWorkflow on the
+            Pi workers retrieves evidence from Weaviate, scores it, regenerates, and verifies every citation against
+            the retrieved passages. Silent retrieval failures now raise instead of producing confident, evidence-free answers.
           </p>
         </div>
       </section>
@@ -293,21 +322,64 @@ useHead({
         </div>
       </section>
 
+      <!-- START HERE -->
+      <section class="mb-10">
+        <JetsonLeaderboardCard metric="tools" title="Which small models can drive an agent on edge hardware?" blurb="Agents live or die on tool calling. These are the most reliable tool callers I measured on an 8 GB Jetson Orin Nano Super." />
+      </section>
+
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/agentic-start.jpg" side="full" />
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Start Here: Key Agentic AI Articles</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 max-w-3xl leading-relaxed">The core reading path through agent design, memory, durable orchestration, and verification.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <NuxtLink
+            v-for="post in startHere" :key="post.to" :to="post.to"
+            class="group flex items-start gap-3 rounded-xl p-3 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200"
+          >
+            <div class="w-24 shrink-0 aspect-[3/2] overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+              <img :src="`/img${post.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">{{ post.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ post.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- RELATED SYSTEMS & PROJECTS -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-4">Related Systems &amp; Projects</h2>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="r in relatedLinks" :key="r.to" :to="r.to"
+            class="px-3 py-1.5 rounded-lg text-sm border
+                   bg-slate-100 dark:bg-slate-800
+                   text-slate-600 dark:text-slate-300
+                   border-slate-200 dark:border-slate-700/50
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+          >{{ r.label }}</NuxtLink>
+        </div>
+      </section>
+
       <section class="mb-10">
         <NuxtLink
           to="/categories/agentic-ai-systems"
-          class="flex items-center justify-between gap-6 rounded-2xl p-6
+          class="relative isolate overflow-hidden flex items-center justify-between gap-6 rounded-2xl p-6
                  border border-sky-500/20 bg-sky-500/5
                  hover:border-sky-500/40 hover:bg-sky-500/10
                  transition-all duration-200 group"
         >
+          <HeroBackdrop lazy src="/img/categories/agentic-ai-systems.jpg" />
           <div>
             <p class="text-xs font-medium text-sky-500 uppercase tracking-wider mb-1">Knowledge Base</p>
             <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">
               Explore the Agentic AI Systems Articles
             </h2>
             <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              11 articles covering planning, memory, Temporal/Kafka orchestration, and verification agents in production.
+              11 articles covering planning, memory, Temporal orchestration, event-driven agents, and verification agents in production.
             </p>
           </div>
           <Icon name="mdi:arrow-right" class="flex-shrink-0 text-2xl text-sky-500 group-hover:translate-x-1 transition-transform duration-200" />

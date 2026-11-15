@@ -2,7 +2,7 @@
 title: "Joining Worker Nodes"
 description: "How to join worker nodes to an existing K3s cluster on Raspberry Pi — token-based authentication, node labeling, and verifying node readiness."
 date: 2025-10-06
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
@@ -10,13 +10,16 @@ tags:
 draft: false
 slug: joining-worker-nodes
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/06-joining-worker-nodes.jpg
 ---
 
 # Joining Worker Nodes
 
-In a distributed Kubernetes setup like a K3s cluster running on a Raspberry Pi-based homelab rack, worker nodes are what give your system real scale and flexibility. In your setup, where ARM64 devices handle lightweight workloads alongside more powerful nodes in your rack, adding workers is a key step in expanding capacity without overcomplicating the control plane. This guide walks through how to safely and cleanly join additional worker nodes to your existing K3s cluster so they can immediately begin running workloads, pods, and services.
+To join a worker node to K3s, read the token from `/var/lib/rancher/k3s/server/node-token` on the server, then run the K3s install script on the new node with `K3S_URL` pointing at the server's port 6443 and `K3S_TOKEN` set to that token. The node registers itself as an agent and shows up in `kubectl get nodes` once it's Ready. I've joined three Raspberry Pi workers and three Jetson Orin Nano Super GPU workers to my cluster this way.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+In a distributed Kubernetes setup like a K3s cluster running on a Raspberry Pi-based homelab rack, worker nodes are what give your system real scale and flexibility. In my setup, where ARM64 Pis handle lightweight workloads alongside ARM64 Jetson GPU boards, adding workers is a key step in expanding capacity without overcomplicating the control plane. This guide walks through how to safely and cleanly join additional worker nodes to your existing K3s cluster so they can immediately begin running workloads, pods, and services.
+
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -44,6 +47,8 @@ kubectl get nodes
 ```
 At that point, the new worker becomes part of your homelab compute pool, ready to run workloads from your CI/CD pipelines, Gitea runners, or any of your AI and infrastructure services deployed across the rack.
 
+Before the join, make sure the server has a fixed address (see [installing the K3s control plane](/blog/infrastructureengineering/05-installing-k3s-control-plane)). After it, label the node so workloads land where they belong. Labels also have side effects: a single ServiceLB node label once [broke every LoadBalancer service in my cluster](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers) with a port 8080 clash, so I double-check labels on every new node now.
+
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
@@ -68,7 +73,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Adding worker nodes to your K3s cluster is one of the simplest yet most powerful ways to scale your homelab without introducing unnecessary complexity. In your rack setup, this pattern lets you grow compute capacity incrementally—whether you're distributing AI workloads, running CI/CD jobs through Gitea, or hosting backend services across multiple Raspberry Pis. With each new node, your cluster becomes more resilient, more flexible, and better suited for the kind of modular infrastructure you're building.
+Adding worker nodes to your K3s cluster is one of the simplest yet most powerful ways to scale your homelab without introducing unnecessary complexity. In a rack setup, this pattern lets you grow compute capacity incrementally—whether you're distributing AI workloads, running CI/CD jobs through Gitea, or hosting backend services across multiple Raspberry Pis. With each new node, your cluster becomes more resilient, more flexible, and better suited for the kind of modular infrastructure you're building.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -123,5 +128,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Installing K3s Control Plane](/blog/infrastructureengineering/05-installing-k3s-control-plane) — previous in the series
+- [Storage Setup](/blog/infrastructureengineering/07-storage-setup) — next in the series
+- [Node Roles](/blog/infrastructureengineering/27-node-roles) — how each Pi and Jetson node is assigned a role
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Using Three Jetson Orin Nano Supers as an AI Cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) — joining Jetson Orin boards as GPU workers
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

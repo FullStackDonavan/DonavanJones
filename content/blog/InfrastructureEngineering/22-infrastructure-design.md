@@ -2,7 +2,7 @@
 title: "Infrastructure Design"
 description: "Core principles for designing robust self-hosted infrastructure — separation of concerns, redundancy planning, and lessons from building a production homelab."
 date: 2025-11-17
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - design
@@ -10,17 +10,20 @@ tags:
 draft: false
 slug: infrastructure-design
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/22-infrastructure-design.jpg
 ---
 
 # Infrastructure Design
+
+Good self-hosted infrastructure design comes down to a few principles: give every component one clear job, make deployment automatic so nothing depends on manual steps, put each workload on the cheapest hardware that can run it, and make the system observable before it gets complicated. Those are the rules my homelab follows, from the Pi control plane to the Jetson GPU workers.
 
 ## Introduction
 
 Infrastructure design is not just about servers, clusters, or networking—it’s about building systems that can evolve without breaking under pressure. In my case, I approach infrastructure as a living system that supports both software development and real-world deployment needs: AI workloads, web applications, CI/CD pipelines, and experimental services.
 
-My current setup reflects this philosophy. I run a homelab rack powered by a K3s Kubernetes cluster on multiple nodes, combined with a separate development machine running an RTX 3090 for local model execution and experimentation. I also use Gitea as the central Git system, paired with self-hosted CI runners that act as the glue between code and deployment. This separation of concerns—compute, orchestration, and development—lets me iterate quickly without sacrificing stability.
+My current setup reflects this philosophy. I run a homelab rack powered by a seven-node K3s Kubernetes cluster (four Raspberry Pis and three Jetson Orin GPU workers), combined with a separate development machine running an RTX 3090 for large-model execution and experimentation. I also use Gitea as the central Git system, paired with self-hosted CI runners that act as the glue between code and deployment. This separation of concerns—compute, orchestration, and development—lets me iterate quickly without sacrificing stability.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -37,7 +40,8 @@ destinationUrl: "/categories/infrastructure-engineering"
 ### 1. Separation of Concerns
 Each part of the system has a defined role:
 - Kubernetes (K3s) handles orchestration and service deployment
-- The 3090 development machine handles AI workloads and local inference
+- The Jetson GPU workers handle in-cluster inference, one job per board (image generation, speech, a small LLM)
+- The 3090 development machine handles large models, embeddings, and training
 - CI runners handle builds, tests, and deployment automation
 - Gitea acts as the source of truth for all code and pipelines
 
@@ -52,15 +56,15 @@ Gitea combined with self-hosted runners is what connects everything. When I push
 - Tests run automatically
 - Deployments are pushed into the K3s cluster
 
-This removes manual deployment friction and enforces consistency.
+This removes manual deployment friction and enforces consistency. The details are in the [Gitea runners pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline) post.
 
 ### 4. Hybrid Compute Model
 Not everything belongs in Kubernetes. My RTX 3090 machine runs:
-- AI model training
-- Inference services inside Docker containers
+- AI model training (LoRA)
+- Large-model inference, like Ornith-1.0-35B in Ollama, plus the embedding service in Docker
 - Experimental workloads that don’t need orchestration overhead
 
-Kubernetes handles stable services; the GPU box handles heavy computation.
+Kubernetes handles stable services and small-model inference on the Jetsons; the GPU box handles heavy computation. How those two GPU tiers cooperate is in [RTX 3090 + Jetson Orin: a hybrid AI architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture).
 
 ---
 
@@ -72,6 +76,11 @@ At a high level, my infrastructure looks like this:
   - Runs production-like services
   - Hosts APIs, backend services, and supporting infrastructure
   - Handles service discovery and networking
+
+- **Jetson GPU Workers (in the K3s cluster)**
+  - gpu-worker-1: image generation and a shelf of small models
+  - gpu-worker-2: speech (Kokoro TTS + Whisper STT)
+  - gpu-worker-3: llama3.2:3b, always loaded
 
 - **Development Machine (RTX 3090)**
   - Docker-based AI services
@@ -109,7 +118,7 @@ destinationUrl: "/systems/infrastructure"
 The goal of this infrastructure is not maximum scale—it’s maximum learning velocity with production-grade patterns.
 
 I prioritize:
-- Observability over complexity
+- Observability over complexity (Prometheus, Grafana, and Loki cover every node — see [monitoring and troubleshooting](/blog/infrastructureengineering/10-monitoring-and-troubleshooting))
 - Reproducibility over manual configuration
 - Automation over direct intervention
 - Modular services over monoliths
@@ -197,5 +206,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Gitea Runners Pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline) — previous in the series
+- [Installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes) — next in the series
+- [Systems Thinking](/blog/infrastructureengineering/35-systems-thinking) — the systems-thinking approach behind these principles
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Kingdom Tools](/projects/kingdom-tools) — the internal control plane I built to provision services and manage models across this cluster
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

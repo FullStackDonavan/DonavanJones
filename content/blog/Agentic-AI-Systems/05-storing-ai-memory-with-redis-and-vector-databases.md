@@ -1,23 +1,24 @@
 ---
 title: "Storing AI Memory with Redis and Vector Databases"
-description: "A concrete implementation for agent memory storage — Redis for fast session state, a vector database for semantic long-term recall."
-date: 2026-05-11
-lastUpdated: "2026-06-09"
+description: "Storing AI agent memory with Redis and a vector database: Redis with TTLs for fast session state, vector search for long-term recall, and promotion between."
+date: 2026-09-01
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - redis
   - vector-databases
-draft: true
+draft: false
 slug: storing-ai-memory-with-redis-and-vector-databases
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases.jpg
 ---
 
 # Storing AI Memory with Redis and Vector Databases
 
-Following the memory-scope framework from the previous article, here's the concrete implementation: Redis for anything that needs fast, structured access within a session, and a vector database for anything that needs semantic recall across time.
+Use Redis for session memory that an agent reads and writes on nearly every step, and a vector database for long-term memories that need to be found by meaning. Neither store does the other's job well, so a production agent uses both, with a promotion step in between. This is the concrete implementation of the scopes from [Agent Memory Architectures](/blog/agentic-ai-systems/04-agent-memory-architectures).
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -50,9 +51,11 @@ def get_session_context(session_id, last_n=20):
 
 The TTL matters — session memory that never expires slowly turns into an unmanaged long-term store with none of the deliberate curation that long-term memory needs.
 
+This is the split I run at home: Redis lives on one of the Raspberry Pi workers in my K3s cluster (it also backs VerseHub's LLM response cache), and Weaviate holds the vectors, embedded with all-MiniLM-L6-v2. The [VerseHub Redis memory layer](/blog/versehub-engineering/05-redis-memory-layer-design) post covers that side in more detail.
+
 ## Vector Storage for Long-Term Recall
 
-Long-term memories need to be findable by meaning, not just by exact key — "what did I learn about this user's deployment setup" should surface a memory stored as "user runs k3s on ARM64 nodes" even if the query doesn't use those exact words.
+Long-term memories need to be findable by meaning ([vector search](/blog/backendengineering/05-vector-search)), not just by exact key — "what did I learn about this user's deployment setup" should surface a memory stored as "user runs k3s on ARM64 nodes" even if the query doesn't use those exact words.
 
 ```python
 def store_long_term_memory(content, metadata):
@@ -96,7 +99,7 @@ The bridge between the two is the memory-promotion step: after a session ends, o
   ---
   buttonText: "Read: Building an AI Copilot That Understands Your Entire Codebase"
   supportingCopy: "Memory storage applied to a real production use case."
-  destinationUrl: "/blog/agentic-ai-systems/building-an-ai-copilot-that-understands-your-codebase"
+  destinationUrl: "/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase"
   ---
   :::
 
@@ -124,6 +127,13 @@ links:
     description: "Background on vector similarity search used for long-term semantic memory recall."
 ---
 ::
+
+## Related reading
+
+- [Agent Memory Architectures](/blog/agentic-ai-systems/04-agent-memory-architectures) — previous: the three memory scopes this implements
+- [Building an AI Copilot That Understands Your Entire Codebase](/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase) — next: putting retrieval and memory together in a codebase copilot
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage) — the rest of the storage layer in my homelab
 
 ---
 

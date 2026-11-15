@@ -9,9 +9,19 @@ const { data: seoDoc } = await useAsyncData(
   () => queryContent(route.path).findOne()
 )
 
-const pageImage = computed(() => seoDoc.value?.excerptImage || `${SITE}/img/logo.png`)
+const _abs = useAbsoluteUrl()
+const pageImage = computed(() => _abs(seoDoc.value?.excerptImage) || `${SITE}/img/logo.png`)
 const pageUrl   = computed(() => `${SITE}${route.path}`)
 const personId  = `${SITE}/#person`
+
+// dateModified must never precede datePublished
+const modifiedDate = computed(() => {
+  const d = seoDoc.value?.date
+  const u = seoDoc.value?.lastUpdated
+  if (!u) return d
+  if (!d) return u
+  return new Date(u) > new Date(d) ? u : d
+})
 const siteId    = `${SITE}/#website`
 
 useSeoMeta({
@@ -30,9 +40,8 @@ useSeoMeta({
   // Article-specific Open Graph
   articlePublishedTime: () => seoDoc.value?.date
     ? new Date(seoDoc.value.date).toISOString() : undefined,
-  articleModifiedTime: () => seoDoc.value?.lastUpdated
-    ? new Date(seoDoc.value.lastUpdated).toISOString()
-    : seoDoc.value?.date ? new Date(seoDoc.value.date).toISOString() : undefined,
+  articleModifiedTime: () => modifiedDate.value
+    ? new Date(modifiedDate.value).toISOString() : undefined,
   articleAuthor:  `${SITE}/about`,
   articleSection: () => seoDoc.value?.category || undefined,
 })
@@ -57,7 +66,7 @@ useHead({
           inLanguage: 'en-US',
           image: pageImage.value,
           datePublished: iso(doc.date),
-          dateModified: iso(doc.lastUpdated) ?? iso(doc.date),
+          dateModified: iso(modifiedDate.value),
           articleSection: doc.category || undefined,
           keywords: Array.isArray(doc.tags) ? doc.tags.join(', ') : undefined,
           author: {
@@ -115,10 +124,14 @@ useHead({
         name: 'Donavan Jones',
         url: SITE,
         jobTitle: 'AI Systems Engineer & Platform Builder',
+        description: 'Full-stack and AI systems engineer who builds and operates a self-hosted local AI cluster (K3s on Raspberry Pi and NVIDIA Jetson Orin Nano Super, plus an RTX 3090) running RAG, voice and agent workloads.',
+        address: { '@type': 'PostalAddress', addressLocality: 'Lakeland', addressRegion: 'FL', addressCountry: 'US' },
         knowsAbout: [
-          'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'PostgreSQL',
-          'Redis', 'Kubernetes', 'RAG Pipelines', 'LLM Integration',
-          'WebRTC', 'BullMQ', 'Weaviate',
+          'Local LLM inference', 'Edge AI', 'NVIDIA Jetson Orin', 'Ollama',
+          'AI agent orchestration', 'Temporal', 'Retrieval-augmented generation',
+          'LLM output verification', 'Kubernetes', 'K3s', 'Prometheus', 'Grafana', 'Loki',
+          'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'Python', 'FastAPI',
+          'PostgreSQL', 'Redis', 'Weaviate', 'MinIO',
         ],
         sameAs: [
           'https://github.com/FullStackDonavan',
@@ -197,6 +210,18 @@ function isoDate(d: string | undefined) {
 
             <!-- Article header card -->
             <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 overflow-hidden mb-8">
+
+              <!-- Header art (decorative; also the post's og:image) -->
+              <img
+                v-if="seoDoc.excerptImage"
+                :src="seoDoc.excerptImage"
+                alt=""
+                width="1200"
+                height="630"
+                fetchpriority="high"
+                decoding="async"
+                class="block w-full aspect-[2/1] sm:aspect-[3/1] object-cover border-b border-slate-200 dark:border-slate-800"
+              />
 
               <!-- Chrome header -->
               <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">

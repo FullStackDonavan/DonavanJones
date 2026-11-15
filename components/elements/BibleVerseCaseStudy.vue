@@ -113,7 +113,7 @@
 
       <!-- CTA -->
       <NuxtLink
-        to="/projects/bible-verse"
+        to="/projects/versehub"
         class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
                bg-purple-500/10 border border-purple-500/20 text-purple-400
                hover:bg-purple-500/20 hover:border-purple-500/40 transition-all duration-200"
@@ -128,16 +128,16 @@
 
 <script setup lang="ts">
 const stats = [
-  { value: '80%',    label: 'Requests served by local LLM' },
-  { value: '<200ms', label: 'Avg. RAG retrieval latency' },
-  { value: '37K+',   label: 'Documents indexed' },
+  { value: '~21',    label: 'tok/s local draft on a Jetson' },
+  { value: '4',      label: 'Stage Temporal refine workflow' },
+  { value: '0.85s',  label: 'TTS → STT voice round trip' },
   { value: '3',      label: 'Async job queues' },
 ]
 
 const outcomes = [
-  'Reduced inference costs ~70% by routing 80% of requests to self-hosted Llama 3.2; OpenAI API handles only edge cases requiring stronger reasoning.',
-  'RAG retrieval under 200ms average — achieved through hybrid BM25 + vector search in Weaviate, reducing irrelevant context passed to the model.',
-  'Semantic search across 37,000+ verses eliminates the need to know exact references — a natural language query surfaces contextually relevant passages from Bible and Quran in a single retrieval call.',
+  'Answers start fast: a self-hosted llama3.2:3b on a Jetson Orin Nano Super drafts at ~21 tok/s, then a Temporal workflow (retrieve → score → generate → verify) refines it with cited scripture.',
+  'Every cited reference is checked against the evidence actually retrieved from Weaviate; a failed retrieval now raises an error instead of letting the model answer without evidence.',
+  'Semantic search over scripture and Church Fathers collections (all-MiniLM-L6-v2 embeddings) surfaces relevant passages from a natural-language question, no exact reference needed.',
   'Zero request-path blocking on media uploads: FFmpeg transcoding fully decoupled via BullMQ, keeping API response times unaffected by processing load.',
   'Whisper STT pipeline automates speech-to-text transcription for devotional audio — no manual transcription step in the media processing workflow.',
   'Cross-instance WebSocket consistency maintained at scale via Redis pub/sub, eliminating missed messages during peak concurrent sessions.',
@@ -152,7 +152,7 @@ const challenges = [
   },
   {
     icon: 'mdi:brain',
-    text: 'Hybrid Llama / OpenAI routing — local inference for cost, API fallback for quality at the edge',
+    text: 'Two-phase answers — fast local draft on a Jetson, then a durable Temporal refine-and-verify workflow',
     colorClasses: 'bg-sky-500/10 border-sky-500/20 text-sky-400',
   },
   {
@@ -176,6 +176,6 @@ const lessons = [
 const stack = [
   'Nuxt 3', 'TypeScript', 'Nitro', 'PostgreSQL', 'Prisma',
   'Redis', 'BullMQ', 'Weaviate', 'MinIO', 'FFmpeg',
-  'WebRTC', 'WebSockets', 'Llama 3.2', 'OpenAI API', 'Kubernetes',
+  'WebRTC', 'WebSockets', 'Llama 3.2', 'Temporal', 'Kubernetes (K3s)',
 ]
 </script>

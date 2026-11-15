@@ -1,8 +1,8 @@
 ---
 title: "Microsoft AutoGen"
-description: "Introduction to Microsoft AutoGen for local agent systems."
+description: "Microsoft AutoGen explained: the conversational multi-agent model, the v0.4 AgentChat API, where it excels, where it adds friction, and when to use it."
 date: 2026-05-01
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,15 +11,18 @@ tags:
 draft: false
 slug: microsoft-autogen
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/06-microsoft-autogen.jpg
 ---
 
 # Microsoft AutoGen
 
-The previous two articles built up a picture of what agent orchestration and state management look like when implemented from scratch. That custom approach is what this platform uses in production — explicit task graphs, typed pipeline state, deliberate model selection per stage. But it is not the only approach, and understanding the alternatives clarifies why specific design decisions were made.
+Microsoft AutoGen is an open-source framework for multi-agent systems in which agents collaborate by sending each other messages, rather than by following an explicit pipeline. It shines for exploratory, research-style workflows; for production features that need deterministic routing and typed state, a custom orchestrator is usually easier to reason about.
+
+The previous two articles built up a picture of what [agent orchestration](/blog/ai-engineering/04-agent-orchestration) and [state management](/blog/ai-engineering/05-state-management) look like when implemented from scratch. That custom approach is what this platform uses in production — explicit task graphs, typed pipeline state, deliberate model selection per stage. But it is not the only approach, and understanding the alternatives clarifies why specific design decisions were made.
 
 Microsoft AutoGen is one of the most widely used frameworks for multi-agent AI systems. It takes a different philosophy: instead of defining explicit pipelines, agents communicate by conversing. They send messages to each other, respond to requests, and the collective dialogue produces the result. Understanding AutoGen — what it is, what it is good at, and where its model breaks down — is useful context for anyone building AI systems, even those who end up building custom rather than using the framework.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -221,7 +224,7 @@ destinationUrl: "https://versehub.app/register"
 
 Even without using AutoGen in production, studying it clarified some principles that shaped the custom pipeline design:
 
-The GroupChatManager's non-determinism — using a model to decide agent order — made explicit how important deterministic routing is in production. The custom orchestrator's task graph with defined dependencies is a direct response to wanting routing to be code, not model output.
+The GroupChatManager's non-determinism — using a model to decide agent order — made explicit how important deterministic routing is in production. The custom orchestrator's task graph with defined dependencies is a direct response to wanting routing to be code, not model output. Durable workflow engines push that further — see [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal).
 
 AutoGen's conversation model — where all context accumulates in a shared thread — made explicit the value of targeted context propagation. Custom pipelines pass only the relevant subset of state to each stage. This came from seeing what happens when you pass everything.
 
@@ -276,6 +279,14 @@ links:
     description: "Formal definition of a software agent and its properties — the conceptual unit AutoGen's AssistantAgent and UserProxyAgent instantiate."
 ---
 ::
+
+## Related reading
+
+- [State Management](/blog/ai-engineering/05-state-management) — previous in the AI Engineering series
+- [Local Agent Systems](/blog/ai-engineering/07-local-agent-systems) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Single Agent vs Multi-Agent Systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) — when multiple agents are worth the complexity
+- [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) — the deterministic alternative to conversational routing
 
 ---
 

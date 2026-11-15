@@ -21,6 +21,25 @@ const hiddenCount = computed(() =>
 <template>
   <div v-if="category" class="flex flex-col p-5 h-full">
 
+    <!-- Cover art, bled to the card edges (the parent card clips overflow) -->
+    <nuxt-link
+      v-if="category.cover && category.link"
+      :to="category.link"
+      tabindex="-1"
+      aria-hidden="true"
+      class="group -mx-5 -mt-5 mb-4 block aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800"
+    >
+      <img
+        :src="category.cover"
+        alt=""
+        width="600"
+        height="315"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      />
+    </nuxt-link>
+
     <!-- Title -->
     <nuxt-link v-if="category.link" :to="category.link" class="group">
       <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100

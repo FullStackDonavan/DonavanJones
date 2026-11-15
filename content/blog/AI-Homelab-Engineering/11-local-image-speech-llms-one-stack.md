@@ -1,22 +1,23 @@
 ---
 title: "Local Image Generation, Speech, and LLMs in One Stack"
-description: "Running text, image, and speech models on shared local infrastructure — scheduling, VRAM sharing, and pipeline integration."
-date: 2026-03-25
-lastUpdated: "2026-06-09"
+description: "Running local image generation, speech (Kokoro + Whisper), and LLMs in one homelab stack by giving each its own Jetson board, with the RTX 3090 for big models."
+date: 2026-10-29
+lastUpdated: "2026-11-14"
 category: "ai-homelab-engineering"
 tags:
   - ai-homelab-engineering
   - multimodal
-draft: true
+draft: false
 slug: local-image-speech-llms-one-stack
 author: Donavan Jones
+excerptImage: /img/blog/ai-homelab-engineering/11-local-image-speech-llms-one-stack.jpg
 ---
 
 # Local Image Generation, Speech, and LLMs in One Stack
 
-Text, image generation, and speech models have different resource profiles and different usage patterns, and running all three on shared hardware without one starving the others took more coordination than just installing all three and hoping for the best.
+You can run local image generation, speech, and LLMs in one stack without them starving each other — the trick is to stop sharing. In my homelab each modality gets its own Jetson Orin Nano Super (image generation, speech, and a pinned 3B LLM), and the RTX 3090 handles the one model too big for any of them. Getting there took more coordination than installing all three on one GPU and hoping for the best.
 
-*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering).*
+*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering). For the full system map, see the [AI homelab architecture hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -28,35 +29,35 @@ destinationUrl: "/categories/ai-homelab-engineering"
 
 ## The Three Workload Profiles
 
-**LLM inference (text)** — the most latency-sensitive, especially for the interactive coding agent covered elsewhere on this site. Wants priority access to the RTX 3090 during active sessions.
+**LLM inference (text)** — the most latency-sensitive. For live features like VerseHub's draft answers, llama3.2:3b stays pinned on gpu-worker-3 (20.8 tok/s measured). For the coding agent covered elsewhere on this site, Ornith-1.0-35B runs on the RTX 3090.
 
-**Image generation (Stable Diffusion class models)** — bursty and VRAM-hungry during generation, but tolerant of queueing — a few extra seconds waiting for an image rarely matters the way a slow coding response does.
+**Image generation (Stable Diffusion class models)** — bursty and memory-hungry during generation, but tolerant of queueing — a few extra seconds waiting for an image rarely matters the way a slow text response does. It runs as the Dreamer service on gpu-worker-1.
 
-**Speech (Whisper for transcription, a local TTS model for synthesis)** — comparatively lightweight, runs comfortably on the Jetson tier rather than needing the 3090 at all.
+**Speech (Whisper for transcription, Kokoro for synthesis)** — comparatively lightweight. Kokoro-82M TTS and whisper.cpp `small.en` (CUDA) share gpu-worker-2, with no LLM on that board, and a Kokoro→Whisper round trip measured 0.85 s.
 
-## Scheduling Priority
+## Placement Instead of Priority
 
 ```
-Priority order on the RTX 3090:
-1. Interactive LLM sessions (coding agent) — always preempts
-2. Image generation — queued, runs when the 3090 isn't serving an interactive session
-3. (Speech runs on Jetson tier — doesn't compete for 3090 time at all)
+gpu-worker-1 (Jetson)  image-gen  Dreamer SD  ⇄  small-model shelf (one at a time)
+gpu-worker-2 (Jetson)  speech     Kokoro TTS + whisper.cpp STT
+gpu-worker-3 (Jetson)  llm        llama3.2:3b, pinned permanently
+RTX 3090 workstation   big model  Ornith-1.0-35B (21.2 GB VRAM)
 ```
 
-This is enforced the same way as the general workload-priority pattern covered in [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/kubernetes-for-ai-workloads) — a Kubernetes `PriorityClass` on the interactive workload, with image generation jobs submitted at a lower priority so they yield when the higher-priority workload needs the GPU.
+On an 8 GB Jetson with unified memory, only one ~4-5 GB model or service fits at a time, so priority scheduling on a shared board doesn't help much — the lower-priority model still has to be evicted and reloaded. Pinning each always-needed workload to its own board with a k3s node selector removes the contention entirely. The general scheduling patterns are in [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads).
 
 ## A Simple Pipeline Combining All Three
 
 A voice-driven interface — user speaks a request, it's transcribed, an LLM processes it and may generate a supporting image, then a response is synthesized back to speech — touches all three model types in one request flow:
 
 ```
-Audio input → Whisper (Jetson) → text
-Text → LLM (RTX 3090) → response + optional image prompt
-Image prompt → Stable Diffusion (RTX 3090, queued) → image
-Response text → TTS (Jetson) → audio output
+Audio input   → Whisper (gpu-worker-2)       → text
+Text          → LLM (gpu-worker-3)           → response + optional image prompt
+Image prompt  → Stable Diffusion (gpu-worker-1, queued) → image
+Response text → Kokoro TTS (gpu-worker-2)    → audio output
 ```
 
-Splitting this across hardware tiers by workload type — rather than running the whole pipeline on one GPU — keeps the latency-sensitive middle step (LLM reasoning) from waiting behind image generation or speech processing that doesn't need the same GPU at all.
+Splitting this across boards by workload type — rather than running the whole pipeline on one GPU — keeps the latency-sensitive middle step (LLM reasoning) from waiting behind image generation or speech processing. VerseHub's voice features use the same speech board; the design side is in [voice narration pipelines](/blog/ai-engineering/22-voice-narration-pipelines).
 
 ::CtaSystemArchitecture
 ---
@@ -68,7 +69,7 @@ destinationUrl: "/systems/ai-homelab"
 
 ## Where This Gets Genuinely Hard
 
-Model-swapping overhead is the recurring cost across all of this — switching the 3090 from serving an LLM to serving an image generation model and back has a real load-time penalty each direction. Keeping the LLM resident and treating image generation as the workload that pays the swap cost (rather than the other way around) is the practical compromise, since interactive LLM latency matters more here than image generation latency.
+Model-swapping overhead is the recurring cost. gpu-worker-1 switches between the Dreamer image service and the small-model shelf, and every switch pays a load-time penalty in each direction. Worse, on a Jetson the CUDA allocator can't reclaim page cache, so a swap can OOM even when `free -h` says memory is available — the old model has to be stopped and caches dropped (`sync; echo 3 > /proc/sys/vm/drop_caches`) before the next one loads. Keeping the LLM and speech boards fixed, and letting the image board be the one that pays the swap cost, is the practical compromise.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -82,8 +83,8 @@ Model-swapping overhead is the recurring cost across all of this — switching t
   :::CtaRelatedArticle
   ---
   buttonText: "Read: Jetson Orin Tutorials"
-  supportingCopy: "The lighter-weight tier handling speech and background work."
-  destinationUrl: "/blog/ai-homelab-engineering/jetson-orin-tutorials"
+  supportingCopy: "Setting up the boards that run speech, images, and the small LLM."
+  destinationUrl: "/blog/ai-homelab-engineering/12-jetson-orin-tutorials"
   ---
   :::
 
@@ -111,6 +112,13 @@ links:
     description: "Background on the image generation model class referenced throughout this article."
 ---
 ::
+
+## Related reading
+
+- [RTX 3090 Optimization for LLMs](/blog/ai-homelab-engineering/10-rtx-3090-optimization-for-llms) — previous in the series: tuning the big-model tier.
+- [Jetson Orin Tutorials](/blog/ai-homelab-engineering/12-jetson-orin-tutorials) — next: bringing a Jetson from bare metal to cluster node.
+- [AI Homelab architecture hub](/systems/ai-homelab) — the interactive system diagram.
+- [Using Three Jetson Orin Nano Supers as an AI Cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) — the role-per-board design in detail.
 
 ---
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ctaImage } from '~/utils/ctaImage'
 withDefaults(defineProps<{
   buttonText: string
   supportingCopy: string
@@ -13,10 +14,11 @@ const isExternal = (url: string) => /^https?:\/\//.test(url)
 
 <template>
   <div
-    class="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
+    class="relative isolate overflow-hidden flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
            border-slate-200 dark:border-slate-700/50
            bg-slate-50 dark:bg-slate-900/60 p-5 sm:p-6"
   >
+    <HeroBackdrop lazy :src="ctaImage(destinationUrl)" />
     <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
                 bg-sky-500/10 border border-sky-500/20">
       <Icon name="mdi:shape-outline" class="text-xl text-sky-400" />

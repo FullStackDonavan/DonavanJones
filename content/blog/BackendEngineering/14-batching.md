@@ -1,8 +1,8 @@
 ---
 title: "Batching"
-description: "Batching strategies for AI inference and backend services."
+description: "Batching for AI backends: the overhead math, size-or-time batch windows, tuning for embeddings, GPU, vector store and Postgres, and partial failures."
 date: 2026-04-03
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - batching
@@ -10,15 +10,16 @@ tags:
 draft: false
 slug: batching
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/14-batching.jpg
 ---
 
 # Batching
 
-Batching is one of the highest-leverage optimizations in an AI backend. It appears in every layer of this platform — embedding generation, GPU inference, database writes, notification delivery, API calls — and the version in each layer looks slightly different. The underlying principle is always the same: fixed overhead paid once across many units of work is cheaper than fixed overhead paid once per unit.
+Batching groups many small requests into one operation so a fixed overhead (a network round trip, a kernel launch, a transaction commit) is paid once instead of once per item; the cost is a small, bounded wait. It is one of the highest-leverage optimizations in an AI backend. It appears in every layer of this platform — embedding generation, GPU inference, database writes, notification delivery, API calls — and the version in each layer looks slightly different. The underlying principle is always the same: fixed overhead paid once across many units of work is cheaper than fixed overhead paid once per unit.
 
-Earlier articles touched on batching in specific contexts: adaptive batching in the embedding service, dynamic batching for GPU workloads, bulk writes in the job queue. This article pulls those threads together into a complete treatment: where batching applies, how to implement it correctly, and how to tune the tradeoffs between latency and throughput that batching always introduces.
+Earlier articles touched on batching in specific contexts: adaptive batching in the [embedding service](/blog/backendengineering/09-embedding-services), dynamic batching for [GPU workloads](/blog/backendengineering/13-gpu-allocation), bulk writes in the job queue. This article pulls those threads together into a complete treatment: where batching applies, how to implement it correctly, and how to tune the tradeoffs between latency and throughput that batching always introduces.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -119,19 +120,19 @@ This implementation is reusable across embedding, GPU inference, and vector stor
 
 ## Tuning Batch Parameters
 
-`maxSize` and `maxWaitMs` require empirical tuning against the specific workload. The right values depend on the overhead characteristics of the operation and the latency requirements of the caller.
+`maxSize` and `maxWaitMs` require empirical tuning against the specific workload. The right values depend on the overhead characteristics of the operation and the latency requirements of the caller. The numbers below are reasonable starting points, not universal answers.
 
-**Embedding API** (`maxSize: 100`, `maxWaitMs: 20ms`)
+**Embedding calls** (`maxSize: 100`, `maxWaitMs: 20ms`)
 
-The embedding API charges per token and has a fixed HTTP overhead of ~40ms. A batch of 100 texts amortizes that overhead across 100 results. The 20ms window keeps individual request latency below 60ms (20ms wait + ~40ms API call), which is acceptable for both real-time queries and background indexing.
+A hosted embedding API charges per token and adds a fixed HTTP round trip to every call; a local embedder like the all-MiniLM-L6-v2 container on my RTX 3090 has a smaller per-call overhead but still benefits from filling the GPU. Either way, a batch of 100 texts amortizes the overhead across 100 results, and a 20ms window adds at most 20ms of wait, which is acceptable for both real-time queries and background indexing.
 
 **GPU inference reranker** (`maxSize: 32`, `maxWaitMs: 20ms`)
 
-GPU kernels have significant launch overhead relative to execution time for small models. Batch size is limited by VRAM — above 32 candidates, activation memory approaches the slice ceiling. At 20ms window, most user-triggered searches arrive as part of a batch during normal load, keeping GPU utilization high without sacrificing p95 latency.
+GPU kernels have significant launch overhead relative to execution time for small models. Batch size is limited by VRAM — raise it until activation memory approaches the budget you left for this model, then back off. At 20ms window, most user-triggered searches arrive as part of a batch during normal load, keeping GPU utilization high without sacrificing p95 latency.
 
 **Vector store upserts** (`maxSize: 200`, `maxWaitMs: 100ms`)
 
-Qdrant accepts bulk upsert payloads. The overhead per upsert request is dominated by network round-trip and index update. Background indexing is not latency-sensitive (100ms wait is fine), and large batches significantly reduce the number of network calls during bulk operations. For real-time single-note saves, the 100ms window means a user waits up to 100ms before their note appears in search — acceptable.
+Vector databases (Weaviate, which I use, and Qdrant alike) accept bulk import payloads. The overhead per upsert request is dominated by network round-trip and index update. Background indexing is not latency-sensitive (100ms wait is fine), and large batches significantly reduce the number of network calls during bulk operations. For real-time single-note saves, the 100ms window means a user waits up to 100ms before their note appears in search — acceptable.
 
 **Database writes** (`maxSize: 500`, `maxWaitMs: 50ms`)
 
@@ -327,6 +328,13 @@ links:
     description: "Overview of latency as a system property — the dimension that batching trades against throughput, motivating the hybrid size-or-time batch window strategy described in this article."
 ---
 ::
+
+## Related reading
+
+- [GPU Allocation](/blog/backendengineering/13-gpu-allocation) — previous in the series: the hardware batching is trying to keep busy
+- [Latency Optimization](/blog/backendengineering/15-latency-optimization) — next in the series: the other side of the trade-off
+- [RTX 3090 Optimization for LLMs](/blog/ai-homelab-engineering/10-rtx-3090-optimization-for-llms) — getting throughput out of a single consumer GPU
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

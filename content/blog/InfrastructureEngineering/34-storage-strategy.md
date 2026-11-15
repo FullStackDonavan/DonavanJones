@@ -1,8 +1,8 @@
 ---
 title: "Storage Strategy"
-description: "My storage strategy for homelab Kubernetes workloads — local volumes for performance, NFS for shared access, and Longhorn for distributed replication."
+description: "My storage strategy for a K3s homelab: ephemeral node storage, persistent volumes, MinIO object storage, Weaviate vectors, and an RTX 3090 box as the fast tier."
 date: 2026-01-12
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - storage
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: storage-strategy
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/34-storage-strategy.jpg
 ---
 
 # Storage Strategy
 
 ## Introduction
 
-In a homelab environment built around a Raspberry Pi-based K3s cluster and a dedicated development machine with a powerful GPU node, storage becomes one of the most critical design decisions. Unlike traditional cloud environments where storage is abstracted, a self-hosted rack demands intentional planning around persistence, redundancy, performance, and scalability.
+My homelab storage strategy splits data by how it behaves: stateless pods use ephemeral node storage, databases and app state use Kubernetes persistent volumes, files and datasets go to MinIO object storage, vectors live in Weaviate, and the RTX 3090 machine's local SSD is the fast tier for model weights and training data. Backups live off-node, and configuration lives in Git. In a homelab built around a 7-node K3s cluster and a dedicated GPU workstation, storage is one of the most critical design decisions. Unlike traditional cloud environments where storage is abstracted, a self-hosted rack demands intentional planning around persistence, redundancy, performance, and scalability.
 
 My goal is to create a storage strategy that supports multiple workloads: Kubernetes deployments, CI/CD pipelines with Gitea runners, AI workloads running in Docker containers, and long-term data storage for applications like my Bible app, logs, and user-generated content. This system needs to stay flexible enough to evolve as I expand the rack while remaining simple enough to debug and maintain.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -49,9 +50,10 @@ Before choosing any storage solution, I built the system around a few guiding pr
 My rack setup includes a mix of:
 
 - Raspberry Pi nodes running a K3s cluster (worker + control plane)
+- Three Jetson Orin Nano Super GPU workers, each booted from NVMe
 - A dedicated development machine with GPU (RTX 3090)
 - External storage devices attached via USB and network shares
-- Docker-based model containers running outside the cluster (for now)
+- Model weights on each Jetson's NVMe for in-cluster inference, plus larger models on the 3090 machine
 
 Because of this hybrid setup, storage is not centralized in a single SAN/NAS appliance. Instead, it is distributed across multiple layers:
 
@@ -59,7 +61,7 @@ Because of this hybrid setup, storage is not centralized in a single SAN/NAS app
    - High-speed workloads (AI models, embeddings, local caching)
    - Temporary datasets for training and inference
 
-2. **K3s node storage (SD/SSD depending on node)**
+2. **K3s node storage (SD/SSD on the Pis, NVMe on the Jetsons)**
    - Lightweight workloads
    - Ephemeral container storage
    - Small services and configs
@@ -94,6 +96,8 @@ This keeps the cluster lightweight and avoids unnecessary storage complexity on 
 
 Used for:
 - Database workloads (PostgreSQL, Redis persistence where needed)
+- Object storage in MinIO, including a bucket for training datasets
+- Vector data in Weaviate (the VerseHub verses and Church Fathers collections)
 - User uploads (profile images, media content)
 - Application state (Bible app features like journals, notes, achievements)
 
@@ -102,7 +106,7 @@ For persistence, I lean toward:
 - Kubernetes Persistent Volumes (PVs) and Persistent Volume Claims (PVCs)
 - Backup snapshots stored off-node
 
-This abstraction allows pods to be rescheduled without data loss, which is critical for cluster reliability.
+This abstraction allows pods to be rescheduled without data loss, which is critical for cluster reliability. The hands-on setup is in [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes), and why MinIO became the object layer is in [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage).
 
 ---
 
@@ -141,7 +145,7 @@ My approach includes:
 - **Local backups**: periodic snapshots of critical volumes
 - **Off-node backups**: copies stored outside the cluster (external drives or NAS)
 - **Application-level backups**: database dumps for PostgreSQL and structured exports for app data
-- **Git-based backup for configs**: infrastructure-as-code stored in Gitea
+- **Git-based backup for configs**: infrastructure-as-code stored in [self-hosted Gitea](/blog/infrastructureengineering/40-why-self-hosted-git)
 
 The guiding idea is simple:
 > If a node dies, nothing important should be lost.
@@ -241,6 +245,15 @@ links:
     description: "Overview of backup strategies — the data protection layer described as a first-class system concern, with nightly snapshots, database dumps, and off-node copies ensuring recovery when homelab hardware fails."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Separation of Workloads](/blog/infrastructureengineering/33-separation-of-workloads) — previous in the series.
+- [Systems Thinking](/blog/infrastructureengineering/35-systems-thinking) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [MinIO Storage Strategy](/blog/versehub-engineering/08-minio-storage-strategy) — how VerseHub uses the object storage layer.
 
 ---
 

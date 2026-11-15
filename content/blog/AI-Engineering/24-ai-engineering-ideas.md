@@ -11,6 +11,7 @@ tags:
 draft: true
 slug: ai-engineering-ideas
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/24-ai-engineering-ideas.jpg
 ---
 
 # What I Learned Building an AI Bible Study Platform

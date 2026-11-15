@@ -1,8 +1,8 @@
 ---
 title: "Debate Agents"
-description: "Debate agents for theological argumentation in AI pipelines."
+description: "Debate agents for contested questions: advocate agents argue each tradition from its own sources, a critic tests both, and a moderator summarizes the dispute."
 date: 2026-07-05
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -12,9 +12,12 @@ draft: false
 cluster: "ai-engineering"
 slug: debate-agents
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/21-debate-agents.jpg
 ---
 
 # Debate Agents
+
+Debate agents answer a contested question by having separate advocate agents argue each position from that tradition's own sources, a critic agent test both arguments, and a moderator summarize where they genuinely disagree. It is slower and costlier than a single answer, so it is reserved for questions that are actually contested.
 
 The hardest questions in theological study are not factual — they are interpretive and contested. What does Paul mean by "works of the law" in Galatians? Is the "righteousness of God" in Romans 1:17 a divine attribute, a gift, or both? Did Calvin teach double predestination in the same sense as later Calvinist scholasticism?
 
@@ -22,7 +25,7 @@ A single-agent response to these questions tends toward premature closure. The m
 
 Debate agents address this by using multiple agents, each assigned to argue a distinct theological position, with an orchestrating agent that moderates the exchange and synthesizes a balanced summary. The output is not one position — it is the debate itself, structured so the user can follow the argument and form their own view.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -73,7 +76,7 @@ function computeTraditionDivergence(
 
 ## The Debate Agent Architecture
 
-The debate pipeline has four components: a retrieval stage that assembles tradition-specific evidence, two or more advocate agents that argue assigned positions, a critic agent that challenges each advocate, and a moderator agent that synthesizes the exchange.
+The debate pipeline has four components: a retrieval stage that assembles tradition-specific evidence, two or more [advocate agents](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) that argue assigned positions, a [critic agent](/blog/ai-engineering/04-agent-orchestration) that challenges each advocate, and a moderator agent that synthesizes the exchange. This is the design behind the Debate Arena in [VerseHub](/projects/versehub).
 
 ```
                     ┌─────────────────────┐
@@ -109,7 +112,7 @@ The debate pipeline has four components: a retrieval stage that assembles tradit
 
 ## Tradition-Specific Retrieval
 
-Before any agent generates, the retrieval stage assembles separate evidence packages for each tradition:
+Before any agent generates, the [retrieval stage](/blog/ai-engineering/09-retrieval-systems-for-theology) assembles separate evidence packages for each tradition:
 
 ```typescript
 async function assembleDebateContext(
@@ -360,7 +363,7 @@ Three consistent failure modes in debate agents:
 
 ## Latency and Cost
 
-The debate pipeline is more expensive than single-agent generation:
+The debate pipeline is more expensive than single-agent generation. The figures below are rough per-stage budgets for hosted models, not benchmarks:
 
 | Stage | Model | Calls | Latency contribution |
 |---|---|---|---|
@@ -370,7 +373,7 @@ The debate pipeline is more expensive than single-agent generation:
 | Moderator | Sonnet | 1 | ~1,500ms |
 | **Total** | | **6** | **~3,750ms** |
 
-Compared to the standard single-agent pipeline at ~1,800ms end-to-end, the debate pipeline takes roughly twice as long. This is the right tradeoff for questions where the debate structure provides genuine value. For standard study questions, the latency cost is not justified — which is why the routing logic is conservative about when to invoke it.
+Compared to a standard single-agent answer, the debate pipeline takes roughly twice as long. This is the right tradeoff for questions where the debate structure provides genuine value. For standard study questions, the latency cost is not justified — which is why the routing logic is conservative about when to invoke it.
 
 The cost difference is similar: six model calls versus one, with two of those calls on Sonnet. Debate responses are cached aggressively. The same question about Romans 9 election asked by two different users within a 24-hour window reuses the cached debate structure; only the moderator summary is personalized and regenerated.
 
@@ -427,6 +430,14 @@ links:
     description: "Foundational overview of multi-agent architectures — the technical model that debate agent orchestration builds on."
 ---
 ::
+
+## Related reading
+
+- [Moderation](/blog/ai-engineering/20-moderation) — previous in the AI Engineering series
+- [Voice Narration Pipelines](/blog/ai-engineering/22-voice-narration-pipelines) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Single Agent vs Multi-Agent Systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) — when a multi-agent design is justified
+- [VerseHub project overview](/projects/versehub) — where the Debate Arena lives
 
 ---
 

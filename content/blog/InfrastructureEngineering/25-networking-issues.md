@@ -1,8 +1,8 @@
 ---
 title: "Networking Issues"
-description: "Common networking issues in a Kubernetes homelab and how to diagnose them — DNS failures, pod connectivity, CNI misconfigurations, and routing problems."
+description: "Common K3s homelab networking issues and how to debug them: pod-to-pod failures, CoreDNS, ServiceLB/LoadBalancer exposure, Flannel VXLAN, and IP conflicts."
 date: 2025-11-26
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -10,19 +10,20 @@ tags:
 draft: false
 slug: networking-issues
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/25-networking-issues.jpg
 ---
 
 # Networking Issues
 
 ## Introduction
 
-Networking is one of the most common failure points in a Kubernetes homelab environment. In my own setup—a Raspberry Pi–based K3s cluster running inside a custom homelab rack alongside services like Gitea, CI runners, and internal tooling—networking issues tend to surface more often than compute or storage problems. 
+The most common networking issues in a Kubernetes homelab are pod-to-pod failures across nodes, CoreDNS not resolving service names, services that never become reachable from outside the cluster, flaky node links, and IP conflicts. Debug them in layers — physical, node, pod, then service — and most of them become easy to isolate. In my own setup (a 7-node K3s cluster with a Raspberry Pi control plane, Pi workers and Jetson GPU workers, running Gitea, CI runners and internal tooling), networking breaks more often than compute or storage.
 
 Because K3s is designed to be lightweight, it abstracts a lot of networking complexity, but that also means when something breaks, you often have to dig into CNI behavior, cluster DNS, routing between nodes, and even physical network topology in your rack.
 
 This article covers the most common networking issues I’ve run into (and seen others hit), along with practical debugging approaches that actually work in a real homelab environment.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -34,7 +35,7 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 ---
 
-# Common Networking Issues in Kubernetes
+## Common Networking Issues in Kubernetes
 
 ## 1. Pod-to-Pod Communication Failure
 
@@ -86,12 +87,15 @@ This is common when exposing services like:
 - dashboards
 - internal APIs
 
-In a homelab rack, this often comes down to ingress misconfiguration or missing MetalLB setup.
+In a homelab rack, this often comes down to ingress misconfiguration or the load balancer layer. K3s ships its own ServiceLB (Klipper) for `LoadBalancer` services; other clusters use MetalLB.
 
 ### Typical causes:
 - Service type still set to ClusterIP instead of LoadBalancer or NodePort
-- MetalLB pool not configured correctly
+- ServiceLB not allowed on the right nodes (or a MetalLB pool not configured correctly)
+- Two LoadBalancer services fighting over the same host port
 - Router not forwarding traffic to correct node IPs
+
+This one bit me directly: a single node label (`svccontroller.k3s.cattle.io/enablelb`) plus a port 8080 clash left my LoadBalancer services stuck — I wrote up the whole thing in [how one node label broke every LoadBalancer service in my K3s cluster](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers).
 
 ```bash
 kubectl get svc
@@ -171,6 +175,8 @@ This is more common than people expect in rack setups where:
 - Standardize DHCP range on main router
 - Avoid mixing static + DHCP unmanaged assignments
 
+The related failure is the control-plane node changing IP — every agent loses its server. I had to recover from exactly that once; see [recovering a K3s cluster after a control plane IP change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change). The prevention side is in [static IPs and networking](/blog/infrastructureengineering/04-static-ips-and-networking).
+
 ## Debugging Strategy I Use in My Rack
 In my homelab rack (K3s cluster + CI runners + Gitea + AI containers), I always follow this order:
 
@@ -181,7 +187,7 @@ In my homelab rack (K3s cluster + CI runners + Gitea + AI containers), I always 
 5. Check physical network (switch, cables, power)
 6. Only then inspect CNI internals
 
-This prevents wasting time debugging Kubernetes when the issue is actually physical networking.
+This prevents wasting time debugging Kubernetes when the issue is actually physical networking. Having logs from every node in one place helps a lot here — [Loki and Promtail on a Pi K3s cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) covers how I collect them.
 
 ::CtaContactWork
 ---
@@ -250,6 +256,15 @@ links:
     description: "Flannel is the default CNI networking layer in K3s clusters — the software responsible for VXLAN overlay networking whose VXLAN port requirements and subnet configuration are common sources of networking issues."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Network Topology](/blog/infrastructureengineering/24-network-topology) — previous in the series: how the rack network is laid out.
+- [Networking (Skill)](/blog/infrastructureengineering/26-networking-skill) — next in the series: the fundamentals behind these debugging steps.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the whole cluster architecture.
+- [Networking for AI Clusters](/blog/ai-homelab-engineering/06-networking-for-ai-clusters) — the same network viewed from the AI/Jetson side.
 
 ---
 

@@ -1,0 +1,1940 @@
+[
+ {
+  "id": "page:home",
+  "out": "/img/heroes/home.jpg",
+  "prompt": "a compact homelab server rack with small single-board computers and a large graphics card glowing softly, cables neatly routed",
+  "seed": 90082745
+ },
+ {
+  "id": "page:about",
+  "out": "/img/heroes/about.jpg",
+  "prompt": "an engineer's workbench with a soldering iron, a small circuit board, a mechanical keyboard and a notebook, warm desk lamp",
+  "seed": 39300438
+ },
+ {
+  "id": "page:services",
+  "out": "/img/heroes/services.jpg",
+  "prompt": "precision tools laid out on a dark workbench, calipers, small screwdrivers and a circuit board, orderly arrangement",
+  "seed": 121017602
+ },
+ {
+  "id": "page:services-local-ai-infrastructure",
+  "out": "/img/heroes/services-local-ai-infrastructure.jpg",
+  "prompt": "three small green AI developer boards with heatsinks on a dark shelf connected by short blue network cables, status LEDs",
+  "seed": 135647626
+ },
+ {
+  "id": "page:services-ai-automation",
+  "out": "/img/heroes/services-ai-automation.jpg",
+  "prompt": "interlocking brass gears and a small glowing circuit board, a clockwork mechanism in motion",
+  "seed": 182489426
+ },
+ {
+  "id": "page:services-web-development",
+  "out": "/img/heroes/services-web-development.jpg",
+  "prompt": "a laptop with its screen glowing softly cyan on a dark desk beside a cup of coffee, screen content out of focus",
+  "seed": 229629513
+ },
+ {
+  "id": "page:services-local-business-ai",
+  "out": "/img/heroes/services-local-business-ai.jpg",
+  "prompt": "a tablet resting on a wooden shop counter beside a small potted plant and a ceramic cup, warm pendant lights, no signs",
+  "seed": 126127041
+ },
+ {
+  "id": "page:hire-me",
+  "out": "/img/heroes/hire-me.jpg",
+  "prompt": "a clean desk with an open notebook, a fountain pen and a laptop, morning light, calm and ready to start",
+  "seed": 9350087
+ },
+ {
+  "id": "page:resume",
+  "out": "/img/heroes/resume.jpg",
+  "prompt": "a neatly organized desk with a leather portfolio, a pen and a small server board, documents slightly out of focus",
+  "seed": 196896641
+ },
+ {
+  "id": "page:blog",
+  "out": "/img/heroes/blog.jpg",
+  "prompt": "a stack of technical books next to a circuit board and a coffee mug under a desk lamp",
+  "seed": 75390038
+ },
+ {
+  "id": "page:insights",
+  "out": "/img/heroes/insights.jpg",
+  "prompt": "a city skyline at dusk seen through an office window, a laptop on the sill, warm and cool light",
+  "seed": 58871924
+ },
+ {
+  "id": "page:products",
+  "out": "/img/heroes/products.jpg",
+  "prompt": "neatly packed boxes with blueprints, a Raspberry Pi board and cables, product kit flat lay",
+  "seed": 238101826
+ },
+ {
+  "id": "page:projects",
+  "out": "/img/heroes/projects.jpg",
+  "prompt": "a workbench with several prototype devices and a laptop, each project lit by its own small light",
+  "seed": 101972276
+ },
+ {
+  "id": "page:system-overview",
+  "out": "/img/heroes/system-overview.jpg",
+  "prompt": "an aerial view of a miniature data center model, rows of tiny server racks with blue light trails",
+  "seed": 123581795
+ },
+ {
+  "id": "page:systems-ai",
+  "out": "/img/heroes/systems-ai.jpg",
+  "prompt": "a translucent glass brain sculpture with fine glowing fibers inside, resting on a dark plinth",
+  "seed": 222490010
+ },
+ {
+  "id": "page:systems-backend",
+  "out": "/img/heroes/systems-backend.jpg",
+  "prompt": "rows of server rack ports with blue patch cables, data center aisle, depth of field",
+  "seed": 136815813
+ },
+ {
+  "id": "page:systems-infrastructure",
+  "out": "/img/heroes/systems-infrastructure.jpg",
+  "prompt": "a small Kubernetes cluster of Raspberry Pi boards in a stacked acrylic case, ethernet switch, status LEDs",
+  "seed": 82715848
+ },
+ {
+  "id": "page:systems-agentic-ai",
+  "out": "/img/heroes/systems-agentic-ai.jpg",
+  "prompt": "several small robotic arms working together on a dark assembly table, coordinated motion",
+  "seed": 259712754
+ },
+ {
+  "id": "page:systems-ai-homelab",
+  "out": "/img/heroes/systems-ai-homelab.jpg",
+  "prompt": "a home office corner with a small server rack, a desktop PC with a large GPU and blinking network switch",
+  "seed": 257886583
+ },
+ {
+  "id": "page:systems-local-vibe-coding",
+  "out": "/img/heroes/systems-local-vibe-coding.jpg",
+  "prompt": "a laptop on a desk at night beside a small glowing AI board, no internet router, cozy desk lamp",
+  "seed": 257807766
+ },
+ {
+  "id": "page:jetson-leaderboard",
+  "out": "/img/heroes/jetson-leaderboard.jpg",
+  "prompt": "three small NVIDIA Jetson developer boards side by side on a dark bench, like contestants on a podium, spotlights",
+  "seed": 47067384
+ },
+ {
+  "id": "page:tools",
+  "out": "/img/heroes/tools.jpg",
+  "prompt": "a precision measuring instrument next to a graphics card, digital calipers measuring a memory chip",
+  "seed": 221146740
+ },
+ {
+  "id": "page:newsletter",
+  "out": "/img/heroes/newsletter.jpg",
+  "prompt": "a neat stack of envelopes beside a laptop and a cup of tea, calm desk at dawn",
+  "seed": 153065058
+ },
+ {
+  "id": "project:versehub",
+  "out": "/img/projects/versehub/cover.jpg",
+  "prompt": "an open old leather-bound book on a dark desk with soft blue light from a small server board beside it",
+  "seed": 78555414
+ },
+ {
+  "id": "project:christian-reels",
+  "out": "/img/projects/christian-reels/cover.jpg",
+  "prompt": "a vertical smartphone on a small tripod in a dark studio, a film reel and a softbox light, video production",
+  "seed": 263528464
+ },
+ {
+  "id": "project:tpa-platform",
+  "out": "/img/projects/tpa-platform/cover.jpg",
+  "prompt": "a medical clipboard and a stethoscope beside a laptop on a dark desk, healthcare administration, orderly files",
+  "seed": 137181644
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/01-single-agent-vs-multi-agent-systems",
+  "out": "/img/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems.jpg",
+  "prompt": "one large brass gear standing alone on the left and a cluster of small interlocking brass gears on the right, dark surface",
+  "seed": 37693637
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/02-planning-agents-explained",
+  "out": "/img/blog/agentic-ai-systems/02-planning-agents-explained.jpg",
+  "prompt": "a brass compass beside red string connecting a few pushpins on a dark cork board, route planning",
+  "seed": 178407345
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/03-teaching-ai-agents-about-your-project-with-rag",
+  "out": "/img/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag.jpg",
+  "prompt": "a small robot reading an open binder of documents under a lamp",
+  "seed": 235787097
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/04-agent-memory-architectures",
+  "out": "/img/blog/agentic-ai-systems/04-agent-memory-architectures.jpg",
+  "prompt": "a wall of small labeled wooden drawers like a card catalog, some drawers open, glowing blue inside",
+  "seed": 44333397
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/05-storing-ai-memory-with-redis-and-vector-databases",
+  "out": "/img/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases.jpg",
+  "prompt": "glass jars filled with tiny glowing points of light arranged on shelves, organized memory",
+  "seed": 257520435
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/06-building-an-ai-copilot-that-understands-your-codebase",
+  "out": "/img/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase.jpg",
+  "prompt": "an aircraft cockpit with two seats, instrument panel glowing cyan, co-pilot seat",
+  "seed": 93693882
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/07-building-multi-agent-workflows-with-temporal",
+  "out": "/img/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal.jpg",
+  "prompt": "an hourglass beside interconnected gears, time and coordinated workflow",
+  "seed": 39802631
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/08-event-driven-ai-agents-using-kafka",
+  "out": "/img/blog/agentic-ai-systems/08-event-driven-ai-agents-using-kafka.jpg",
+  "prompt": "a Newton's cradle with polished chrome balls, one ball lifted mid-swing, dark background",
+  "seed": 144384534
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/09-long-running-agent-workflows",
+  "out": "/img/blog/agentic-ai-systems/09-long-running-agent-workflows.jpg",
+  "prompt": "a long exposure of light trails on a winding mountain road at night",
+  "seed": 117881615
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/10-autonomous-background-jobs",
+  "out": "/img/blog/agentic-ai-systems/10-autonomous-background-jobs.jpg",
+  "prompt": "a robotic vacuum-like machine working alone in a dim empty room at night",
+  "seed": 239684664
+ },
+ {
+  "id": "blog/Agentic-AI-Systems/11-verification-agents-in-production",
+  "out": "/img/blog/agentic-ai-systems/11-verification-agents-in-production.jpg",
+  "prompt": "a magnifying glass over a circuit board, inspecting with a checkmark-shaped light reflection",
+  "seed": 20648405
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/01-claude-api-cost-breakdown",
+  "out": "/img/blog/ai-cost-optimization/01-claude-api-cost-breakdown.jpg",
+  "prompt": "a small stack of coins beside a glowing frosted glass cloud sculpture on a dark desk",
+  "seed": 109669792
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/02-openai-api-cost-vs-local-ai",
+  "out": "/img/blog/ai-cost-optimization/02-openai-api-cost-vs-local-ai.jpg",
+  "prompt": "a balance scale with a cloud-shaped glass object on one side and a small computer board on the other",
+  "seed": 53538160
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/03-electricity-vs-api-pricing",
+  "out": "/img/blog/ai-cost-optimization/03-electricity-vs-api-pricing.jpg",
+  "prompt": "a glowing power plug and a coiled black cable on a dark desk, single overhead light",
+  "seed": 20889716
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/04-hardware-roi-for-ai-development",
+  "out": "/img/blog/ai-cost-optimization/04-hardware-roi-for-ai-development.jpg",
+  "prompt": "a graphics card resting on a stack of coins with a small growing plant beside it",
+  "seed": 72568199
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/05-when-to-buy-a-gpu-instead-of-api-fees",
+  "out": "/img/blog/ai-cost-optimization/05-when-to-buy-a-gpu-instead-of-api-fees.jpg",
+  "prompt": "a graphics card in its retail box on a dark table next to a calculator and coins",
+  "seed": 168363785
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/06-running-everything-locally",
+  "out": "/img/blog/ai-cost-optimization/06-running-everything-locally.jpg",
+  "prompt": "a self-contained desktop workstation with a large GPU in a dark room, unplugged ethernet cable coiled beside it",
+  "seed": 160822549
+ },
+ {
+  "id": "blog/AI-Cost-Optimization/07-local-ai-stack-vs-year-of-claude-max",
+  "out": "/img/blog/ai-cost-optimization/07-local-ai-stack-vs-year-of-claude-max.jpg",
+  "prompt": "a small homelab server shelf beside a plain ceramic piggy bank on a dark desk",
+  "seed": 165218764
+ },
+ {
+  "id": "blog/AI-Engineering/01-persistent-memory-systems",
+  "out": "/img/blog/ai-engineering/01-persistent-memory-systems.jpg",
+  "prompt": "an engraved stone tablet with glowing blue grooves, permanent record",
+  "seed": 133050699
+ },
+ {
+  "id": "blog/AI-Engineering/02-vector-databases",
+  "out": "/img/blog/ai-engineering/02-vector-databases.jpg",
+  "prompt": "thousands of tiny glowing points suspended in a dark glass cube forming clusters",
+  "seed": 211019896
+ },
+ {
+  "id": "blog/AI-Engineering/03-tool-calling",
+  "out": "/img/blog/ai-engineering/03-tool-calling.jpg",
+  "prompt": "a robotic hand reaching for a wrench on a pegboard of neatly hung tools",
+  "seed": 136694018
+ },
+ {
+  "id": "blog/AI-Engineering/04-agent-orchestration",
+  "out": "/img/blog/ai-engineering/04-agent-orchestration.jpg",
+  "prompt": "a conductor's baton resting on a music stand in a dark concert hall, orchestra chairs",
+  "seed": 209295684
+ },
+ {
+  "id": "blog/AI-Engineering/05-state-management",
+  "out": "/img/blog/ai-engineering/05-state-management.jpg",
+  "prompt": "a mechanical counter with rotating number wheels and switches in different positions",
+  "seed": 166950725
+ },
+ {
+  "id": "blog/AI-Engineering/06-microsoft-autogen",
+  "out": "/img/blog/ai-engineering/06-microsoft-autogen.jpg",
+  "prompt": "several small identical robots seated around a round table in conversation",
+  "seed": 71541514
+ },
+ {
+  "id": "blog/AI-Engineering/07-local-agent-systems",
+  "out": "/img/blog/ai-engineering/07-local-agent-systems.jpg",
+  "prompt": "a small robot on a desk next to a homelab server, everything inside one room",
+  "seed": 48327436
+ },
+ {
+  "id": "blog/AI-Engineering/08-tool-based-reasoning",
+  "out": "/img/blog/ai-engineering/08-tool-based-reasoning.jpg",
+  "prompt": "a robotic arm choosing between a hammer, a ruler and a magnifying glass on a workbench",
+  "seed": 246976819
+ },
+ {
+  "id": "blog/AI-Engineering/09-retrieval-systems-for-theology",
+  "out": "/img/blog/ai-engineering/09-retrieval-systems-for-theology.jpg",
+  "prompt": "an old library aisle with tall shelves of leather-bound books and a single beam of light",
+  "seed": 205353898
+ },
+ {
+  "id": "blog/AI-Engineering/10-chunking-religious-texts",
+  "out": "/img/blog/ai-engineering/10-chunking-religious-texts.jpg",
+  "prompt": "pages of an old book neatly separated into small stacks, bookmarks between them",
+  "seed": 258768503
+ },
+ {
+  "id": "blog/AI-Engineering/11-embedding-strategies",
+  "out": "/img/blog/ai-engineering/11-embedding-strategies.jpg",
+  "prompt": "colored glass marbles sorted into clusters on a dark surface",
+  "seed": 144518462
+ },
+ {
+  "id": "blog/AI-Engineering/12-semantic-retrieval",
+  "out": "/img/blog/ai-engineering/12-semantic-retrieval.jpg",
+  "prompt": "a compass needle pointing toward one glowing book among many on a shelf",
+  "seed": 254021823
+ },
+ {
+  "id": "blog/AI-Engineering/13-citation-grounding",
+  "out": "/img/blog/ai-engineering/13-citation-grounding.jpg",
+  "prompt": "an anchor resting on an open old book, chain across the pages",
+  "seed": 7397806
+ },
+ {
+  "id": "blog/AI-Engineering/14-hallucination-reduction",
+  "out": "/img/blog/ai-engineering/14-hallucination-reduction.jpg",
+  "prompt": "a camera lens on a dark table, the background half blurred and half in sharp focus",
+  "seed": 89861417
+ },
+ {
+  "id": "blog/AI-Engineering/15-ai-pipelines-for-bible-study",
+  "out": "/img/blog/ai-engineering/15-ai-pipelines-for-bible-study.jpg",
+  "prompt": "an open Bible on a wooden desk next to a small glowing circuit board and reading glasses",
+  "seed": 30598500
+ },
+ {
+  "id": "blog/AI-Engineering/16-prompt-engineering",
+  "out": "/img/blog/ai-engineering/16-prompt-engineering.jpg",
+  "prompt": "a typewriter with a single blank sheet of paper in a dark room, soft light",
+  "seed": 174026520
+ },
+ {
+  "id": "blog/AI-Engineering/17-retrieval-augmented-generation",
+  "out": "/img/blog/ai-engineering/17-retrieval-augmented-generation.jpg",
+  "prompt": "an open book with a softly glowing glass orb resting on its pages, a short stack of books behind it",
+  "seed": 230882220
+ },
+ {
+  "id": "blog/AI-Engineering/18-theological-consistency",
+  "out": "/img/blog/ai-engineering/18-theological-consistency.jpg",
+  "prompt": "a perfectly balanced stack of smooth stones beside an old book",
+  "seed": 235064272
+ },
+ {
+  "id": "blog/AI-Engineering/19-memory-systems",
+  "out": "/img/blog/ai-engineering/19-memory-systems.jpg",
+  "prompt": "rows of old film reels and modern memory chips side by side",
+  "seed": 175640740
+ },
+ {
+  "id": "blog/AI-Engineering/20-moderation",
+  "out": "/img/blog/ai-engineering/20-moderation.jpg",
+  "prompt": "a gatekeeper's iron gate partially open with soft light behind it",
+  "seed": 267804185
+ },
+ {
+  "id": "blog/AI-Engineering/21-debate-agents",
+  "out": "/img/blog/ai-engineering/21-debate-agents.jpg",
+  "prompt": "two chairs facing each other across a small table with two microphones, debate stage",
+  "seed": 177309495
+ },
+ {
+  "id": "blog/AI-Engineering/22-voice-narration-pipelines",
+  "out": "/img/blog/ai-engineering/22-voice-narration-pipelines.jpg",
+  "prompt": "a studio condenser microphone with a pop filter and sound waves of light",
+  "seed": 125642901
+ },
+ {
+  "id": "blog/AI-Engineering/23-ocr-for-manuscripts",
+  "out": "/img/blog/ai-engineering/23-ocr-for-manuscripts.jpg",
+  "prompt": "an ancient handwritten parchment under a scanner light bar",
+  "seed": 160180384
+ },
+ {
+  "id": "blog/AI-Engineering/24-ai-engineering-ideas",
+  "out": "/img/blog/ai-engineering/24-ai-engineering-ideas.jpg",
+  "prompt": "a desk covered in sticky notes and sketches around a single glowing light bulb",
+  "seed": 191457255
+ },
+ {
+  "id": "blog/AI-Engineering/25-tiny-tool-calling-model-34-to-98",
+  "out": "/img/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98.jpg",
+  "prompt": "a tiny robot holding a full-size wrench, small but capable, macro shot",
+  "seed": 221794056
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/01-my-homelab-architecture-for-agentic-ai",
+  "out": "/img/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai.jpg",
+  "prompt": "a home office shelf with a small black server rack, a tower PC with a glass side panel and three small circuit boards, unbranded",
+  "seed": 65629484
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/02-three-jetson-orin-nano-supers-as-ai-cluster",
+  "out": "/img/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster.jpg",
+  "prompt": "three small NVIDIA Jetson developer boards in a row connected by ethernet cables",
+  "seed": 78370426
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/03-rtx-3090-jetson-orin-hybrid-architecture",
+  "out": "/img/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture.jpg",
+  "prompt": "a large graphics card beside a small developer board, big and small compute side by side",
+  "seed": 40151074
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/04-kubernetes-for-ai-developers-k3s",
+  "out": "/img/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s.jpg",
+  "prompt": "a single wooden ship's helm wheel resting beside a stack of small green circuit boards",
+  "seed": 63317766
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/05-kubernetes-for-ai-workloads",
+  "out": "/img/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads.jpg",
+  "prompt": "shipping containers stacked neatly at a port at night, cranes, blue light",
+  "seed": 104484397
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/06-networking-for-ai-clusters",
+  "out": "/img/blog/ai-homelab-engineering/06-networking-for-ai-clusters.jpg",
+  "prompt": "a network switch with many blue ethernet cables plugged in, port LEDs blinking",
+  "seed": 28491006
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/07-minio-and-distributed-ai-storage",
+  "out": "/img/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage.jpg",
+  "prompt": "several hard drives arranged in a row with their covers open, platters reflecting light",
+  "seed": 17631527
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/08-raspberry-pi-ai-cluster-setup",
+  "out": "/img/blog/ai-homelab-engineering/08-raspberry-pi-ai-cluster-setup.jpg",
+  "prompt": "four bare green single-board computers stacked on brass standoffs in a clear acrylic case, short blue ethernet cables, unbranded",
+  "seed": 253108358
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/09-running-multiple-local-models-without-melting-gpu",
+  "out": "/img/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu.jpg",
+  "prompt": "a graphics card with heat shimmer and a thermometer beside it, cooling fans",
+  "seed": 265042899
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/10-rtx-3090-optimization-for-llms",
+  "out": "/img/blog/ai-homelab-engineering/10-rtx-3090-optimization-for-llms.jpg",
+  "prompt": "a large triple-fan graphics card on a dark surface, dramatic side light, macro detail",
+  "seed": 46096445
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/11-local-image-speech-llms-one-stack",
+  "out": "/img/blog/ai-homelab-engineering/11-local-image-speech-llms-one-stack.jpg",
+  "prompt": "a microphone, a camera lens and a graphics card arranged together on a dark table",
+  "seed": 651817
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/12-jetson-orin-tutorials",
+  "out": "/img/blog/ai-homelab-engineering/12-jetson-orin-tutorials.jpg",
+  "prompt": "a small NVIDIA Jetson board on an anti-static mat with a screwdriver and a notebook",
+  "seed": 250225318
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/13-local-ai-security-keeping-data-private",
+  "out": "/img/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private.jpg",
+  "prompt": "a heavy padlock on a small server board, secure and private",
+  "seed": 58832166
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/14-monthly-power-bill-ai-cluster",
+  "out": "/img/blog/ai-homelab-engineering/14-monthly-power-bill-ai-cluster.jpg",
+  "prompt": "a black power strip with glowing blue plugs and neatly coiled cables on a dark floor",
+  "seed": 214808954
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/15-biggest-mistakes-building-ai-homelab",
+  "out": "/img/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab.jpg",
+  "prompt": "a tangled mess of cables on the floor next to a small server rack",
+  "seed": 268209243
+ },
+ {
+  "id": "blog/AI-Homelab-Engineering/16-complete-guide-production-ready-local-ai-platform",
+  "out": "/img/blog/ai-homelab-engineering/16-complete-guide-production-ready-local-ai-platform.jpg",
+  "prompt": "a fully built compact server rack with neat cable management, every device lit",
+  "seed": 160174784
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/binary-search",
+  "out": "/img/blog/algorithms-and-data-structures/binary-search.jpg",
+  "prompt": "a row of brass weights from small to large with a spotlight on the middle one",
+  "seed": 130919340
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/divide-and-conquer-pattern",
+  "out": "/img/blog/algorithms-and-data-structures/divide-and-conquer-pattern.jpg",
+  "prompt": "a large crystal split cleanly into smaller and smaller pieces",
+  "seed": 35103731
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/frequency-counter",
+  "out": "/img/blog/algorithms-and-data-structures/frequency-counter.jpg",
+  "prompt": "colored beads sorted into small glass dishes on a dark table",
+  "seed": 1724675
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/linear-search",
+  "out": "/img/blog/algorithms-and-data-structures/linear-search.jpg",
+  "prompt": "a long row of identical closed boxes with one being opened, flashlight beam",
+  "seed": 100482050
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/multiple-pointers",
+  "out": "/img/blog/algorithms-and-data-structures/multiple-pointers.jpg",
+  "prompt": "two small flashlights at opposite ends of a row of glass marbles, their beams meeting in the middle",
+  "seed": 77633147
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/recursion",
+  "out": "/img/blog/algorithms-and-data-structures/recursion.jpg",
+  "prompt": "nested Russian dolls opened in a line from largest to smallest",
+  "seed": 232228065
+ },
+ {
+  "id": "blog/Algorithms-And-Data-Structures/sliding-window",
+  "out": "/img/blog/algorithms-and-data-structures/sliding-window.jpg",
+  "prompt": "a rectangular magnifying glass resting over a straight row of colored glass beads",
+  "seed": 97391321
+ },
+ {
+  "id": "blog/BackendEngineering/01-monolith-vs-microservices",
+  "out": "/img/blog/backendengineering/01-monolith-vs-microservices.jpg",
+  "prompt": "one large stone block beside many small stone cubes arranged in a grid",
+  "seed": 53644899
+ },
+ {
+  "id": "blog/BackendEngineering/02-ai-services",
+  "out": "/img/blog/backendengineering/02-ai-services.jpg",
+  "prompt": "a server rack with one server unit slid partly out, blue status lights, unbranded",
+  "seed": 80704414
+ },
+ {
+  "id": "blog/BackendEngineering/03-authentication",
+  "out": "/img/blog/backendengineering/03-authentication.jpg",
+  "prompt": "a single old brass skeleton key on a dark slate surface, dramatic side light",
+  "seed": 158567170
+ },
+ {
+  "id": "blog/BackendEngineering/04-embeddings",
+  "out": "/img/blog/backendengineering/04-embeddings.jpg",
+  "prompt": "points of light suspended in a dark glass sphere forming constellations",
+  "seed": 48039073
+ },
+ {
+  "id": "blog/BackendEngineering/05-vector-search",
+  "out": "/img/blog/backendengineering/05-vector-search.jpg",
+  "prompt": "a laser pointer beam passing through a cloud of floating glass beads, finding the nearest",
+  "seed": 197855355
+ },
+ {
+  "id": "blog/BackendEngineering/06-streaming",
+  "out": "/img/blog/backendengineering/06-streaming.jpg",
+  "prompt": "water flowing smoothly over dark rocks, long exposure, silky stream",
+  "seed": 102553088
+ },
+ {
+  "id": "blog/BackendEngineering/07-notifications",
+  "out": "/img/blog/backendengineering/07-notifications.jpg",
+  "prompt": "a small brass desk bell with a soft glow",
+  "seed": 255282683
+ },
+ {
+  "id": "blog/BackendEngineering/08-inference-services",
+  "out": "/img/blog/backendengineering/08-inference-services.jpg",
+  "prompt": "an open server chassis with a large graphics card installed, fans and heatsinks, unlabeled",
+  "seed": 87023579
+ },
+ {
+  "id": "blog/BackendEngineering/09-embedding-services",
+  "out": "/img/blog/backendengineering/09-embedding-services.jpg",
+  "prompt": "a factory conveyor belt carrying small glowing cubes",
+  "seed": 224389424
+ },
+ {
+  "id": "blog/BackendEngineering/10-ocr-pipelines",
+  "out": "/img/blog/backendengineering/10-ocr-pipelines.jpg",
+  "prompt": "a flatbed scanner with its lid open and a line of cyan light, a stack of blank paper beside it",
+  "seed": 263667352
+ },
+ {
+  "id": "blog/BackendEngineering/11-agent-orchestration",
+  "out": "/img/blog/backendengineering/11-agent-orchestration.jpg",
+  "prompt": "a railway switching yard at night with tracks converging, signal lights",
+  "seed": 156108663
+ },
+ {
+  "id": "blog/BackendEngineering/12-async-workers",
+  "out": "/img/blog/backendengineering/12-async-workers.jpg",
+  "prompt": "a row of identical small robots working at separate stations",
+  "seed": 240227
+ },
+ {
+  "id": "blog/BackendEngineering/13-gpu-allocation",
+  "out": "/img/blog/backendengineering/13-gpu-allocation.jpg",
+  "prompt": "a graphics card with memory chips highlighted, divided into sections with thin light lines",
+  "seed": 18419138
+ },
+ {
+  "id": "blog/BackendEngineering/14-batching",
+  "out": "/img/blog/backendengineering/14-batching.jpg",
+  "prompt": "several neat stacks of identical plain cardboard boxes grouped on a dark warehouse floor",
+  "seed": 37971994
+ },
+ {
+  "id": "blog/BackendEngineering/15-latency-optimization",
+  "out": "/img/blog/backendengineering/15-latency-optimization.jpg",
+  "prompt": "a race car blurred in motion on a dark track at night, light streaks, unbranded",
+  "seed": 195988244
+ },
+ {
+  "id": "blog/BackendEngineering/16-model-loading-strategies",
+  "out": "/img/blog/backendengineering/16-model-loading-strategies.jpg",
+  "prompt": "a loading dock with crates being lifted onto a shelf, warehouse at night",
+  "seed": 24480262
+ },
+ {
+  "id": "blog/BackendEngineering/17-installing-age",
+  "out": "/img/blog/backendengineering/17-installing-age.jpg",
+  "prompt": "an elephant figurine next to a small graph of connected glass nodes",
+  "seed": 66457517
+ },
+ {
+  "id": "blog/BackendEngineering/18-cypher-queries-in-postgres",
+  "out": "/img/blog/backendengineering/18-cypher-queries-in-postgres.jpg",
+  "prompt": "a network of connected brass pins and string on a dark board, graph structure",
+  "seed": 26922617
+ },
+ {
+  "id": "blog/BackendEngineering/19-graph-sql-hybrid-querying",
+  "out": "/img/blog/backendengineering/19-graph-sql-hybrid-querying.jpg",
+  "prompt": "a grid of wooden blocks on one side merging into a web of connected nodes on the other",
+  "seed": 139238412
+ },
+ {
+  "id": "blog/InfrastructureEngineering/01-k3s-on-raspberry-pis",
+  "out": "/img/blog/infrastructureengineering/01-k3s-on-raspberry-pis.jpg",
+  "prompt": "four small green circuit boards stacked vertically on brass spacers, macro, dark background",
+  "seed": 32849091
+ },
+ {
+  "id": "blog/InfrastructureEngineering/02-hardware-list-and-costs",
+  "out": "/img/blog/infrastructureengineering/02-hardware-list-and-costs.jpg",
+  "prompt": "flat lay of Raspberry Pi boards, SD cards, power supplies and cables on a dark mat",
+  "seed": 78762450
+ },
+ {
+  "id": "blog/InfrastructureEngineering/03-flashing-raspberry-pi-os",
+  "out": "/img/blog/infrastructureengineering/03-flashing-raspberry-pi-os.jpg",
+  "prompt": "a blank microSD card half inserted into a slot on a green circuit board, macro, unlabeled",
+  "seed": 68845348
+ },
+ {
+  "id": "blog/InfrastructureEngineering/04-static-ips-and-networking",
+  "out": "/img/blog/infrastructureengineering/04-static-ips-and-networking.jpg",
+  "prompt": "a small network router and switch with blue ethernet cables, port lights",
+  "seed": 187195456
+ },
+ {
+  "id": "blog/InfrastructureEngineering/05-installing-k3s-control-plane",
+  "out": "/img/blog/infrastructureengineering/05-installing-k3s-control-plane.jpg",
+  "prompt": "a single Raspberry Pi board under a spotlight at the top of a stack",
+  "seed": 66812823
+ },
+ {
+  "id": "blog/InfrastructureEngineering/06-joining-worker-nodes",
+  "out": "/img/blog/infrastructureengineering/06-joining-worker-nodes.jpg",
+  "prompt": "a hand-free shot of an ethernet cable clicking into a Raspberry Pi port",
+  "seed": 255312067
+ },
+ {
+  "id": "blog/InfrastructureEngineering/07-storage-setup",
+  "out": "/img/blog/infrastructureengineering/07-storage-setup.jpg",
+  "prompt": "an external SSD connected by a short cable to a Raspberry Pi board",
+  "seed": 69320580
+ },
+ {
+  "id": "blog/InfrastructureEngineering/08-ingress-setup",
+  "out": "/img/blog/infrastructureengineering/08-ingress-setup.jpg",
+  "prompt": "an open doorway with light streaming in, a doorway into a dark server room",
+  "seed": 36714678
+ },
+ {
+  "id": "blog/InfrastructureEngineering/09-persistent-volumes",
+  "out": "/img/blog/infrastructureengineering/09-persistent-volumes.jpg",
+  "prompt": "stacked solid state drives on a dark surface with blue edge light",
+  "seed": 120609577
+ },
+ {
+  "id": "blog/InfrastructureEngineering/10-monitoring-and-troubleshooting",
+  "out": "/img/blog/infrastructureengineering/10-monitoring-and-troubleshooting.jpg",
+  "prompt": "a stethoscope resting on a small server board",
+  "seed": 177128793
+ },
+ {
+  "id": "blog/InfrastructureEngineering/11-architecture-diagrams",
+  "out": "/img/blog/infrastructureengineering/11-architecture-diagrams.jpg",
+  "prompt": "architect's drafting tools on blank blueprint paper, ruler and compass",
+  "seed": 110725964
+ },
+ {
+  "id": "blog/InfrastructureEngineering/12-arm64-considerations",
+  "out": "/img/blog/infrastructureengineering/12-arm64-considerations.jpg",
+  "prompt": "macro shot of an ARM processor chip on a small circuit board",
+  "seed": 137337983
+ },
+ {
+  "id": "blog/InfrastructureEngineering/13-cluster-architecture-homelab",
+  "out": "/img/blog/infrastructureengineering/13-cluster-architecture-homelab.jpg",
+  "prompt": "a small server rack seen from the front with each shelf lit",
+  "seed": 29930695
+ },
+ {
+  "id": "blog/InfrastructureEngineering/14-cluster-topology",
+  "out": "/img/blog/infrastructureengineering/14-cluster-topology.jpg",
+  "prompt": "a constellation of small lights connected by thin lines on a dark background",
+  "seed": 34274770
+ },
+ {
+  "id": "blog/InfrastructureEngineering/15-consumer-hardware-usage",
+  "out": "/img/blog/infrastructureengineering/15-consumer-hardware-usage.jpg",
+  "prompt": "a gaming PC tower with a glass side panel repurposed as a server, cables tidy",
+  "seed": 122621425
+ },
+ {
+  "id": "blog/InfrastructureEngineering/16-control-plane-taints",
+  "out": "/img/blog/infrastructureengineering/16-control-plane-taints.jpg",
+  "prompt": "a single small server board on a raised dark pedestal under a spotlight, other boards on the floor around it in shadow",
+  "seed": 217803682
+ },
+ {
+  "id": "blog/InfrastructureEngineering/17-cooling-and-power-setup",
+  "out": "/img/blog/infrastructureengineering/17-cooling-and-power-setup.jpg",
+  "prompt": "small cooling fans and a power supply unit arranged on a dark bench",
+  "seed": 207003109
+ },
+ {
+  "id": "blog/InfrastructureEngineering/18-cost-vs-performance-tradeoffs",
+  "out": "/img/blog/infrastructureengineering/18-cost-vs-performance-tradeoffs.jpg",
+  "prompt": "an old brass balance scale with a small computer chip on one pan, dark background",
+  "seed": 145536832
+ },
+ {
+  "id": "blog/InfrastructureEngineering/19-dns-and-service-discovery",
+  "out": "/img/blog/infrastructureengineering/19-dns-and-service-discovery.jpg",
+  "prompt": "an old telephone switchboard with patch cords, operator panel lights",
+  "seed": 129931889
+ },
+ {
+  "id": "blog/InfrastructureEngineering/20-future-expansion-plans",
+  "out": "/img/blog/infrastructureengineering/20-future-expansion-plans.jpg",
+  "prompt": "a compact server rack half filled, empty bays waiting, one new server unit standing beside it",
+  "seed": 116408194
+ },
+ {
+  "id": "blog/InfrastructureEngineering/21-gitea-runners-pipeline",
+  "out": "/img/blog/infrastructureengineering/21-gitea-runners-pipeline.jpg",
+  "prompt": "a factory assembly line with small boxes moving between stations",
+  "seed": 7658487
+ },
+ {
+  "id": "blog/InfrastructureEngineering/22-infrastructure-design",
+  "out": "/img/blog/infrastructureengineering/22-infrastructure-design.jpg",
+  "prompt": "an architect's scale model of a building under a desk lamp",
+  "seed": 132573331
+ },
+ {
+  "id": "blog/InfrastructureEngineering/23-installing-gitea-in-kubernetes",
+  "out": "/img/blog/infrastructureengineering/23-installing-gitea-in-kubernetes.jpg",
+  "prompt": "a small tea cup next to a stack of Raspberry Pi boards",
+  "seed": 217221449
+ },
+ {
+  "id": "blog/InfrastructureEngineering/24-network-topology",
+  "out": "/img/blog/infrastructureengineering/24-network-topology.jpg",
+  "prompt": "a map of glowing nodes connected like a subway map, three-dimensional",
+  "seed": 256639108
+ },
+ {
+  "id": "blog/InfrastructureEngineering/25-networking-issues",
+  "out": "/img/blog/infrastructureengineering/25-networking-issues.jpg",
+  "prompt": "a tangled knot of ethernet cables with one unplugged end",
+  "seed": 95394745
+ },
+ {
+  "id": "blog/InfrastructureEngineering/26-networking-skill",
+  "out": "/img/blog/infrastructureengineering/26-networking-skill.jpg",
+  "prompt": "a hand-crimping tool and ethernet connectors on a dark mat",
+  "seed": 208730637
+ },
+ {
+  "id": "blog/InfrastructureEngineering/27-node-roles",
+  "out": "/img/blog/infrastructureengineering/27-node-roles.jpg",
+  "prompt": "three different brass gears each mounted on its own small green circuit board, side by side",
+  "seed": 72860460
+ },
+ {
+  "id": "blog/InfrastructureEngineering/28-physical-organization",
+  "out": "/img/blog/infrastructureengineering/28-physical-organization.jpg",
+  "prompt": "a pegboard wall with neatly hung cables, tools and labeled bins",
+  "seed": 266495718
+ },
+ {
+  "id": "blog/InfrastructureEngineering/29-pod-layouts",
+  "out": "/img/blog/infrastructureengineering/29-pod-layouts.jpg",
+  "prompt": "seed pods arranged in a neat grid on a dark surface",
+  "seed": 98351653
+ },
+ {
+  "id": "blog/InfrastructureEngineering/30-power-consumption-tradeoffs",
+  "out": "/img/blog/infrastructureengineering/30-power-consumption-tradeoffs.jpg",
+  "prompt": "a glowing light bulb and a small circuit board balanced on the two ends of a wooden seesaw",
+  "seed": 144403884
+ },
+ {
+  "id": "blog/InfrastructureEngineering/31-rack-overview",
+  "out": "/img/blog/infrastructureengineering/31-rack-overview.jpg",
+  "prompt": "a compact open-frame server rack front view, devices on each shelf, blue LEDs",
+  "seed": 26453928
+ },
+ {
+  "id": "blog/InfrastructureEngineering/32-real-deployed-workloads",
+  "out": "/img/blog/infrastructureengineering/32-real-deployed-workloads.jpg",
+  "prompt": "a busy small server rack at night with many activity lights blinking",
+  "seed": 147802023
+ },
+ {
+  "id": "blog/InfrastructureEngineering/33-separation-of-workloads",
+  "out": "/img/blog/infrastructureengineering/33-separation-of-workloads.jpg",
+  "prompt": "glass compartments in an organizer box each holding a different component",
+  "seed": 133650177
+ },
+ {
+  "id": "blog/InfrastructureEngineering/34-storage-strategy",
+  "out": "/img/blog/infrastructureengineering/34-storage-strategy.jpg",
+  "prompt": "a library of labeled storage boxes on metal shelves",
+  "seed": 232207127
+ },
+ {
+  "id": "blog/InfrastructureEngineering/35-systems-thinking",
+  "out": "/img/blog/infrastructureengineering/35-systems-thinking.jpg",
+  "prompt": "a complex clock mechanism with many gears visible behind glass",
+  "seed": 117307280
+ },
+ {
+  "id": "blog/InfrastructureEngineering/36-troubleshooting-skill",
+  "out": "/img/blog/infrastructureengineering/36-troubleshooting-skill.jpg",
+  "prompt": "a multimeter with two probes touching a small green circuit board, dark bench, single light",
+  "seed": 236570304
+ },
+ {
+  "id": "blog/InfrastructureEngineering/37-why-i-built-a-homelab",
+  "out": "/img/blog/infrastructureengineering/37-why-i-built-a-homelab.jpg",
+  "prompt": "a garage workbench at night with a small server rack and a desk lamp",
+  "seed": 87016033
+ },
+ {
+  "id": "blog/InfrastructureEngineering/38-why-lightweight-kubernetes-matters",
+  "out": "/img/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters.jpg",
+  "prompt": "a single dark feather resting on top of a small green single-board computer",
+  "seed": 53531369
+ },
+ {
+  "id": "blog/InfrastructureEngineering/39-why-local-ai-matters",
+  "out": "/img/blog/infrastructureengineering/39-why-local-ai-matters.jpg",
+  "prompt": "a small glowing AI board inside a house-shaped wooden frame",
+  "seed": 232769644
+ },
+ {
+  "id": "blog/InfrastructureEngineering/40-why-self-hosted-git",
+  "out": "/img/blog/infrastructureengineering/40-why-self-hosted-git.jpg",
+  "prompt": "a tree with visible branching roots in a glass terrarium",
+  "seed": 63325739
+ },
+ {
+  "id": "blog/InfrastructureEngineering/41-prometheus-on-pi-cluster",
+  "out": "/img/blog/infrastructureengineering/41-prometheus-on-pi-cluster.jpg",
+  "prompt": "a lit torch beside a stack of Raspberry Pi boards",
+  "seed": 15025857
+ },
+ {
+  "id": "blog/InfrastructureEngineering/42-grafana-on-pi-cluster",
+  "out": "/img/blog/infrastructureengineering/42-grafana-on-pi-cluster.jpg",
+  "prompt": "a dark control room panel of round glowing indicator lights and toggle switches",
+  "seed": 109836926
+ },
+ {
+  "id": "blog/InfrastructureEngineering/43-loki-promtail-on-pi-cluster",
+  "out": "/img/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster.jpg",
+  "prompt": "a long roll of blank paper unrolling across a dark desk",
+  "seed": 94350247
+ },
+ {
+  "id": "blog/InfrastructureEngineering/44-recovering-after-control-plane-ip-change",
+  "out": "/img/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change.jpg",
+  "prompt": "a plain orange lifebuoy with no markings hanging on a dark wall beside a small server rack",
+  "seed": 44853853
+ },
+ {
+  "id": "blog/InfrastructureEngineering/45-deploying-an-app-on-the-rack",
+  "out": "/img/blog/infrastructureengineering/45-deploying-an-app-on-the-rack.jpg",
+  "prompt": "a plain white model rocket without markings on a launch pad beside a small server rack",
+  "seed": 124130130
+ },
+ {
+  "id": "blog/InfrastructureEngineering/46-servicelb-node-label-broke-loadbalancers",
+  "out": "/img/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers.jpg",
+  "prompt": "a single small blank paper tag hanging from a blue network cable, everything else in shadow",
+  "seed": 141799470
+ },
+ {
+  "id": "blog/InfrastructureEngineering/47-running-the-corpus-crawler-on-the-rack",
+  "out": "/img/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack.jpg",
+  "prompt": "a spider web with dew drops glowing in front of a small server rack",
+  "seed": 237102605
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/01-vibe-coding-locally-2026-setup",
+  "out": "/img/blog/local-vibe-coding/01-vibe-coding-locally-2026-setup.jpg",
+  "prompt": "a desk setup at night with a laptop, a large GPU desktop and a small AI board, cozy lamp",
+  "seed": 120555461
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/02-running-ornith-locally-with-ollama",
+  "out": "/img/blog/local-vibe-coding/02-running-ornith-locally-with-ollama.jpg",
+  "prompt": "a large graphics card on a desk with a small llama figurine beside it",
+  "seed": 7410579
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/03-best-local-models-for-coding",
+  "out": "/img/blog/local-vibe-coding/03-best-local-models-for-coding.jpg",
+  "prompt": "a row of trophies of different sizes on a dark shelf",
+  "seed": 215746881
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/04-ai-coding-without-internet",
+  "out": "/img/blog/local-vibe-coding/04-ai-coding-without-internet.jpg",
+  "prompt": "a laptop in a remote cabin at night with no signal, warm lantern light",
+  "seed": 180560974
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/05-openclaw-from-scratch",
+  "out": "/img/blog/local-vibe-coding/05-openclaw-from-scratch.jpg",
+  "prompt": "a mechanical claw machine arm over a desk of computer parts",
+  "seed": 235186299
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/06-first-offline-ai-coding-agent",
+  "out": "/img/blog/local-vibe-coding/06-first-offline-ai-coding-agent.jpg",
+  "prompt": "a small robot sitting at a tiny desk with a laptop, unplugged cable beside it",
+  "seed": 138097152
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/07-connecting-ornith-to-your-codebase",
+  "out": "/img/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase.jpg",
+  "prompt": "a cable plugging into a glowing port on a large graphics card",
+  "seed": 149638425
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/08-building-your-own-coding-assistant",
+  "out": "/img/blog/local-vibe-coding/08-building-your-own-coding-assistant.jpg",
+  "prompt": "a robot arm assembling a smaller robot on a workbench",
+  "seed": 45197399
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/09-why-i-stopped-paying-for-claude",
+  "out": "/img/blog/local-vibe-coding/09-why-i-stopped-paying-for-claude.jpg",
+  "prompt": "a pair of scissors beside a cut cable and a graphics card on a dark desk",
+  "seed": 185820713
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/10-local-ai-vs-claude-code-30-days",
+  "out": "/img/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days.jpg",
+  "prompt": "an hourglass beside a GPU workstation on a desk at night",
+  "seed": 23741960
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/11-ornith-vs-claude-code",
+  "out": "/img/blog/local-vibe-coding/11-ornith-vs-claude-code.jpg",
+  "prompt": "two sleek unpainted chrome model cars side by side at a starting line, no decals",
+  "seed": 246592864
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/12-openclaw-vs-cloud-ides",
+  "out": "/img/blog/local-vibe-coding/12-openclaw-vs-cloud-ides.jpg",
+  "prompt": "a solid workstation on a desk on the left and a cloud of mist on the right",
+  "seed": 31201287
+ },
+ {
+  "id": "blog/Local-Vibe-Coding/13-when-to-buy-a-gpu-vs-api-fees",
+  "out": "/img/blog/local-vibe-coding/13-when-to-buy-a-gpu-vs-api-fees.jpg",
+  "prompt": "a new graphics card lifted halfway out of a plain unmarked cardboard box on a dark desk",
+  "seed": 213644921
+ },
+ {
+  "id": "blog/VerseHub-Engineering/01-versehub-architecture",
+  "out": "/img/blog/versehub-engineering/01-versehub-architecture.jpg",
+  "prompt": "an open old Bible on a desk beside an architectural model of glass boxes",
+  "seed": 30544555
+ },
+ {
+  "id": "blog/VerseHub-Engineering/02-how-i-added-agentic-ai-to-versehub",
+  "out": "/img/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub.jpg",
+  "prompt": "a small robot gently turning the page of an old book",
+  "seed": 249117491
+ },
+ {
+  "id": "blog/VerseHub-Engineering/03-how-i-built-a-production-ai-bible-platform",
+  "out": "/img/blog/versehub-engineering/03-how-i-built-a-production-ai-bible-platform.jpg",
+  "prompt": "an old Bible and a modern server board side by side under warm and cool light",
+  "seed": 25787612
+ },
+ {
+  "id": "blog/VerseHub-Engineering/04-ai-pipeline-design",
+  "out": "/img/blog/versehub-engineering/04-ai-pipeline-design.jpg",
+  "prompt": "glass pipes and valves carrying light through a dark workshop",
+  "seed": 199816171
+ },
+ {
+  "id": "blog/VerseHub-Engineering/05-redis-memory-layer-design",
+  "out": "/img/blog/versehub-engineering/05-redis-memory-layer-design.jpg",
+  "prompt": "a red glass cube glowing on a dark shelf next to small memory chips",
+  "seed": 103290405
+ },
+ {
+  "id": "blog/VerseHub-Engineering/06-verification-pipeline-for-ai-outputs",
+  "out": "/img/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs.jpg",
+  "prompt": "a jeweler's loupe examining a page of an old book",
+  "seed": 125379685
+ },
+ {
+  "id": "blog/VerseHub-Engineering/07-temporal-workflows-in-production",
+  "out": "/img/blog/versehub-engineering/07-temporal-workflows-in-production.jpg",
+  "prompt": "large brass clockwork gears turning behind glass, no clock face",
+  "seed": 132562797
+ },
+ {
+  "id": "blog/VerseHub-Engineering/08-minio-storage-strategy",
+  "out": "/img/blog/versehub-engineering/08-minio-storage-strategy.jpg",
+  "prompt": "rows of archive boxes on metal shelves in a quiet vault",
+  "seed": 79085116
+ },
+ {
+  "id": "blog/VerseHub-Engineering/09-scaling-versehub-with-local-ai-infrastructure",
+  "out": "/img/blog/versehub-engineering/09-scaling-versehub-with-local-ai-infrastructure.jpg",
+  "prompt": "a small server rack beside a tall stack of old books",
+  "seed": 34427382
+ },
+ {
+  "id": "Insights/01-why-lakeland-startups-should-consider-ai-automation",
+  "out": "/img/insights/01-why-lakeland-startups-should-consider-ai-automation.jpg",
+  "prompt": "a small modern office at dusk with palm trees outside the window, a laptop on the desk",
+  "seed": 259556743
+ },
+ {
+  "id": "Insights/02-hiring-a-software-developer-in-lakeland",
+  "out": "/img/insights/02-hiring-a-software-developer-in-lakeland.jpg",
+  "prompt": "two coffee cups on a cafe table with a laptop and a notebook, meeting setting",
+  "seed": 152996609
+ },
+ {
+  "id": "Insights/03-building-custom-business-software-in-central-florida",
+  "out": "/img/insights/03-building-custom-business-software-in-central-florida.jpg",
+  "prompt": "a craftsman's workbench with a laptop and blueprint paper, Florida light through window",
+  "seed": 186722126
+ },
+ {
+  "id": "Insights/04-ai-opportunities-for-small-businesses-in-lakeland",
+  "out": "/img/insights/04-ai-opportunities-for-small-businesses-in-lakeland.jpg",
+  "prompt": "a tablet on a wooden counter in a small cafe at evening, warm pendant lights, no signs",
+  "seed": 62243878
+ },
+ {
+  "id": "Insights/05-when-your-lakeland-business-has-outgrown-its-software",
+  "out": "/img/insights/05-when-your-lakeland-business-has-outgrown-its-software.jpg",
+  "prompt": "a potted plant whose roots have outgrown a small pot, beside a laptop",
+  "seed": 115015748
+ },
+ {
+  "id": "products/1.raspberry-pi-ai-cluster-blueprint",
+  "out": "/img/products/1.raspberry-pi-ai-cluster-blueprint.jpg",
+  "prompt": "four Raspberry Pi boards in an acrylic stack on top of a blueprint sheet",
+  "seed": 180418851
+ },
+ {
+  "id": "products/2.self-hosted-ai-starter-kit",
+  "out": "/img/products/2.self-hosted-ai-starter-kit.jpg",
+  "prompt": "a neatly packed kit box with a small AI board, cables and an SD card, flat lay",
+  "seed": 223373179
+ },
+ {
+  "id": "products/3.production-ai-api-boilerplate",
+  "out": "/img/products/3.production-ai-api-boilerplate.jpg",
+  "prompt": "a steel template plate with precise cutouts on a workbench, engineering",
+  "seed": 238788282
+ },
+ {
+  "id": "products/4.local-vibe-coding-blueprint",
+  "out": "/img/products/4.local-vibe-coding-blueprint.jpg",
+  "prompt": "a laptop and a small AI board on top of a rolled-out blueprint, night desk lamp",
+  "seed": 13356554
+ },
+ {
+  "id": "products/5.tiny-tool-calling-model-blueprint",
+  "out": "/img/products/5.tiny-tool-calling-model-blueprint.jpg",
+  "prompt": "a tiny robot holding a wrench standing on a blueprint sheet, macro",
+  "seed": 253831593
+ },
+ {
+  "id": "category:ai-engineering",
+  "out": "/img/categories/ai-engineering.jpg",
+  "prompt": "precision watchmaker tools laid beside a small glowing circuit board on a dark mat",
+  "seed": 38008284
+ },
+ {
+  "id": "category:algorithms",
+  "out": "/img/categories/algorithms.jpg",
+  "prompt": "polished wooden puzzle pieces fitting together on a dark surface, one piece being placed",
+  "seed": 1431478
+ },
+ {
+  "id": "category:backend-engineering",
+  "out": "/img/categories/backend-engineering.jpg",
+  "prompt": "the back of a server rack with neatly bundled blue cables and small status lights, unbranded",
+  "seed": 78197911
+ },
+ {
+  "id": "category:infrastructure-engineering",
+  "out": "/img/categories/infrastructure-engineering.jpg",
+  "prompt": "a compact rack of small single-board computers with blue ethernet cables and status lights, unbranded",
+  "seed": 242056786
+ },
+ {
+  "id": "category:local-vibe-coding",
+  "out": "/img/categories/local-vibe-coding.jpg",
+  "prompt": "a laptop on a wooden desk at night beside a desk lamp and a small glowing circuit board, cozy and quiet",
+  "seed": 176577853
+ },
+ {
+  "id": "category:agentic-ai-systems",
+  "out": "/img/categories/agentic-ai-systems.jpg",
+  "prompt": "two small robotic arms on a dark table passing a glowing glass cube between them",
+  "seed": 95257082
+ },
+ {
+  "id": "category:ai-homelab-engineering",
+  "out": "/img/categories/ai-homelab-engineering.jpg",
+  "prompt": "a tower PC with a glass side panel showing a large graphics card beside a small server shelf, monitor switched off, blue glow, unbranded",
+  "seed": 121917602
+ },
+ {
+  "id": "category:ai-cost-optimization",
+  "out": "/img/categories/ai-cost-optimization.jpg",
+  "prompt": "a large graphics card on a dark desk beside a small frosted glass cloud sculpture glowing softly",
+  "seed": 149793871
+ },
+ {
+  "id": "category:versehub-engineering",
+  "out": "/img/categories/versehub-engineering.jpg",
+  "prompt": "an old leather-bound Bible open on a desk beside a small server board glowing blue",
+  "seed": 40663886
+ },
+ {
+  "id": "card:lead-capture",
+  "out": "/img/cards/lead-capture.jpg",
+  "prompt": "a vintage telephone on a dark desk with a soft cyan glow, a small blank notepad and pen beside it",
+  "seed": 183466612
+ },
+ {
+  "id": "card:web-apps",
+  "out": "/img/cards/web-apps.jpg",
+  "prompt": "a laptop and a tablet side by side on a dark desk, screens glowing with soft abstract blue color blocks, unbranded",
+  "seed": 175477947
+ },
+ {
+  "id": "card:workflow-automation",
+  "out": "/img/cards/workflow-automation.jpg",
+  "prompt": "neat stacks of blank paper envelopes moving along a small conveyor belt in a dark workshop",
+  "seed": 45545175
+ },
+ {
+  "id": "card:infrastructure",
+  "out": "/img/cards/infrastructure.jpg",
+  "prompt": "a compact server rack with blue status lights in a dark room, cables neatly routed, unbranded",
+  "seed": 183535531
+ },
+ {
+  "id": "card:tool-vram",
+  "out": "/img/cards/tool-vram.jpg",
+  "prompt": "a single unlabeled memory module with gold contacts lying on a dark surface, macro, cyan rim light",
+  "seed": 87400361
+ },
+ {
+  "id": "card:tool-kv-cache",
+  "out": "/img/cards/tool-kv-cache.jpg",
+  "prompt": "a stack of thin glass plates growing taller from left to right, each glowing softly cyan, dark background",
+  "seed": 221698247
+ },
+ {
+  "id": "card:tool-gpu-comparison",
+  "out": "/img/cards/tool-gpu-comparison.jpg",
+  "prompt": "two graphics cards standing upright side by side seen from the metal back bracket end, fans hidden, single spotlight, dark background",
+  "seed": 251803269
+ },
+ {
+  "id": "card:open-roles",
+  "out": "/img/cards/open-roles.jpg",
+  "prompt": "a quiet modern office at dusk with empty desks and warm desk lamps, city lights through tall windows, no people",
+  "seed": 76686716
+ },
+ {
+  "id": "card:cta-projects",
+  "out": "/img/cards/cta-projects.jpg",
+  "prompt": "a single small brass service bell on a dark desk beside a closed laptop, soft warm light",
+  "seed": 223496686
+ },
+ {
+  "id": "card:cta-hire",
+  "out": "/img/cards/cta-hire.jpg",
+  "prompt": "a closed leather portfolio and a fountain pen lying on a dark desk, side light",
+  "seed": 134913681
+ },
+ {
+  "id": "card:website-chat",
+  "out": "/img/cards/website-chat.jpg",
+  "prompt": "a frosted glass speech bubble sculpture glowing softly cyan beside an open laptop on a dark desk",
+  "seed": 44624220
+ },
+ {
+  "id": "card:cta-contact",
+  "out": "/img/cards/cta-contact.jpg",
+  "prompt": "a plain sealed envelope and a fountain pen on a dark wooden desk, warm side light",
+  "seed": 130913636
+ },
+ {
+  "id": "card:cta-plan",
+  "out": "/img/cards/cta-plan.jpg",
+  "prompt": "a sheet of blank blueprint paper with a pencil and a steel ruler on a dark desk, cool light",
+  "seed": 191276107
+ },
+ {
+  "id": "card:cta-launch",
+  "out": "/img/cards/cta-launch.jpg",
+  "prompt": "a desk at sunrise with a closed laptop and a cup of coffee, warm golden light through a window",
+  "seed": 232750892
+ },
+ {
+  "id": "card:webdev-saas-platforms",
+  "out": "/img/cards/webdev-saas-platforms.jpg",
+  "prompt": "several laptops and a tablet arranged on a long dark table, screens glowing with soft abstract blue panels, unbranded",
+  "seed": 94318583
+ },
+ {
+  "id": "card:webdev-apis-backend",
+  "out": "/img/cards/webdev-apis-backend.jpg",
+  "prompt": "neatly bundled blue network cables plugged into the back of a dark server, status lights, unbranded",
+  "seed": 86701998
+ },
+ {
+  "id": "card:webdev-payments-billing",
+  "out": "/img/cards/webdev-payments-billing.jpg",
+  "prompt": "a dark leather wallet with plain blank cards fanned out on a dark desk, side light",
+  "seed": 120379776
+ },
+ {
+  "id": "card:webdev-auth-access",
+  "out": "/img/cards/webdev-auth-access.jpg",
+  "prompt": "a single brass key and a closed steel padlock resting on dark slate",
+  "seed": 142365899
+ },
+ {
+  "id": "card:webdev-document-generation",
+  "out": "/img/cards/webdev-document-generation.jpg",
+  "prompt": "a neat stack of blank white paper beside a fountain pen and a wax seal stamp on a dark desk",
+  "seed": 81717623
+ },
+ {
+  "id": "card:webdev-ai-integration",
+  "out": "/img/cards/webdev-ai-integration.jpg",
+  "prompt": "a small glowing glass orb resting on top of a green circuit board, dark background",
+  "seed": 79494601
+ },
+ {
+  "id": "card:engage-user-research",
+  "out": "/img/cards/engage-user-research.jpg",
+  "prompt": "two empty chairs facing each other across a small round table with two coffee cups, quiet studio",
+  "seed": 194069611
+ },
+ {
+  "id": "card:engage-design-partner",
+  "out": "/img/cards/engage-design-partner.jpg",
+  "prompt": "a small unbranded prototype circuit board under a magnifying lamp on a workbench",
+  "seed": 186039624
+ },
+ {
+  "id": "card:engage-technical-advisory",
+  "out": "/img/cards/engage-technical-advisory.jpg",
+  "prompt": "a brass compass resting on a blank sheet of paper next to a small circuit board, dark desk",
+  "seed": 62362916
+ },
+ {
+  "id": "card:engage-contract-engineering",
+  "out": "/img/cards/engage-contract-engineering.jpg",
+  "prompt": "a tidy workbench with precision screwdrivers, a soldering iron and a small circuit board, warm lamp",
+  "seed": 109302041
+ },
+ {
+  "id": "card:industry-roofing",
+  "out": "/img/cards/industry-roofing.jpg",
+  "prompt": "a stack of dark roof shingles and a hammer on a wooden workbench, evening light",
+  "seed": 7748110
+ },
+ {
+  "id": "card:industry-hvac-plumbing",
+  "out": "/img/cards/industry-hvac-plumbing.jpg",
+  "prompt": "shiny copper pipes joined with brass fittings lying on a dark workbench",
+  "seed": 74738145
+ },
+ {
+  "id": "card:industry-law-firms",
+  "out": "/img/cards/industry-law-firms.jpg",
+  "prompt": "a wooden gavel resting beside a closed leather-bound book on a dark desk",
+  "seed": 121166093
+ },
+ {
+  "id": "card:industry-med-spas-dental",
+  "out": "/img/cards/industry-med-spas-dental.jpg",
+  "prompt": "a clean bright treatment room with a reclining chair and soft lighting, no people",
+  "seed": 56365377
+ },
+ {
+  "id": "card:industry-insurance",
+  "out": "/img/cards/industry-insurance.jpg",
+  "prompt": "a plain umbrella standing open on a dark floor under soft rain light",
+  "seed": 264312248
+ },
+ {
+  "id": "card:industry-real-estate",
+  "out": "/img/cards/industry-real-estate.jpg",
+  "prompt": "a small wooden house model with a brass key in front of it on a dark table",
+  "seed": 173952496
+ },
+ {
+  "id": "card:agentic-planning",
+  "out": "/img/cards/agentic-planning.jpg",
+  "prompt": "a brass compass on a dark cork board with red string connecting three pushpins",
+  "seed": 91115571
+ },
+ {
+  "id": "card:agentic-memory",
+  "out": "/img/cards/agentic-memory.jpg",
+  "prompt": "an old wooden card catalog cabinet with one small drawer open and glowing softly",
+  "seed": 32814183
+ },
+ {
+  "id": "card:agentic-orchestration",
+  "out": "/img/cards/agentic-orchestration.jpg",
+  "prompt": "interlocking brass gears of different sizes turning together on a dark surface",
+  "seed": 93136658
+ },
+ {
+  "id": "card:agentic-verification",
+  "out": "/img/cards/agentic-verification.jpg",
+  "prompt": "a jeweler loupe lying on a small green circuit board, sharp focus, dark background",
+  "seed": 19591202
+ },
+ {
+  "id": "card:homelab-compute",
+  "out": "/img/cards/homelab-compute.jpg",
+  "prompt": "three small AI developer boards with heatsinks in a row on a dark shelf, status LEDs",
+  "seed": 20897593
+ },
+ {
+  "id": "card:homelab-orchestration",
+  "out": "/img/cards/homelab-orchestration.jpg",
+  "prompt": "a single wooden ship helm wheel in front of a small server rack, blue light",
+  "seed": 147596122
+ },
+ {
+  "id": "card:homelab-storage",
+  "out": "/img/cards/homelab-storage.jpg",
+  "prompt": "several hard drives standing in a row on a dark shelf, cyan edge light",
+  "seed": 251112965
+ },
+ {
+  "id": "card:homelab-security",
+  "out": "/img/cards/homelab-security.jpg",
+  "prompt": "a thick dark steel chain wrapped around a small green circuit board on dark slate, side light",
+  "seed": 130273459
+ },
+ {
+  "id": "card:ai-retrieval",
+  "out": "/img/cards/ai-retrieval.jpg",
+  "prompt": "a long library aisle of dark bookshelves with one book pulled out and lit",
+  "seed": 201202896
+ },
+ {
+  "id": "card:ai-agents",
+  "out": "/img/cards/ai-agents.jpg",
+  "prompt": "two small robotic arms working together on a dark table",
+  "seed": 108890126
+ },
+ {
+  "id": "card:ai-memory",
+  "out": "/img/cards/ai-memory.jpg",
+  "prompt": "glass jars on a dark shelf each holding tiny glowing points of light",
+  "seed": 225913843
+ },
+ {
+  "id": "card:ai-evaluation",
+  "out": "/img/cards/ai-evaluation.jpg",
+  "prompt": "an old brass balance scale weighing two small glass spheres, dark background",
+  "seed": 28501774
+ },
+ {
+  "id": "card:backend-apis",
+  "out": "/img/cards/backend-apis.jpg",
+  "prompt": "blue ethernet cables plugged into a row of ports, macro, no labels, blue glow",
+  "seed": 259408191
+ },
+ {
+  "id": "card:backend-services",
+  "out": "/img/cards/backend-services.jpg",
+  "prompt": "small identical metal boxes neatly arranged on dark shelves, each with a blue status light",
+  "seed": 54047126
+ },
+ {
+  "id": "card:backend-databases",
+  "out": "/img/cards/backend-databases.jpg",
+  "prompt": "a stack of thick dark hard drives with cyan edge light on a dark surface",
+  "seed": 37593126
+ },
+ {
+  "id": "card:backend-async-systems",
+  "out": "/img/cards/backend-async-systems.jpg",
+  "prompt": "a conveyor belt carrying small plain cardboard boxes through a dark warehouse",
+  "seed": 18348874
+ },
+ {
+  "id": "card:lvc-models",
+  "out": "/img/cards/lvc-models.jpg",
+  "prompt": "a large graphics card standing on a dark desk seen from the metal bracket end, fans hidden, spotlight",
+  "seed": 216017024
+ },
+ {
+  "id": "card:lvc-agent-loop",
+  "out": "/img/cards/lvc-agent-loop.jpg",
+  "prompt": "a small robot sitting at a tiny desk with a laptop on a dark table",
+  "seed": 101709973
+ },
+ {
+  "id": "card:lvc-retrieval",
+  "out": "/img/cards/lvc-retrieval.jpg",
+  "prompt": "a magnifying glass lying on an open book on a dark desk, warm lamp light",
+  "seed": 230075003
+ },
+ {
+  "id": "card:lvc-hardware",
+  "out": "/img/cards/lvc-hardware.jpg",
+  "prompt": "a tower PC with a glass side panel and a small AI board beside it on a dark desk, monitor switched off, unbranded",
+  "seed": 55566375
+ },
+ {
+  "id": "card:infra-general-compute",
+  "out": "/img/cards/infra-general-compute.jpg",
+  "prompt": "four small green single-board computers stacked on brass spacers, status LEDs, unbranded",
+  "seed": 140820900
+ },
+ {
+  "id": "card:infra-gpu-tier",
+  "out": "/img/cards/infra-gpu-tier.jpg",
+  "prompt": "three small AI developer boards with large heatsinks on a dark shelf, blue glow",
+  "seed": 229174115
+ },
+ {
+  "id": "card:infra-networking",
+  "out": "/img/cards/infra-networking.jpg",
+  "prompt": "blue ethernet cables plugged into a small plain network switch, macro, port lights, no labels",
+  "seed": 51928375
+ },
+ {
+  "id": "card:infra-storage",
+  "out": "/img/cards/infra-storage.jpg",
+  "prompt": "a row of solid state drives standing on edge on a dark surface, cyan light",
+  "seed": 56134304
+ },
+ {
+  "id": "card:infra-cicd",
+  "out": "/img/cards/infra-cicd.jpg",
+  "prompt": "a factory assembly line with small boxes moving between stations, dark",
+  "seed": 6552515
+ },
+ {
+  "id": "card:obs-prometheus",
+  "out": "/img/cards/obs-prometheus.jpg",
+  "prompt": "a lit torch mounted on a dark stone wall, warm flame",
+  "seed": 126628550
+ },
+ {
+  "id": "card:obs-loki",
+  "out": "/img/cards/obs-loki.jpg",
+  "prompt": "a long roll of blank paper unrolling across a dark desk",
+  "seed": 204070359
+ },
+ {
+  "id": "card:obs-grafana",
+  "out": "/img/cards/obs-grafana.jpg",
+  "prompt": "a dark control panel with round glowing indicator lights and toggle switches",
+  "seed": 129586730
+ },
+ {
+  "id": "card:obs-alertmanager",
+  "out": "/img/cards/obs-alertmanager.jpg",
+  "prompt": "a small brass bell on a dark desk lit by a warm spotlight",
+  "seed": 193375130
+ },
+ {
+  "id": "card:kt-cluster-management",
+  "out": "/img/cards/kt-cluster-management.jpg",
+  "prompt": "a compact rack of small single-board computers with status lights, a hand-free view, unbranded",
+  "seed": 163974306
+ },
+ {
+  "id": "card:kt-data-layer",
+  "out": "/img/cards/kt-data-layer.jpg",
+  "prompt": "several small glass cylinders of different colors standing on a dark shelf, soft light",
+  "seed": 58026275
+ },
+ {
+  "id": "card:kt-service-catalog",
+  "out": "/img/cards/kt-service-catalog.jpg",
+  "prompt": "a neat wooden drawer organizer with labeled-free compartments holding small electronic parts",
+  "seed": 100291992
+ },
+ {
+  "id": "card:kt-provisioning",
+  "out": "/img/cards/kt-provisioning.jpg",
+  "prompt": "a single glowing button on a dark control panel under a spotlight",
+  "seed": 14100213
+ },
+ {
+  "id": "card:kt-audit-drift",
+  "out": "/img/cards/kt-audit-drift.jpg",
+  "prompt": "a magnifying glass over a spread of blank paper cards on a dark table",
+  "seed": 2571923
+ },
+ {
+  "id": "card:kt-observability-dashboard",
+  "out": "/img/cards/kt-observability-dashboard.jpg",
+  "prompt": "a dark room with several small round glowing gauges on a wall panel, no numbers",
+  "seed": 162808004
+ },
+ {
+  "id": "section:webdev-what-i-build",
+  "out": "/img/sections/webdev-what-i-build.jpg",
+  "prompt": "a dark workshop desk with a laptop and scattered electronic components, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 240141056
+ },
+ {
+  "id": "section:webdev-case-studies",
+  "out": "/img/sections/webdev-case-studies.jpg",
+  "prompt": "a dark shelf of closed leather binders, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 160930355
+ },
+ {
+  "id": "section:lai-operate",
+  "out": "/img/sections/lai-operate.jpg",
+  "prompt": "a small server rack with blue status lights in a dark room, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 94237522
+ },
+ {
+  "id": "section:lai-lessons",
+  "out": "/img/sections/lai-lessons.jpg",
+  "prompt": "an open notebook and a pen on a dark desk under a lamp, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 74396529
+ },
+ {
+  "id": "section:lai-engagements",
+  "out": "/img/sections/lai-engagements.jpg",
+  "prompt": "two coffee cups on a dark meeting table, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 218846758
+ },
+ {
+  "id": "section:lba-industries",
+  "out": "/img/sections/lba-industries.jpg",
+  "prompt": "a row of small shop windows at night with warm interior light, no signs, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 67280943
+ },
+ {
+  "id": "section:lba-insights",
+  "out": "/img/sections/lba-insights.jpg",
+  "prompt": "a stack of books and a coffee mug on a dark desk, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 205069522
+ },
+ {
+  "id": "section:services-cards",
+  "out": "/img/sections/services-cards.jpg",
+  "prompt": "precision tools laid out on a dark workbench, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 135555473
+ },
+ {
+  "id": "section:agentic-areas",
+  "out": "/img/sections/agentic-areas.jpg",
+  "prompt": "small robotic arms on a dark table, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 143216192
+ },
+ {
+  "id": "section:agentic-metrics",
+  "out": "/img/sections/agentic-metrics.jpg",
+  "prompt": "blue light trails in a dark tunnel, long exposure, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 183801637
+ },
+ {
+  "id": "section:agentic-start",
+  "out": "/img/sections/agentic-start.jpg",
+  "prompt": "a dark library reading table with a single lamp, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 219108426
+ },
+ {
+  "id": "section:homelab-areas",
+  "out": "/img/sections/homelab-areas.jpg",
+  "prompt": "a home office corner at night with a small server shelf, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 254953961
+ },
+ {
+  "id": "section:homelab-metrics",
+  "out": "/img/sections/homelab-metrics.jpg",
+  "prompt": "blinking status LEDs on small circuit boards in the dark, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 23967106
+ },
+ {
+  "id": "section:homelab-start",
+  "out": "/img/sections/homelab-start.jpg",
+  "prompt": "a stack of technical books beside a small circuit board, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 158445283
+ },
+ {
+  "id": "section:ai-areas",
+  "out": "/img/sections/ai-areas.jpg",
+  "prompt": "a translucent glass sphere with fine glowing fibers inside, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 20723494
+ },
+ {
+  "id": "section:ai-metrics",
+  "out": "/img/sections/ai-metrics.jpg",
+  "prompt": "cyan light streaks in a dark room, long exposure, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 20984257
+ },
+ {
+  "id": "section:ai-start",
+  "out": "/img/sections/ai-start.jpg",
+  "prompt": "an open book under a single warm lamp on a dark desk, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 163958722
+ },
+ {
+  "id": "section:backend-areas",
+  "out": "/img/sections/backend-areas.jpg",
+  "prompt": "rows of server ports with blue cables, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 29378628
+ },
+ {
+  "id": "section:backend-start",
+  "out": "/img/sections/backend-start.jpg",
+  "prompt": "a dark desk with a closed notebook and a pen, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 31655338
+ },
+ {
+  "id": "section:infra-layers",
+  "out": "/img/sections/infra-layers.jpg",
+  "prompt": "a compact homelab rack in a dark room, blue status lights, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 74751746
+ },
+ {
+  "id": "section:infra-observability",
+  "out": "/img/sections/infra-observability.jpg",
+  "prompt": "a dark control room panel with small glowing lights, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 128201779
+ },
+ {
+  "id": "section:infra-kingdom",
+  "out": "/img/sections/infra-kingdom.jpg",
+  "prompt": "a dark server room aisle with soft blue light, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 262359860
+ },
+ {
+  "id": "section:infra-start",
+  "out": "/img/sections/infra-start.jpg",
+  "prompt": "a pegboard of neatly hung cables and tools in a dark workshop, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 246109373
+ },
+ {
+  "id": "section:lvc-areas",
+  "out": "/img/sections/lvc-areas.jpg",
+  "prompt": "a laptop on a dark desk at night beside a desk lamp, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 85801205
+ },
+ {
+  "id": "section:lvc-metrics",
+  "out": "/img/sections/lvc-metrics.jpg",
+  "prompt": "blue light glowing softly from inside a dark computer case, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 260053239
+ },
+ {
+  "id": "section:lvc-start",
+  "out": "/img/sections/lvc-start.jpg",
+  "prompt": "a cozy desk at night with a laptop and a cup of tea, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 81771392
+ },
+ {
+  "id": "card:so-core-ai",
+  "out": "/img/cards/so-core-ai.jpg",
+  "prompt": "a softly glowing glass sphere with fine fiber light inside resting on a small circuit board, dark background",
+  "seed": 53245330
+ },
+ {
+  "id": "card:so-core-data",
+  "out": "/img/cards/so-core-data.jpg",
+  "prompt": "several clear glass cubes stacked on a dark shelf, each holding tiny glowing points of light",
+  "seed": 198438409
+ },
+ {
+  "id": "card:so-core-storage",
+  "out": "/img/cards/so-core-storage.jpg",
+  "prompt": "a row of hard drives standing on edge on a dark shelf, cyan edge light",
+  "seed": 23913563
+ },
+ {
+  "id": "card:so-node-arm64",
+  "out": "/img/cards/so-node-arm64.jpg",
+  "prompt": "a stack of small green single-board computers next to three small AI boards with heatsinks, status LEDs, unbranded",
+  "seed": 2854455
+ },
+ {
+  "id": "card:so-node-orchestration",
+  "out": "/img/cards/so-node-orchestration.jpg",
+  "prompt": "a conductor baton resting on a dark music stand in an empty concert hall",
+  "seed": 139170997
+ },
+ {
+  "id": "card:so-node-cicd",
+  "out": "/img/cards/so-node-cicd.jpg",
+  "prompt": "a small conveyor belt carrying plain cardboard boxes past a robotic arm, dark workshop",
+  "seed": 7497651
+ },
+ {
+  "id": "card:so-node-observability",
+  "out": "/img/cards/so-node-observability.jpg",
+  "prompt": "a dark wall of small round glowing indicator lights and gauges without numbers",
+  "seed": 229753277
+ },
+ {
+  "id": "card:so-node-kingdom",
+  "out": "/img/cards/so-node-kingdom.jpg",
+  "prompt": "a tidy workbench with a small server rack, a laptop and neatly coiled cables, warm lamp",
+  "seed": 12752188
+ },
+ {
+  "id": "card:so-pi-control",
+  "out": "/img/cards/so-pi-control.jpg",
+  "prompt": "a single small green single-board computer on a raised dark pedestal under a spotlight",
+  "seed": 180254194
+ },
+ {
+  "id": "card:so-pi-worker-1",
+  "out": "/img/cards/so-pi-worker-1.jpg",
+  "prompt": "a small green single-board computer with blue ethernet cables plugged in, dark desk",
+  "seed": 234607869
+ },
+ {
+  "id": "card:so-pi-worker-2",
+  "out": "/img/cards/so-pi-worker-2.jpg",
+  "prompt": "a small green single-board computer beside a glowing red glass cube, dark background",
+  "seed": 241761256
+ },
+ {
+  "id": "card:so-pi-worker-3",
+  "out": "/img/cards/so-pi-worker-3.jpg",
+  "prompt": "a small green single-board computer beside a neat stack of plain cardboard boxes, dark background",
+  "seed": 221707406
+ },
+ {
+  "id": "card:so-jetson-image",
+  "out": "/img/cards/so-jetson-image.jpg",
+  "prompt": "a small AI developer board with a heatsink beside an artist paintbrush and a blank canvas, dark studio",
+  "seed": 104683402
+ },
+ {
+  "id": "card:so-jetson-speech",
+  "out": "/img/cards/so-jetson-speech.jpg",
+  "prompt": "a small AI developer board with a heatsink beside a studio microphone, dark background",
+  "seed": 236545674
+ },
+ {
+  "id": "card:so-jetson-llm",
+  "out": "/img/cards/so-jetson-llm.jpg",
+  "prompt": "a small AI developer board with a heatsink beside an open book, warm lamp, dark background",
+  "seed": 63303032
+ },
+ {
+  "id": "card:so-stage-push",
+  "out": "/img/cards/so-stage-push.jpg",
+  "prompt": "a finger-free view of a glowing enter key on a dark keyboard, single key lit",
+  "seed": 125891248
+ },
+ {
+  "id": "card:so-stage-trigger",
+  "out": "/img/cards/so-stage-trigger.jpg",
+  "prompt": "a row of dominoes on a dark table with the first one just tipping over",
+  "seed": 226015376
+ },
+ {
+  "id": "card:so-stage-build",
+  "out": "/img/cards/so-stage-build.jpg",
+  "prompt": "a robotic arm assembling small metal parts on a dark workbench",
+  "seed": 16194110
+ },
+ {
+  "id": "card:so-stage-import",
+  "out": "/img/cards/so-stage-import.jpg",
+  "prompt": "plain cardboard boxes being loaded onto small green circuit boards on dark shelves",
+  "seed": 183215434
+ },
+ {
+  "id": "card:so-stage-deploy",
+  "out": "/img/cards/so-stage-deploy.jpg",
+  "prompt": "a small white model rocket without markings lifting off from a pad, dark background",
+  "seed": 114291559
+ },
+ {
+  "id": "card:so-store-minio",
+  "out": "/img/cards/so-store-minio.jpg",
+  "prompt": "rows of plain archive boxes on dark metal shelves in a quiet vault",
+  "seed": 228071418
+ },
+ {
+  "id": "card:so-store-postgres",
+  "out": "/img/cards/so-store-postgres.jpg",
+  "prompt": "a heavy dark oak filing cabinet with brass handles, one drawer slightly open",
+  "seed": 76237238
+ },
+ {
+  "id": "card:so-store-redis",
+  "out": "/img/cards/so-store-redis.jpg",
+  "prompt": "a glowing red glass cube on a dark shelf beside small memory chips",
+  "seed": 139382389
+ },
+ {
+  "id": "card:so-store-weaviate",
+  "out": "/img/cards/so-store-weaviate.jpg",
+  "prompt": "a dark glass cube filled with thousands of tiny glowing points forming clusters",
+  "seed": 185935506
+ },
+ {
+  "id": "section:so-core",
+  "out": "/img/sections/so-core.jpg",
+  "prompt": "a compact homelab rack glowing blue in a dark room, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 143796078
+ },
+ {
+  "id": "section:so-diagram",
+  "out": "/img/sections/so-diagram.jpg",
+  "prompt": "architect drafting tools on blank blueprint paper, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 6811696
+ },
+ {
+  "id": "section:so-narrative",
+  "out": "/img/sections/so-narrative.jpg",
+  "prompt": "a desk lamp lighting an open notebook in a dark room, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 206960752
+ },
+ {
+  "id": "section:so-topology",
+  "out": "/img/sections/so-topology.jpg",
+  "prompt": "small single-board computers connected by blue cables in the dark, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 228198004
+ },
+ {
+  "id": "section:so-monitoring",
+  "out": "/img/sections/so-monitoring.jpg",
+  "prompt": "a dark control room with small glowing indicator lights, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 176979136
+ },
+ {
+  "id": "section:so-cicd",
+  "out": "/img/sections/so-cicd.jpg",
+  "prompt": "a factory assembly line at night with soft blue light, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 155541517
+ },
+ {
+  "id": "section:so-storage",
+  "out": "/img/sections/so-storage.jpg",
+  "prompt": "rows of dark storage shelves in a quiet vault, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 89931623
+ },
+ {
+  "id": "section:so-screens",
+  "out": "/img/sections/so-screens.jpg",
+  "prompt": "a dark desk with several monitors glowing softly, screens out of focus, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 136521063
+ },
+ {
+  "id": "section:so-explore",
+  "out": "/img/sections/so-explore.jpg",
+  "prompt": "a dark server room aisle with soft blue light, very dark and minimal, lots of empty space, soft out of focus background",
+  "seed": 123273357
+ }
+]

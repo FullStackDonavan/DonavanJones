@@ -2,7 +2,7 @@
 title: "Persistent Volumes"
 description: "How persistent volumes and persistent volume claims work in a K3s homelab — storage classes, binding, and real workload data persistence strategies."
 date: 2025-10-16
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - storage
@@ -10,9 +10,12 @@ tags:
 draft: false
 slug: persistent-volumes
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/09-persistent-volumes.jpg
 ---
 
 # Persistent Volumes
+
+A PersistentVolume (PV) is a piece of storage the cluster knows about, and a PersistentVolumeClaim (PVC) is a pod's request for that storage. Kubernetes binds the two so data outlives the pod. On a K3s homelab you can create PVs by hand with `hostPath`, or let K3s's built-in local-path provisioner create them on demand. Either way, stateful pods should be pinned to the node that holds their data.
 
 ## Introduction
 
@@ -22,7 +25,7 @@ To solve this, I use Persistent Volumes (PVs) and Persistent Volume Claims (PVCs
 
 In my rack setup, storage is distributed across mounted external drives connected to Raspberry Pi nodes, with K3s handling orchestration and binding storage dynamically where needed.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -47,7 +50,7 @@ My cluster uses a hybrid storage model:
 For more stable workloads (like databases), I prefer pinning storage to specific nodes with labels such as:
 
 ```bash
-kubectl label node pi-node-1 storage=fast-ssd
+kubectl label node pi-worker-1 storage=fast-ssd
 ```
 
 This ensures workloads with heavy I/O don’t land on weaker nodes.
@@ -55,7 +58,7 @@ This ensures workloads with heavy I/O don’t land on weaker nodes.
 ## Example Persistent Volume (HostPath)
 For simple homelab workloads, I often use hostPath volumes:
 
-```bash
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -76,7 +79,7 @@ This works well in my rack because each node has a known directory structure tha
 ## Persistent Volume Claim
 Applications request storage through PVCs rather than directly referencing nodes:
 
-```bash
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -98,11 +101,13 @@ Because my cluster is ARM64-based and runs on Raspberry Pi nodes, I avoid overly
 
 Used for:
 
-- Databases (PostgreSQL, MySQL)
-- Gitea repositories
+- Databases (PostgreSQL, Redis persistence, Weaviate vectors)
+- Gitea repositories (the PVC setup is in [installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes))
 - CI/CD runners
 - Stateful AI services
-### 2. Shared network storage (Optional layer)
+### 2. Object storage and shared storage
+
+In my cluster, MinIO provides S3-compatible object storage in-cluster (including a training-datasets bucket), so files don't need to live on a PV at all. See [how I set up storage on the cluster](/blog/infrastructureengineering/07-storage-setup) for how the layers fit together.
 
 Used for:
 
@@ -229,5 +234,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Ingress Setup](/blog/infrastructureengineering/08-ingress-setup) — previous in the series
+- [Monitoring and Troubleshooting](/blog/infrastructureengineering/10-monitoring-and-troubleshooting) — next in the series
+- [Storage Strategy](/blog/infrastructureengineering/34-storage-strategy) — the overall storage strategy for the rack
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage) — object storage for datasets and model artifacts
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

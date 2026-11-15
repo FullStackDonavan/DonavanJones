@@ -41,7 +41,7 @@ const testimonials = [
 const markers = [
   { icon: 'mdi:calendar-clock', text: '20+ Years Building Software' },
   { icon: 'mdi:account-group-outline', text: 'Worked with Non-Technical Teams' },
-  { icon: 'mdi:domain', text: '92 Businesses Automated' },
+  { icon: 'mdi:cash-multiple', text: '$10.8M in Payments Processed' },
   { icon: 'mdi:kubernetes', text: 'Production AI Systems on Kubernetes' },
 ]
 

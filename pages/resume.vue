@@ -8,7 +8,7 @@ useSeoMeta({
   ogTitle: 'Resume — Donavan Jones | AI Systems Engineer',
   ogDescription: 'AI Systems Engineer with 20+ years building production RAG pipelines, local LLM inference on Kubernetes, and full-stack SaaS platforms.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/resume.jpg`,
   ogUrl: `${_SITE}/resume`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Resume — Donavan Jones | AI Systems Engineer',
@@ -49,12 +49,13 @@ const experience = [
     dates: 'Aug 2025 – Present',
     caseStudy: { label: 'View full case study →', to: '/projects/business-benefit-alliance' },
     points: [
-      'Served as sole architect and lead developer — gathered requirements from business stakeholders, presented architecture decisions and tradeoffs to non-technical leadership, and owned the system from schema design through production deployment',
-      'Reduced enrollment workflow time from hours to minutes for 92 businesses by replacing a manual, spreadsheet-driven process with an automated SaaS platform — eliminated ~10 tracking spreadsheets and cut per-enrollment support emails from 5–10 to near zero',
-      'Trained end users and administrators post-launch; designed the system to minimize ongoing support overhead — support requests became rare after go-live',
-      'Designed a 5-step enrollment state machine (draft → open → applications-complete → payment-submitted → fulfilled) with atomic transitions — enforces workflow sequence across multiple concurrent actors with no manual coordination required',
-      'Automated PDF generation and document delivery: signed documents composited server-side on every submission, insurance cards delivered directly from the admin dashboard — eliminated manual PDF assembly and email attachment chains entirely',
-      'Coordinated with non-technical teams and business users throughout the build, translating operational workflows into production features and iterating based on real user feedback',
+      'Sole architect and lead developer of the company’s production insurance platform: 10,588 user accounts, 1,859 licensed agents, about 2,000 monthly and 200 daily active users. Gather requirements from leadership and present architecture tradeoffs to non-technical stakeholders',
+      'Built card and ACH premium billing on ePayPolicy that has processed $10.8M across 9,632 successful charges since July 2026. Recurring-charge, polling, and ACH-settlement cron jobs use atomic charge locks so a policy is never charged twice',
+      'Took 8,490 enrollment applications (7,073 signed, 4,654 active paid policies, 2,880 dependents) through an explicit application state machine. 15,706 signed PDFs are generated with pdf-lib and stored in S3 behind short-lived signed URLs',
+      'Built the agent hierarchy and a rule-based commission engine with overrides, point-in-time snapshots, and statement PDFs, plus leaderboards, bonus contests, and 1,888 agent contracting submissions',
+      'Integrated carriers and partners: Marpai 834 EDI over SFTP, IHQ TPA exports every 15 minutes, a group quoting and underwriting pipeline (83 groups, 758 census lives), GoHighLevel, AgencyBloc, Dropbox, Google Sheets, and Microsoft Graph',
+      'Rolled out field-level encryption for SSNs, bank accounts, and underwriting data, with masked API responses and audit-logged reveals. The append-only audit trail has 47,800 entries. Diagnosed and fixed Postgres connection-exhaustion incidents on Vercel serverless',
+      'Scaled the codebase to about 180K lines: 686 API endpoints, 93 Prisma models, 245 additive-only migrations, 8 Vercel cron jobs, and 95 test files. Shipped an in-app support desk (2,659 tickets) and a training library with AI-generated lesson video',
     ],
   },
   {
@@ -110,37 +111,38 @@ const experience = [
 ]
 
 const homelabPoints = [
-  'Designed and operate a 12-node self-hosted Kubernetes cluster (k3s): 8× Raspberry Pi 5 ARM64 nodes for general workloads + 4× NVIDIA Jetson Orin Nano Super GPU nodes for local AI inference',
+  'Designed and operate a 7-node self-hosted Kubernetes cluster (k3s): 4× Raspberry Pi ARM64 nodes (control plane + workers) + 3× NVIDIA Jetson Orin Nano Super 8GB GPU nodes for local AI, plus an RTX 3090 (24GB) workstation for embeddings, LoRA training, and Ornith-1.0-35B (~64 tok/s)',
   'Runs production workloads: VerseHub SaaS platform, PostgreSQL + Apache AGE, Redis, MinIO S3-compatible object storage, Weaviate vector database, and Gitea CI/CD',
-  'Full observability stack: Prometheus metrics, Loki log aggregation, Grafana dashboards, and Alertmanager routing — monitoring all cluster nodes and application services',
-  'Local LLM inference on CUDA-accelerated Jetson nodes: Llama 3.2 serving ~80% of AI requests at under 200ms RAG retrieval latency — ~70% cost reduction vs. full API routing',
-  'Automated CI/CD via self-hosted Gitea Actions: build, type-check, test, and rolling deploy on every push to main',
+  'Full observability stack: Prometheus metrics, Loki + Promtail log aggregation, Grafana dashboards, and a custom /metrics agent for Jetson GPU load — monitoring all cluster nodes and application services',
+  'Model scheduling under 8GB unified memory: one role per Jetson — llama3.2:3b pinned in Ollama (20.8 tok/s, 100% on GPU), Kokoro TTS + Whisper STT (0.85 s round trip), and Stable Diffusion plus ~42 sweep-tested small models swapped one at a time',
+  'Built Kingdom Tools, an internal platform (FastAPI): per-service provisioning of PostgreSQL, MinIO, Redis, and Weaviate, a service catalog with drift detection, Jetson model load/unload/benchmarking, and a LoRA Lab',
+  'Automated CI/CD via self-hosted Gitea Actions: ARM64 images built with docker buildx, imported on each node with k3s ctr, and deployed on every push to main',
   'Cloudflare Tunnel ingress — secure public routing without exposed ports; Flannel CNI for pod networking across heterogeneous hardware tiers',
 ]
 
 const projectSystems = [
   {
-    label: 'Performance Outcomes',
+    label: 'AI Pipeline',
     items: [
-      '37,000+ Bible and Quran verses indexed in Weaviate',
-      'RAG retrieval averaging under 200ms (hybrid BM25 + vector)',
-      '80% of inference requests served by local Llama 3.2 on Jetson GPU nodes',
-      '~70% inference cost reduction vs. full OpenAI API routing',
+      'Fast first answer: llama3.2:3b draft on a Jetson Orin Nano Super at ~21 tok/s',
+      'Temporal ScholarWorkflow on the Pi workers refines it: retrieve → score → generate → verify',
+      'Weaviate retrieval (verses + Church Fathers) with all-MiniLM-L6-v2 embeddings',
+      'Citation verification checks every cited reference against retrieved evidence',
     ],
   },
   {
     label: 'Reliability Outcomes',
     items: [
-      'Zero request-path blocking: FFmpeg transcoding fully decoupled via BullMQ',
-      'Cross-instance WebSocket consistency via Redis pub/sub — no missed messages',
-      '5 independently deployable bounded domains with no cross-domain coupling',
-      'Circuit breaker on AI inference path — auto-routes to fallback on error threshold',
+      'Silent retrieval failures now raise instead of producing confident, evidence-free answers',
+      'Fixed a scripture search path that never sent the query vector to Weaviate',
+      'Fixed Temporal’s default 10 s task timeout and Redis pub/sub replay interleaving streamed text',
+      'Cut three workflows per question to one by moving helper calls to a direct quick-LLM endpoint',
     ],
   },
   {
     label: 'Infrastructure',
     items: [
-      'Self-hosted Kubernetes (k3s) on 12-node cluster — 8× Pi 5 + 4× Jetson Orin Nano Super',
+      'Self-hosted Kubernetes (k3s) on a 7-node cluster — 4× Raspberry Pi + 3× Jetson Orin Nano Super 8GB',
       'MinIO S3-compatible object storage with signed URL delivery',
       'PostgreSQL + Apache AGE for relational and graph queries',
       'Prometheus + Loki + Grafana observability across all services',
@@ -150,7 +152,7 @@ const projectSystems = [
     label: 'Architecture Decisions',
     items: [
       '3 async BullMQ queues — transcoding, notifications, AI batch — keep API non-blocking',
-      'Prompt complexity classifier routes to local or cloud inference transparently',
+      'Fast local draft first, durable Temporal refinement second — users see an answer immediately',
       'Redis pub/sub for cross-instance real-time state — no sticky sessions required',
       'Domain-driven service modules: each domain owns its schema and data access',
     ],
@@ -162,7 +164,8 @@ const projectSystems = [
   <PatternSection>
 
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
-    <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 print:border-0">
+    <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 print:border-0">
+      <HeroBackdrop src="/img/heroes/resume.jpg" />
       <div class="max-w-7xl mx-auto px-6 py-14 sm:py-20">
 
         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
@@ -262,10 +265,10 @@ const projectSystems = [
               </div>
               <div class="p-5 space-y-3">
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  AI Systems Engineer with 20+ years of end-to-end ownership — from gathering requirements with business stakeholders through architecture decisions, implementation, and production operations. Most recently served as sole architect and lead developer for a group benefits enrollment platform that automated workflows for 92 businesses, cutting enrollment time from hours to minutes and eliminating 10+ manual tracking spreadsheets.
+                  AI Systems Engineer with 20+ years of end-to-end ownership — from gathering requirements with business stakeholders through architecture decisions, implementation, and production operations. Currently sole architect and lead developer of a production insurance platform with 1,859 agents and about 2,000 monthly active users. It has taken 8,490 enrollment applications and processed $10.8M in card and ACH premium payments, and it runs commissions, group quoting, and 834 EDI carrier feeds.
                 </p>
                 <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Also building a production AI platform on a self-hosted 12-node Kubernetes cluster: RAG pipelines with hybrid search under 200ms, local LLM inference on NVIDIA Jetson GPU nodes reducing inference costs ~70%, and full Prometheus + Loki + Grafana observability. I work best when I own the full problem — from first stakeholder conversation to production deployment.
+                  Also building and operating a self-hosted AI platform: a 7-node K3s cluster (4 Raspberry Pis + 3 NVIDIA Jetson Orin Nano Super 8GB) plus an RTX 3090 workstation, Temporal-orchestrated RAG with citation verification for VerseHub, the Kingdom Tools internal platform, and full Prometheus + Loki + Grafana observability. I work best when I own the full problem — from first stakeholder conversation to production deployment.
                 </p>
               </div>
             </div>
@@ -493,7 +496,7 @@ const projectSystems = [
                     </span>
                   </div>
                   <p class="text-sm text-slate-500 dark:text-slate-400 mb-3">
-                    37K+ verses indexed · &lt;200ms RAG retrieval · 80% local inference · ~70% cost reduction · 5 bounded domains · Self-hosted Kubernetes
+                    Jetson llama3.2:3b fast draft · Temporal RAG workflow (retrieve → score → generate → verify) · Citation verification · Kokoro + Whisper voice · Self-hosted Kubernetes
                   </p>
                   <NuxtLink
                     to="/projects/versehub"

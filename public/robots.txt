@@ -4,4 +4,18 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 
+# AI search and answer engines are welcome
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+
 Sitemap: https://donavanjones.com/sitemap.xml
+# LLM-readable site summary: https://donavanjones.com/llms.txt

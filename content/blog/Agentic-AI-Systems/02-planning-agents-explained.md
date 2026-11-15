@@ -1,22 +1,23 @@
 ---
 title: "Planning Agents Explained"
-description: "How planning agents decompose complex tasks into ordered steps, and the failure modes that show up when planning goes wrong."
-date: 2026-04-20
-lastUpdated: "2026-06-09"
+description: "Planning agents explained: how an agent turns a vague task into ordered steps, when it should replan, and the failure modes like drift and thrashing to watch."
+date: 2026-07-25
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - planning
-draft: true
+draft: false
 slug: planning-agents-explained
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/02-planning-agents-explained.jpg
 ---
 
 # Planning Agents Explained
 
 A planning agent's job is to take an ambiguous, high-level task and turn it into an ordered sequence of concrete, executable steps before any of them run. This is distinct from a reactive agent that decides its next action one step at a time with no upfront plan — and the difference matters more than it sounds.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -28,7 +29,7 @@ destinationUrl: "/categories/agentic-ai-systems"
 
 ## Planning vs Reactive Execution
 
-A purely reactive agent decides each next action based only on the current state — useful for short tasks, but prone to getting stuck in local decisions that don't add up to a coherent overall solution on longer tasks. A planning agent first produces something like:
+A purely reactive agent (the [tool-based reasoning](/blog/ai-engineering/08-tool-based-reasoning) loop in its simplest form) decides each next action based only on the current state — useful for short tasks, but prone to getting stuck in local decisions that don't add up to a coherent overall solution on longer tasks. A planning agent first produces something like:
 
 ```
 1. Identify all files that reference the deprecated function
@@ -72,7 +73,7 @@ destinationUrl: "/systems/agentic-ai"
 
 **Thrashing** — replanning too eagerly on minor surprises, burning time and tokens without making forward progress.
 
-Guarding against these is mostly a matter of making the plan and its revisions visible — logged, reviewable, and checkpointed — rather than trusting the agent's internal state silently.
+Guarding against these is mostly a matter of making the plan and its revisions visible — logged, reviewable, and checkpointed (durable execution with [Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) makes the checkpointing part nearly free) — rather than trusting the agent's internal state silently. A plan built on wrong assumptions about the codebase is also a retrieval problem: [giving the agent project context with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) prevents a lot of overconfident plans before they start.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -87,7 +88,7 @@ Guarding against these is mostly a matter of making the plan and its revisions v
   ---
   buttonText: "Read: Teaching AI Agents About Your Project with RAG"
   supportingCopy: "Giving a planning agent the project-specific context it needs."
-  destinationUrl: "/blog/agentic-ai-systems/teaching-ai-agents-about-your-project-with-rag"
+  destinationUrl: "/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag"
   ---
   :::
 
@@ -115,6 +116,13 @@ links:
     description: "The interleaved reasoning-and-acting pattern that underlies plan revision in modern agent loops."
 ---
 ::
+
+## Related reading
+
+- [Single Agent vs Multi-Agent Systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) — previous: why one well-designed agent is usually the right start
+- [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) — next: feeding a planner the project-specific context it lacks
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the whole agentic AI series
+- [Building Your First AI Coding Agent That Runs Completely Offline](/blog/local-vibe-coding/06-first-offline-ai-coding-agent) — a planning-style coding agent running fully offline
 
 ---
 

@@ -9,7 +9,7 @@
       </div>
       <span class="inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-        Completed
+        Active
       </span>
     </div>
 
@@ -23,16 +23,16 @@
         <div>
           <p class="text-xl font-bold text-slate-900 dark:text-white mb-0.5">Business Benefit Alliance</p>
           <p class="text-sm text-slate-500 dark:text-slate-400">
-            Production SaaS · Group Insurance Enrollment · Sole Developer &amp; Architect
+            Production SaaS · Insurance Enrollment &amp; Payments · Sole Developer &amp; Architect
           </p>
         </div>
       </div>
 
       <!-- Description -->
       <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-        A full-stack group insurance enrollment platform that automated a previously manual process for 92 businesses.
-        I gathered requirements from stakeholders, presented architecture decisions to non-technical leadership, built the system,
-        trained end users, and owned it through production. Enrollment workflows that took hours now take minutes.
+        A production insurance platform that began as a fix for a manual enrollment process and now runs the whole business:
+        enrollment, card and ACH billing, agent commissions, group quoting, and carrier data feeds. I gather requirements from
+        leadership, make the architecture calls, build it, and own it in production as sole developer.
       </p>
 
       <!-- Before / After -->
@@ -150,32 +150,32 @@
 
 <script setup lang="ts">
 const before = [
-  'Enrollment workflows took hours per business cycle',
-  '5–10 support emails required per enrollment to coordinate between roles',
-  '~10 spreadsheets tracking enrollment status manually',
+  'Enrollment took hours per business cycle',
+  '5–10 support emails per enrollment to coordinate between roles',
+  'About 10 spreadsheets tracking enrollment status by hand',
   'PDFs assembled and forwarded by hand',
 ]
 
 const after = [
-  'Enrollment workflows take minutes',
-  'Support requests became rare — system enforces workflow automatically',
-  'All spreadsheets eliminated — single auditable platform',
-  'PDFs auto-generated server-side; cards delivered from dashboard',
+  '8,490 applications taken in-platform, 7,073 signed',
+  '$10.8M in card and ACH premiums processed automatically',
+  '1,859 agents with commissions calculated from rules',
+  'Carrier files sent as 834 EDI over SFTP on a schedule',
 ]
 
 const stats = [
-  { value: '92',    label: 'Businesses Onboarded' },
-  { value: '~10',   label: 'Spreadsheets Eliminated' },
-  { value: '0',     label: 'Manual Assignment Steps' },
-  { value: '100%',  label: 'Audit Coverage' },
+  { value: '$10.8M', label: 'Payments Processed' },
+  { value: '8,490',  label: 'Enrollment Applications' },
+  { value: '1,859',  label: 'Licensed Agents' },
+  { value: '~2,000', label: 'Monthly Active Users' },
 ]
 
 const outcomes = [
-  'Automated end-to-end enrollment for 92 businesses — invite codes auto-link employees to the correct company on sign-up, eliminating manual admin assignment.',
-  'Eliminated manual PDF assembly: signed documents generated server-side on every form submission with digital signatures composited in — one coherent file stored to S3.',
-  'Insurance cards delivered directly from the admin dashboard — no email attachments, no manual forwarding per employee.',
-  'Append-only audit trail covers every enrollment action, replacing informal tracking for a workflow that requires legal traceability.',
-  'State machine enforces the full 5-step enrollment sequence across multiple actors — no employee can submit out of order, no owner can authorize payment before all applications are complete.',
+  '9,632 successful card and ACH premium charges since July 2026. Recurring billing and ACH settlement run on daily cron jobs with atomic charge locks.',
+  '15,706 signed application PDFs generated on the server and stored in S3 behind short-lived signed URLs.',
+  'SSNs, bank accounts, and underwriting data encrypted at rest, with masked API responses and audit-logged reveals.',
+  '47,800 append-only audit entries covering enrollment, payment, and admin actions.',
+  '2,659 support tickets and 1,888 agent contracting submissions handled in-app instead of by email.',
 ]
 
 const challenges = [
@@ -202,14 +202,14 @@ const challenges = [
 ]
 
 const lessons = [
-  'State machine design keeps multi-actor workflows auditable without reconstructing history from events.',
-  'Server-side document generation ensures legally significant PDFs are tamper-resistant from the moment they are created.',
-  'Soft delete over hard delete preserves enrollment record integrity across all workflow phases — data is never unrecoverable.',
+  'Money movement needs idempotency on the server, such as charge locks and in-flight markers, not just a disabled button in the UI.',
+  'Additive-only migrations (245 so far) mean a deploy never breaks a running serverless function that is still on the old schema.',
+  'Commission statements have to come from point-in-time snapshots, or a past period will change every time the rules do.',
 ]
 
 const stack = [
   'Nuxt 3', 'Vue 3', 'TypeScript', 'Tailwind CSS',
-  'Nitro Server', 'Prisma ORM', 'PostgreSQL',
-  'AWS S3', 'Nodemailer', 'PDF Generation', 'Digital Signatures', 'Zod', 'Pinia',
+  'Nitro Server', 'Prisma ORM', 'PostgreSQL', 'Redis',
+  'Vercel', 'AWS S3', 'ePayPolicy', 'pdf-lib', 'SFTP / EDI 834', 'Zod',
 ]
 </script>

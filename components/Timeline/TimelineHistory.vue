@@ -9,7 +9,7 @@
           jobDate="July 2025 to Present"
           jobTitle="Software Engineer"
           jobImage="/img/Amerus-Logo.png"
-          jobDescription="I developed two production applications, the Amerus Financial app and the NBBA app. The Amerus Financial app includes financial calculators and structured checklists to support agents and clients in the decision making process. The NBBA app is a full client management system where agents sign up insurance clients, capture required information, and complete digital paperwork, while administrators receive generated PDFs and enroll clients into group plan insurance programs. In addition to the applications, I built and maintained client facing websites and implemented Go High Level marketing funnels to improve lead capture and conversion, with a strong focus on performance, usability, and reliable data handling.
+          jobDescription="I developed two production applications, the Amerus Financial app and the NBBA app. The Amerus Financial app includes financial calculators and structured checklists to support agents and clients in the decision making process. The NBBA app is a production insurance platform used by 1,859 licensed agents and about 2,000 users a month. It has taken 8,490 enrollment applications and processed $10.8M in card and ACH premium payments. It also runs agent commissions, group quoting and underwriting, and carrier data feeds (834 EDI over SFTP). In addition to the applications, I built and maintained client facing websites and implemented Go High Level marketing funnels to improve lead capture and conversion, with a strong focus on performance, usability, and reliable data handling.
 "
         />
 

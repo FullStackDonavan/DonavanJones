@@ -1,8 +1,8 @@
 ---
 title: "Semantic Retrieval"
-description: "Semantic retrieval techniques for theological AI systems."
+description: "Semantic retrieval for theological AI: the query-to-rerank pipeline, where vector search fails (negation, rare terms), and hybrid semantic + BM25 retrieval."
 date: 2026-05-26
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: semantic-retrieval
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/12-semantic-retrieval.jpg
 ---
 
 # Semantic Retrieval
@@ -19,7 +20,7 @@ Semantic retrieval is the process of finding content that means what a query mea
 
 Earlier articles covered the infrastructure of semantic retrieval (vector databases, embedding services) and the domain-specific design of retrieval systems for theology. This article focuses on the techniques themselves: how semantic retrieval works at the query-document matching level, where it succeeds and where it predictably fails for theological content, and the practical methods used to compensate for its failures.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -83,11 +84,11 @@ The classification determines: which embedding strategy to use (raw query, rewri
 
 ### Stage 2: Query Embedding
 
-Covered in detail in article 11. The short version: complex queries use HyDE; short queries use rewriting; follow-up queries embed the full conversational context. Simple direct lookups skip embedding entirely.
+Covered in detail in [article 11](/blog/ai-engineering/11-embedding-strategies). The short version: complex queries use HyDE; short queries use rewriting; follow-up queries embed the full conversational context. Simple direct lookups skip embedding entirely.
 
 ### Stage 3: Candidate Retrieval
 
-ANN search returns the top-k candidates by approximate cosine similarity. Two design decisions at this stage:
+[ANN search](/blog/backendengineering/05-vector-search) returns the top-k candidates by approximate cosine similarity. Two design decisions at this stage:
 
 **k selection**: retrieving too few candidates (k=5) risks missing the best passage if approximate search places it at position 6. Retrieving too many (k=50) floods the reranker with noise and slows reranking. For theological content, k=20 is the default; complex comparative queries use k=30 to ensure broad coverage.
 
@@ -130,7 +131,7 @@ async function rerank(
 }
 ```
 
-The reranker runs on the local GPU (article 13 in the Backend Engineering series). Latency: 20–30ms for 20 candidates. This is in the request path; the latency is justified by the retrieval quality improvement.
+The reranker runs on a local GPU (scheduling is covered in [GPU Allocation](/blog/backendengineering/13-gpu-allocation) in the Backend Engineering series). Expect roughly 20–30ms for 20 candidates with a small cross-encoder. This is in the request path; the latency is justified by the retrieval quality improvement.
 
 ### Stage 5: Result Assembly
 
@@ -220,7 +221,7 @@ function selectHybridAlpha(analysis: QueryAnalysis): number {
 }
 ```
 
-BM25 search runs against the full-text index in Postgres (using `tsvector` and `ts_rank`). The scores from Postgres BM25 and Qdrant semantic search are normalized to a common 0-1 range before combining.
+BM25 search runs against the full-text index in Postgres (using `tsvector` and `ts_rank`). The scores from Postgres BM25 and Weaviate semantic search are normalized to a common 0-1 range before combining.
 
 ## Contextual Compression
 
@@ -331,6 +332,14 @@ links:
     description: "Established that dense retrieval outperforms BM25 for natural language questions — the evidence base for semantic retrieval over keyword search."
 ---
 ::
+
+## Related reading
+
+- [Embedding Strategies](/blog/ai-engineering/11-embedding-strategies) — previous in the AI Engineering series
+- [Citation Grounding](/blog/ai-engineering/13-citation-grounding) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Vector Search](/blog/backendengineering/05-vector-search) — the vector search service behind stage 3
+- [AI Pipeline Design](/blog/versehub-engineering/04-ai-pipeline-design) — where retrieval sits in VerseHub's pipeline
 
 ---
 

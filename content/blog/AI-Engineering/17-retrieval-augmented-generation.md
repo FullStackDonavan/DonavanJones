@@ -1,8 +1,8 @@
 ---
 title: "Retrieval Augmented Generation"
-description: "Using retrieval augmented generation in theological AI pipelines."
+description: "Retrieval-augmented generation explained through a theological AI: the full RAG architecture, hybrid retrieval, reranking, context assembly and its limits."
 date: 2026-06-08
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,13 +11,16 @@ tags:
 draft: false
 slug: retrieval-augmented-generation
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/17-retrieval-augmented-generation.jpg
 ---
 
 # Retrieval Augmented Generation
 
-The earlier articles in this series have covered individual components of retrieval-augmented generation in detail: vector databases, embedding strategies, semantic retrieval, chunking, citation grounding, hallucination reduction, and prompt engineering. This article steps back and explains the whole: what RAG is, why it is the right architecture for theological AI specifically, how the retrieval and generation sides interact, and the design decisions that make the difference between a RAG system that feels like a knowledgeable guide and one that feels like an expensive search engine with a language model stapled to the end.
+Retrieval-augmented generation (RAG) means retrieving relevant source text first and generating the answer from it, instead of relying on what the model memorized in training. For a Bible study platform that makes answers checkable against scripture and commentary — as long as retrieval, reranking and context assembly are engineered as carefully as the prompt.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+The earlier articles in this series have covered individual components of retrieval-augmented generation in detail: [vector databases](/blog/ai-engineering/02-vector-databases), [embedding strategies](/blog/ai-engineering/11-embedding-strategies), semantic retrieval, chunking, citation grounding, hallucination reduction, and prompt engineering. This article steps back and explains the whole: what RAG is, why it is the right architecture for theological AI specifically, how the retrieval and generation sides interact, and the design decisions that make the difference between a RAG system that feels like a knowledgeable guide and one that feels like an expensive search engine with a language model stapled to the end.
+
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -51,7 +54,7 @@ Commentary library                     ▼
    Patristic, Historical)              │
 Lexical resources                      ▼
   (BDAG, BDB, Strong's)           Retrieval (parallel)
-Cross-reference graph             ├─ Vector search (Qdrant)
+Cross-reference graph             ├─ Vector search (Weaviate)
 User notes                        ├─ Keyword search (BM25)
 User memory                       ├─ Graph traversal (AGE)
                                   └─ Direct lookup
@@ -66,7 +69,7 @@ User memory                       ├─ Graph traversal (AGE)
                                    + conversation history)
                                        │
                                        ▼
-                                  Generation (Claude)
+                                  Generation (draft + refine)
                                        │
                                        ▼
                                   Post-processing
@@ -192,11 +195,11 @@ What makes generation work in a RAG system:
 
 RAG is a significant improvement over pure generation from training memory. It is not a complete solution to the problems of AI-generated theological content.
 
-**RAG does not solve hallucination.** It significantly reduces it by grounding generation in retrieved evidence. But the model can still hallucinate within the constraints — asserting that retrieved content says something it does not, making connections between passages that are not supported, generating plausible-sounding interpretations that have no scholarly basis. The hallucination reduction techniques in article 14 address this, but no combination of techniques eliminates it.
+**RAG does not solve hallucination.** It significantly reduces it by grounding generation in retrieved evidence. But the model can still hallucinate within the constraints — asserting that retrieved content says something it does not, making connections between passages that are not supported, generating plausible-sounding interpretations that have no scholarly basis. The hallucination reduction techniques in [article 14](/blog/ai-engineering/14-hallucination-reduction) address this, but no combination of techniques eliminates it.
 
 **RAG does not solve interpretive bias.** The retrieval system returns what is in the knowledge base. If the knowledge base over-represents one theological tradition, retrieval will consistently surface that tradition's interpretation and underrepresent others. The knowledge base design — balanced commentary representation across Reformed, Evangelical, Arminian, Anglican, Catholic, and Patristic traditions — is as important as the retrieval quality.
 
-**RAG does not solve context window limits.** A user who has studied a book of the Bible across 40 sessions has accumulated more context than fits in any model's context window. Memory compression, semantic summarization, and episodic memory retrieval (article 19) address this, but they are imperfect approximations. The model never has complete context about what a user has learned.
+**RAG does not solve context window limits.** A user who has studied a book of the Bible across 40 sessions has accumulated more context than fits in any model's context window. Memory compression, semantic summarization, and episodic memory retrieval ([article 19](/blog/ai-engineering/19-memory-systems)) address this, but they are imperfect approximations. The model never has complete context about what a user has learned.
 
 **RAG does not replace human judgment.** The platform's most important feature is that it surfaces evidence and options, not that it provides answers. A user who reads "Reformed commentators tend to read this verse as supporting unconditional election, while Arminian commentators read it as conditional" has what they need to form their own view. A user who reads "this verse teaches unconditional election" has been given a theological conclusion dressed as evidence. RAG helps make the first kind of response easier to produce. The prompt design, content constraints, and uncertainty expressions ensure it actually happens.
 
@@ -279,6 +282,14 @@ links:
     description: "Foundational discipline covering document indexing, ranking, and relevance — the theoretical underpinning of the retrieval side of RAG."
 ---
 ::
+
+## Related reading
+
+- [Prompt Engineering](/blog/ai-engineering/16-prompt-engineering) — previous in the AI Engineering series
+- [Theological Consistency](/blog/ai-engineering/18-theological-consistency) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) — the same RAG pattern applied to a codebase
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — the architecture this RAG system runs in
 
 ---
 

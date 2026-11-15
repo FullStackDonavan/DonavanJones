@@ -9,14 +9,23 @@
            transition-all duration-300"
   >
     <!-- IMAGE -->
-    <div class="overflow-hidden">
+    <div class="overflow-hidden h-48 bg-slate-100 dark:bg-slate-800">
       <img
-        :src="imageUrl"
-        :alt="article.title"
+        v-if="article.excerptImage"
+        :src="article.excerptImage"
+        alt=""
+        width="600"
+        height="315"
+        loading="lazy"
+        decoding="async"
         class="w-full h-48 object-cover
                transition-transform duration-500
                group-hover:scale-105"
       />
+      <!-- no third-party placeholder service: a quiet local fallback -->
+      <div v-else class="flex h-full items-center justify-center" aria-hidden="true">
+        <Icon name="mdi:text-box-outline" class="text-4xl text-slate-300 dark:text-slate-600" />
+      </div>
     </div>
 
     <!-- CONTENT -->
@@ -99,13 +108,6 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-})
-
-const imageUrl = computed(() => {
-  return props.article.excerptImage ||
-    `https://placehold.co/600x400/png?text=${encodeURIComponent(
-      props.article.title
-    )}`
 })
 
 const formattedDate = computed(() => {

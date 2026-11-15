@@ -7,13 +7,35 @@ useSeoMeta({
   ogTitle: 'Backend Systems Engineering — Donavan Jones',
   ogDescription: 'Production backend patterns — REST APIs, BullMQ queues, PostgreSQL with Prisma, Redis caching, and typed service layers in Nuxt 3 and Node.js.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/systems-backend.jpg`,
   ogUrl: `${_SITE}/systems/backend`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Backend Systems Engineering — Donavan Jones',
   twitterDescription: 'Backend architecture for production systems — BullMQ queues, PostgreSQL, Redis, typed service layers in Nuxt 3.',
   canonical: `${_SITE}/systems/backend`,
 })
+
+// Curated entry points into this topic cluster (all URLs verified against published posts)
+const startHere = [
+  { to: '/blog/backendengineering/01-monolith-vs-microservices', title: 'Monolith vs microservices', desc: 'Where to draw service boundaries, and when not to.' },
+  { to: '/blog/backendengineering/08-inference-services', title: 'Inference services', desc: 'Serving model inference behind a stable API.' },
+  { to: '/blog/backendengineering/09-embedding-services', title: 'Embedding services', desc: 'Running embedding generation as its own service.' },
+  { to: '/blog/backendengineering/12-async-workers', title: 'Async workers', desc: 'Keeping heavy work off the request path.' },
+  { to: '/blog/backendengineering/13-gpu-allocation', title: 'GPU allocation', desc: 'Sharing scarce GPU memory between services.' },
+  { to: '/blog/backendengineering/16-model-loading-strategies', title: 'Model loading strategies', desc: 'Load, pin, and swap models without OOM surprises.' },
+  { to: '/blog/backendengineering/06-streaming', title: 'Streaming responses', desc: 'Getting tokens to the client as they are generated.' },
+  { to: '/blog/backendengineering/19-graph-sql-hybrid-querying', title: 'Graph + SQL hybrid querying', desc: 'Apache AGE and Cypher alongside relational queries in Postgres.' },
+  { to: '/blog/algorithms-and-data-structures/sliding-window', title: 'Sliding window pattern', desc: 'An algorithms primer from the fundamentals series.' },
+]
+
+const relatedLinks = [
+  { to: '/categories/algorithms', label: 'Algorithms & data structures articles' },
+  { to: '/systems/ai', label: 'AI Systems Engineering' },
+  { to: '/systems/infrastructure', label: 'Infrastructure Engineering' },
+  { to: '/systems/agentic-ai', label: 'Agentic AI Systems' },
+  { to: '/projects/versehub', label: 'VerseHub case study' },
+  { to: '/projects/kingdom-tools', label: 'Kingdom Tools platform' },
+]
 
 const principles = [
   { icon: 'mdi:arrow-decision',   color: 'sky',    text: 'Design stateless APIs wherever possible — state lives in the store, not the server' },
@@ -25,25 +47,25 @@ const principles = [
 const areas = [
   {
     icon: 'mdi:api', color: 'sky',
-    title: 'APIs',
+    title: 'APIs', image: '/img/cards/backend-apis.jpg',
     desc: 'REST and event-driven endpoints, Zod schema validation, authentication middleware, and typed service contracts.',
     tags: ['Nitro', 'FastAPI', 'Zod', 'JWT'],
   },
   {
     icon: 'mdi:hexagon-multiple', color: 'purple',
-    title: 'Services',
+    title: 'Services', image: '/img/cards/backend-services.jpg',
     desc: 'Domain-driven service modules, typed interfaces across boundaries, modular monolith patterns.',
     tags: ['DDD', 'Prisma', 'Service Layer'],
   },
   {
     icon: 'mdi:database', color: 'emerald',
-    title: 'Databases',
+    title: 'Databases', image: '/img/cards/backend-databases.jpg',
     desc: 'PostgreSQL + Apache AGE for relational and graph queries. Redis for caching and pub/sub. Weaviate for vector search and hybrid retrieval.',
     tags: ['PostgreSQL', 'Apache AGE', 'Redis', 'Weaviate'],
   },
   {
     icon: 'mdi:swap-horizontal', color: 'amber',
-    title: 'Async Systems',
+    title: 'Async Systems', image: '/img/cards/backend-async-systems.jpg',
     desc: 'BullMQ job queues, dedicated workers, dead-letter queues, exponential backoff, and event-driven flows.',
     tags: ['BullMQ', 'Workers', 'Dead-letter'],
   },
@@ -223,35 +245,42 @@ useHead({
       </div>
 
       <!-- ARCHITECTURE AREAS -->
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/backend-areas.jpg" side="full" />
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">Backend Architecture Areas</h2>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="area in areas"
             :key="area.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 flex flex-col gap-3
                    hover:border-sky-500/40 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-sky-500/10 border-sky-500/20':         area.color === 'sky',
-                'bg-purple-500/10 border-purple-500/20':   area.color === 'purple',
-                'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
-                'bg-amber-500/10 border-amber-500/20':     area.color === 'amber',
-              }"
-            >
-              <Icon :name="area.icon" class="text-xl"
-                :class="{
-                  'text-sky-400':    area.color === 'sky',
-                  'text-purple-400': area.color === 'purple',
-                  'text-emerald-400':area.color === 'emerald',
-                  'text-amber-400':  area.color === 'amber',
-                }"
-              />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="area.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                    :class="{
+                      'bg-sky-500/10 border-sky-500/20':         area.color === 'sky',
+                      'bg-purple-500/10 border-purple-500/20':   area.color === 'purple',
+                      'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
+                      'bg-amber-500/10 border-amber-500/20':     area.color === 'amber',
+                    }"
+                  >
+                    <Icon :name="area.icon" class="text-xl"
+                      :class="{
+                        'text-sky-400':    area.color === 'sky',
+                        'text-purple-400': area.color === 'purple',
+                        'text-emerald-400':area.color === 'emerald',
+                        'text-amber-400':  area.color === 'amber',
+                      }"
+                    />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ area.title }}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ area.desc }}</p>
@@ -296,15 +325,54 @@ useHead({
       <BibleVerseCaseStudy />
       <ClusterArticles cluster="backend-engineering" /> -->
 
+      <!-- START HERE -->
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/backend-start.jpg" side="full" />
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Start Here: Key Backend Engineering Articles</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 max-w-3xl leading-relaxed">Service architecture for AI-heavy backends, plus the algorithm fundamentals underneath.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <NuxtLink
+            v-for="post in startHere" :key="post.to" :to="post.to"
+            class="group flex items-start gap-3 rounded-xl p-3 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200"
+          >
+            <div class="w-24 shrink-0 aspect-[3/2] overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+              <img :src="`/img${post.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">{{ post.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ post.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- RELATED SYSTEMS & PROJECTS -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-4">Related Systems &amp; Projects</h2>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="r in relatedLinks" :key="r.to" :to="r.to"
+            class="px-3 py-1.5 rounded-lg text-sm border
+                   bg-slate-100 dark:bg-slate-800
+                   text-slate-600 dark:text-slate-300
+                   border-slate-200 dark:border-slate-700/50
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+          >{{ r.label }}</NuxtLink>
+        </div>
+      </section>
+
       <!-- CATEGORY LINK -->
       <section class="mb-10">
         <NuxtLink
           to="/categories/backend-engineering"
-          class="flex items-center justify-between gap-6 rounded-2xl p-6
+          class="relative isolate overflow-hidden flex items-center justify-between gap-6 rounded-2xl p-6
                  border border-sky-500/20 bg-sky-500/5
                  hover:border-sky-500/40 hover:bg-sky-500/10
                  transition-all duration-200 group"
         >
+          <HeroBackdrop lazy src="/img/categories/backend-engineering.jpg" />
           <div>
             <p class="text-xs font-medium text-sky-500 uppercase tracking-wider mb-1">Knowledge Base</p>
             <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">

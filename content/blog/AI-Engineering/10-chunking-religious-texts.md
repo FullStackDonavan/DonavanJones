@@ -1,8 +1,8 @@
 ---
 title: "Chunking Religious Texts"
-description: "Strategies for chunking religious texts for AI retrieval."
+description: "How to chunk religious texts for RAG: verse-level scripture, argument-aware commentary, patristic and Reformation writings, notes, and measuring chunk quality."
 date: 2026-05-17
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: chunking-religious-texts
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/10-chunking-religious-texts.jpg
 ---
 
 # Chunking Religious Texts
@@ -21,7 +22,7 @@ Generic chunking advice — "use 512 tokens with 64-token overlap" — works ade
 
 This article covers the structural properties of each content type on this platform, the chunking strategy designed for each, and the evaluation process that reveals whether a chunking decision is working.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -33,7 +34,7 @@ destinationUrl: "/categories/ai-engineering"
 
 ## Why Chunking Matters More Than It Seems
 
-Embedding models convert text to a vector that represents the aggregate meaning of the entire input. A long chunk has a diffuse representation — the vector captures the average semantic content, which means any single idea within the chunk is represented at reduced fidelity. A short chunk has a sharp, specific representation — but may lack enough context for the model to understand what the chunk is about.
+[Embedding models](/blog/ai-engineering/11-embedding-strategies) convert text to a vector that represents the aggregate meaning of the entire input. A long chunk has a diffuse representation — the vector captures the average semantic content, which means any single idea within the chunk is represented at reduced fidelity. A short chunk has a sharp, specific representation — but may lack enough context for the model to understand what the chunk is about.
 
 The chunk size tradeoff is: small chunks retrieve precisely but may lack context; large chunks carry more context but retrieve imprecisely.
 
@@ -260,7 +261,7 @@ The test for chunking quality is retrieval quality at query time. Poor chunking 
 
 **Argument fragmentation**: a multi-step theological argument is split across chunk boundaries in a way that makes each fragment meaningless in isolation.
 
-I evaluate chunking against the same 300-query ground truth set used for retrieval evaluation, with an additional metric: **content utilization** — what fraction of the retrieved chunk is actually used in the model's response. A chunk where only 10% of the text is relevant to the query is a chunking failure; the other 90% is diluting the context window with noise.
+I evaluate chunking against the same [ground truth set used for retrieval evaluation](/blog/ai-engineering/09-retrieval-systems-for-theology), with an additional metric: **content utilization** — what fraction of the retrieved chunk is actually used in the model's response. A chunk where only 10% of the text is relevant to the query is a chunking failure; the other 90% is diluting the context window with noise.
 
 Content utilization is measured by asking a lightweight model to score which sentences from each retrieved chunk directly support the response. This is an approximation — the model's scoring is imperfect — but it surfaces systematic chunking failures: consistently low utilization scores on a specific content type signal that chunks from that type are too large or structured incorrectly.
 
@@ -317,6 +318,14 @@ links:
     description: "Foundational field whose precision and recall metrics define whether a chunking strategy is actually working for its retrieval use case."
 ---
 ::
+
+## Related reading
+
+- [Retrieval Systems for Theology](/blog/ai-engineering/09-retrieval-systems-for-theology) — previous in the AI Engineering series
+- [Embedding Strategies](/blog/ai-engineering/11-embedding-strategies) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) — chunking and RAG applied to a codebase
+- [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack) — how the source corpus gets collected
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Notifications"
-description: "Notification services in distributed backend systems."
+description: "Designing a notification service for a distributed backend: event queues, WebSocket, push and email delivery, Redis pub/sub fan-out, and deduplication."
 date: 2026-03-15
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - notifications
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: notifications
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/07-notifications.jpg
 ---
 
 # Notifications
 
-Streaming covers events that happen during a request — the user is actively waiting, connected, and watching tokens arrive. Notifications cover everything else: events that happen asynchronously, outside any active request, that the user still needs to know about.
+A notification service consumes events from other services and delivers them over in-app, push, and email channels with retries, user preferences, and deduplication, so no other service has to own delivery. [Streaming](/blog/backendengineering/06-streaming) covers events that happen during a request — the user is actively waiting, connected, and watching tokens arrive. Notifications cover everything else: events that happen asynchronously, outside any active request, that the user still needs to know about.
 
 A daily devotional is ready. A long-running study guide finished generating. A reading plan reminder fires at 7am. Someone commented on a shared note. These are not responses to a request — they are events the system needs to push to users on its own schedule.
 
 Getting notifications right means solving two distinct problems: reliably detecting that an event worth notifying about has occurred, and reliably delivering that notification across multiple channels (in-app, push, email) to wherever the user actually is.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -40,7 +41,7 @@ Before designing the service, it helps to be precise about what types of events 
 
 **Time-triggered events** — reminders and scheduled content that fire at a specific time regardless of any immediate user action. Daily devotionals, streak reminders, reading plan check-ins.
 
-Each type has different latency requirements, different delivery channels, and different failure tolerance. A job completion notification should arrive within seconds. A 7am devotional reminder needs to land within a minute of the scheduled time, not a second. A comment reply should feel near-real-time. Designing one system that handles all of these without special-casing each one is the core challenge.
+Each type has different latency requirements, different delivery channels, and different failure tolerance. A job completion notification (for example when a long-running [background agent job](/blog/agentic-ai-systems/10-autonomous-background-jobs) finishes) should arrive within seconds. A 7am devotional reminder needs to land within a minute of the scheduled time, not a second. A comment reply should feel near-real-time. Designing one system that handles all of these without special-casing each one is the core challenge.
 
 ## Notification Service Architecture
 
@@ -211,7 +212,7 @@ WHERE scheduled_for BETWEEN now() - interval '1 minute' AND now()
 
 Matched rows are processed into notification events and delivered through the normal pipeline. The row status is updated to `sent` atomically with the delivery attempt to prevent duplicate sends across service restarts.
 
-For the daily devotional specifically — where thousands of users might have 7am configured — the query window is staggered by user ID to spread delivery load over a few minutes rather than spiking all at once at the top of the hour.
+For the daily devotional specifically — where many users are likely to pick 7am — the query window is staggered by user ID to spread delivery load over a few minutes rather than spiking all at once at the top of the hour.
 
 ::CtaContactWork
 ---
@@ -229,6 +230,8 @@ Notifications are easy to overlook in observability because they are asynchronou
 - **Time-to-delivery**: how long between event creation and successful delivery
 - **Opt-out rate by event type**: if users frequently disable a notification type, it is a signal the notification is not valuable
 - **Retry exhaustion rate**: how often max retries are reached before a successful delivery
+
+These go into the same [Prometheus and Grafana stack](/blog/infrastructureengineering/42-grafana-on-pi-cluster) as the rest of the cluster.
 
 A spike in push delivery failures usually means the device token store has gone stale and needs a refresh cycle. A spike in time-to-delivery usually means the queue consumer is backed up. Both are actionable from metrics alone, without needing to dig into logs.
 
@@ -285,6 +288,14 @@ links:
     description: "According to this overview, an idempotent operation produces the same result regardless of how many times it is applied — the property enforced via notification IDs to prevent duplicate deliveries."
 ---
 ::
+
+## Related reading
+
+- [Streaming](/blog/backendengineering/06-streaming) — previous in the series: real-time delivery inside a request
+- [Inference Services](/blog/backendengineering/08-inference-services) — next in the series: the service that emits job.completed events
+- [Async Workers](/blog/backendengineering/12-async-workers) — the workers that produce most of these events
+- [Autonomous Background Jobs](/blog/agentic-ai-systems/10-autonomous-background-jobs) — agent jobs that finish outside a request and need to notify someone
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

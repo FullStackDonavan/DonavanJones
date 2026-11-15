@@ -1,22 +1,23 @@
 ---
 title: "How I Added Agentic AI to My SaaS Application (VerseHub)"
-description: "How an agentic AI layer was added to VerseHub after the core application already existed and had real users — the incremental approach that made it safe."
-date: 2026-07-01
-lastUpdated: "2026-07-01"
+description: "How I added agentic AI to VerseHub, a live SaaS app: a separate AI domain, new endpoints instead of refactors, grounded RAG answers, and constant verification."
+date: 2026-07-30
+lastUpdated: "2026-11-14"
 category: "versehub-engineering"
 tags:
   - versehub-engineering
   - agentic-ai
-draft: true
+draft: false
 slug: how-i-added-agentic-ai-to-versehub
 author: Donavan Jones
+excerptImage: /img/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub.jpg
 ---
 
 # How I Added Agentic AI to My SaaS Application (VerseHub)
 
-VerseHub existed as a working scripture-study application before any AI features shipped. Adding an agentic AI layer to an application already serving real users is a different problem than building AI-first from scratch — the bar for "doesn't break what already works" is much higher, and it shaped every decision covered here.
+I added agentic AI to VerseHub by putting it in its own domain with new endpoints, shipping one narrow grounded feature first, and verifying output at every stage, so existing features never depended on the AI layer. VerseHub existed as a working scripture-study application before any AI features shipped, and adding AI to an app already serving real users is a different problem than building AI-first: the bar for "doesn't break what already works" is much higher.
 
-*Part of the [VerseHub Engineering series](/categories/versehub-engineering).*
+*Part of the [VerseHub Engineering series](/categories/versehub-engineering). For the project overview, see the [VerseHub project page](/projects/versehub).*
 
 ::CtaCategoryPillar
 ---
@@ -32,7 +33,7 @@ The first decision wasn't which AI feature to ship — it was where the AI layer
 
 ## Shipping the Narrowest Useful Version First
 
-The first agentic AI feature wasn't a general-purpose assistant — it was a single, narrow capability: retrieval-augmented answers to direct scripture questions, grounded in actual text via Weaviate search rather than the model's unverified recall. Narrow scope meant a smaller verification surface (covered in its own article in this series) and a feature simple enough to evaluate clearly before expanding it.
+The first agentic AI feature wasn't a general-purpose assistant — it was a single, narrow capability: retrieval-augmented answers to direct scripture questions, grounded in actual text via Weaviate search rather than the model's unverified recall. Narrow scope meant a smaller verification surface (covered in [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs)) and a feature simple enough to evaluate clearly before expanding it.
 
 ## Routing AI Requests Without Touching Existing Endpoints
 
@@ -40,24 +41,24 @@ Rather than modifying existing request handlers to add AI behavior inline, new e
 
 ```
 Existing: GET /api/scripture/:reference        → PostgreSQL (unchanged)
-New:      POST /api/study/ask                  → AI domain → Weaviate + Llama/OpenAI
+New:      POST /api/study/ask                  → AI domain → Jetson llama3.2:3b draft + Temporal refine (Weaviate)
 ```
 
 ## Expanding Gradually, With Verification at Every Stage
 
-Each subsequent AI feature — deeper study tools, personalized recommendations, the memory layer covered elsewhere in this series — shipped behind the same verification discipline established for the first feature. Expanding scope didn't mean relaxing the bar; it meant applying the same grounding and verification pattern to each new capability before it reached users.
+Each subsequent AI feature — deeper study tools, the Debate Arena, voice (Kokoro TTS and Whisper STT on a dedicated Jetson, with a round trip of about 0.85 s), the [Redis-backed memory and cache layer](/blog/versehub-engineering/05-redis-memory-layer-design) — shipped behind the same verification discipline established for the first feature. Expanding scope didn't mean relaxing the bar; it meant applying the same grounding and verification pattern to each new capability before it reached users.
 
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
 supportingCopy: "See how the AI layer fits into VerseHub's full production architecture."
-destinationUrl: "/systems/versehub-engineering"
+destinationUrl: "/projects/versehub"
 ---
 ::
 
 ## What This Approach Cost
 
-Building a clean domain boundary and a verification pipeline before shipping the first feature took longer than wiring AI output directly into an existing endpoint would have. That upfront cost is the reason the AI layer could expand steadily afterward without accumulating the kind of tangled, hard-to-verify AI integration that becomes a liability once real users depend on the output being trustworthy.
+Building a clean domain boundary and a verification pipeline before shipping the first feature took longer than wiring AI output directly into an existing endpoint would have. That upfront cost is the reason the AI layer could expand steadily afterward without accumulating the kind of tangled, hard-to-verify AI integration that becomes a liability once real users depend on the output being trustworthy. If you're weighing the same move, [Single Agent vs Multi-Agent Systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) is a good place to decide how much "agent" you actually need.
 
 ::CtaCardRow
   :::CtaTryApp
@@ -72,7 +73,7 @@ Building a clean domain boundary and a verification pipeline before shipping the
   ---
   buttonText: "Read: AI Pipeline Design"
   supportingCopy: "The internal design of the AI domain itself."
-  destinationUrl: "/blog/versehub-engineering/ai-pipeline-design"
+  destinationUrl: "/blog/versehub-engineering/04-ai-pipeline-design"
   ---
   :::
 
@@ -96,6 +97,13 @@ links:
     description: "The incremental-migration pattern this additive, boundary-first approach to adding AI is closely related to."
 ---
 ::
+
+## Related reading
+
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — previous in the series: the five domains.
+- [How I Built a Production AI Bible Platform](/blog/versehub-engineering/03-how-i-built-a-production-ai-bible-platform) — next: the full build order.
+- [VerseHub project page](/projects/versehub) — overview and architecture diagram.
+- [AI Pipelines for Bible Study](/blog/ai-engineering/15-ai-pipelines-for-bible-study) — the AI-engineering view of the same features.
 
 ---
 

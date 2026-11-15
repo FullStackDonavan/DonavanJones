@@ -1,8 +1,8 @@
 ---
 title: "Why Lightweight Kubernetes Matters"
-description: "Why lightweight Kubernetes distributions like K3s matter — lower resource overhead, faster startup, ARM64 compatibility, and easier homelab management."
+description: "Why lightweight Kubernetes like K3s matters for homelabs: low overhead, a single binary, ARM64 support, and room left for real workloads on Pis and Jetsons."
 date: 2026-02-03
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -10,19 +10,20 @@ tags:
 draft: false
 slug: why-lightweight-kubernetes-matters
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters.jpg
 ---
 
 # Why Lightweight Kubernetes Matters
 
 ## Introduction
 
-As infrastructure becomes more accessible to individuals building homelabs, the gap between enterprise Kubernetes clusters and personal environments has started to shrink. Lightweight Kubernetes distributions like K3s make it possible to run production-grade orchestration on small machines such as Raspberry Pi clusters, mini PCs, and edge devices without the overhead of full upstream Kubernetes.
+Lightweight Kubernetes matters because it leaves the CPU and memory on small machines for your actual workloads instead of the orchestrator. Distributions like K3s ship as a single binary with sensible defaults, run well on ARM64, and make it possible to run production-grade orchestration on small machines such as Raspberry Pi clusters, mini PCs, and edge devices without the overhead of full upstream Kubernetes.
 
-In a homelab setup like your own rack—built around Raspberry Pi nodes and ARM64 workloads, with supporting services like CI/CD pipelines (Gitea runners), AI services running in containers on your development machine, and workloads deployed directly into your cluster—efficiency and resource awareness are not optional. They are the difference between a stable lab and a constantly throttled system.
+In my own rack—a 7-node K3s cluster (v1.34.x) of Raspberry Pis and Jetson Orin Nano Supers, all ARM64, running Gitea, CI runners, data services, and AI inference, with a separate RTX 3090 machine alongside—efficiency and resource awareness are not optional. They are the difference between a stable lab and a constantly throttled system.
 
 Lightweight Kubernetes is not just about saving resources. It’s about enabling experimentation, faster iteration, and bringing cloud-native patterns into environments that would otherwise be too constrained for them.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -34,7 +35,7 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 ---
 
-# What Makes Kubernetes “Lightweight”?
+## What Makes Kubernetes “Lightweight”?
 
 Lightweight Kubernetes distributions (like K3s) remove or simplify components of standard Kubernetes while preserving core functionality:
 
@@ -53,9 +54,9 @@ This makes them ideal for:
 
 ---
 
-# Why It Matters in a Homelab Rack Setup
+## Why It Matters in a Homelab Rack Setup
 
-In a rack-based homelab like yours—where multiple Raspberry Pi nodes are acting as worker nodes and services like Gitea, CI runners, and application deployments are running together—resource constraints become real fast.
+In a rack-based homelab like mine—where multiple Raspberry Pi nodes are acting as worker nodes and services like Gitea, CI runners, and application deployments are running together—resource constraints become real fast.
 
 Without lightweight Kubernetes:
 
@@ -70,12 +71,13 @@ With K3s or similar distributions:
 - Worker nodes stay responsive under load
 - You can run multiple services (CI/CD, APIs, bots, and databases) without constant contention
 - Cluster recovery and reboot cycles are significantly faster
+- Memory-constrained GPU boards can join as agents: each of my Jetsons has 8 GB of unified memory shared by CPU and GPU, so every megabyte the agent doesn't use is a megabyte available to the model
 
-This is especially important in hybrid setups where some workloads (like AI models) are running on a separate dev machine with an RTX GPU, while orchestration still happens in the cluster.
+This is especially important in hybrid setups like mine, where the largest AI models run on a separate dev machine with an RTX 3090 while orchestration — and small-model inference on the Jetsons — still happens in the cluster. More on that in [Kubernetes for AI Developers: Deploying Local Models with k3s](/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s).
 
 ---
 
-# Tradeoffs You Should Understand
+## Tradeoffs You Should Understand
 
 Lightweight Kubernetes is not a free upgrade—it comes with intentional compromises:
 
@@ -83,7 +85,7 @@ Lightweight Kubernetes is not a free upgrade—it comes with intentional comprom
 Some enterprise-grade features or plugins may not be available or require manual configuration.
 
 ### 2. Opinionated Defaults
-K3s makes decisions for you (container runtime, networking, etc.), which can reduce flexibility.
+K3s makes decisions for you (container runtime, Flannel networking, the built-in ServiceLB load balancer, etc.), which can reduce flexibility. Those defaults are convenient until one surprises you — I lost every LoadBalancer service once because of a single ServiceLB node label ([the full write-up](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers)).
 
 ### 3. Debugging Differences
 Logs and internal architecture may differ slightly from upstream Kubernetes, which can affect troubleshooting patterns.
@@ -105,18 +107,19 @@ destinationUrl: "/systems/infrastructure"
 
 ---
 
-# Real Value in Your Architecture
+## Real Value in My Architecture
 
-In your current setup, lightweight Kubernetes is acting as the glue between multiple layers:
+In my current setup, lightweight Kubernetes is acting as the glue between multiple layers:
 
-- Raspberry Pi cluster = orchestration layer
-- Dev machine with GPU = compute-heavy AI workloads
+- Raspberry Pi nodes = orchestration layer and services
+- Jetson GPU workers = in-cluster small-model inference, speech, image generation
+- Dev machine with an RTX 3090 = compute-heavy AI workloads
 - Gitea + CI runners = deployment automation
 - Containerized services = modular application design
 
 This separation is powerful because it mirrors real-world distributed systems while staying inexpensive and locally controlled.
 
-It also allows you to:
+It also allows me to:
 
 - Push code → Gitea pipeline triggers build → deploys into K3s cluster
 - Run services independently without breaking the entire system
@@ -124,7 +127,7 @@ It also allows you to:
 
 ---
 
-# When You Should NOT Use Lightweight Kubernetes
+## When You Should NOT Use Lightweight Kubernetes
 
 There are situations where full Kubernetes or even non-Kubernetes setups are better:
 
@@ -133,7 +136,7 @@ There are situations where full Kubernetes or even non-Kubernetes setups are bet
 - Heavy reliance on advanced networking or service mesh features at scale
 - Teams needing strict compliance tooling baked into the platform
 
-For your use case (homelab + development + learning), K3s is actually closer to optimal than full Kubernetes.
+For a homelab used for development and learning, K3s is actually closer to optimal than full Kubernetes. If you want to start from scratch, [K3s on Raspberry Pis](/blog/infrastructureengineering/01-k3s-on-raspberry-pis) walks through my install.
 
 ::CtaContactWork
 ---
@@ -145,13 +148,13 @@ destinationUrl: "/hire-me"
 
 ---
 
-# Conclusion
+## Conclusion
 
 Lightweight Kubernetes matters because it lowers the barrier between learning infrastructure concepts and actually running them in real environments. It turns a small rack of Raspberry Pis into a functional distributed system that behaves like a scaled-down version of cloud infrastructure.
 
-In your case, it becomes more than just a cluster—it becomes the backbone of your entire development ecosystem. From CI/CD automation with Gitea to deploying services for your Bible app and experimenting with AI workloads, K3s gives you the structure needed to scale ideas without waiting for enterprise hardware.
+In my case, it becomes more than just a cluster—it becomes the backbone of my entire development ecosystem. From CI/CD automation with Gitea to deploying services for my Bible app and experimenting with AI workloads, K3s gives me the structure needed to scale ideas without waiting for enterprise hardware.
 
-The real advantage is not just efficiency—it’s control. You’re building a system where every layer is intentional, observable, and yours to evolve.
+The real advantage is not just efficiency—it’s control: a system where every layer is intentional, observable, and yours to evolve.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -204,6 +207,15 @@ links:
     description: "Overview of edge computing — the deployment model that lightweight Kubernetes serves, enabling orchestration at the network edge on constrained hardware without the overhead of full Kubernetes or cloud dependencies."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Why I Built a Homelab](/blog/infrastructureengineering/37-why-i-built-a-homelab) — previous in the series.
+- [Why Local AI Matters](/blog/infrastructureengineering/39-why-local-ai-matters) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads) — running GPU workloads on the same K3s cluster.
 
 ---
 

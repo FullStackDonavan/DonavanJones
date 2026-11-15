@@ -1,6 +1,8 @@
 <script setup lang="ts">
 defineProps<{
   title: string
+  /** decorative hero art (the product's excerptImage) */
+  image?: string
   tagline?: string
   description: string
   badge?: string
@@ -21,7 +23,8 @@ const guideUrl = computed(() => `${route.path}/guide`)
 </script>
 
 <template>
-  <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+  <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <HeroBackdrop v-if="image" :src="image" />
     <div class="max-w-7xl mx-auto px-6 py-16 sm:py-24">
 
       <!-- Breadcrumb -->

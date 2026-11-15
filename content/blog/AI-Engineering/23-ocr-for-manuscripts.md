@@ -1,19 +1,22 @@
 ---
 title: "OCR for Manuscripts"
-description: "Using OCR for digitizing and analyzing religious manuscripts."
-date: 2026-07-12
-lastUpdated: "2026-06-09"
+description: "OCR for theological manuscripts: preprocessing, page segmentation, Latin, Greek and Hebrew recognition, post-correction, confidence scoring and review."
+date: 2026-07-22
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
   - ocr
   - manuscripts
-draft: true
+draft: false
 slug: ocr-for-manuscripts
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/23-ocr-for-manuscripts.jpg
 ---
 
 # OCR for Manuscripts
+
+OCR for theological manuscripts means turning scanned Latin, Greek and Hebrew pages into clean, searchable text the retrieval system can trust. Standard OCR handles modern English print well and old mixed-script pages badly, so the pipeline adds preprocessing, script-aware segmentation, domain-dictionary correction and confidence-based human review.
 
 The bulk of the platform's source corpus — Bible translations, lexicons, modern commentaries — arrived in clean digital form. But the theological library that matters most to serious study was written before digitization existed. Augustine's *City of God*, Calvin's *Institutes*, Luther's commentaries, the Church Fathers in their original Latin and Greek — this material exists in scanned PDFs, photographed manuscripts, and aged print editions that no clean digital text has fully captured.
 
@@ -21,7 +24,7 @@ Getting this content into the platform's knowledge base requires optical charact
 
 This article covers how the manuscript OCR pipeline is built, what makes theological manuscripts specifically hard, and the post-processing layers that convert noisy OCR output into clean, indexed text.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -47,7 +50,7 @@ Standard OCR engines are trained primarily on modern, typeset Latin-script text.
 
 ## Pipeline Architecture
 
-The OCR pipeline has five stages, each addressing a specific failure mode:
+The OCR pipeline has five stages, each addressing a specific failure mode (the service plumbing — queues, workers, storage — is covered in [OCR Pipelines](/blog/backendengineering/10-ocr-pipelines)):
 
 ```
 Raw image/PDF
@@ -409,7 +412,7 @@ The New Testament manuscript tradition includes over 5,800 Greek manuscripts —
 
 The platform does not currently attempt automated OCR of manuscript Greek at the level of primary textual criticism — that work requires specialist paleographic training and careful human review. What the pipeline handles is printed critical editions (NA28, UBS5, BHQ) and scholarly works that contain Greek quotations typeset in modern Unicode-compatible Greek fonts.
 
-For these, the Google Cloud Vision path with polytonic Greek support works well (>90% character accuracy on modern typeset Greek). The remaining errors cluster on ambiguous character pairs: ε/ο confusion, ν/υ confusion, ι/ν/υ in minuscule fonts.
+For these, the Google Cloud Vision path with polytonic Greek support generally works well on modern typeset Greek. The remaining errors cluster on ambiguous character pairs: ε/ο confusion, ν/υ confusion, ι/ν/υ in minuscule fonts.
 
 A post-recognition pass validates Greek words against the BDAG lexical database — if a word does not appear in BDAG, it checks the lexicon for similar entries within edit distance 1. This catches the most common character-level errors without requiring character-by-character checking:
 
@@ -451,7 +454,7 @@ The unknown word list surfaces candidates for dictionary addition — new terms 
 
 ## Integration with the Knowledge Base
 
-Validated OCR output flows into the same ingest pipeline as native digital text: chunking (article 10), embedding, and indexing into Qdrant. The only difference is the provenance metadata:
+Validated OCR output flows into the same ingest pipeline as native digital text: [chunking](/blog/ai-engineering/10-chunking-religious-texts), embedding, and indexing into Weaviate. The only difference is the provenance metadata (born-digital sources arrive through a separate corpus crawler that runs as a Kubernetes Job — see [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack)):
 
 ```typescript
 interface OCRChunkMetadata {
@@ -481,9 +484,9 @@ The manuscript OCR pipeline is slow and expensive relative to processing clean d
 
   :::CtaRelatedArticle
   ---
-  buttonText: "Read: AI Engineering Ideas"
-  supportingCopy: "Continue with \"AI Engineering Ideas\" for the next piece of this system."
-  destinationUrl: "/blog/ai-engineering/24-ai-engineering-ideas"
+  buttonText: "Read: Teaching a 0.6B Model to Run My Homelab"
+  supportingCopy: "Continue with the next post: fine-tuning a tiny model for reliable tool calls."
+  destinationUrl: "/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98"
   ---
   :::
 
@@ -521,6 +524,14 @@ links:
     description: "The authoritative reference for character encoding — the standard that normalization pipelines must conform to when processing multi-script theological manuscripts."
 ---
 ::
+
+## Related reading
+
+- [Voice Narration Pipelines](/blog/ai-engineering/22-voice-narration-pipelines) — previous in the AI Engineering series
+- [From 34% to 98%: Teaching a 0.6B Model to Run My Homelab](/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [OCR Pipelines](/blog/backendengineering/10-ocr-pipelines) — the OCR service architecture
+- [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack) — collecting the born-digital corpus
 
 ---
 

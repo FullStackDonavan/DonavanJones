@@ -7,13 +7,36 @@ useSeoMeta({
   ogTitle: 'AI Systems Engineering — Donavan Jones',
   ogDescription: 'Production AI system patterns — RAG pipelines with Weaviate, agent frameworks, hybrid LLM routing, and evaluation architecture for real-world inference.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/systems-ai.jpg`,
   ogUrl: `${_SITE}/systems/ai`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'AI Systems Engineering — Donavan Jones',
   twitterDescription: 'Production AI systems — RAG pipelines, agent frameworks, hybrid LLM routing, and inference architecture.',
   canonical: `${_SITE}/systems/ai`,
 })
+
+// Curated entry points into this topic cluster (all URLs verified against published posts)
+const startHere = [
+  { to: '/blog/ai-engineering/17-retrieval-augmented-generation', title: 'Retrieval-augmented generation (RAG)', desc: 'How retrieval, context assembly, and generation fit together.' },
+  { to: '/blog/ai-engineering/02-vector-databases', title: 'Vector databases', desc: 'Choosing and using a vector store such as Weaviate.' },
+  { to: '/blog/ai-engineering/11-embedding-strategies', title: 'Embedding strategies', desc: 'Picking and running embedding models for retrieval.' },
+  { to: '/blog/ai-engineering/13-citation-grounding', title: 'Citation grounding', desc: 'Tying every claim in an answer back to retrieved evidence.' },
+  { to: '/blog/ai-engineering/14-hallucination-reduction', title: 'Hallucination reduction', desc: 'Practical ways to keep a model from inventing answers.' },
+  { to: '/blog/ai-engineering/03-tool-calling', title: 'Tool calling', desc: 'Letting a model call functions safely and reliably.' },
+  { to: '/blog/ai-engineering/04-agent-orchestration', title: 'Agent orchestration', desc: 'Coordinating multi-step AI work.' },
+  { to: '/blog/ai-engineering/07-local-agent-systems', title: 'Local agent systems', desc: 'Running agents on your own hardware.' },
+  { to: '/blog/ai-engineering/22-voice-narration-pipelines', title: 'Voice narration pipelines', desc: 'Local text-to-speech and speech-to-text in one pipeline.' },
+  { to: '/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98', title: 'Teaching a 0.6B model to call tools (34% to 98%)', desc: 'Fine-tuning a tiny model to run homelab tools.' },
+]
+
+const relatedLinks = [
+  { to: '/systems/agentic-ai', label: 'Agentic AI Systems' },
+  { to: '/systems/backend', label: 'Backend Systems' },
+  { to: '/systems/ai-homelab', label: 'AI Homelab Engineering' },
+  { to: '/systems/local-vibe-coding', label: 'Local Vibe Coding' },
+  { to: '/projects/versehub', label: 'VerseHub case study' },
+  { to: '/projects/kingdom-tools', label: 'Kingdom Tools platform' },
+]
 
 const principles = [
   { icon: 'mdi:layers-triple',    color: 'purple', text: 'Separate retrieval, reasoning, and generation into distinct layers' },
@@ -25,25 +48,25 @@ const principles = [
 const areas = [
   {
     icon: 'mdi:database-search', color: 'purple',
-    title: 'Retrieval',
+    title: 'Retrieval', image: '/img/cards/ai-retrieval.jpg',
     desc: 'Vector search, hybrid retrieval, embedding models, and context window assembly.',
     tags: ['Weaviate', 'Embeddings', 'Hybrid Search'],
   },
   {
     icon: 'mdi:robot', color: 'sky',
-    title: 'Agents',
+    title: 'Agents', image: '/img/cards/ai-agents.jpg',
     desc: 'Tool calling, planning loops, multi-step task execution, and multi-agent workflows.',
     tags: ['Tool Use', 'Planning', 'Orchestration'],
   },
   {
     icon: 'mdi:brain', color: 'emerald',
-    title: 'Memory',
+    title: 'Memory', image: '/img/cards/ai-memory.jpg',
     desc: 'Long-term context, episodic memory, session summarization, and knowledge persistence.',
     tags: ['Redis', 'Weaviate', 'Summarization'],
   },
   {
     icon: 'mdi:chart-box', color: 'amber',
-    title: 'Evaluation',
+    title: 'Evaluation', image: '/img/cards/ai-evaluation.jpg',
     desc: 'Retrieval metrics, hallucination detection, latency tracing, and quality scoring.',
     tags: ['Tracing', 'Metrics', 'Observability'],
   },
@@ -57,16 +80,16 @@ const failures = [
 ]
 
 const inferenceMetrics = [
-  { value: '80%',    label: 'Requests served by local LLM' },
-  { value: '<200ms', label: 'Avg. RAG retrieval latency' },
-  { value: '37K+',   label: 'Documents indexed (Weaviate)' },
-  { value: '4',      label: 'Jetson GPU nodes (CUDA)' },
+  { value: '~21',    label: 'tok/s llama3.2:3b draft on a Jetson' },
+  { value: '4',      label: 'Workflow stages: retrieve → score → generate → verify' },
+  { value: '0.85 s', label: 'Kokoro TTS → Whisper STT round trip' },
+  { value: '3',      label: 'Jetson Orin Nano Super 8GB nodes (CUDA)' },
 ]
 
 const stack = [
-  'Llama 3.2 8B', 'OpenAI API', 'Weaviate', 'RAG Pipelines',
+  'Llama 3.2 3B', 'Ollama', 'OpenAI API', 'Weaviate', 'RAG Pipelines', 'Temporal',
   'NVIDIA Jetson Orin Nano Super', 'CUDA', 'FastAPI', 'Redis',
-  'PostgreSQL', 'BullMQ', 'Whisper STT', 'ElevenLabs TTS',
+  'PostgreSQL', 'BullMQ', 'Whisper STT', 'Kokoro TTS',
   'Stable Diffusion', 'Prometheus', 'Loki',
 ]
 
@@ -85,7 +108,7 @@ const faqs = [
   },
   {
     question: 'How do you route between local and cloud AI models?',
-    answer: 'A custom orchestration layer classifies query complexity before inference. Standard queries route to Llama locally. Complex or low-confidence cases escalate to the OpenAI API. The routing is transparent to the user.'
+    answer: 'In VerseHub, a fast draft comes from llama3.2:3b on a Jetson, then a Temporal workflow retrieves evidence, scores it, regenerates, and verifies citations. Hosted APIs are used where a task needs a stronger model; the split is a per-feature decision, not a black box.'
   },
   {
     question: 'Can AI be integrated into existing applications?',
@@ -93,11 +116,11 @@ const faqs = [
   },
   {
     question: 'Do you build voice AI applications?',
-    answer: 'Yes. I integrate Whisper for speech-to-text, ElevenLabs for text-to-speech, and custom conversational pipelines for voice-driven experiences.'
+    answer: 'Yes. VerseHub voice runs Kokoro-82M text-to-speech and whisper.cpp speech-to-text on a Jetson Orin Nano Super, with a measured 0.85 s round trip.'
   },
   {
     question: 'Can you deploy AI on private infrastructure?',
-    answer: 'Yes. My cluster runs 4 NVIDIA Jetson Orin Nano Super GPU nodes dedicated to local LLM inference and embedding generation — no cloud required. Llama 3.2 handles ~80% of requests locally, cutting inference costs ~70% vs routing everything through the OpenAI API.'
+    answer: 'Yes. My 7-node K3s cluster includes 3 NVIDIA Jetson Orin Nano Super 8GB nodes for local LLM, speech, and image generation, and an RTX 3090 workstation runs the sentence embedder and larger models — no cloud required for those workloads.'
   },
   {
     question: 'Do you build AI agents and workflow automation?',
@@ -230,35 +253,42 @@ useHead({
       </div>
 
       <!-- ARCHITECTURE AREAS -->
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/ai-areas.jpg" side="full" />
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Areas</h2>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="area in areas"
             :key="area.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 flex flex-col gap-3
                    hover:border-purple-500/40 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
-                'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
-                'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
-              }"
-            >
-              <Icon :name="area.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': area.color === 'purple',
-                  'text-sky-400':    area.color === 'sky',
-                  'text-emerald-400':area.color === 'emerald',
-                  'text-amber-400':  area.color === 'amber',
-                }"
-              />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="area.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                    :class="{
+                      'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
+                      'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
+                      'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
+                      'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
+                    }"
+                  >
+                    <Icon :name="area.icon" class="text-xl"
+                      :class="{
+                        'text-purple-400': area.color === 'purple',
+                        'text-sky-400':    area.color === 'sky',
+                        'text-emerald-400':area.color === 'emerald',
+                        'text-amber-400':  area.color === 'amber',
+                      }"
+                    />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ area.title }}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ area.desc }}</p>
@@ -277,7 +307,8 @@ useHead({
       </section>
 
       <!-- PRODUCTION METRICS -->
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/ai-metrics.jpg" side="full" />
         <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-6">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
@@ -285,7 +316,7 @@ useHead({
             </div>
             <div>
               <h2 class="text-base font-semibold text-slate-900 dark:text-white">Running in Production</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">4× NVIDIA Jetson Orin Nano Super — dedicated GPU inference tier on the 12-node cluster</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">3× NVIDIA Jetson Orin Nano Super 8GB on the 7-node K3s cluster, plus one RTX 3090 workstation</p>
             </div>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -299,8 +330,8 @@ useHead({
             </div>
           </div>
           <p class="mt-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Local inference on CUDA-accelerated Jetson nodes serves the majority of requests at under 200ms RAG retrieval latency.
-            The OpenAI API handles only edge cases requiring stronger reasoning — keeping inference costs ~70% lower than full-cloud routing.
+            VerseHub answers start with a fast draft from llama3.2:3b on a Jetson, then a Temporal ScholarWorkflow on the Pi workers
+            retrieves from Weaviate, scores the evidence, regenerates, and checks every citation against the retrieved passages.
           </p>
         </div>
       </section>
@@ -332,15 +363,58 @@ useHead({
       <BibleVerseCaseStudy />
       <ClusterArticles cluster="ai-engineering" /> -->
 
+      <!-- START HERE -->
+      <section class="mb-10">
+        <JetsonLeaderboardCard metric="tools" blurb="Tool-calling accuracy of small local models on a Jetson Orin Nano Super: right tool, right arguments, or no call when none fits." />
+      </section>
+
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/ai-start.jpg" side="full" />
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Start Here: Key AI Engineering Articles</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 max-w-3xl leading-relaxed">The core path through retrieval, grounding, agents, and running models locally.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <NuxtLink
+            v-for="post in startHere" :key="post.to" :to="post.to"
+            class="group flex items-start gap-3 rounded-xl p-3 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200"
+          >
+            <div class="w-24 shrink-0 aspect-[3/2] overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+              <img :src="`/img${post.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">{{ post.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ post.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- RELATED SYSTEMS & PROJECTS -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-4">Related Systems &amp; Projects</h2>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="r in relatedLinks" :key="r.to" :to="r.to"
+            class="px-3 py-1.5 rounded-lg text-sm border
+                   bg-slate-100 dark:bg-slate-800
+                   text-slate-600 dark:text-slate-300
+                   border-slate-200 dark:border-slate-700/50
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+          >{{ r.label }}</NuxtLink>
+        </div>
+      </section>
+
       <!-- CATEGORY LINK -->
       <section class="mb-10">
         <NuxtLink
           to="/categories/ai-engineering"
-          class="flex items-center justify-between gap-6 rounded-2xl p-6
+          class="relative isolate overflow-hidden flex items-center justify-between gap-6 rounded-2xl p-6
                  border border-sky-500/20 bg-sky-500/5
                  hover:border-sky-500/40 hover:bg-sky-500/10
                  transition-all duration-200 group"
         >
+          <HeroBackdrop lazy src="/img/categories/ai-engineering.jpg" />
           <div>
             <p class="text-xs font-medium text-sky-500 uppercase tracking-wider mb-1">Knowledge Base</p>
             <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-400 transition-colors">

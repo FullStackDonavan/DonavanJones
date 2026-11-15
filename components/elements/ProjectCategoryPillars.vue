@@ -7,6 +7,9 @@ const { data: counts } = await useFetch<Record<string, number>>('/api/category-c
   key: 'category-counts',
 })
 
+// Blog categories with generated cover art (scripts/image-subjects.json)
+const COVERED = new Set(['ai-engineering', 'algorithms', 'backend-engineering', 'infrastructure-engineering', 'local-vibe-coding', 'agentic-ai-systems', 'ai-homelab-engineering', 'ai-cost-optimization', 'versehub-engineering'])
+
 const CATEGORY_META: Record<string, {
   title: string
   icon: string
@@ -60,7 +63,7 @@ const CATEGORY_META: Record<string, {
         v-for="slug in pillars"
         :key="slug"
         :to="CATEGORY_META[slug]?.to ?? `/categories/${slug}`"
-        class="group flex flex-col gap-3 rounded-2xl p-5 border transition-all duration-200"
+        class="group flex flex-col gap-3 overflow-hidden rounded-2xl p-5 border transition-all duration-200"
         :class="{
           'border-purple-500/20 bg-purple-500/5 hover:border-purple-500/40 hover:bg-purple-500/10': CATEGORY_META[slug]?.color === 'purple',
           'border-sky-500/20 bg-sky-500/5 hover:border-sky-500/40 hover:bg-sky-500/10':           CATEGORY_META[slug]?.color === 'sky',
@@ -69,27 +72,55 @@ const CATEGORY_META: Record<string, {
           'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 hover:border-sky-500/40': !CATEGORY_META[slug],
         }"
       >
-        <!-- Icon -->
-        <div
-          class="w-9 h-9 rounded-lg flex items-center justify-center border"
-          :class="{
-            'bg-purple-500/10 border-purple-500/20': CATEGORY_META[slug]?.color === 'purple',
-            'bg-sky-500/10 border-sky-500/20':       CATEGORY_META[slug]?.color === 'sky',
-            'bg-emerald-500/10 border-emerald-500/20': CATEGORY_META[slug]?.color === 'emerald',
-            'bg-amber-500/10 border-amber-500/20':   CATEGORY_META[slug]?.color === 'amber',
-          }"
-        >
-          <Icon
-            :name="CATEGORY_META[slug]?.icon ?? 'mdi:tag-outline'"
-            class="text-lg"
-            :class="{
-              'text-purple-400': CATEGORY_META[slug]?.color === 'purple',
-              'text-sky-400':    CATEGORY_META[slug]?.color === 'sky',
-              'text-emerald-400':CATEGORY_META[slug]?.color === 'emerald',
-              'text-amber-400':  CATEGORY_META[slug]?.color === 'amber',
-            }"
-          />
+        <div v-if="COVERED.has(slug)" class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+          <img :src="`/img/categories/${slug}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+               class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+            <div
+              class="w-9 h-9 rounded-lg flex items-center justify-center border"
+              :class="{
+                'bg-purple-500/10 border-purple-500/20': CATEGORY_META[slug]?.color === 'purple',
+                'bg-sky-500/10 border-sky-500/20':       CATEGORY_META[slug]?.color === 'sky',
+                'bg-emerald-500/10 border-emerald-500/20': CATEGORY_META[slug]?.color === 'emerald',
+                'bg-amber-500/10 border-amber-500/20':   CATEGORY_META[slug]?.color === 'amber',
+              }"
+            >
+              <Icon
+                :name="CATEGORY_META[slug]?.icon ?? 'mdi:tag-outline'"
+                class="text-lg"
+                :class="{
+                  'text-purple-400': CATEGORY_META[slug]?.color === 'purple',
+                  'text-sky-400':    CATEGORY_META[slug]?.color === 'sky',
+                  'text-emerald-400':CATEGORY_META[slug]?.color === 'emerald',
+                  'text-amber-400':  CATEGORY_META[slug]?.color === 'amber',
+                }"
+              />
+            </div>
+          </div>
         </div>
+        <div v-else>
+          <div
+            class="w-9 h-9 rounded-lg flex items-center justify-center border"
+            :class="{
+              'bg-purple-500/10 border-purple-500/20': CATEGORY_META[slug]?.color === 'purple',
+              'bg-sky-500/10 border-sky-500/20':       CATEGORY_META[slug]?.color === 'sky',
+              'bg-emerald-500/10 border-emerald-500/20': CATEGORY_META[slug]?.color === 'emerald',
+              'bg-amber-500/10 border-amber-500/20':   CATEGORY_META[slug]?.color === 'amber',
+            }"
+          >
+            <Icon
+              :name="CATEGORY_META[slug]?.icon ?? 'mdi:tag-outline'"
+              class="text-lg"
+              :class="{
+                'text-purple-400': CATEGORY_META[slug]?.color === 'purple',
+                'text-sky-400':    CATEGORY_META[slug]?.color === 'sky',
+                'text-emerald-400':CATEGORY_META[slug]?.color === 'emerald',
+                'text-amber-400':  CATEGORY_META[slug]?.color === 'amber',
+              }"
+            />
+          </div>
+        </div>
+        <!-- Icon -->
 
         <!-- Body -->
         <div class="flex-1">

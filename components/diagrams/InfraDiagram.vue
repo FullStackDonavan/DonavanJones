@@ -106,7 +106,7 @@ const allNodes = {
               lines: ['3 × RPi 5', 'Stateful pods', 'PVC binding'] } },
     { id: 'wn-ai',   type: 'arch', position: { x: 280,  y: 380 },
       data: { label: 'Workers (AI)',    icon: 'mdi:chip',                  color: 'slate',
-              lines: ['RTX 3090 node', 'Jetson Orin', 'GPU scheduling'] } },
+              lines: ['Jetson Orin Nano Super ×3', 'RTX 3090 workstation', 'GPU scheduling'] } },
     { id: 'app',     type: 'arch', position: { x: 580,  y: 60  },
       data: { label: 'App Pods',        icon: 'mdi:application-brackets',  color: 'green',
               lines: ['Nuxt / FastAPI', 'BullMQ workers', 'WebSocket server'] } },

@@ -1,22 +1,23 @@
 ---
 title: "Autonomous Background Jobs"
-description: "Designing agents that run unattended on a schedule — the guardrails that make recurring autonomous jobs safe to leave running."
-date: 2026-06-15
-lastUpdated: "2026-06-15"
+description: "Autonomous background jobs for AI agents: the guardrails — bounded blast radius, idempotency, and dead-man's-switch heartbeats — that make unattended runs safe."
+date: 2026-10-25
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - automation
-draft: true
+draft: false
 slug: autonomous-background-jobs
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/10-autonomous-background-jobs.jpg
 ---
 
 # Autonomous Background Jobs
 
-A recurring agent job — running nightly, hourly, or on every push to a repository — is a different design problem than an interactive one. Nobody is watching it run, which means the guardrails that catch mistakes have to be built into the job itself rather than supplied by a human noticing something looks wrong in real time.
+A recurring agent job — running nightly, hourly, or on every push to a repository — is a different design problem than an interactive one. Nobody is watching it run, which means the guardrails that catch mistakes have to be built into the job itself rather than supplied by a human noticing something looks wrong in real time. The three that matter most are a bounded blast radius, idempotent runs, and a dead-man's switch that alerts when the job stops.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -53,7 +54,9 @@ def nightly_triage_job():
         raise  # let the scheduler's alerting catch this
 ```
 
-The `heartbeat` call is the dead-man's-switch piece — an external monitor alerts if no heartbeat arrives in the expected window, whether the job failed loudly or just silently stopped firing.
+The `heartbeat` call is the dead-man's-switch piece — an external monitor alerts if no heartbeat arrives in the expected window, whether the job failed loudly or just silently stopped firing. A [Prometheus](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) alert on a stale "last success" timestamp is the simplest version.
+
+In my cluster the closest real example is the VerseHub corpus crawler, which runs as a Kubernetes Job on the Raspberry Pi rack — [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack) covers how it's launched and where its output lands.
 
 ::CtaSystemArchitecture
 ---
@@ -65,7 +68,7 @@ destinationUrl: "/systems/agentic-ai"
 
 ## Where to Draw the Autonomy Line
 
-The practical rule: autonomous unattended execution is appropriate for actions that are reversible, low-cost to get wrong, or purely informational (flagging, summarizing, drafting). Anything destructive, expensive to undo, or customer-facing should either require a confirmation step or run through a verification agent before taking effect — covered in the next article in this series.
+The practical rule: autonomous unattended execution is appropriate for actions that are reversible, low-cost to get wrong, or purely informational (flagging, summarizing, drafting). Anything destructive, expensive to undo, or customer-facing should either require a confirmation step or run through a verification agent before taking effect — covered in [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -80,7 +83,7 @@ The practical rule: autonomous unattended execution is appropriate for actions t
   ---
   buttonText: "Read: Verification Agents in Production"
   supportingCopy: "The safety layer for higher-stakes autonomous actions."
-  destinationUrl: "/blog/agentic-ai-systems/verification-agents-in-production"
+  destinationUrl: "/blog/agentic-ai-systems/11-verification-agents-in-production"
   ---
   :::
 
@@ -108,6 +111,13 @@ links:
     description: "The monitoring pattern behind detecting a silently-failed scheduled job."
 ---
 ::
+
+## Related reading
+
+- [Long-Running Agent Workflows](/blog/agentic-ai-systems/09-long-running-agent-workflows) — previous: checkpointing and progress for multi-hour workflows
+- [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production) — next: checking agent output before it takes effect
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [Monitoring and Troubleshooting](/blog/infrastructureengineering/10-monitoring-and-troubleshooting) — the monitoring setup that catches silent failures
 
 ---
 

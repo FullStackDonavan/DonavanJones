@@ -2,7 +2,7 @@
 title: "Consumer Hardware Usage"
 description: "How consumer-grade hardware performs in homelab infrastructure — tradeoffs between cost, reliability, and capability for running Kubernetes clusters."
 date: 2025-10-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - hardware
@@ -10,13 +10,16 @@ tags:
 draft: false
 slug: consumer-hardware-usage
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/15-consumer-hardware-usage.jpg
 ---
 
 # Consumer Hardware Usage
 
-Building infrastructure at home does not always require enterprise servers, expensive networking gear, or a massive budget. A large part of my homelab is built around consumer hardware, Raspberry Pis, gaming PCs, and repurposed components that allow me to experiment with Kubernetes, AI workloads, CI/CD pipelines, and distributed services from my own rack. My setup focuses on learning practical infrastructure engineering while keeping costs manageable and power usage reasonable. Over time, the rack evolved from a small development environment into a platform for hosting microservices, AI tooling, databases, Gitea runners, and parts of my Bible app ecosystem.
+Consumer hardware is enough to run a real Kubernetes homelab with local AI. My entire setup is four Raspberry Pis, three Jetson Orin Nano Super developer boards, and one gaming-class desktop with an RTX 3090. Nothing in it is enterprise gear. You give up ECC memory, redundant power, and hot-swap drives, and you get low cost, low power draw, and hardware that's easy to replace.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+Building infrastructure at home does not always require enterprise servers, expensive networking gear, or a massive budget. A large part of my homelab is built around consumer hardware, Raspberry Pis, a gaming PC, and repurposed components that allow me to experiment with Kubernetes, AI workloads, CI/CD pipelines, and distributed services from my own rack. My setup focuses on learning practical infrastructure engineering while keeping costs manageable and power usage reasonable. Over time, the rack evolved from a small development environment into a platform for hosting microservices, AI tooling, databases, Gitea runners, and parts of my Bible app ecosystem.
+
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -43,7 +46,7 @@ Some advantages include:
 
 ## My Rack Setup
 
-My rack currently mixes lightweight cluster nodes with more powerful systems for AI and development workloads. The cluster handles infrastructure services while my RTX 3090 development machine runs local AI models and GPU-heavy tasks.
+My rack currently mixes lightweight cluster nodes with more powerful systems for AI and development workloads. The four Pis handle infrastructure services, the three Jetsons handle small-model inference, speech, and image generation inside the cluster, and my RTX 3090 development machine runs the largest local models. The full parts list is in [hardware list and costs](/blog/infrastructureengineering/02-hardware-list-and-costs).
 
 The rack is used for:
 
@@ -73,9 +76,13 @@ I use ARM nodes for:
 
 Even though they are small devices, clustering multiple Pis together provides a strong learning environment for container orchestration and networking.
 
+## Jetson Orin Boards for Edge Inference
+
+The Jetson Orin Nano Super is a consumer-priced developer board with an NVIDIA GPU and 8 GB of unified memory. I run three of them as K3s GPU workers, booted from NVMe in MAXN_SUPER power mode. They're small, but they're real: one keeps llama3.2:3b loaded permanently at about 20.8 tok/s, and another runs a Kokoro TTS to Whisper STT round trip in 0.85 seconds. The limit is memory. Each board fits one ~4–5 GB model at a time. More on that in [using three Jetson Orin Nano Supers as an AI cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster).
+
 ## Gaming PCs for AI Workloads
 
-Consumer gaming hardware has become extremely useful for AI engineering. GPUs like the RTX 3090 provide enough VRAM and compute power for running local models, embeddings, vector pipelines, and inference services.
+Consumer gaming hardware has become extremely useful for AI engineering. GPUs like the RTX 3090 provide enough VRAM and compute power for running local models, embeddings, vector pipelines, and inference services. My single 3090 (24 GB) runs Ornith-1.0-35B, a mixture-of-experts model, at about 64 tok/s using 21.2 GB of VRAM. Whether that's cheaper than paying for APIs is covered in [hardware ROI for AI development](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development).
 
 My GPU machine is currently used for:
 
@@ -188,5 +195,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Cluster Topology](/blog/infrastructureengineering/14-cluster-topology) — previous in the series
+- [Control Plane Taints](/blog/infrastructureengineering/16-control-plane-taints) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [When Should You Buy a GPU Instead of Paying API Fees?](/blog/ai-cost-optimization/05-when-to-buy-a-gpu-instead-of-api-fees) — the break-even math for consumer GPUs
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — how the consumer GPU tiers divide the work
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

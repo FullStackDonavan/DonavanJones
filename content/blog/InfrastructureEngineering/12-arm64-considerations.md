@@ -2,7 +2,7 @@
 title: "ARM64 Considerations"
 description: "Key considerations for running Kubernetes and production workloads on ARM64 hardware — image compatibility, build pipelines, and performance tradeoffs."
 date: 2025-10-24
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - arm64
@@ -11,13 +11,16 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: arm64-considerations
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/12-arm64-considerations.jpg
 ---
 
 # ARM64 Considerations
 
+Running Kubernetes on ARM64 works well as long as every image you deploy is built for `linux/arm64`, you schedule heavy work onto nodes that can handle it, and you use SSDs or NVMe instead of SD cards for anything stateful. Image compatibility is where most of the friction is. Every node in my seven-node K3s cluster is ARM64, including the three Jetson Orin GPU workers, so I build everything with `docker buildx --platform linux/arm64`.
+
 As I continue building out my homelab rack and Kubernetes infrastructure, ARM64 hardware has become a major part of my workflow. From Raspberry Pi nodes running K3s to lightweight backend services and CI/CD workloads, ARM64 offers a balance of low power consumption, affordability, and scalability that makes it attractive for self-hosted infrastructure. Running ARM64 in a mixed environment alongside x86 systems and GPU machines also introduces important considerations around compatibility, performance, container images, and deployment strategy.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -64,7 +67,7 @@ Less ideal workloads:
 - GPU-intensive tasks
 - Video transcoding
 
-In my rack setup, I separate lightweight infrastructure services onto ARM64 nodes while heavier AI models and GPU workloads remain on dedicated x86 hardware with NVIDIA GPUs. This keeps the cluster efficient while still allowing high-performance workloads where needed.
+That list is about CPU-only boards like the Raspberry Pi. ARM64 with a GPU is a different story: my three Jetson Orin Nano Super boards are ARM64 too, and they run CUDA inference inside the cluster. One of them keeps llama3.2:3b loaded permanently and generates about 20.8 tokens per second. In my rack, lightweight infrastructure services go on the Pis, small-model inference, speech, and image generation go on the Jetsons, and only the largest models run on the one x86 machine, an RTX 3090 workstation outside the cluster.
 
 ## Power Efficiency
 
@@ -105,6 +108,8 @@ Use multi-arch images whenever possible. Tools like Docker Buildx make this easi
 docker buildx build --platform linux/amd64,linux/arm64 -t myapp:latest .
 ```
 
+Since my cluster is ARM64-only, I build just `--platform linux/arm64`, export the image, and import it on each node with `k3s ctr images import`, using `imagePullPolicy: Never` so pods use the local copy. The full flow is in [deploying an app on the rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack).
+
 ### Node Scheduling
 
 You may want to separate workloads between ARM64 and x86 nodes using:
@@ -112,7 +117,7 @@ You may want to separate workloads between ARM64 and x86 nodes using:
 - Taints and tolerations
 - Affinity rules
 
-This is especially useful in hybrid clusters where ARM nodes handle infrastructure while GPU systems handle AI or compute-heavy services.
+This is especially useful in hybrid clusters where ARM nodes handle infrastructure while GPU systems handle AI or compute-heavy services. In my cluster every node is ARM64, so I separate by role instead of architecture: Pi workers versus Jetson GPU workers (see [control plane taints](/blog/infrastructureengineering/16-control-plane-taints) for the scheduling side).
 
 ### Storage
 
@@ -138,7 +143,7 @@ ARM64 is improving rapidly for AI-related workloads, especially with:
 - Retrieval systems
 - Automation agents
 
-However, large models still benefit heavily from dedicated GPUs. In my setup, ARM64 nodes support the surrounding infrastructure while AI containers and models run separately on more powerful hardware.
+However, large models still benefit heavily from dedicated GPUs with more memory. In my setup, the Pis support the surrounding infrastructure, the Jetsons handle models small enough for 8 GB of unified memory (about one 4–5 GB model per board), and bigger models like Ornith-1.0-35B run on the RTX 3090. Memory is the real limit on the Jetsons. The CUDA allocator can't reclaim page cache, so a model can OOM even when `free -h` shows memory available. I cover that in my [Jetson Orin tutorials](/blog/ai-homelab-engineering/12-jetson-orin-tutorials).
 
 ::CtaContactWork
 ---
@@ -150,7 +155,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-ARM64 has become an important part of modern self-hosted infrastructure because it enables efficient, scalable, and affordable deployments without requiring enterprise hardware. Whether running K3s clusters, CI/CD pipelines, APIs, or lightweight backend services, ARM64 hardware can handle far more than many people expect. In hybrid environments like my rack setup, combining ARM64 nodes for infrastructure workloads with dedicated x86 GPU systems for AI and heavy compute creates a flexible architecture that balances performance, cost, and power efficiency. As software support continues improving across the ecosystem, ARM64 will likely become even more common in homelabs, edge computing, and production-ready infrastructure.
+ARM64 has become an important part of modern self-hosted infrastructure because it enables efficient, scalable, and affordable deployments without requiring enterprise hardware. Whether running K3s clusters, CI/CD pipelines, APIs, or lightweight backend services, ARM64 hardware can handle far more than many people expect. In hybrid environments like my rack setup, combining ARM64 Pi nodes for infrastructure, ARM64 Jetson boards for edge inference, and a single x86 GPU workstation for the heaviest compute creates a flexible architecture that balances performance, cost, and power efficiency. As software support continues improving across the ecosystem, ARM64 will likely become even more common in homelabs, edge computing, and production-ready infrastructure.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -205,5 +210,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Architecture Diagrams](/blog/infrastructureengineering/11-architecture-diagrams) — previous in the series
+- [Cluster Architecture (Homelab)](/blog/infrastructureengineering/13-cluster-architecture-homelab) — next in the series
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Using Three Jetson Orin Nano Supers as an AI Cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) — what the ARM64 GPU workers actually run
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — how models get loaded on memory-constrained nodes
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

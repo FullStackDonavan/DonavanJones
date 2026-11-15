@@ -1,8 +1,8 @@
 ---
 title: "Theological Consistency"
-description: "Ensuring theological consistency in AI-generated responses."
+description: "How to keep AI theology answers consistent: tradition profiles, position memory, coherence checks, trajectory tracking, and testing for contradictions."
 date: 2026-06-21
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,9 +11,12 @@ tags:
 draft: false
 slug: theological-consistency
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/18-theological-consistency.jpg
 ---
 
 # Theological Consistency
+
+Theological consistency means an AI gives coherent answers within a single response and keeps a stable, explainable position across a user's sessions. It does not come from a capable model alone: it takes a tradition profile, memory of positions already taken, coherence checks after generation, and tests that look for contradictions over time.
 
 Theological consistency is a problem that only becomes visible over time. A single AI response about Romans 8:28 can be accurate, well-cited, and appropriately hedged. But if a second response about the same passage a week later takes a different interpretive position — and the model is unaware that it has contradicted itself — something has failed that no single-response evaluation would catch.
 
@@ -21,7 +24,7 @@ Consistency in theological AI has two dimensions. The first is internal: across 
 
 Both dimensions require engineering — they do not emerge from a capable model alone.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -81,7 +84,7 @@ readings fairly. Do not assume the user wants to be challenged on tradition
 — they know the debates. Surface the debates when the evidence warrants it.
 ```
 
-The profile is updated incrementally as the user studies. Explicit statements ("I'm a Calvinist, don't lecture me about Arminianism") update it immediately. Implicit signals — consistently engaging with Reformed commentary, saving passages that emphasize divine sovereignty, asking follow-up questions about the ordo salutis — update it gradually through the memory extraction pipeline.
+The profile is updated incrementally as the user studies. Explicit statements ("I'm a Calvinist, don't lecture me about Arminianism") update it immediately. Implicit signals — consistently engaging with Reformed commentary, saving passages that emphasize divine sovereignty, asking follow-up questions about the ordo salutis — update it gradually through the [memory extraction pipeline](/blog/ai-engineering/19-memory-systems).
 
 ## Consistency Layer 2: Position Memory
 
@@ -102,7 +105,7 @@ interface TheologicalPosition {
 }
 ```
 
-When a user returns to a question previously addressed, the position is retrieved from memory and injected into context:
+When a user returns to a question previously addressed, the position is retrieved from [persistent memory](/blog/ai-engineering/01-persistent-memory-systems) and injected into context:
 
 ```
 Prior position on this topic (from session 2026-05-14):
@@ -356,6 +359,14 @@ links:
     description: "Research showing that agents with memory and reflection produce more consistent, coherent behavior over time — the precedent for longitudinal theological consistency."
 ---
 ::
+
+## Related reading
+
+- [Retrieval Augmented Generation](/blog/ai-engineering/17-retrieval-augmented-generation) — previous in the AI Engineering series
+- [Memory Systems](/blog/ai-engineering/19-memory-systems) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs) — verification that backs consistency checks
+- [VerseHub project overview](/projects/versehub) — the platform these consistency layers serve
 
 ---
 

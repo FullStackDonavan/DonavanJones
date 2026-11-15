@@ -1,8 +1,8 @@
 ---
 title: "Prometheus on a Pi K3s Cluster"
-description: "How to deploy Prometheus as a Kubernetes pod on an ARM64 Raspberry Pi k3s cluster — RBAC, scrape config, persistent storage, and cluster-wide metrics collection."
+description: "How I run Prometheus as a pod on an ARM64 Raspberry Pi K3s cluster: RBAC, scrape config, persistent storage, NodePort access, and cluster-wide metrics."
 date: 2026-06-13
-lastUpdated: "2026-06-13"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - prometheus
@@ -15,6 +15,7 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: prometheus-on-pi-cluster
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/41-prometheus-on-pi-cluster.jpg
 ---
 
 This article covers deploying Prometheus as a pod inside a K3s cluster running on Raspberry Pi ARM64 nodes. Rather than running Prometheus as a bare binary on the host, embedding it in Kubernetes keeps it managed by the same orchestration layer as everything else — automatic restarts, persistent storage via PVCs, and scrape targets discovered directly from the cluster's own API.
@@ -23,7 +24,7 @@ This article covers deploying Prometheus as a pod inside a K3s cluster running o
 
 Cluster-wide metrics collection using Prometheus deployed as a native Kubernetes workload on ARM64.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -244,7 +245,7 @@ up{instance="pi-node1", job="kubernetes-nodes"}                   1
 up{instance="pi-worker-3", job="kubernetes-cadvisor"}             1
 ```
 
-A value of `0` means the target is unreachable. In my cluster, two nodes (`raspberrypi` and `pi-node-redis`) showed `0` — both had dropped off the cluster, which Prometheus surfaced immediately.
+A value of `0` means the target is unreachable. In my cluster, two nodes (`raspberrypi` and `pi-node-redis`) showed `0` — both had dropped off the cluster after the control plane changed IP, which Prometheus surfaced immediately. (The recovery is in [Recovering a K3s Cluster After a Control Plane IP Change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change); `pi-node-redis` has since been renamed `pi-worker-2`.)
 
 ::CtaSystemArchitecture
 ---
@@ -269,7 +270,7 @@ increase(kube_pod_container_status_restarts_total[1h])
 kube_pod_status_phase{phase!="Running"}
 ```
 
-Node-level CPU and memory queries require `node_exporter` running on each Pi:
+The `kube_pod_*` metrics above come from kube-state-metrics, which is a separate deployment — install it if those queries return nothing. Node-level CPU and memory queries require `node_exporter` running on each Pi:
 
 ```bash
 sudo apt install prometheus-node-exporter -y
@@ -288,6 +289,8 @@ destinationUrl: "/hire-me"
 ## Conclusion
 
 Prometheus running as a K3s pod gives full cluster visibility with minimal operational overhead. The RBAC setup lets it auto-discover every node and pod without manual target configuration. On ARM64 Pi hardware, the resource footprint at 30-second scrape intervals is well within what a single Pi node can sustain alongside other workloads.
+
+The same Prometheus also scrapes my three Jetson Orin Nano Super GPU workers: a small custom agent on each board exposes GPU load on a `/metrics` endpoint, so model load on the Jetsons shows up next to everything else. The next steps are [Grafana on a Pi K3s cluster](/blog/infrastructureengineering/42-grafana-on-pi-cluster) for dashboards and [Loki and Promtail](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) for logs.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -336,6 +339,16 @@ links:
     description: "Overview of the ARM processor architecture — the hardware platform (ARM64) on which the Raspberry Pi nodes run and that determines image compatibility for container workloads."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Why Self-Hosted Git](/blog/infrastructureengineering/40-why-self-hosted-git) — previous in the series.
+- [Grafana on a Pi K3s Cluster](/blog/infrastructureengineering/42-grafana-on-pi-cluster) — next in the series: dashboards on top of these metrics.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Monitoring and Troubleshooting](/blog/infrastructureengineering/10-monitoring-and-troubleshooting) — the earlier, broader monitoring overview.
+- [Jetson Orin Tutorials](/blog/ai-homelab-engineering/12-jetson-orin-tutorials) — the GPU workers this Prometheus also watches.
 
 ---
 

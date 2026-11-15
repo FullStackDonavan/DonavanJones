@@ -1,8 +1,8 @@
 ---
 title: "Async Workers"
-description: "Asynchronous worker patterns in backend engineering."
+description: "Async worker patterns for AI backends: Postgres as a job queue with SKIP LOCKED, per-queue concurrency, retries, dead letters, and scaling on queue depth."
 date: 2026-03-27
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - async
@@ -11,15 +11,16 @@ draft: false
 cluster: "backend-engineering"
 slug: async-workers
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/12-async-workers.jpg
 ---
 
 # Async Workers
 
-Every article in this series that describes a job queue, a background pipeline, or a deferred operation is describing something that runs on an async worker. OCR processing runs on workers. Study guide generation runs on workers. Embedding indexing runs on workers. Notification delivery runs on workers. The async worker layer is the infrastructure that all of these sit on top of.
+Async workers pull jobs from a queue and run slow, expensive, or failure-prone work outside the HTTP request, with retries, concurrency limits, and a record of every attempt. Every article in this series that describes a job queue, a background pipeline, or a deferred operation is describing something that runs on an async worker. OCR processing runs on workers. Study guide generation runs on workers. Embedding indexing runs on workers. Notification delivery runs on workers. The async worker layer is the infrastructure that all of these sit on top of.
 
 This article covers the worker system itself: how jobs are queued and claimed, how workers are structured, how concurrency is managed, how failures are handled, and how the system scales. It is the substrate under everything that does not happen in the request path.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -35,7 +36,7 @@ The core reason to move work off the request path is that some operations are to
 
 **Too slow**: A study guide takes 45–90 seconds to generate. An HTTP request that takes 90 seconds before responding will be killed by proxies, load balancers, and impatient clients. The user cannot stare at a spinner for 90 seconds and feel like the product works.
 
-**Too expensive**: A batch reindex of 125,000 Bible verses consumes significant API quota. Running it in a request means the request holds a connection open while burning through rate-limited resources. An async worker runs it at a controlled pace without tying up a server process.
+**Too expensive**: A full reindex of the Bible corpus ties up the embedder (API quota on a hosted model, GPU time on mine) for a long stretch. Running it in a request means the request holds a connection open while burning through limited resources. An async worker runs it at a controlled pace without tying up a server process.
 
 **Too unreliable**: Downstream services fail. Embedding API calls return 429s. Notification delivery bounces. In the request path, these failures surface directly to the user. In a worker, they are retried automatically with backoff, invisible to the user unless they exhaust all retries.
 
@@ -274,9 +275,9 @@ WHERE status = 'pending' AND run_at <= now()
 GROUP BY queue;
 ```
 
-This runs every 30 seconds and feeds the autoscaler decision: if `embedding` queue depth exceeds 500 jobs, spin up two additional embedding workers. If it drops below 50, scale back down. Workers are Docker containers — scaling is a container count adjustment, not a code change.
+This runs every 30 seconds and feeds the autoscaler decision: if `embedding` queue depth exceeds 500 jobs, spin up two additional embedding workers. If it drops below 50, scale back down. Workers are containers — scaling is a replica count adjustment, not a code change. On my home lab K3s cluster they are ordinary Deployments, and one-off batch work like VerseHub's corpus crawler runs as a Kubernetes Job instead (see [running the corpus crawler on the rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack)).
 
-The practical scaling limit is the downstream service's capacity, not the worker count. Adding more embedding workers does not help if the embedding API rate limit is already saturated. The rate limiter in the embedding service is the actual bottleneck, and more workers just means more workers waiting at the rate limit gate. Understanding the true bottleneck is more useful than simply adding workers when a queue backs up.
+The practical scaling limit is the downstream service's capacity, not the worker count. Adding more embedding workers does not help if the embedding API rate limit — or, in my case, the single GPU running the embedder — is already saturated. That is the actual bottleneck, and more workers just means more workers waiting at the gate. Understanding the true bottleneck is more useful than simply adding workers when a queue backs up.
 
 ::CtaContactWork
 ---
@@ -296,7 +297,7 @@ The jobs table is its own observability surface. At any point I can query:
 - Average processing time by job type
 - Dead job rate by queue and error message
 
-Beyond the table, workers emit structured logs on job start, completion, and failure. A job that takes significantly longer than its typical processing time is flagged automatically — a study guide job that runs for 10 minutes when the average is 60 seconds is either hung or encountering an unusual input.
+Beyond the table, workers emit structured logs on job start, completion, and failure, which [Loki and Promtail](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) collect across the cluster. A job that takes significantly longer than its typical processing time is flagged automatically — a study guide job that runs for 10 minutes when the average is 60 seconds is either hung or encountering an unusual input.
 
 Async workers are invisible when they work and highly visible when they do not. The goal is not to make them invisible in monitoring — it is to make failures immediately obvious before users notice. A queue that is silently backing up, workers that are silently hanging, and dead jobs that are silently accumulating are all failures even if no user has complained yet. Monitoring the queue is how you find out first.
 
@@ -351,6 +352,13 @@ links:
     description: "Overview of concurrent execution — the model behind worker concurrency settings and FOR UPDATE SKIP LOCKED, which allow multiple worker processes to claim jobs without coordination."
 ---
 ::
+
+## Related reading
+
+- [Agent Orchestration (Backend)](/blog/backendengineering/11-agent-orchestration) — previous in the series: multi-step jobs that run on these workers
+- [GPU Allocation](/blog/backendengineering/13-gpu-allocation) — next in the series: when the worker needs a GPU
+- [Long-Running Agent Workflows](/blog/agentic-ai-systems/09-long-running-agent-workflows) — when a job queue is not enough and you need durable workflows
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

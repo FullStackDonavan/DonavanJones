@@ -1,8 +1,8 @@
 ---
 title: "Local Agent Systems"
-description: "Overview of local agent systems in AI engineering."
+description: "Local agent systems: running LLM agents on your own hardware with Ollama or llama.cpp, model sizing, hybrid local/cloud routing, and where local falls short."
 date: 2026-05-03
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,9 +11,12 @@ tags:
 draft: false
 slug: local-agent-systems
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/07-local-agent-systems.jpg
 ---
 
 # Local Agent Systems
+
+A local agent system is an AI agent whose model runs on hardware you control — a workstation GPU, an edge board like a Jetson, or the user's own device — instead of a cloud API. Local wins on privacy, offline use, latency for small tasks and cost at volume; frontier cloud models still win on complex reasoning, so the practical design is a hybrid router.
 
 Every article in this series so far has assumed that model inference happens through a cloud API — send a request to Anthropic or OpenAI, receive a completion. For most production AI features, this is the right architecture. Cloud APIs deliver the best available models with no infrastructure to run.
 
@@ -21,7 +24,7 @@ But cloud APIs are not the only option, and for certain tasks they are not the b
 
 This article covers what local agent systems are, when they make sense over cloud APIs, the tooling ecosystem for running models locally, and how local and cloud inference mix on this platform.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -167,33 +170,35 @@ async def generate(request: GenerateRequest):
     return {"text": tokenizer.decode(outputs[0], skip_special_tokens=True)}
 ```
 
-This approach is used for the historical OCR model (fine-tuned Tesseract, Python-served) and for the local reranker (sentence-transformers, served via FastAPI sidecar).
+This is the pattern for anything Ollama can't serve — a fine-tuned OCR model, or a sentence-transformers reranker behind a small FastAPI sidecar.
 
 ## Model Selection for Local Deployment
 
 Not all models run well locally. The practical constraints:
 
-**Parameter count vs hardware**: a 70B model requires roughly 40GB of VRAM in Q4 quantization — an H100 or two A100s. A 7B model requires roughly 4–5GB — a Mac M2 Pro handles it comfortably. For most local deployments, 7B–13B models are the practical range on available hardware.
+**Parameter count vs hardware**: a 70B model requires roughly 40GB of VRAM in Q4 quantization — more than a single 24GB RTX 3090 holds, so it means a 48–80GB data-center card or splitting across GPUs. A 7B model requires roughly 4–5GB — a Mac M2 Pro handles it comfortably. For most local deployments, 7B–13B models are the practical range on available hardware.
 
 **Task-model fit**: smaller models are surprisingly capable at constrained, well-defined tasks and noticeably weaker at open-ended reasoning. A 7B model classifying topic categories or checking passage reference formatting performs well. A 7B model generating a nuanced theological commentary does not. Match model size to task requirements.
 
 **Quantization tradeoffs**: Q4 quantization (4-bit) halves memory requirements versus FP16 at roughly 2–5% quality degradation on standard benchmarks. Q8 quantization cuts memory in half from FP16 with under 1% degradation. For most local tasks, Q4 is the right default; for quality-sensitive tasks, Q8 is worth the extra memory.
 
-Models I use locally on this platform:
+What actually runs locally in my setup — one [RTX 3090 workstation plus three Jetson Orin Nano Supers](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) in a K3s cluster:
 
-| Task | Model | Quantization | Runtime |
+| Task | Model | Hardware | Runtime |
 |---|---|---|---|
-| Embedding (fallback) | nomic-embed-text | FP16 | Ollama |
-| Reranking | cross-encoder/ms-marco-MiniLM-L-6-v2 | FP16 | FastAPI |
-| Classification (topic, language) | llama3.2:3b | Q4 | Ollama |
-| Historical OCR | tesseract-finetuned | N/A | FastAPI |
-| Offline Q&A (mobile) | phi-3-mini | Q4 | llama.cpp (device) |
+| Embedding | all-MiniLM-L6-v2 | RTX 3090 (24 GB) | Docker (sentence-transformers) |
+| Fast drafts, classification | llama3.2:3b, pinned in memory | Jetson Orin Nano Super (8 GB) | Ollama |
+| Text-to-speech / speech-to-text | Kokoro-82M / whisper.cpp small.en | Jetson Orin Nano Super | CUDA services |
+| Small-model shelf (coder, vision, embeddings) | Qwen2.5-Coder, Qwen3, Gemma 3 4B, nomic-embed and others | Jetson Orin Nano Super | Ollama, one model at a time |
+| Large local model (agent verifier) | Ornith-1.0-35B (MoE, Q4_K_M) | RTX 3090 | Ollama |
+
+On a Jetson, llama3.2:3b generates at about 20.8 tokens/second, loads in about 5 seconds and runs 100% on the GPU. The 8 GB of unified memory is the real constraint: only one 4–5 GB model fits per board, and the CUDA allocator can't reclaim Linux page cache, so a model can OOM even when `free -h` says memory is available. The fix is to stop the old model and [drop caches before loading the next one](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu). Not everything fit: I ran Ornith-1.0-9B on a Jetson as a drafter, but at roughly 5.3 GB with a 4K context ceiling it managed only about 3 tokens/second end-to-end, so I retired it.
 
 The larger, more capable models (Opus, Sonnet) remain cloud-only — the quality gap between a 7B local model and a frontier model is significant for complex reasoning tasks, and the infrastructure cost of running a 70B model locally is not justified.
 
 ## Building a Local Agent Loop
 
-A local agent loop is structurally identical to a cloud agent loop — the same message array, the same tool calling pattern, the same agentic loop from article 03. The only difference is the client pointing at a local endpoint.
+A local agent loop is structurally identical to a cloud agent loop — the same message array, the same tool calling pattern, the same agentic loop from [article 03](/blog/ai-engineering/03-tool-calling). The only difference is the client pointing at a local endpoint.
 
 For tool calling with a local model, capability matters: not all local models handle tool calling reliably. Models that are specifically fine-tuned for function calling (Llama 3.1, Mistral with function calling fine-tune, Qwen 2.5) work well. Models that are not fine-tuned for it will attempt to call tools but produce malformed JSON arguments frequently.
 
@@ -237,7 +242,7 @@ async function runLocalAgent(userMessage: string, tools: Tool[]): Promise<string
 }
 ```
 
-One practical difference: local models respond more slowly than cloud APIs for the same parameter count when running on consumer hardware. A 7B model on an M2 Pro generates roughly 30–60 tokens per second. A cloud API serving the same model at scale generates faster because it runs on optimized hardware with better memory bandwidth. For interactive local agents, 60 tokens/sec is fine. For bulk processing, it may be a bottleneck.
+One practical difference: local models respond more slowly than cloud APIs for the same parameter count when running on consumer hardware. A 7B model on an M2 Pro generates roughly 30–60 tokens per second. On my own hardware, [Ornith-1.0-35B](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama) — a mixture-of-experts model with about 3B active parameters — runs at about 64 tokens/second on the RTX 3090, using 21.2 GB of VRAM. A cloud API serving the same model at scale generates faster because it runs on optimized hardware with better memory bandwidth. For interactive local agents, 60 tokens/sec is fine. For bulk processing, it may be a bottleneck.
 
 ## Hybrid Architecture: Local and Cloud Together
 
@@ -346,6 +351,21 @@ links:
     description: "According to this overview, on-device inference is a primary privacy-preserving deployment strategy for sensitive workloads."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: all
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Microsoft AutoGen](/blog/ai-engineering/06-microsoft-autogen) — previous in the AI Engineering series
+- [Tool-Based Reasoning](/blog/ai-engineering/08-tool-based-reasoning) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — the RTX 3090 + Jetson hardware behind these numbers
+- [Running Multiple Local Models Without Melting Your GPU](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu) — scheduling several local models on limited memory
 
 ---
 

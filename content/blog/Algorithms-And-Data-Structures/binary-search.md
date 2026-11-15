@@ -2,7 +2,7 @@
 title: "Binary Search"
 description: "Learn how Binary Search works in JavaScript — step-by-step examples, O(log n) time complexity analysis, sorted array requirements, and practical use cases."
 date: 2025-08-14
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -10,6 +10,7 @@ tags:
 draft: false
 slug: binary-search
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/binary-search.jpg
 ---
 
 # Binary Search
@@ -18,7 +19,7 @@ Binary Search is an efficient searching algorithm used to find a target value in
 
 Because it cuts the search area in half each step, Binary Search is much faster on large datasets.
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -122,6 +123,8 @@ Binary Search is useful when:
 - Working with large datasets
 - Searching IDs, usernames, timestamps, or ordered values
 
+The halving idea goes beyond arrays. When a batch of 100 items fails because of one bad input, splitting it in half and retrying each half finds the culprit in O(log n) retries — the partial-failure strategy I describe in [batching for AI backends](/blog/backendengineering/14-batching).
+
 ## Common Mistake
 
 Binary Search only works correctly on **sorted arrays**.
@@ -214,6 +217,13 @@ links:
     description: "According to this overview, a sorted array is the prerequisite data structure for binary search — the property that enables logarithmic lookup."
 ---
 ::
+
+## Related reading
+
+- [Linear Search](/blog/algorithms-and-data-structures/linear-search) — previous in the series: the O(n) baseline
+- [Divide And Conquer Pattern](/blog/algorithms-and-data-structures/divide-and-conquer-pattern) — next in the series: the general pattern binary search belongs to
+- [Batching](/blog/backendengineering/14-batching) — binary splitting to isolate failures in production
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Monolith vs Microservices"
-description: "Tradeoffs and reasoning behind splitting monoliths into microservices."
+description: "Monolith vs microservices from a real AI app: when I split VerseHub into services, what got harder, and three signals for when to extract a service."
 date: 2026-02-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - architecture
@@ -10,15 +10,16 @@ tags:
 draft: false
 slug: monolith-vs-microservices
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/01-monolith-vs-microservices.jpg
 ---
 
 # Monolith vs Microservices
 
-When I started building the backend for my AI-powered Bible study platform, I made a decision that most engineers eventually face: do I start with a single deployable application or split everything into separate services from day one?
+Start with a monolith, and extract a service only when one part of the system needs to scale, deploy, or fail independently of the rest. Microservices buy you that independence at the price of network failures, distributed transactions, and harder debugging.
 
-I started with a monolith. Then I split it. Here is what I learned.
+That is the path I took with the backend for [VerseHub](/projects/versehub), my AI-powered Bible study platform: I started with a monolith, then split it. Here is what I learned.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -66,7 +67,7 @@ I broke out services along domain boundaries. Each service owns its own data, ex
 | Search Service | Vector similarity queries, hybrid retrieval |
 | Narration Service | Text-to-speech pipeline, audio storage |
 
-Each service is a separate Node.js application with its own database schema. They communicate over HTTP and an internal message queue for async operations.
+Each service is its own deployable with its own database schema. They communicate over HTTP for anything in the request path and asynchronously for everything else. The multi-step AI work eventually moved onto [Temporal workflows](/blog/versehub-engineering/07-temporal-workflows-in-production), which handle retries and partial failure far better than a hand-rolled queue.
 
 ## The Real Tradeoffs
 
@@ -95,7 +96,7 @@ Running five services locally requires either Docker Compose or careful port man
 
 ### Distributed debugging is slower
 
-When something breaks in a monolith, the stack trace tells you everything. When something breaks across services, you are reading logs from multiple places and reconstructing what happened. I invested early in structured logging and a local log aggregator (Loki + Grafana) to make this tractable.
+When something breaks in a monolith, the stack trace tells you everything. When something breaks across services, you are reading logs from multiple places and reconstructing what happened. I invested early in structured logging and a log aggregator ([Loki and Promtail on my Pi cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster), viewed in Grafana) to make this tractable.
 
 ::CtaSystemArchitecture
 ---
@@ -135,7 +136,7 @@ destinationUrl: "/hire-me"
 
 ## Where I Landed
 
-For my platform, the split was the right call — specifically because AI inference and embedding generation have wildly different scaling profiles than authentication or text retrieval. I can run multiple inference replicas behind a load balancer during heavy usage and scale them back down without touching anything else.
+For my platform, the split was the right call — specifically because AI inference and embedding generation have wildly different resource profiles than authentication or text retrieval. Today the fast-draft LLM runs on a dedicated Jetson Orin Nano, the embedder runs on the RTX 3090, and the orchestration workers run on Raspberry Pis. I can move or swap any one of those without touching anything else — which would have been impossible inside one process.
 
 But I extracted services gradually. Auth and Bible text came first because the boundaries were obvious and the payoff was immediate. Narration and search came later, once the pain of having them in the monolith was concrete rather than theoretical.
 
@@ -194,6 +195,13 @@ links:
     description: "According to this overview, sagas manage long-running distributed transactions with compensating actions — the pattern used when database-level atomicity is not available across services."
 ---
 ::
+
+## Related reading
+
+- [AI Services](/blog/backendengineering/02-ai-services) — next in the series: how the extracted AI services behave differently
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — the system these services ended up in
+- [Separation of Workloads](/blog/infrastructureengineering/33-separation-of-workloads) — the same idea applied to hardware and cluster nodes
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

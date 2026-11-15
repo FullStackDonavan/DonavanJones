@@ -1,8 +1,8 @@
 ---
 title: "Streaming"
-description: "Streaming services and their use in backend systems."
+description: "How to stream LLM responses end to end with Server-Sent Events: inference service, nginx proxy buffering, fetch-based parsing, disconnects, and token limits."
 date: 2026-03-10
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - streaming
@@ -10,9 +10,12 @@ tags:
 draft: false
 slug: streaming
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/06-streaming.jpg
 ---
 
 # Streaming
+
+Streaming LLM output means forwarding each token to the browser as it is generated, usually over Server-Sent Events, so users start reading in under a second instead of staring at a spinner. Every hop — model, inference service, proxy, client — has to pass the stream through without buffering it.
 
 The first time I wired up LLM inference without streaming, the UX was immediately obvious as a problem. The user submits a question, a spinner runs for 8 seconds, then the full answer appears at once. It feels broken even when it works correctly. The wait is long enough to make users question whether anything is happening.
 
@@ -20,7 +23,7 @@ Streaming fixes the perception problem and, more importantly, fixes the actual e
 
 This article covers how streaming is implemented across the stack: from the LLM API through the inference service, through the backend API gateway, and into the browser.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -56,7 +59,7 @@ Two protocols support real-time server-to-client data: Server-Sent Events (SSE) 
 
 For LLM streaming, SSE is the right choice. The client sends one request — the prompt — and then listens while the server streams the completion. There is no bidirectional communication during inference. SSE's simplicity and compatibility with standard HTTP tooling make it easier to operate than WebSockets.
 
-The LLM APIs (Anthropic, OpenAI) both use SSE. I use SSE end-to-end so each layer speaks the same protocol. No translation is needed at any hop.
+The hosted LLM APIs (Anthropic, OpenAI) both use SSE, so I use SSE from the inference service outward and every layer speaks the same protocol. Local models are the exception: Ollama, which serves the fast-draft model for [VerseHub](/projects/versehub) on a Jetson, streams newline-delimited JSON, so the inference service translates that into SSE events before forwarding.
 
 ## The SSE Protocol
 
@@ -132,6 +135,10 @@ req.on("close", () => {
 ```
 
 Node's `req.close` event fires when the client drops the connection. Aborting the stream controller cancels the upstream fetch request, which terminates token generation on the LLM side. This is the correct behavior: stop spending money when there is nobody left to receive the output.
+
+## When the Stream Crosses a Message Bus
+
+Not every stream is a direct pipe. In VerseHub the refine pass runs inside a [Temporal workflow](/blog/versehub-engineering/07-temporal-workflows-in-production) on worker nodes, so tokens travel through Redis pub/sub before reaching the HTTP layer, with a replay of what was already published. My first version of that replay interleaved replayed text with live text, garbling the answer every 18 characters. The lesson: once a bus sits in the middle of a stream, you own ordering and deduplication — replayed and live chunks have to form one ordered sequence, and the client must never append a chunk twice.
 
 ## Streaming Through the API Gateway
 
@@ -321,6 +328,14 @@ links:
     description: "Overview of nginx as a reverse proxy — the layer that must be explicitly configured with proxy_buffering off to pass SSE streams through without buffering."
 ---
 ::
+
+## Related reading
+
+- [Vector Search](/blog/backendengineering/05-vector-search) — previous in the series: retrieving the context that gets streamed
+- [Notifications](/blog/backendengineering/07-notifications) — next in the series: events outside the request lifecycle
+- [Latency Optimization](/blog/backendengineering/15-latency-optimization) — why time-to-first-token is the number that matters
+- [Redis Memory Layer Design](/blog/versehub-engineering/05-redis-memory-layer-design) — the Redis layer the VerseHub stream passes through
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

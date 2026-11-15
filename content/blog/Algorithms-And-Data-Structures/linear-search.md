@@ -2,7 +2,7 @@
 title: "Linear Search"
 description: "How Linear Search works in JavaScript — iterating through arrays element by element, time complexity analysis, and when to use it over binary search."
 date: 2025-08-07
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -10,13 +10,14 @@ tags:
 draft: false
 slug: linear-search
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/linear-search.jpg
 ---
 
 # Linear Search
 
 Linear Search is the simplest searching algorithm. It examines each element in a list one by one, from beginning to end, until it finds the target value or exhausts the entire collection. There are no shortcuts, no requirements on the data, and no clever tricks — just a straight scan from left to right.
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -182,6 +183,8 @@ Linear Search is not appropriate when:
 - The same data will be searched many times — sort once, then use Binary Search
 - Working with database indexes or sorted collections where O(log n) lookup is available
 
+Linear search also has a modern cousin: exact nearest-neighbor search compares a query vector against every stored vector, which is O(n) per query. That is why production [vector search](/blog/backendengineering/05-vector-search) uses approximate indexes like HNSW instead of a full scan.
+
 ## Practical Example: Finding a User by ID
 
 ```js
@@ -264,6 +267,13 @@ links:
     description: "The sorted-data alternative to linear search — understanding binary search makes the tradeoffs of linear search concrete and measurable."
 ---
 ::
+
+## Related reading
+
+- [Multiple Pointers](/blog/algorithms-and-data-structures/multiple-pointers) — previous in the series
+- [Binary Search](/blog/algorithms-and-data-structures/binary-search) — next in the series: the O(log n) alternative
+- [Vector Search](/blog/backendengineering/05-vector-search) — why AI search avoids a linear scan
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

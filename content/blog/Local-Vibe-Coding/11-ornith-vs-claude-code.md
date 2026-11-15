@@ -1,23 +1,24 @@
 ---
 title: "Ornith-1.0-35B vs Claude Code"
-description: "A direct, model-level comparison of a locally-hosted Ornith-1.0-35B model against Claude Code on real coding tasks."
-date: 2026-03-23
-lastUpdated: "2026-07-09"
+description: "Ornith-1.0-35B vs Claude Code on real coding tasks: where the local 35B MoE model matches Claude, where multi-file reasoning gaps open, and how to route work."
+date: 2026-10-27
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - ornith
   - claude-code
-draft: true
+draft: false
 slug: ornith-vs-claude-code
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/11-ornith-vs-claude-code.jpg
 ---
 
 # Ornith-1.0-35B vs Claude Code
 
-This is narrower than the full 30-day cost/speed/privacy comparison elsewhere in this series — it's specifically about model quality, on identical tasks, with the agent tooling held constant as much as possible.
+On well-specified, pattern-following coding tasks, Ornith-1.0-35B running locally is close to Claude Code; on multi-file refactors and subtle non-local bugs, Claude Code is clearly stronger. This is narrower than the [30-day cost/speed/privacy comparison](/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days) — it's specifically about model quality on identical tasks, with the agent tooling held constant as much as possible.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -29,11 +30,11 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## The Test Set
 
-I ran the same 20 real tasks — pulled from actual work over several weeks, not a synthetic benchmark — through both the local pipeline and Claude Code, and rated the output on three axes: correctness (did it work), idiomaticity (did it match the codebase's existing conventions), and whether it required follow-up correction. "Ornith-1.0-35B" below refers to what actually reaches me locally: its output after its own self-review pass, not the first uncritiqued generation — that self-review step is baked into every local result in this comparison.
+I ran the same set of real tasks — pulled from actual work over several weeks, not a synthetic benchmark — through both the local pipeline and Claude Code, and rated the output on three axes: correctness (did it work), idiomaticity (did it match the codebase's existing conventions), and whether it required follow-up correction. "Ornith-1.0-35B" below refers to what actually reaches me locally: its output after its own self-review pass, not the first uncritiqued generation — that self-review step is baked into every local result in this comparison. For context on the local side: Ornith-1.0-35B runs at Q4_K_M in Ollama on a single RTX 3090, using about 21.2GB of VRAM at roughly 64 tok/s ([setup guide here](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama)).
 
 ## Where Ornith-1.0-35B Holds Up
 
-On straightforward, well-specified tasks — "add a validation function," "write tests for this module," "convert this callback pattern to async/await" — Ornith-1.0-35B's output was correct and idiomatic close to as often as Claude Code's. These are tasks with a clear, learnable pattern, and a well-tuned 35B model has seen enough of that pattern in training to reproduce it reliably.
+On straightforward, well-specified tasks — "add a validation function," "write tests for this module," "convert this callback pattern to async/await" — Ornith-1.0-35B's output was correct and idiomatic close to as often as Claude Code's. These are tasks with a clear, learnable pattern, and a well-tuned 35B mixture-of-experts model (~3B parameters active per token) has seen enough of that pattern in training to reproduce it reliably.
 
 ## Where the Gap Opens Up
 
@@ -56,7 +57,7 @@ destinationUrl: "/systems/local-vibe-coding"
 
 ## What This Means Practically
 
-Route by task type, not by habit. The instinct to reach for whichever tool is open is worth resisting — a quick mental check ("is this pattern-following or does it require holding a lot of context") is usually enough to route correctly, and getting that routing right is most of what makes the hybrid setup work at all. In OpenClaw this routing is partly automatic: a task Ornith-1.0-35B's own self-review flags as uncertain gets escalated to Claude Code instead of a local retry, which catches most of the "should have gone to Claude Code from the start" cases even when my own initial guess was wrong.
+Route by task type, not by habit. The instinct to reach for whichever tool is open is worth resisting — a quick mental check ("is this pattern-following or does it require holding a lot of context") is usually enough to route correctly, and getting that routing right is most of what makes the hybrid setup work at all. In OpenClaw this routing is partly automatic: a task Ornith-1.0-35B's own self-review flags as uncertain gets escalated to Claude Code instead of a local retry, which catches most of the "should have gone to Claude Code from the start" cases even when my own initial guess was wrong. Checking a model's output before trusting it is the same principle behind [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -71,7 +72,7 @@ Route by task type, not by habit. The instinct to reach for whichever tool is op
   ---
   buttonText: "Read: OpenClaw vs Cloud IDEs"
   supportingCopy: "The agent-tooling side of this same comparison."
-  destinationUrl: "/blog/local-vibe-coding/openclaw-vs-cloud-ides"
+  destinationUrl: "/blog/local-vibe-coding/12-openclaw-vs-cloud-ides"
   ---
   :::
 
@@ -95,6 +96,13 @@ links:
     description: "Background on the hidden-dependency failure mode where a locally-correct fix breaks something elsewhere."
 ---
 ::
+
+## Related reading
+
+- [Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days](/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days) — previous in the series: the system-level comparison.
+- [OpenClaw vs Cloud IDEs](/blog/local-vibe-coding/12-openclaw-vs-cloud-ides) — next: the agent-tooling side of the same question.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [Hallucination Reduction](/blog/ai-engineering/14-hallucination-reduction) — techniques that narrow the gap for smaller models.
 
 ---
 

@@ -2,7 +2,7 @@
 title: "Ingress Setup"
 description: "How to configure Traefik ingress on a K3s Raspberry Pi cluster — routing external traffic, TLS termination, and deploying your first service."
 date: 2025-10-13
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - ingress
@@ -11,24 +11,27 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: ingress-setup
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/08-ingress-setup.jpg
 ---
 
 # Ingress Setup
 
+K3s ships with the Traefik ingress controller already enabled, so ingress setup on a Pi cluster mostly comes down to writing an `Ingress` resource that maps a hostname to a Service, then pointing that hostname at the cluster in DNS or `/etc/hosts`. Add TLS with cert-manager or self-signed certs once routing works. K3s's built-in ServiceLB (Klipper) handles `LoadBalancer` services, so you don't need MetalLB to get started.
+
 ## Introduction
 
-This guide walks through setting up Ingress in a lightweight Kubernetes environment using K3s running on a Raspberry Pi homelab rack cluster. Your rack setup includes multiple Pi nodes, containerized services, and external compute workloads (like your RTX 3090 Docker AI machine) that work alongside the cluster.
+This guide walks through setting up Ingress in a lightweight Kubernetes environment using K3s running on a Raspberry Pi homelab rack cluster. A rack like mine has multiple Pi nodes, Jetson GPU workers, containerized services, and external compute (an RTX 3090 Docker machine) working alongside the cluster.
 
-Ingress acts as the **single routing layer** that connects all of these moving parts. Instead of exposing each service separately, you route everything through one controlled entry point. This is especially useful in your setup because you’re running:
+Ingress acts as the **single routing layer** that connects all of these moving parts. Instead of exposing each service separately, you route everything through one controlled entry point. This is especially useful in a setup that runs:
 
 - Kubernetes services on Raspberry Pi nodes
 - AI workloads on a separate GPU machine
 - CI/CD pipelines using Gitea inside the cluster
-- Internal apps like your Bible app and dashboards
+- Internal apps like [VerseHub](/projects/versehub) and dashboards
 
 Ingress becomes the bridge between all of them.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -48,7 +51,7 @@ Make sure:
 - kubectl is working from your admin machine
 - At least one service is deployed
 - Cluster networking between nodes is healthy
-- (Optional) MetalLB is installed for bare-metal IP exposure
+- (Optional) MetalLB, if you'd rather not use K3s's built-in ServiceLB for bare-metal IP exposure
 
 ---
 
@@ -64,48 +67,54 @@ If you want NGINX instead:
 
 Install it using Helm:
 
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx  
-helm repo update  
+```bash
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
 
-helm install ingress-nginx ingress-nginx/ingress-nginx  
---namespace ingress-nginx  
---create-namespace  
+helm install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx \
+  --create-namespace
+```
 
 ---
 
 ## Creating an Ingress Resource
 
-Once your controller is running, create an ingress rule like this:
+Once your controller is running, create an ingress rule like this (the `rewrite-target` annotation only applies to NGINX; Traefik ignores it):
 
-apiVersion: networking.k8s.io/v1  
-kind: Ingress  
-metadata:  
-  name: example-ingress  
-  namespace: default  
-  annotations:  
-    nginx.ingress.kubernetes.io/rewrite-target: /  
-spec:  
-  rules:  
-    - host: app.local  
-      http:  
-        paths:  
-          - path: /  
-            pathType: Prefix  
-            backend:  
-              service:  
-                name: example-service  
-                port:  
-                  number: 80  
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: example-service
+                port:
+                  number: 80
+```
 
 Apply it:
 
-kubectl apply -f ingress.yaml  
+```bash
+kubectl apply -f ingress.yaml
+```
 
 ---
 
 ## DNS and Local Routing
 
-In your rack setup, DNS is usually handled manually.
+In a homelab rack, DNS is usually handled manually.
 
 You can map:
 
@@ -115,9 +124,11 @@ Using:
 
 - /etc/hosts on your dev machine
 - Router DNS rules
-- Pi-hole inside your rack cluster
+- A local DNS server such as Pi-hole
 
-This is what makes Ingress actually reachable from your browser.
+This is what makes Ingress actually reachable from your browser. Inside the cluster, services find each other through CoreDNS instead — see [DNS and service discovery in K3s](/blog/infrastructureengineering/19-dns-and-service-discovery).
+
+Not everything in my cluster goes through ingress, either. Internal tools like Prometheus (30909), Grafana (30300), and Gitea (32080) are exposed as plain NodePorts, which is simpler for LAN-only dashboards. For `LoadBalancer` services, K3s's ServiceLB decides which nodes publish ports based on a node label — and getting that label wrong once [broke every LoadBalancer service in my cluster](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers).
 
 ::CtaSystemArchitecture
 ---
@@ -239,5 +250,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Storage Setup](/blog/infrastructureengineering/07-storage-setup) — previous in the series
+- [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes) — next in the series
+- [Installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes) — an ingress example for a real self-hosted service
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — the app most of this routing serves
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

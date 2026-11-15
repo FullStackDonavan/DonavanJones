@@ -1,22 +1,23 @@
 ---
 title: "Building an AI Copilot That Understands Your Entire Codebase"
-description: "Combining retrieval, memory, and agentic tool use into a copilot that reasons about a whole codebase rather than a single file."
-date: 2026-05-18
-lastUpdated: "2026-06-09"
+description: "How to build an AI copilot that understands your entire codebase by combining a static call graph, semantic retrieval, and persistent project memory."
+date: 2026-09-16
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - copilot
-draft: true
+draft: false
 slug: building-an-ai-copilot-that-understands-your-codebase
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase.jpg
 ---
 
 # Building an AI Copilot That Understands Your Entire Codebase
 
 A copilot that only sees the file currently open is useful but limited — it can't tell you that the function you're editing is called from twelve other places, or that a similar problem was already solved in a different module. Getting to whole-codebase understanding means combining the retrieval and memory patterns from earlier in this series into one working system.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -30,9 +31,9 @@ destinationUrl: "/categories/agentic-ai-systems"
 
 **Structural understanding** — a call graph and dependency map, built by static analysis rather than relying on the model to infer relationships from raw text. Knowing that changing a function's signature affects twelve call sites shouldn't depend on the model reading and correctly cross-referencing every file.
 
-**Semantic retrieval** — the embedding-based search covered earlier in this series, for finding conceptually related code even when the exact terminology differs.
+**Semantic retrieval** — the embedding-based search covered in [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag), for finding conceptually related code even when the exact terminology differs.
 
-**Persistent project memory** — accumulated facts about the codebase's conventions, past architectural decisions, and known trouble spots, so the copilot doesn't re-derive the same understanding from scratch every session.
+**Persistent project memory** — the [Redis + vector store memory](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) from the previous article, holding accumulated facts about the codebase's conventions, past architectural decisions, and known trouble spots, so the copilot doesn't re-derive the same understanding from scratch every session.
 
 ## Assembling Context for a Query
 
@@ -46,7 +47,7 @@ User: "Where should I add rate limiting for the upload endpoint?"
 5. Generate a recommendation consistent with what already exists, not a generic pattern
 ```
 
-Step 4 is what separates a whole-codebase copilot from a single-file autocomplete tool — the recommendation is grounded in what this specific project already does, not a textbook answer.
+Step 4 is what separates a whole-codebase copilot from a single-file autocomplete tool (and it's the core of [building your own coding assistant](/blog/local-vibe-coding/08-building-your-own-coding-assistant) on local models) — the recommendation is grounded in what this specific project already does, not a textbook answer.
 
 ## Why the Call Graph Matters More Than It Seems
 
@@ -77,7 +78,7 @@ Static analysis handles explicit dependencies (function calls, imports) well and
   ---
   buttonText: "Read: Building Multi-Agent Workflows with Temporal"
   supportingCopy: "Scaling this pattern into durable, long-running workflows."
-  destinationUrl: "/blog/agentic-ai-systems/building-multi-agent-workflows-with-temporal"
+  destinationUrl: "/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal"
   ---
   :::
 
@@ -105,6 +106,13 @@ links:
     description: "General background on the static analysis techniques underlying structural codebase understanding."
 ---
 ::
+
+## Related reading
+
+- [Storing AI Memory with Redis and Vector Databases](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) — previous: the memory layer the copilot relies on
+- [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) — next: making multi-step agent work durable
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [Connecting Ornith to Your Own Codebase](/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase) — the same idea applied to a local 35B model
 
 ---
 

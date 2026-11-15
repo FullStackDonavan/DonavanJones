@@ -1,8 +1,8 @@
 ---
 title: "Persistent Memory Systems"
-description: "Overview of persistent memory systems in local AI agents."
+description: "How persistent memory works for AI agents: episodic, semantic, procedural and working memory, stored in Postgres, Redis and a vector store, with decay."
 date: 2026-04-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,9 +11,12 @@ tags:
 draft: false
 slug: persistent-memory-systems
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/01-persistent-memory-systems.jpg
 ---
 
 # Persistent Memory Systems
+
+Persistent memory lets an AI agent remember a user across sessions instead of starting from zero every time. In practice it is four stores working together — episodic events, distilled semantic facts, procedural preferences, and short-lived working memory — with only the relevant slice retrieved into the prompt for each request.
 
 Every conversation with an LLM starts from zero. The model has no memory of who you are, what you have studied before, what questions you have asked, or what you have already told it. Each session is a blank slate. For a simple chatbot, this is fine. For a Bible study platform built around continuity — a tool meant to accompany someone's study over months and years — it is a fundamental design problem.
 
@@ -21,7 +24,7 @@ Persistent memory systems are how AI agents overcome this limitation. They give 
 
 This article covers the architecture of persistent memory in AI agent systems — the different types of memory, how each is stored and retrieved, how memory integrates into inference, and the tradeoffs involved. The platform context throughout is a Bible study application where memory makes the difference between a generic AI assistant and one that knows this user's faith journey.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -41,7 +44,7 @@ Persistent memory solves this by storing history externally and retrieving only 
 
 ## Four Types of Memory
 
-AI memory systems are most clearly understood through four distinct types, each serving a different purpose:
+AI memory systems are most clearly understood through [four distinct types](/blog/agentic-ai-systems/04-agent-memory-architectures), each serving a different purpose:
 
 ### 1. Episodic Memory
 
@@ -94,11 +97,11 @@ Each memory type has different storage requirements:
 
 **Episodic storage** is append-only. New events are inserted; old events are never modified. This gives a reliable audit trail and allows re-deriving semantic memories if the extraction logic changes. Events older than 12–24 months are archived rather than deleted — rarely accessed but retained for long-term pattern analysis.
 
-**Semantic storage** uses both Postgres (for structured retrieval by topic, entity, or date) and a vector store (for similarity-based retrieval when the semantic match is fuzzy). Storing "the user is working through Calvinist theology" alongside its embedding vector lets the agent retrieve it whether the current query mentions "Calvinism" or "predestination" or "election" or "sovereign grace" — all semantically close.
+**Semantic storage** uses both Postgres (for structured retrieval by topic, entity, or date) and a [vector store](/blog/ai-engineering/02-vector-databases) (for similarity-based retrieval when the semantic match is fuzzy). Storing "the user is working through Calvinist theology" alongside its embedding vector lets the agent retrieve it whether the current query mentions "Calvinism" or "predestination" or "election" or "sovereign grace" — all semantically close.
 
 **Procedural storage** is a simple key-value structure. Keys like `response_style`, `explanation_depth`, `preferred_translation` map to learned values. These are updated slowly through explicit feedback and inferred behavioral patterns.
 
-**Working memory** lives in Redis as a session-scoped list. The current session's conversation turns are pushed to the list as they happen. When the list exceeds a token threshold, the oldest turns are summarized and the summary replaces them, keeping the list within bounds.
+**Working memory** lives in Redis as a session-scoped list (the [Redis memory layer design](/blog/versehub-engineering/05-redis-memory-layer-design) post covers the production version). The current session's conversation turns are pushed to the list as they happen. When the list exceeds a token threshold, the oldest turns are summarized and the summary replaces them, keeping the list within bounds.
 
 ::CtaSystemArchitecture
 ---
@@ -296,6 +299,13 @@ links:
     description: "Stanford research on AI agents with persistent memory, reflection, and planning — direct academic precedent for memory architecture patterns."
 ---
 ::
+
+## Related reading
+
+- [Vector Databases](/blog/ai-engineering/02-vector-databases) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Agent Memory Architectures](/blog/agentic-ai-systems/04-agent-memory-architectures) — the agentic-systems view of the same memory types
+- [Redis Memory Layer Design](/blog/versehub-engineering/05-redis-memory-layer-design) — how working memory is built in production
 
 ---
 

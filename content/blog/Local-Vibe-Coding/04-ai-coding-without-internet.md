@@ -1,23 +1,24 @@
 ---
 title: "AI Coding Without Internet"
-description: "What it actually takes to code with AI assistance with zero network dependency — offline models, offline docs, and the gaps that remain."
-date: 2026-02-02
-lastUpdated: "2026-06-09"
+description: "AI coding without internet: what an offline coding assistant needs (local models, package caches, no telemetry), what works offline, and the gaps that remain."
+date: 2026-08-12
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - offline
   - privacy
-draft: true
+draft: false
 slug: ai-coding-without-internet
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/04-ai-coding-without-internet.jpg
 ---
 
 # AI Coding Without Internet
 
-Running a local model is not the same as being able to code without internet. Most "local AI" setups still quietly depend on the network somewhere — package registries, documentation lookups, telemetry the tool doesn't let you disable. Getting to genuinely offline-capable took more deliberate stripping down than I expected.
+Yes, you can code with AI assistance without internet: run the model locally (Ollama caches it after the first pull), pre-populate your package cache, and disable telemetry, and the read-edit-test loop works fully offline. But running a local model is not the same as being offline-capable. Most "local AI" setups still quietly depend on the network somewhere — package registries, documentation lookups, telemetry — and getting to genuinely offline took more deliberate stripping down than I expected.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -39,7 +40,7 @@ destinationUrl: "/categories/local-vibe-coding"
 
 ## What Actually Works Offline
 
-With local models, a pre-populated package cache (`npm ci` against a lockfile with packages already downloaded, or a local PyPI mirror for Python projects), and telemetry disabled, the core loop — read files, generate a diff, apply the diff, run tests — works with zero network dependency. This is genuinely useful on a flight, in a location with unreliable connectivity, or as a deliberate privacy stance for sensitive codebases.
+With local models, a pre-populated package cache (`npm ci` against a lockfile with packages already downloaded, or a local PyPI mirror for Python projects), and telemetry disabled, the core loop — read files, generate a diff, apply the diff, run tests — works with zero network dependency. The rest of my toolchain is built the same way: git and CI run on [self-hosted Gitea](/blog/infrastructureengineering/40-why-self-hosted-git) inside the cluster, and container images are built locally with `docker buildx` and imported straight into each k3s node (`imagePullPolicy: Never`), so a deploy doesn't need a public registry either. This is genuinely useful on a flight, in a location with unreliable connectivity, or as a deliberate privacy stance for sensitive codebases.
 
 ## What Doesn't
 
@@ -55,7 +56,7 @@ destinationUrl: "/systems/local-vibe-coding"
 
 ## The Actual Value Proposition
 
-For most people, fully offline capability isn't the point — reliability and privacy are. Knowing the agent works identically whether the office wifi is up or down removes a category of "why is this suddenly broken" debugging. And for codebases with genuine confidentiality requirements, not sending code to a third party at all is the entire reason to run local in the first place, independent of whether you're actually disconnected.
+For most people, fully offline capability isn't the point — reliability and privacy are. Knowing the agent works identically whether the office wifi is up or down removes a category of "why is this suddenly broken" debugging. And for codebases with genuine confidentiality requirements, not sending code to a third party at all is the entire reason to run local in the first place, independent of whether you're actually disconnected — the privacy side is covered in [Local AI Security: Keeping Your Code and Data Private](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -70,7 +71,7 @@ For most people, fully offline capability isn't the point — reliability and pr
   ---
   buttonText: "Read: OpenClaw from Scratch"
   supportingCopy: "See the agent build that ties these pieces together."
-  destinationUrl: "/blog/local-vibe-coding/openclaw-from-scratch"
+  destinationUrl: "/blog/local-vibe-coding/05-openclaw-from-scratch"
   ---
   :::
 
@@ -98,6 +99,21 @@ links:
     description: "The lockfile-based install command used to avoid live registry dependency during offline sessions."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: code
+blurb: "Offline coding on edge hardware: which small models pass tests, and how fast they run."
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Best Local Models for Coding](/blog/local-vibe-coding/03-best-local-models-for-coding) — previous in the series: which model to cache before you unplug.
+- [OpenClaw from Scratch](/blog/local-vibe-coding/05-openclaw-from-scratch) — next: the agent that ties these pieces together.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [Why Local AI Matters](/blog/infrastructureengineering/39-why-local-ai-matters) — the broader case for owning your inference.
 
 ---
 

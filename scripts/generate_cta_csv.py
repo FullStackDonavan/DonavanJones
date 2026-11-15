@@ -350,7 +350,7 @@ for a in articles:
         ))
         ctas.append((
             "View my portfolio", "See A Real Case Study",
-            "See a real 92-business SaaS platform built from the ground up for a local company.",
+            "See a real insurance platform with $10.8M in payments processed, built from the ground up for a local company.",
             "/projects/business-benefit-alliance", "Mid-article",
         ))
         if rel:

@@ -1,8 +1,8 @@
 ---
 title: "Vector Search"
-description: "Vector search services in distributed backend architectures."
+description: "How I run vector search in production with Weaviate: HNSW indexes, hybrid BM25 + semantic search, reranking, metadata filters, and silent retrieval failures."
 date: 2026-03-07
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - vector-search
@@ -11,15 +11,18 @@ draft: false
 cluster: "backend-engineering"
 slug: vector-search
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/05-vector-search.jpg
 ---
 
 # Vector Search
 
-The previous article covered how the embedding service converts text into vectors. This article covers what happens next: storing those vectors, querying them efficiently, and returning results that are actually useful in a production system.
+Vector search stores embeddings in an approximate-nearest-neighbor index and returns the passages whose meaning is closest to the query, usually blended with keyword scoring and filtered by metadata. In [VerseHub](/projects/versehub) that index is Weaviate, holding scripture verses and Church Fathers collections embedded with all-MiniLM-L6-v2.
+
+The [previous article](/blog/backendengineering/04-embeddings) covered how the embedding service converts text into vectors. This one covers what happens next: storing those vectors, querying them efficiently, and returning results that are actually useful in a production system.
 
 Vector search is deceptively simple on the surface — "find the nearest neighbors to this query vector" — but the details around index design, query construction, result ranking, and operational scaling are where the real engineering lives. Getting it right is the difference between a search feature that feels magical and one that returns plausible-looking but unhelpful results.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -78,18 +81,19 @@ The three endpoints reflect three distinct search strategies I use depending on 
 
 ## The Vector Database
 
-I use **Qdrant** as the vector database. The selection criteria were: self-hostable (no external SaaS dependency for core search), strong filtering support (needed for scripture metadata like book, chapter, testament, translation), active development, and good client library support for Node.js.
+I use **Weaviate** as the vector database, running in-cluster on my home lab K3s cluster next to PostgreSQL, Redis, and MinIO. The selection criteria were: self-hostable (no external SaaS dependency for core search), strong filtering support (needed for scripture metadata like book, chapter, testament, translation), and built-in hybrid search.
 
-Alternatives I considered:
+How the common options compare:
 
-| Database | Why Not |
+| Database | Trade-off |
 |---|---|
+| Weaviate | What I run: self-hosted, native hybrid (BM25 + vector) search, payload filtering |
+| Qdrant | Also a strong self-hosted choice with excellent filtering |
 | Pinecone | SaaS-only, vendor dependency, cost at scale |
-| Weaviate | More complex operational profile than needed |
-| pgvector | Good option, but I wanted dedicated vector storage separate from the main Postgres instance |
-| Chroma | Good for development; less battle-tested for production at the time |
+| pgvector | Good option if you want vectors inside your main Postgres instance |
+| Chroma | Good for development; less battle-tested for production |
 
-Qdrant runs as a separate container with persistent volume storage. Collections are the unit of organization — each logical dataset (bible verses by translation, user notes, commentary) gets its own collection with its own vector dimensions and indexing configuration.
+Weaviate runs as its own service with persistent volume storage. Collections are the unit of organization — VerseHub has one for verses and one for Church Fathers passages, each with its own properties and indexing configuration.
 
 ### Collection Design
 
@@ -111,21 +115,21 @@ Each collection stores points. A point is a vector plus a payload (arbitrary JSO
 }
 ```
 
-The payload fields are indexed for filtering. Filtering happens at the vector search level — Qdrant applies the filter before or during the ANN search, not as a post-processing step on the full result set. This means filtered queries are fast even across large collections.
+The payload fields are indexed for filtering. Filtering happens at the vector search level — the database applies the filter before or during the ANN search, not as a post-processing step on the full result set. This means filtered queries are fast even across large collections.
 
 ## Approximate Nearest Neighbor Search
 
 Exact nearest neighbor search — comparing the query vector to every vector in the collection — is too slow at scale. A collection with 500,000 vectors would require 500,000 cosine similarity computations per query. Approximate Nearest Neighbor (ANN) search trades a small amount of recall for a large gain in speed.
 
-Qdrant uses **HNSW** (Hierarchical Navigable Small World graphs) as its ANN algorithm. HNSW builds a multi-layer graph where each node is connected to its nearest neighbors. A query traverses the graph starting from the top layer, drilling down to find approximate neighbors without scanning the full collection.
+Weaviate (like Qdrant and pgvector) uses **HNSW** (Hierarchical Navigable Small World graphs) as its ANN algorithm. HNSW builds a multi-layer graph where each node is connected to its nearest neighbors. A query traverses the graph starting from the top layer, drilling down to find approximate neighbors without scanning the full collection.
 
-The key parameters I tuned:
+The key parameters to understand (names vary slightly by database):
 
-- **`m`** (connections per node): 16 — higher values improve recall but increase memory and index build time
-- **`ef_construct`** (build-time search width): 100 — controls index quality during construction
-- **`ef`** (query-time search width): 64 — controls the recall/speed tradeoff at query time
+- **`m` / `maxConnections`** (connections per node): higher values improve recall but increase memory and index build time
+- **`ef_construct` / `efConstruction`** (build-time search width): controls index quality during construction
+- **`ef`** (query-time search width): controls the recall/speed trade-off at query time
 
-On my verse collection (~125,000 vectors across four translations), these settings give sub-10ms query latency with roughly 97% recall compared to exact search. For a Bible study application, the 3% of cases where the top result differs from the true nearest neighbor is an acceptable tradeoff.
+For a corpus the size of the Bible plus commentary, the defaults are a reasonable starting point; tune `ef` first if recall looks low, because it changes nothing about the stored index.
 
 ## Three Search Strategies
 
@@ -149,7 +153,7 @@ The `alpha` parameter controls the balance. I use `alpha = 0.7` as the default, 
 - Concept searches ("what does grace mean"): `alpha = 0.9` — mostly semantic
 - General questions: `alpha = 0.7` — balanced default
 
-The BM25 component runs against a full-text index on the `text` field in the payload. Qdrant supports sparse vectors for this, or I can run BM25 in Postgres and merge results in the search service. Currently I use the latter since the full-text index in Postgres is already maintained for other purposes.
+The BM25 component runs against a full-text index on the `text` field. Weaviate does this natively in its hybrid query (with the same `alpha` knob); with other databases you can use sparse vectors or run BM25 in Postgres and merge results in the search service.
 
 ### 3. Reranking
 
@@ -157,7 +161,7 @@ Used as a post-processing step when result quality needs to be maximized — pri
 
 The first-pass search retrieves a larger candidate set (top-20 to top-50). A cross-encoder reranker then scores each candidate against the full query text. Cross-encoders are slower than bi-encoders (the embedding model) because they process the query and each document together rather than independently, but they produce more accurate relevance scores.
 
-I use a lightweight cross-encoder model running locally. The reranker narrows 20 candidates to the top 5 that will actually be sent to the LLM as context. This two-stage approach (fast ANN retrieval + slow reranking on a small set) gets near cross-encoder quality at near bi-encoder speed.
+A lightweight cross-encoder can run locally next to the embedder. The reranker narrows 20 candidates to the top 5 that will actually be sent to the LLM as context. This two-stage approach (fast ANN retrieval + slow reranking on a small set) gets near cross-encoder quality at near bi-encoder speed.
 
 ```
 Query → Embed → ANN search (top-20) → Rerank → Top-5 context passages
@@ -194,11 +198,11 @@ I expose filters on every search endpoint:
 }
 ```
 
-Qdrant evaluates these filters during the ANN traversal using its payload index. The performance cost is low because the filtered candidate pool is still much larger than the top-k result size.
+The database evaluates these filters during the ANN traversal using its property index. The performance cost is low because the filtered candidate pool is still much larger than the top-k result size.
 
 ## Scoring and Result Shape
 
-Raw vector similarity scores (cosine similarity, range -1 to 1) are not meaningful to callers. The search service normalizes scores to a 0–1 range and adds a `relevance_tier` label (high / medium / low) based on score thresholds calibrated against my evaluation set.
+Raw vector similarity scores (cosine similarity, range -1 to 1) are not meaningful to callers. The search service normalizes scores to a 0–1 range and adds a `relevance_tier` label (high / medium / low) based on score thresholds calibrated against a small hand-checked evaluation set.
 
 ```json
 {
@@ -213,21 +217,23 @@ Raw vector similarity scores (cosine similarity, range -1 to 1) are not meaningf
     ...
   ],
   "query_time_ms": 7,
-  "total_candidates": 125000
+  "total_candidates": 20
 }
 ```
 
 Callers use `relevance_tier` to decide whether results are good enough to surface to the user or send to inference. If the top result is `low` relevance, the inference service knows retrieval failed and can respond accordingly rather than hallucinating context around a poor match.
 
+The failure that taught me this was worse than a low score. In VerseHub, the scripture path once stopped sending the query vector to Weaviate, so "search" returned verses in insertion order. Separately, a retrieval error was being swallowed and returned as an empty list, which let the model write confident answers with no evidence behind them. Now a retrieval failure raises, and the [verification pipeline](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs) checks every cited reference against what was actually retrieved.
+
 ## Operational Considerations
 
-**Index build time matters at reindex.** Adding 125,000 vectors to an HNSW index takes several minutes with my current settings. During a full reindex (model upgrade, new translation), the old collection remains live and the new collection is built in the background. The search service switches over atomically once the new index is ready — a config update, not a deploy.
+**Index build time matters at reindex.** Building an HNSW index over a full corpus is not instant. During a full reindex (model upgrade, new translation), the old collection remains live and the new collection is built in the background. The search service switches over atomically once the new index is ready — a config update, not a deploy.
 
-**Memory sizing.** HNSW indexes are memory-resident for fast querying. Each vector (1536 float32 values) takes about 6KB. 500,000 vectors is ~3GB of vector data alone, plus graph overhead. I size the Qdrant container with enough RAM to hold the active collections in memory with headroom.
+**Memory sizing.** HNSW indexes are memory-resident for fast querying. A 1536-dimension float32 vector takes about 6KB, so 500,000 of them is ~3GB before graph overhead. A 384-dimension all-MiniLM-L6-v2 vector is about 1.5KB, a quarter of that. Size the vector database with enough RAM to hold the active collections in memory with headroom.
 
-**Quantization as a lever.** Qdrant supports scalar quantization (float32 → int8) which reduces memory by 4x at a small accuracy cost (~1% recall drop in my testing). I have not needed it yet but it is the first lever to pull if the index outgrows available RAM.
+**Quantization as a lever.** Most vector databases support quantization (for example float32 → int8 scalar quantization, a 4x memory cut) at a small accuracy cost. I have not needed it yet, but it is the first lever to pull if the index outgrows available RAM.
 
-**Monitoring recall quality.** I run a weekly evaluation using a fixed set of 200 ground-truth query/result pairs built from user feedback and manual annotation. If recall drops below 90% on this set, it triggers a review of index parameters or chunking strategy. This is the only reliable way to catch silent degradation — latency and error metrics will not tell you when the right answer drops from position 1 to position 5.
+**Monitoring recall quality.** Keep a fixed set of ground-truth query/result pairs and re-run it after any index, model, or chunking change. This is the only reliable way to catch silent degradation — latency and error metrics will not tell you when the right answer drops from position 1 to position 5.
 
 ::CtaContactWork
 ---
@@ -285,7 +291,7 @@ links:
   - label: "Hierarchical Navigable Small World (HNSW) — Wikipedia"
     url: "https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world"
     type: "wikipedia"
-    description: "According to this overview, HNSW is the graph-based ANN algorithm that enables sub-10ms similarity search across hundreds of thousands of vectors."
+    description: "According to this overview, HNSW is the graph-based ANN algorithm that enables millisecond-scale similarity search across hundreds of thousands of vectors."
   - label: "Okapi BM25 — Wikipedia"
     url: "https://en.wikipedia.org/wiki/Okapi_BM25"
     type: "wikipedia"
@@ -296,6 +302,14 @@ links:
     description: "According to this research, bi-encoder dense retrieval outperforms BM25 for natural language questions — the foundational evidence for the semantic-weighted hybrid search strategy."
 ---
 ::
+
+## Related reading
+
+- [Embeddings](/blog/backendengineering/04-embeddings) — previous in the series: how the vectors are produced
+- [Streaming](/blog/backendengineering/06-streaming) — next in the series: getting the answer back to the user
+- [Vector Databases](/blog/ai-engineering/02-vector-databases) — a broader comparison of vector stores for AI systems
+- [Storing AI Memory with Redis and Vector Databases](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) — the same storage layer used for agent memory
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

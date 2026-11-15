@@ -1,23 +1,24 @@
 ---
 title: "Building Your Own Coding Assistant"
-description: "A general blueprint for building a local coding assistant from the pieces covered in this series — model, retrieval, tools, and the agent loop."
-date: 2026-03-02
-lastUpdated: "2026-07-09"
+description: "A blueprint for building your own local coding assistant: Ollama model runtime, codebase retrieval, a router-and-skills agent loop, and VS Code diff review."
+date: 2026-10-03
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - agents
   - architecture
-draft: true
+draft: false
 slug: building-your-own-coding-assistant
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/08-building-your-own-coding-assistant.jpg
 ---
 
 # Building Your Own Coding Assistant
 
-By this point in the series, every individual piece has been covered — a coding agent (Ornith-1.0-35B, running the full read-plan-edit-test-review loop), a runtime (Ollama), a retrieval layer for codebase awareness, and an agent loop (OpenClaw). This article is the assembly instructions: how those pieces fit together into something you'd actually use daily, and the decisions that matter most when building your own version.
+Building your own coding assistant comes down to four layers: a model runtime (Ollama serving a model capable enough to drive the loop), a retrieval layer for codebase awareness, an agent loop that calls tools, and an interface you'll actually use every day. By this point in the series every piece has been covered — Ornith-1.0-35B as the coding agent, Ollama, repository retrieval, and OpenClaw. This article is the assembly instructions and the decisions that matter most.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -41,7 +42,7 @@ destinationUrl: "/categories/local-vibe-coding"
 └─────────────────────────────────────┘
 ```
 
-Each layer is independently replaceable. The interface can be a bare CLI or a full editor extension. The agent loop can be as minimal as the 150-line version covered earlier in this series or as featured as OpenClaw, with or without a self-review pass between the agent's draft and human review. The retrieval layer can be skipped entirely for small codebases. The model runtime is the one layer that's genuinely load-bearing — everything above it depends on the model (or models) actually being capable enough to drive the loop, which is the reason OpenClaw's coding agent runs on the 3090 rather than a smaller Jetson-hosted model: it needs enough capacity to read, plan, edit, test, and critique its own output in one pass, not just generate.
+Each layer is independently replaceable. The interface can be a bare CLI or a full editor extension. The agent loop can be as minimal as the 150-line version covered earlier in this series or as featured as OpenClaw, with or without a self-review pass between the agent's draft and human review. The retrieval layer can be skipped entirely for small codebases. The model runtime is the one layer that's genuinely load-bearing — everything above it depends on the model (or models) actually being capable enough to drive the loop, which is the reason OpenClaw's coding agent runs on the 3090 rather than a smaller Jetson-hosted model: it needs enough capacity to read, plan, edit, test, and critique its own output in one pass, not just generate. I learned that the hard way — Ornith-1.0-9B on an 8GB Jetson Orin Nano Super topped out at a 4K context and about 3 tok/s, which is why it's retired. [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) covers the runtime side of picking where a model lives.
 
 In OpenClaw specifically, the "Agent Loop" box isn't one function — it's a thin router in front of a folder of skills, one per concern:
 
@@ -106,11 +107,11 @@ readline.createInterface({ input: proc.stdout }).on('line', (line) => {
 });
 ```
 
-`vscode.diff` is doing the real work here — it's the same native side-by-side view VS Code uses for its own source control diffs, fed a real file on one side and a virtual, in-memory document holding the proposed content on the other. The human review step from the core loop doesn't move — it's still "see the diff, then decide" — it just happens as a VS Code diff view with Accept/Reject buttons in the editor tab instead of a wall of text in a terminal. Accepting writes the virtual document's content to disk; rejecting closes the diff and discards it, same as ignoring the CLI's printed diff would.
+`vscode.diff` is doing the real work here — it's the same native side-by-side view VS Code uses for its own source control diffs, fed a real file on one side and a virtual, in-memory document holding the proposed content on the other. The human review step from the core loop doesn't move — it's still "see the diff, then decide" — it just happens as a VS Code diff view, with Accept/Reject actions the extension adds to the editor tab, instead of a wall of text in a terminal. Accepting writes the virtual document's content to disk; rejecting closes the diff and discards it, same as ignoring the CLI's printed diff would.
 
 The `confirmation_required` event follows the same pattern for the mid-loop gates (`run_command`, `delete_file`) — instead of blocking on a terminal `y/n`, it's a VS Code notification with buttons, and the extension writes the approval back to the CLI process's stdin so the loop can continue.
 
-**Confirmation gates before features.** It's tempting to build retrieval, multi-file editing, and test-running before locking down which operations require human approval. Do the safety model first — retrofitting it after the agent already has broad, ungated write access to your filesystem is a bad position to be building from.
+**Confirmation gates before features.** It's tempting to build retrieval, multi-file editing, and test-running before locking down which operations require human approval. Do the safety model first (the [Local AI Security](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private) post covers the wider threat model) — retrofitting it after the agent already has broad, ungated write access to your filesystem is a bad position to be building from.
 
 **Budget for iteration, not perfection.** The first version of the agent loop will get stuck in loops, misinterpret tasks, and occasionally do something you didn't ask for. That's expected — the value comes from tightening the loop over weeks of real use, not from getting the design right on paper before writing any code.
 
@@ -139,7 +140,7 @@ If your goal is just "use AI to code faster," an existing tool is almost certain
   ---
   buttonText: "Read: Why I Stopped Paying for Claude"
   supportingCopy: "The full story of why this build happened in the first place."
-  destinationUrl: "/blog/local-vibe-coding/why-i-stopped-paying-for-claude"
+  destinationUrl: "/blog/local-vibe-coding/09-why-i-stopped-paying-for-claude"
   ---
   :::
 
@@ -171,6 +172,13 @@ links:
     description: "Reference for the extension host, virtual documents, and the vscode.diff command used to surface the diff review inline."
 ---
 ::
+
+## Related reading
+
+- [Connecting Ornith to Your Own Codebase](/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase) — previous in the series: the retrieval layer.
+- [Why I Stopped Paying for Claude](/blog/local-vibe-coding/09-why-i-stopped-paying-for-claude) — next: why this build happened at all.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [Building an AI Copilot That Understands Your Entire Codebase](/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase) — the agent-systems view of the same build.
 
 ---
 

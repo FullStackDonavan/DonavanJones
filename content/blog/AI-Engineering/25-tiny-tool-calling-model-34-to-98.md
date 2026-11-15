@@ -1,29 +1,30 @@
 ---
 title: "From 34% to 98%: Teaching a 0.6B Model to Run My Homelab"
-description: "Six dataset versions, two base models and one prompt bug: how a 600-million-parameter model on a Jetson Orin Nano learned to turn plain English into the right tool call 98% of the time."
+description: "How I fine-tuned a 0.6B Qwen3 model with LoRA to turn plain English into the right homelab tool call on a Jetson Orin Nano Super: from 34% to 98% accuracy."
 date: 2026-11-02
-lastUpdated: "2026-11-02"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
   - tool-calling
   - fine-tuning
   - lora
-draft: true
+draft: false
 cluster: "ai-engineering"
 slug: tiny-tool-calling-model-34-to-98
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/25-tiny-tool-calling-model-34-to-98.jpg
 ---
 
 # From 34% to 98%: Teaching a 0.6B Model to Run My Homelab
 
-My homelab dashboard has a command bar. Press Ctrl+K, type "restart whisper on the voice box" or "is Charlie ok", and it turns the sentence into a function call: `restart_service(device: "the voice box", service: "whisper")`. Checks run straight away. Anything that changes something shows a plan and waits for me to click Run.
+My [homelab dashboard](/projects/kingdom-tools) has a command bar. Press Ctrl+K, type "restart whisper on the voice box" or "is Charlie ok", and it turns the sentence into a [function call](/blog/ai-engineering/03-tool-calling): `restart_service(device: "the voice box", service: "whisper")`. Checks run straight away. Anything that changes something shows a plan and waits for me to click Run.
 
-The model behind it has 600 million parameters, runs on a Jetson Orin Nano at about 34 tokens a second, and gets the right call 98% of the time on wording it has never seen. Out of the box, the same model got 34%.
+The model behind it has 600 million parameters, runs on a Jetson Orin Nano Super at about 34 tokens a second, and gets the right call 98% of the time on wording it has never seen. Out of the box, the same model got 34%.
 
 This is how it got from one to the other, including the parts that didn't work.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -35,7 +36,7 @@ destinationUrl: "/categories/ai-engineering"
 
 ## Why a Tiny Model
 
-A frontier model would handle these requests without any training. But the command bar sits in front of a lab where every gigabyte of GPU memory is spoken for: one Jetson runs Stable Diffusion, one runs speech, one runs the language model for a game world. A 7B model for the command bar would push one of them out.
+A frontier model would handle these requests without any training. But the command bar sits in front of a lab where every gigabyte of GPU memory is spoken for: [one Jetson](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) runs Stable Diffusion, one runs speech, one runs the language model for a game world. A 7B model for the command bar would push one of them out.
 
 A 0.6B model with a 20 MB LoRA adapter fits next to everything else. It doesn't need to reason. It needs to pick one of ten functions and copy a few words out of a short sentence, reliably. That's a narrow job, and narrow jobs are what small fine-tuned models are good at.
 
@@ -54,7 +55,7 @@ From v3 on, every number is on the same held-out test: 103 questions phrased in 
 | v4 | Qwen3 0.6B | same adapter, exact training prompt | 94% |
 | v5 | Qwen3 0.6B | fixed a bias the v4 data created | 98% |
 
-Training each version took about 20 minutes on an RTX 3090. The interesting part is what each step taught me.
+Training each version took about 20 minutes on an [RTX 3090](/blog/ai-homelab-engineering/10-rtx-3090-optimization-for-llms). The interesting part is what each step taught me.
 
 ## Lesson 1: Don't Make the Model Memorize Your IDs
 
@@ -153,6 +154,21 @@ links:
     description: "The library used to train the LoRA adapters."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: tools
+blurb: "The same 10-case tool-calling test, run across every small model I have on the Jetsons."
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [OCR for Manuscripts](/blog/ai-engineering/23-ocr-for-manuscripts) — previous in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Using Three Jetson Orin Nano Supers as an AI Cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster) — the three-Jetson cluster this model runs on
+- [Kingdom Tools](/projects/kingdom-tools) — the homelab platform the command bar belongs to
 
 ---
 

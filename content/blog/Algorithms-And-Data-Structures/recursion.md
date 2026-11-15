@@ -1,8 +1,8 @@
 ---
 title: "Recursion"
-description: "How recursion works in JavaScript — base cases, the call stack, helper method vs pure recursion, and practical problem-solving examples with time complexity analysis."
+description: "How recursion works in JavaScript: base cases, the call stack, helper method vs pure recursion, recursion vs iteration, and time and space complexity."
 date: 2025-08-28
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -10,13 +10,14 @@ tags:
 draft: false
 slug: recursion
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/recursion.jpg
 ---
 
 # Recursion
 
 Recursion is a technique where a function solves a problem by calling itself with a simpler version of the same input. Instead of a loop that iterates until a condition is met, a recursive function delegates the remaining work to itself — each call working on a reduced version of the problem — until it reaches a condition where the answer is known directly.
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -182,7 +183,7 @@ Most recursive problems can also be solved iteratively. The choice depends on re
 | Performance overhead | Slightly higher | Slightly lower |
 | Best use cases | Trees, graphs, divide-and-conquer | Arrays, simple counting |
 
-For problems with natural hierarchical or nested structure — traversing a DOM tree, exploring a directory, parsing nested JSON — recursion is almost always cleaner. For flat iteration over an array, a loop is simpler.
+For problems with natural hierarchical or nested structure — traversing a DOM tree, exploring a directory, parsing nested JSON — recursion is almost always cleaner. For flat iteration over an array, a loop is simpler. Graph traversal is the other big case: multi-hop queries in SQL need recursive CTEs, which is one reason I moved that kind of query to [Cypher in Postgres](/blog/backendengineering/18-cypher-queries-in-postgres).
 
 ## Common Recursion Examples
 
@@ -347,6 +348,13 @@ links:
     description: "According to this overview, dynamic programming extends recursion with memoization to avoid redundant calls — the optimization applied to problems like Fibonacci with O(2ⁿ) naive recursion."
 ---
 ::
+
+## Related reading
+
+- [Divide And Conquer Pattern](/blog/algorithms-and-data-structures/divide-and-conquer-pattern) — previous in the series
+- [Sliding Window](/blog/algorithms-and-data-structures/sliding-window) — next in the series
+- [Cypher Queries in Postgres](/blog/backendengineering/18-cypher-queries-in-postgres) — recursive traversal expressed as graph patterns
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

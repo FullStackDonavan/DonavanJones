@@ -1,23 +1,24 @@
 ---
 title: "Kubernetes for AI Developers: Deploying Local Models with k3s"
-description: "A practical introduction to k3s for developers who want Kubernetes' scheduling and reliability without its usual operational weight."
-date: 2026-02-04
-lastUpdated: "2026-06-09"
+description: "A practical k3s guide for AI developers: install a lightweight Kubernetes control plane, join Jetson and Pi workers, and deploy a local model server."
+date: 2026-08-19
+lastUpdated: "2026-11-14"
 category: "ai-homelab-engineering"
 tags:
   - ai-homelab-engineering
   - kubernetes
   - k3s
-draft: true
+draft: false
 slug: kubernetes-for-ai-developers-k3s
 author: Donavan Jones
+excerptImage: /img/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s.jpg
 ---
 
 # Kubernetes for AI Developers: Deploying Local Models with k3s
 
-Most AI developers' relationship with Kubernetes is limited to deploying to a cloud cluster someone else manages. Running your own — specifically k3s, the lightweight distribution that makes this practical on modest hardware — is a different and useful skill, and it's the backbone of every homelab article in this series.
+k3s is the easiest way for an AI developer to run real Kubernetes on modest hardware: one binary for the control plane, a one-line join for each worker, and the same Deployment YAML you'd use in the cloud for a local model server. It runs my seven-node homelab cluster — a Raspberry Pi control plane, three Pi workers, and three Jetson Orin Nano Supers — and it's the backbone of every homelab article in this series.
 
-*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering).*
+*Part of the [AI Homelab Engineering series](/categories/ai-homelab-engineering). For the full system map, see the [AI homelab architecture hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -29,7 +30,7 @@ destinationUrl: "/categories/ai-homelab-engineering"
 
 ## Why k3s Instead of Full Kubernetes
 
-Full Kubernetes (kubeadm-based clusters, or a managed distribution) carries operational weight — etcd management, a heavier control plane footprint — that's justified at scale and unnecessary for a homelab. k3s strips this down to a single binary, bundles a lightweight datastore by default, and runs comfortably even on ARM64 boards with limited RAM, without giving up the core scheduling and reliability model that makes Kubernetes worth using in the first place.
+Full Kubernetes (kubeadm-based clusters, or a managed distribution) carries operational weight — etcd management, a heavier control plane footprint — that's justified at scale and unnecessary for a homelab. k3s strips this down to a single binary, bundles a lightweight datastore by default, and runs comfortably even on ARM64 boards with limited RAM — my control plane is a Raspberry Pi (pi-node1) — without giving up the core scheduling and reliability model that makes Kubernetes worth using in the first place.
 
 ## Installing the Control Plane
 
@@ -38,7 +39,7 @@ curl -sfL https://get.k3s.io | sh -
 sudo cat /var/lib/rancher/k3s/server/node-token  # save this for worker nodes
 ```
 
-Adding a worker (Jetson, Raspberry Pi, or another x86 machine) is a one-liner pointed at the control plane:
+Adding a worker (Jetson, Raspberry Pi, or an x86 machine) is a one-liner pointed at the control plane. The full Pi walkthrough is in [installing the k3s control plane](/blog/infrastructureengineering/05-installing-k3s-control-plane):
 
 ```bash
 curl -sfL https://get.k3s.io | K3S_URL=https://<control-plane-ip>:6443 \
@@ -79,6 +80,8 @@ spec:
 
 The `persistentVolumeClaim` matters more than it looks — without it, a pod restart re-downloads every model from scratch, which on a home internet connection is a real wait, not a minor inconvenience.
 
+For my own services I don't pull from a registry at all: images are built with `docker buildx --platform linux/arm64`, imported on each node with `k3s ctr images import`, and run with `imagePullPolicy: Never`. A push to main triggers the [Gitea Actions pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline) that does the rollout.
+
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
@@ -89,7 +92,7 @@ destinationUrl: "/systems/ai-homelab"
 
 ## What Kubernetes Actually Buys You Here
 
-Automatic restart when a model server crashes. Rolling updates without manual coordination across nodes. A consistent deployment model across genuinely different hardware architectures (ARM64 and x86) that would otherwise need separate tooling and separate runbooks. None of this is strictly necessary for a single-machine setup — it becomes valuable exactly at the point where you have more than one node and want workloads to be reliable without babysitting them.
+Automatic restart when a model server crashes. Rolling updates without manual coordination across nodes. A consistent deployment model across genuinely different hardware — GPU-equipped Jetsons and plain Raspberry Pis — that would otherwise need separate tooling and separate runbooks. None of this is strictly necessary for a single-machine setup — it becomes valuable exactly at the point where you have more than one node and want workloads to be reliable without babysitting them.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -104,7 +107,7 @@ Automatic restart when a model server crashes. Rolling updates without manual co
   ---
   buttonText: "Read: Kubernetes for AI Workloads"
   supportingCopy: "Scheduling patterns specific to AI inference workloads."
-  destinationUrl: "/blog/ai-homelab-engineering/kubernetes-for-ai-workloads"
+  destinationUrl: "/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads"
   ---
   :::
 
@@ -132,6 +135,13 @@ links:
     description: "The upstream project k3s is a lightweight distribution of."
 ---
 ::
+
+## Related reading
+
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — previous in the series: why the cluster has two hardware tiers.
+- [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads) — next: scheduling patterns specific to inference.
+- [AI Homelab architecture hub](/systems/ai-homelab) — the interactive system diagram.
+- [Why Lightweight Kubernetes Matters](/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters) — the case for k3s over full Kubernetes on small hardware.
 
 ---
 

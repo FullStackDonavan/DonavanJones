@@ -1,8 +1,8 @@
 ---
 title: "Embeddings"
-description: "Embedding services in AI backend architectures."
+description: "How I built an embedding service for semantic Bible search: all-MiniLM-L6-v2 on a local GPU, batching, Redis caching, chunking, and reindexing."
 date: 2026-03-05
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - embeddings
@@ -11,17 +11,20 @@ draft: false
 cluster: "backend-engineering"
 slug: embeddings
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/04-embeddings.jpg
 ---
 
 # Embeddings
 
-Before I built the embedding service, search on my platform was keyword-based. A user looking for passages about "forgiveness" would get results containing the word "forgiveness" and miss everything about "mercy," "pardon," "reconciliation," or "grace." The words are different. The meaning is the same.
+An embedding service turns text into a vector so that passages with similar meaning land close together, which is what makes semantic search and RAG retrieval work. In [VerseHub](/projects/versehub) that service runs all-MiniLM-L6-v2 in Docker on my RTX 3090 and feeds Weaviate.
+
+Before I built it, search on my platform was keyword-based. A user looking for passages about "forgiveness" would get results containing the word "forgiveness" and miss everything about "mercy," "pardon," "reconciliation," or "grace." The words are different. The meaning is the same.
 
 Embeddings fix this. They convert text into a vector — a list of numbers — that encodes semantic meaning rather than surface form. Two passages that mean similar things end up close together in vector space, regardless of the specific words used. This makes search dramatically more useful for a domain like scripture where the same idea appears across thousands of verses in dozens of translations.
 
 This article covers what embeddings are, how the embedding service is designed, what gets embedded and when, and the operational decisions that keep it fast and affordable.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -33,7 +36,7 @@ destinationUrl: "/categories/backend-engineering"
 
 ## What an Embedding Actually Is
 
-An embedding model takes a piece of text and outputs a fixed-length array of floating-point numbers — typically 768 to 3072 dimensions depending on the model. This vector represents the text's meaning in a high-dimensional space where semantic similarity corresponds to geometric proximity.
+An embedding model takes a piece of text and outputs a fixed-length array of floating-point numbers — anywhere from 384 dimensions (small sentence-transformer models like all-MiniLM-L6-v2) to 3072 (large hosted models). This vector represents the text's meaning in a high-dimensional space where semantic similarity corresponds to geometric proximity.
 
 A concrete example. Given these three inputs:
 
@@ -55,15 +58,15 @@ The API surface is intentionally minimal:
 POST /embed
 {
   "text": "What is the armor of God?",
-  "model": "text-embedding-3-small",
+  "model": "all-MiniLM-L6-v2",
   "normalize": true
 }
 
 → 200
 {
-  "embedding": [0.023, -0.817, 0.441, ...],  // 1536 dimensions
+  "embedding": [0.023, -0.817, 0.441, ...],  // 384 dimensions
   "tokens": 9,
-  "model": "text-embedding-3-small"
+  "model": "all-MiniLM-L6-v2"
 }
 ```
 
@@ -71,20 +74,20 @@ Callers specify what they want embedded and which model to use. The service hand
 
 ### Batching
 
-Embedding API calls have a per-request overhead. Sending 100 single-text requests is much more expensive (in latency and cost) than sending one request with 100 texts. The embedding service accepts both single texts and arrays:
+Every embedding call has per-request overhead, whether it goes to a hosted API or a local GPU. Sending 100 single-text requests is much more expensive (in latency, and in cost on a hosted API) than sending one request with 100 texts. The embedding service accepts both single texts and arrays:
 
 ```
 POST /embed/batch
 {
   "texts": ["verse 1", "verse 2", ..., "verse 100"],
-  "model": "text-embedding-3-small"
+  "model": "all-MiniLM-L6-v2"
 }
 
 → 200
 {
   "embeddings": [[...], [...], ...],
   "tokens": 1847,
-  "model": "text-embedding-3-small"
+  "model": "all-MiniLM-L6-v2"
 }
 ```
 
@@ -92,19 +95,21 @@ The initial Bible text indexing — roughly 31,000 verses across multiple transl
 
 ### Caching
 
-Embedding the same text twice is wasteful. The service maintains a Redis cache keyed by `hash(text + model)`. Cache hits return immediately without touching the embedding API. For static content like Bible verses, the cache hit rate is near 100% after the first full indexing run.
+Embedding the same text twice is wasteful. The service maintains a Redis cache keyed by `hash(text + model)`. Cache hits return immediately without touching the model. For static content like Bible verses, the cache hit rate is near 100% after the first full indexing run.
 
 Cache TTL is long (30 days) for static content and short (1 hour) for user-generated content like notes or questions. The service infers content type from the `source` field callers pass with each request.
 
 ### Model Selection
 
-Not all embedding tasks need the same model. I use two models depending on the use case:
+In VerseHub I keep this simple: one model, all-MiniLM-L6-v2 (384 dimensions), running in a Docker container on the RTX 3090 workstation. Verses, Church Fathers passages, and user queries all go through the same model, so every vector in Weaviate is directly comparable. I go deeper on the trade-offs in [embedding strategies](/blog/ai-engineering/11-embedding-strategies).
+
+If you use a hosted API instead, a common split looks like this:
 
 | Use Case | Model | Dimensions | Notes |
 |---|---|---|---|
-| Bible verse indexing | `text-embedding-3-small` | 1536 | Cost-effective for static corpus |
-| User query embedding | `text-embedding-3-small` | 1536 | Matched to index model |
-| Study note indexing | `text-embedding-3-large` | 3072 | Higher quality for personal content |
+| Static corpus indexing | `text-embedding-3-small` | 1536 | Cost-effective for large static content |
+| User query embedding | `text-embedding-3-small` | 1536 | Must match the index model |
+| Personal notes | `text-embedding-3-large` | 3072 | Higher quality for smaller volumes |
 | Cross-lingual search | `text-embedding-3-large` | 3072 | Better multilingual alignment |
 
 The critical constraint: query embeddings must use the same model as the index embeddings they will be compared against. Mixing models produces meaningless similarity scores. The service enforces this by tagging stored embeddings with the model that produced them and rejecting search requests that use mismatched models.
@@ -119,7 +124,7 @@ Everything that needs to be semantically searchable gets an embedding. In practi
 
 **User questions** — when a user asks a question, the query is embedded and used to retrieve the most semantically relevant passages before they are sent to the inference service as context. This is the retrieval step in retrieval-augmented generation (RAG).
 
-**Commentary excerpts** — third-party theological commentary is chunked and embedded for retrieval alongside scripture. Chunk size matters here; I use 512-token chunks with a 64-token overlap to preserve context across boundaries.
+**Commentary excerpts** — commentary such as the Church Fathers collection is chunked and embedded for retrieval alongside scripture. Chunk size matters here; I use 512-token chunks with a 64-token overlap to preserve context across boundaries.
 
 ## The Embedding Pipeline
 
@@ -171,9 +176,11 @@ The overlap matters. Without it, a chunk boundary can split a sentence mid-thoug
 
 ## Operational Considerations
 
-**Reindexing costs real money.** Switching embedding models requires reindexing everything because old vectors are incompatible with new model outputs. For 31,000 verses across four translations, a full reindex costs a few dollars and takes about 20 minutes. For a larger corpus, this becomes a meaningful operational event. I version the embedding model in the vector store collection name (`verses_v2_small`) so old and new indexes can coexist during a transition.
+**Reindexing is an operational event.** Switching embedding models requires reindexing everything because old vectors are incompatible with new model outputs. With a self-hosted model like mine the cost is GPU time rather than API fees; with a hosted API it is a per-token bill that grows with the corpus. Either way, I version the embedding model in the vector store collection name (`verses_v2_small`) so old and new indexes can coexist during a transition.
 
-**Dimension reduction is a lever.** The `text-embedding-3` models support truncating their output to fewer dimensions at the cost of some accuracy. For the verse index, I tested truncating from 1536 to 512 dimensions — storage drops by 66%, query latency drops proportionally, and retrieval quality dropped by about 3% on my evaluation set. For most use cases that tradeoff is worth it; for theological precision, I kept full dimensions.
+**Dimension count is a lever.** Fewer dimensions means less storage and faster queries at some cost in accuracy. The hosted `text-embedding-3` models let you truncate their output (for example 1536 to 512 dimensions, a 66% storage cut). A 384-dimension model like all-MiniLM-L6-v2 starts small, which is part of why it is cheap to run next to everything else on one GPU.
+
+**Retrieval can fail silently.** The worst embedding-path bug I hit was not a bad vector: the scripture search path was not sending the query vector to Weaviate at all, so it returned results in insertion order and nothing errored. Retrieval failures now raise instead of returning an empty list, and I spot-check top-k results.
 
 **Monitor embedding drift.** If the distribution of incoming queries shifts significantly from the distribution of indexed content, retrieval quality degrades. I log a sample of query embeddings and their top-k retrieval results weekly and manually review a subset. This is manual and lightweight; at larger scale it would be automated with an evaluation pipeline.
 
@@ -237,13 +244,21 @@ links:
   - label: "Sentence-BERT: Sentence Embeddings Using Siamese BERT-Networks (Reimers & Gurevych, 2019)"
     url: "https://doi.org/10.48550/arXiv.1908.10084"
     type: "doi"
-    description: "Introduced bi-encoder sentence embeddings for semantic similarity — the architecture class that OpenAI's text-embedding models build on."
+    description: "Introduced bi-encoder sentence embeddings for semantic similarity — the architecture class behind sentence-transformer models like all-MiniLM-L6-v2."
   - label: "Redis — Wikipedia"
     url: "https://en.wikipedia.org/wiki/Redis"
     type: "wikipedia"
-    description: "Overview of Redis as an in-memory data store — the caching layer that reduces repeated embedding API calls for static content like Bible verses to near-zero cost."
+    description: "Overview of Redis as an in-memory data store — the caching layer that keeps static content like Bible verses from being re-embedded."
 ---
 ::
+
+## Related reading
+
+- [Monolith vs Microservices](/blog/backendengineering/01-monolith-vs-microservices) — why embedding generation became its own service
+- [Vector Search](/blog/backendengineering/05-vector-search) — next in the series: storing and querying these vectors
+- [Embedding Services](/blog/backendengineering/09-embedding-services) — running the embedder as a production service
+- [Semantic Retrieval](/blog/ai-engineering/12-semantic-retrieval) — how the vectors drive retrieval in VerseHub
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

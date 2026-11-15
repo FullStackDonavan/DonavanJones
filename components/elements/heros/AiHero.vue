@@ -5,6 +5,7 @@
              border border-slate-200 dark:border-sky-500/20
              bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm"
     >
+      <HeroBackdrop src="/img/heroes/systems-ai.jpg" />
       <!-- Glow -->
       <div
         class="absolute inset-0

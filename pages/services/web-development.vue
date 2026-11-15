@@ -10,7 +10,7 @@ useSeoMeta({
   ogDescription:
     'Full-stack web application development. SaaS platforms, multi-role dashboards, APIs, and payments — production systems delivered end-to-end.',
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: `${SITE}/img/heroes/services-web-development.jpg`,
   ogUrl: `${SITE}/services/web-development`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Custom Web & SaaS Development | Donavan Jones',
@@ -39,32 +39,32 @@ useHead({
 const capabilities = [
   {
     icon: 'mdi:view-dashboard-outline',
-    title: 'SaaS Platforms',
+    title: 'SaaS Platforms', image: '/img/cards/webdev-saas-platforms.jpg',
     desc: 'Multi-role applications with user management, billing, dashboards, and admin controls. Built to support real users from day one.',
   },
   {
     icon: 'mdi:api',
-    title: 'APIs & Backend Systems',
+    title: 'APIs & Backend Systems', image: '/img/cards/webdev-apis-backend.jpg',
     desc: 'RESTful and real-time APIs, async job queues, background workers, and typed data pipelines. PostgreSQL, Redis, BullMQ.',
   },
   {
     icon: 'mdi:credit-card-outline',
-    title: 'Payments & Billing',
+    title: 'Payments & Billing', image: '/img/cards/webdev-payments-billing.jpg',
     desc: 'Stripe integration, subscription management, invoicing, and payment authorization flows — tested and production-ready.',
   },
   {
     icon: 'mdi:shield-lock-outline',
-    title: 'Auth & Access Control',
+    title: 'Auth & Access Control', image: '/img/cards/webdev-auth-access.jpg',
     desc: 'Role-based access control, invite-based onboarding, session management, and multi-tenant data isolation.',
   },
   {
     icon: 'mdi:file-pdf-box',
-    title: 'Document Generation',
+    title: 'Document Generation', image: '/img/cards/webdev-document-generation.jpg',
     desc: 'Automated PDF generation with digital signatures, S3 storage, audit trails, and role-scoped downloads.',
   },
   {
     icon: 'mdi:brain',
-    title: 'AI Integration',
+    title: 'AI Integration', image: '/img/cards/webdev-ai-integration.jpg',
     desc: 'RAG pipelines, LLM-powered features, vector search, and AI agent workflows wired into your application.',
   },
 ]
@@ -72,19 +72,21 @@ const capabilities = [
 const caseStudies = [
   {
     title: 'Business Benefit Alliance',
-    highlight: '92 businesses onboarded',
-    desc: 'Full-stack group insurance enrollment platform with multi-role dashboards, digital signature capture, automated PDF generation, and audit trails. Enrollment workflows reduced from hours to minutes.',
-    tags: ['Nuxt 3', 'PostgreSQL', 'AWS S3', 'Prisma', 'PDF Generation'],
+    highlight: '$10.8M payments processed',
+    desc: 'Production insurance platform: 8,490 enrollment applications, 1,859 agents, card and ACH billing, commission engine, group quoting, and 834 EDI carrier feeds. Six role-based dashboards with signed PDFs and a full audit trail.',
+    tags: ['Nuxt 3', 'PostgreSQL', 'Prisma', 'Vercel', 'AWS S3', 'Payments'],
     to: '/projects/business-benefit-alliance',
-    result: 'Hours → Minutes enrollment',
+    image: '/img/portfolio/nbba.png',
+    result: '8,490 applications · 1,859 agents',
   },
   {
     title: 'VerseHub',
-    highlight: '37,000+ verses indexed',
-    desc: 'AI-powered scripture study platform with RAG retrieval under 200ms, local LLM inference on self-hosted GPU nodes, real-time chat via WebRTC, and async job pipelines.',
-    tags: ['Weaviate', 'Llama 3.2', 'BullMQ', 'WebRTC', 'Kubernetes'],
+    highlight: 'Verified RAG answers',
+    desc: 'AI-powered scripture study platform: a fast llama3.2:3b draft on a self-hosted Jetson, refined by a Temporal workflow that retrieves from Weaviate and verifies every citation, plus local voice (Kokoro TTS + Whisper STT).',
+    tags: ['Nuxt', 'Weaviate', 'Llama 3.2', 'Temporal', 'Kubernetes'],
     to: '/projects/versehub',
-    result: '70% inference cost reduction',
+    image: '/img/projects/versehub/cover.jpg',
+    result: 'Citations checked against retrieved evidence',
   },
 ]
 </script>
@@ -93,7 +95,8 @@ const caseStudies = [
   <PatternSection>
 
     <!-- Hero -->
-    <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop src="/img/heroes/services-web-development.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center">
 
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-medium">
@@ -133,7 +136,8 @@ const caseStudies = [
     </section>
 
     <!-- Capabilities -->
-    <section class="bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-slate-50 dark:bg-slate-950 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/webdev-what-i-build.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -145,11 +149,17 @@ const caseStudies = [
           <div
             v-for="cap in capabilities"
             :key="cap.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-200"
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 flex flex-col gap-3 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-200"
           >
-            <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-              <Icon :name="cap.icon" class="text-purple-400 text-xl" />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="cap.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
+                    <Icon :name="cap.icon" class="text-purple-400 text-xl" />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ cap.title }}</h3>
               <p class="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{{ cap.desc }}</p>
@@ -161,7 +171,8 @@ const caseStudies = [
     </section>
 
     <!-- Case Studies -->
-    <section class="bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/sections/webdev-case-studies.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -177,6 +188,10 @@ const caseStudies = [
             class="group block rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-6 sm:p-8 hover:border-purple-500/40 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-200"
           >
             <div class="flex flex-col sm:flex-row sm:items-start gap-5">
+              <div class="sm:w-56 shrink-0 aspect-[16/9] overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700/50 bg-slate-100 dark:bg-slate-800">
+                <img :src="cs.image" alt="" width="600" height="338" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+              </div>
               <div class="flex-1">
                 <div class="flex items-center gap-3 mb-2">
                   <span class="text-[11px] px-2 py-0.5 rounded-md font-medium bg-purple-500/10 border border-purple-500/20 text-purple-400">
@@ -242,7 +257,8 @@ const caseStudies = [
     <!-- CTA -->
     <section class="bg-slate-50 dark:bg-slate-950 py-16">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+        <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+          <HeroBackdrop lazy src="/img/cards/cta-plan.jpg" side="full" />
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
             Have a project in mind?
           </h2>

@@ -1,22 +1,23 @@
 ---
 title: "Agent Memory Architectures"
-description: "How to structure short-term working memory, session state, and long-term memory for a production AI agent."
-date: 2026-05-04
-lastUpdated: "2026-06-09"
+description: "Agent memory architectures: how to split working, session, and long-term memory for a production AI agent, and decide what gets promoted between them."
+date: 2026-08-20
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - memory
-draft: true
+draft: false
 slug: agent-memory-architectures
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/04-agent-memory-architectures.jpg
 ---
 
 # Agent Memory Architectures
 
 An agent without memory re-derives everything from scratch on every task, including things it already figured out five minutes ago. Memory architecture is what lets an agent build on its own prior work — within a task, across a session, and across sessions over time — and each of those three scopes needs a different storage strategy.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -32,7 +33,9 @@ destinationUrl: "/categories/agentic-ai-systems"
 
 **Session memory (across a conversation)** — context that should persist across multiple related tasks in one session but doesn't need to survive indefinitely. A reasonable fit for Redis, keyed by session ID, with a TTL.
 
-**Long-term memory (across sessions)** — durable facts, learned patterns, and past decisions worth keeping indefinitely. This needs both structured storage (for direct lookup) and a vector store (for semantic recall when the exact phrasing of a future query doesn't match how something was originally stored).
+**Long-term memory (across sessions)** — durable facts, learned patterns, and past decisions worth keeping indefinitely. This needs both structured storage (for direct lookup) and a [vector store](/blog/ai-engineering/02-vector-databases) (for semantic recall when the exact phrasing of a future query doesn't match how something was originally stored).
+
+In my own cluster that maps to Redis for session-scoped data, Weaviate for vectors, and PostgreSQL for structured records — the same split VerseHub uses, described in [Redis Memory Layer Design](/blog/versehub-engineering/05-redis-memory-layer-design).
 
 ## Why Not Just One Big Context Window
 
@@ -47,7 +50,7 @@ Long-term memory: durable facts about the project/user, patterns that recur acro
                    past mistakes worth not repeating
 ```
 
-The promotion path — working memory to session memory to long-term memory — is an explicit compression step, similar to the memory-formation pipeline covered in the [AI Engineering series](/blog/ai-engineering/persistent-memory-systems): not everything that happens in working memory is worth keeping, and an extraction pass decides what's durable enough to promote.
+The promotion path — working memory to session memory to long-term memory — is an explicit compression step, similar to the memory-formation pipeline covered in the [AI Engineering series](/blog/ai-engineering/01-persistent-memory-systems): not everything that happens in working memory is worth keeping, and an extraction pass decides what's durable enough to promote.
 
 ::CtaSystemArchitecture
 ---
@@ -74,7 +77,7 @@ An agent that treats everything as long-term memory accumulates noise — every 
   ---
   buttonText: "Read: Storing AI Memory with Redis and Vector Databases"
   supportingCopy: "The concrete storage implementation behind this architecture."
-  destinationUrl: "/blog/agentic-ai-systems/storing-ai-memory-with-redis-and-vector-databases"
+  destinationUrl: "/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases"
   ---
   :::
 
@@ -102,6 +105,13 @@ links:
     description: "Stanford research on memory streams and reflection in agent architectures."
 ---
 ::
+
+## Related reading
+
+- [Teaching AI Agents About Your Project with RAG](/blog/agentic-ai-systems/03-teaching-ai-agents-about-your-project-with-rag) — previous: retrieving project context at request time
+- [Storing AI Memory with Redis and Vector Databases](/blog/agentic-ai-systems/05-storing-ai-memory-with-redis-and-vector-databases) — next: the concrete Redis + vector store implementation
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [Memory Systems](/blog/ai-engineering/19-memory-systems) — memory systems from the AI engineering side
 
 ---
 

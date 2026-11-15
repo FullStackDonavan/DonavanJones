@@ -3,7 +3,7 @@ title: "Understanding the Frequency Counter Pattern in JavaScript"
 description: "A deep dive into the Frequency Counter pattern in JavaScript — how it replaces nested loops, reduces time complexity to O(n), and solves anagram problems."
 category: "algorithms"
 date: 2025-07-24
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 tags:
   - javascript
   - data-structures
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: frequency-counter
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/frequency-counter.jpg
 ---
 
 # Understanding the Frequency Counter Pattern in JavaScript
@@ -27,7 +28,7 @@ This pattern is especially useful for:
 - Data validation
 - Interview-style algorithm questions
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -39,7 +40,7 @@ destinationUrl: "/categories/algorithms"
 
 ---
 
-# Why Use the Frequency Counter Pattern?
+## Why Use the Frequency Counter Pattern?
 
 Without this pattern, developers often rely on nested loops to compare data structures.
 
@@ -218,6 +219,8 @@ You should consider using this pattern when:
 - Optimizing nested loop solutions
 - Working with strings or arrays
 
+The same "trade a little memory for a hash lookup" idea is behind most caching in backend systems — for example, the Redis cache keyed by `hash(text + model)` in my [embeddings service](/blog/backendengineering/04-embeddings), which skips recomputing vectors the system has already seen.
+
 ## Common Data Structures Used
 
 The Frequency Counter pattern commonly uses:
@@ -312,6 +315,13 @@ links:
     description: "According to this overview, an algorithm is a finite sequence of instructions for solving a problem — the broader category the frequency counter pattern belongs to."
 ---
 ::
+
+## Related reading
+
+- [Multiple Pointers](/blog/algorithms-and-data-structures/multiple-pointers) — next in the series: another way to remove nested loops
+- [Sliding Window](/blog/algorithms-and-data-structures/sliding-window) — often combined with a frequency map for substring problems
+- [Embeddings](/blog/backendengineering/04-embeddings) — hash-keyed caching in a real AI service
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

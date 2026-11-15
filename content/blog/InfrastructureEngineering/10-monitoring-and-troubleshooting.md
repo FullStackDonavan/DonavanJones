@@ -2,7 +2,7 @@
 title: "Monitoring and Troubleshooting"
 description: "How to monitor and troubleshoot a Raspberry Pi Kubernetes cluster using Prometheus, Grafana, and kubectl debugging for production issues."
 date: 2025-10-18
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - monitoring
@@ -11,9 +11,12 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: monitoring-and-troubleshooting
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/10-monitoring-and-troubleshooting.jpg
 ---
 
 # Monitoring and Troubleshooting
+
+To monitor a Raspberry Pi K3s cluster, run Prometheus for metrics, Grafana for dashboards, and Loki with a Promtail DaemonSet for logs. Then troubleshoot in a fixed order: node status, `kubectl describe`, `kubectl logs`, services and endpoints, then resource pressure. That's the stack and the workflow I use on my seven-node cluster of four Pis and three Jetson Orin boards.
 
 ## Introduction
 
@@ -21,7 +24,7 @@ In a homelab environment like my Raspberry Pi–based K3s cluster, things are in
 
 Because resources are limited and nodes can be sensitive to network or power fluctuations, monitoring and troubleshooting becomes a core part of keeping everything stable. Instead of relying on heavy enterprise tools, I focus on simple, effective observability: logs, metrics, and Kubernetes-native tooling that helps me quickly identify when something drifts out of expected behavior.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -92,15 +95,15 @@ destinationUrl: "/systems/infrastructure"
 
 ## Observability Tools I Use
 
-In my setup, I prefer lightweight tools that don’t overwhelm the cluster:
+In my setup, the observability stack is small but complete:
 
-- `kubectl` for direct inspection  
-- `journalctl` on nodes for system-level logs  
-- Basic metrics tooling for CPU/memory tracking  
-- Gitea logs for CI/CD debugging  
-- Custom scripts for quick health checks across all Pis in the rack  
+- **Prometheus** for metrics, exposed on NodePort 30909 ([Prometheus on a Pi K3s cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster))
+- **Grafana** for dashboards on NodePort 30300 ([Grafana on a Pi K3s cluster](/blog/infrastructureengineering/42-grafana-on-pi-cluster))
+- **Loki + Promtail** for logs, with Promtail running as a DaemonSet on every node ([Loki and Promtail on a Pi K3s cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster))
+- A small custom agent on the Jetsons that exposes GPU load on a `/metrics` endpoint for Prometheus to scrape
+- `kubectl` and `journalctl` for direct inspection, and Gitea logs for CI/CD debugging
 
-I intentionally avoid heavy observability stacks unless I specifically need them, since the goal is to keep the cluster lean and responsive.
+One failure mode no dashboard explained at first: on the Jetsons, models would OOM even when `free -h` showed memory "available". The CUDA allocator on Jetson can't reclaim page cache, so the fix is to stop the old model and run `sync; echo 3 > /proc/sys/vm/drop_caches` before loading the next one.
 
 ---
 
@@ -171,5 +174,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes) — previous in the series
+- [Architecture Diagrams](/blog/infrastructureengineering/11-architecture-diagrams) — next in the series
+- [Recovering a K3s Cluster After a Control Plane IP Change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change) — a real troubleshooting walkthrough from this cluster
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [The Biggest Mistakes I Made Building My AI Homelab](/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab) — the mistakes that monitoring would have caught earlier
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

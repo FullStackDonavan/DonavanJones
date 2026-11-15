@@ -10,7 +10,7 @@ useSeoMeta({
   ogDescription:
     'AI lead capture systems, after-hours agents, and workflow automation. Built for local service businesses — roofing, HVAC, law firms, med spas, and more.',
   ogType: 'website',
-  ogImage: `${SITE}/img/logo.png`,
+  ogImage: `${SITE}/img/heroes/services-ai-automation.jpg`,
   ogUrl: `${SITE}/services/ai-automation`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'AI Automation for Small Businesses | Donavan Jones',
@@ -45,6 +45,7 @@ const services = [
     icon: 'mdi:phone-missed',
     color: 'sky',
     title: 'AI Lead Capture & After-Hours Agent',
+    image: '/img/cards/lead-capture.jpg',
     description: 'Stop losing leads when you\'re unavailable. AI answers missed calls, collects the caller\'s name, number, and what they need — then books the appointment and texts you a summary automatically.',
     examples: ['Missed call AI response', 'Automated appointment booking', 'Lead info collection', 'SMS summary to owner'],
   },
@@ -52,6 +53,7 @@ const services = [
     icon: 'mdi:chat-processing-outline',
     color: 'emerald',
     title: 'AI Website Chat That Converts',
+    image: '/img/cards/website-chat.jpg',
     description: 'Replace your dead contact form with a 24/7 AI sales assistant. It answers pricing questions, qualifies leads, and pushes visitors toward booking — integrated with your email, calendar, or CRM.',
     examples: ['Pricing & FAQ answers', 'Lead qualification', 'Booking & scheduling', 'Email / CRM integration'],
   },
@@ -59,6 +61,7 @@ const services = [
     icon: 'mdi:cog-sync-outline',
     color: 'violet',
     title: 'Admin & Workflow Automation',
+    image: '/img/cards/workflow-automation.jpg',
     description: 'Automate the back-office tasks eating your team\'s time — quote generation, intake form processing, follow-up emails, review requests — all running without manual input.',
     examples: ['Quote & invoice generation', 'Intake form → CRM pipeline', 'Automated follow-up emails', 'Google review requests'],
   },
@@ -108,7 +111,8 @@ const faqs = [
   <PatternSection>
 
     <!-- Hero -->
-    <section class="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop src="/img/heroes/services-ai-automation.jpg" side="full" />
       <div class="max-w-5xl mx-auto px-6 py-20 md:py-28 text-center">
 
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-5 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
@@ -175,7 +179,8 @@ const faqs = [
     </section>
 
     <!-- Services Detail -->
-    <section class="bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+    <section class="relative isolate overflow-hidden bg-white dark:bg-slate-900/30 py-16 border-b border-slate-200 dark:border-slate-800">
+      <HeroBackdrop lazy src="/img/heroes/services-local-business-ai.jpg" side="full" />
       <div class="max-w-7xl mx-auto px-6">
 
         <div class="text-center mb-10">
@@ -200,22 +205,29 @@ const faqs = [
               </span>
             </div>
 
-            <div class="p-5">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                :class="{
-                  'bg-sky-500/10 border border-sky-500/20': service.color === 'sky',
-                  'bg-emerald-500/10 border border-emerald-500/20': service.color === 'emerald',
-                  'bg-violet-500/10 border border-violet-500/20': service.color === 'violet',
-                }"
-              >
-                <Icon :name="service.icon" class="text-xl"
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="service.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-xl bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center"
                   :class="{
-                    'text-sky-400': service.color === 'sky',
-                    'text-emerald-400': service.color === 'emerald',
-                    'text-violet-400': service.color === 'violet',
+                    'bg-sky-500/10 border border-sky-500/20': service.color === 'sky',
+                    'bg-emerald-500/10 border border-emerald-500/20': service.color === 'emerald',
+                    'bg-violet-500/10 border border-violet-500/20': service.color === 'violet',
                   }"
-                />
+                >
+                  <Icon :name="service.icon" class="text-xl"
+                    :class="{
+                      'text-sky-400': service.color === 'sky',
+                      'text-emerald-400': service.color === 'emerald',
+                      'text-violet-400': service.color === 'violet',
+                    }"
+                  />
+                </div>
               </div>
+            </div>
+
+            <div class="p-5">
 
               <h3 class="font-bold text-slate-900 dark:text-white mb-2">{{ service.title }}</h3>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{{ service.description }}</p>
@@ -325,7 +337,8 @@ const faqs = [
     <!-- CTA -->
     <section class="bg-white dark:bg-slate-950 py-16">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+        <div class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/60 p-8 sm:p-12 text-center">
+          <HeroBackdrop lazy src="/img/cards/cta-launch.jpg" side="full" />
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6 bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
             Available for new projects

@@ -1,8 +1,8 @@
 ---
 title: "State Management"
-description: "State management strategies for AI agents."
+description: "State management for AI agents: the five layers of agent state (turn, session, task, user, pipeline), where each one lives, and what breaks without it."
 date: 2026-04-29
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,15 +11,18 @@ tags:
 draft: false
 slug: state-management
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/05-state-management.jpg
 ---
 
 # State Management
+
+State management for AI agents means deciding where every piece of context lives — the current turn, the session, long-running tasks, the user profile and the pipeline run — because the model itself remembers nothing between calls. Each layer needs its own store, lifetime and invalidation rules, and most "the agent forgot" bugs are really state bugs.
 
 Every AI agent exists in a world of state. The conversation so far. The tools it has called and what they returned. The user it is talking to and what it knows about them. The task it is working on and how far it has gotten. The pipeline it is running inside and what previous stages produced.
 
 Managing this state correctly is one of the less glamorous but most consequential parts of AI engineering. Get it wrong and agents lose context mid-conversation, produce responses that contradict earlier turns, fail to use information they retrieved two steps ago, or repeat work that was already done. The model itself is stateless — every inference call is independent. State management is entirely the application's responsibility.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -80,7 +83,7 @@ Session state contains:
 - Current task context: what the user is working on, what stage it is in
 - Accumulated tool call results that may be referenced again later in the session
 
-Session state is stored in Redis with the session ID as the key and a TTL that expires inactive sessions after a configurable period (2 hours of inactivity by default). Redis is the right store for session state because it is fast (sessions are read on every message), it handles TTL-based expiry natively, and sessions are naturally scoped to a single service instance or can be shared across instances with a shared Redis cluster.
+Session state is [stored in Redis](/blog/versehub-engineering/05-redis-memory-layer-design) with the session ID as the key and a TTL that expires inactive sessions after a configurable period (2 hours of inactivity by default). Redis is the right store for session state because it is fast (sessions are read on every message), it handles TTL-based expiry natively, and sessions are naturally scoped to a single service instance or can be shared across instances with a shared Redis cluster.
 
 ```typescript
 interface SessionState {
@@ -138,7 +141,7 @@ destinationUrl: "/systems/ai"
 
 When a user triggers a long-running task — a study guide generation, a reading plan build, a multi-passage research query — that task runs asynchronously. Task state tracks where the task is in its lifecycle.
 
-Task state is more durable than session state. It persists beyond the session that spawned it (the user can close the app and return to find their study guide complete) and must survive service restarts.
+Task state is more durable than session state. It persists beyond the session that spawned it (the user can close the app and return to find their study guide complete) and must survive service restarts — exactly what a durable workflow engine provides, and why VerseHub's answer-refinement pass runs as a [Temporal workflow](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal).
 
 ```typescript
 interface TaskState {
@@ -164,7 +167,7 @@ This is the same durable checkpoint pattern from the backend engineering series,
 
 ### Layer 4: User State
 
-Persistent state about the user that spans all sessions and tasks: their memory profile (covered in article 01), their preferences, their reading history, their study progress. User state does not expire — it is the long-term record of who this user is and what they have done on the platform.
+Persistent state about the user that spans all sessions and tasks: their memory profile (covered in [article 01](/blog/ai-engineering/01-persistent-memory-systems)), their preferences, their reading history, their study progress. User state does not expire — it is the long-term record of who this user is and what they have done on the platform.
 
 User state is stored in Postgres. It is retrieved at session start and at the beginning of any task that needs it, then cached in Redis for the duration of the session.
 
@@ -172,7 +175,7 @@ The key design principle for user state: **the model never writes directly to it
 
 ### Layer 5: Pipeline State
 
-When multiple agents collaborate in an orchestration pipeline, shared state flows between them. Pipeline state is the accumulated inputs, intermediate outputs, and metadata from a single pipeline execution.
+When multiple agents collaborate in an [orchestration pipeline](/blog/ai-engineering/04-agent-orchestration), shared state flows between them. Pipeline state is the accumulated inputs, intermediate outputs, and metadata from a single pipeline execution.
 
 Pipeline state is distinct from task state: task state tracks the pipeline's execution status and persistence; pipeline state is the data payload flowing through the pipeline.
 
@@ -349,6 +352,14 @@ links:
     description: "Research on managing context and state across LLM calls using OS-inspired paging and memory hierarchies."
 ---
 ::
+
+## Related reading
+
+- [Agent Orchestration](/blog/ai-engineering/04-agent-orchestration) — previous in the AI Engineering series
+- [Microsoft AutoGen](/blog/ai-engineering/06-microsoft-autogen) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Long-Running Agent Workflows](/blog/agentic-ai-systems/09-long-running-agent-workflows) — keeping state alive across long-running agent work
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — durable task state in production
 
 ---
 

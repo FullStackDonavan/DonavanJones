@@ -11,6 +11,7 @@ export default (name: string): ICategory[][] => {
     message: 'Explore core concepts and published notes for building safe, maintainable AI systems.',
     image: '/img/logos/ai.svg',
     link: '/categories/ai-engineering',
+    cover: '/img/categories/ai-engineering.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'memory', link: '/tags/memory' },
@@ -47,6 +48,7 @@ export default (name: string): ICategory[][] => {
     message: 'Study algorithmic patterns and data structure strategies for performant applications.',
     image: '/img/logos/algorithms.svg',
     link: '/categories/algorithms',
+    cover: '/img/categories/algorithms.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'algorithms', link: '/tags/algorithms' },
@@ -60,6 +62,7 @@ export default (name: string): ICategory[][] => {
     message: 'Backend engineering practices, API design, and architecture for scalable systems.',
     image: '/img/logos/backend.svg',
     link: '/categories/backend-engineering',
+    cover: '/img/categories/backend-engineering.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'architecture', link: '/tags/architecture' },
@@ -92,6 +95,7 @@ export default (name: string): ICategory[][] => {
     message: 'Infrastructure topics for deployment, observability, and resilient production environments.',
     image: '/img/logos/infrastructure.svg',
     link: '/categories/infrastructure-engineering',
+    cover: '/img/categories/infrastructure-engineering.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'k3s', link: '/tags/k3s' },
@@ -138,6 +142,7 @@ export default (name: string): ICategory[][] => {
     message: 'Build a local AI development environment — offline coding agents, local models, and real cost/speed/privacy tradeoffs.',
     image: '/img/logos/local-vibe-coding.svg',
     link: '/categories/local-vibe-coding',
+    cover: '/img/categories/local-vibe-coding.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'jetson-orin', link: '/tags/jetson-orin' },
@@ -161,6 +166,7 @@ export default (name: string): ICategory[][] => {
     message: 'Building production AI agents — orchestration, memory, verification, and multi-agent workflows.',
     image: '/img/logos/agentic-ai-systems.svg',
     link: '/categories/agentic-ai-systems',
+    cover: '/img/categories/agentic-ai-systems.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'architecture', link: '/tags/architecture' },
@@ -183,6 +189,7 @@ export default (name: string): ICategory[][] => {
     message: 'Building a production-ready local AI development platform — Jetson Orin, RTX 3090, k3s, and the infrastructure between them.',
     image: '/img/logos/ai-homelab-engineering.svg',
     link: '/categories/ai-homelab-engineering',
+    cover: '/img/categories/ai-homelab-engineering.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'architecture', link: '/tags/architecture' },
@@ -207,6 +214,7 @@ export default (name: string): ICategory[][] => {
     message: 'Real numbers on replacing expensive AI APIs with local infrastructure — cost breakdowns, ROI math, and honest tradeoffs.',
     image: '/img/logos/ai-cost-optimization.svg',
     link: '/categories/ai-cost-optimization',
+    cover: '/img/categories/ai-cost-optimization.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'claude-api', link: '/tags/claude-api' },
@@ -223,6 +231,7 @@ export default (name: string): ICategory[][] => {
     message: 'Production engineering behind VerseHub — a real AI-powered SaaS, not a demo.',
     image: '/img/logos/versehub-engineering.svg',
     link: '/categories/versehub-engineering',
+    cover: '/img/categories/versehub-engineering.jpg',
     lessonQuantity: 0,
     tags: [
       { title: 'architecture', link: '/tags/architecture' },

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ctaImage } from '~/utils/ctaImage'
 withDefaults(defineProps<{
   buttonText: string
   supportingCopy: string
@@ -14,10 +15,11 @@ withDefaults(defineProps<{
 <template>
   <div
     v-if="variant === 'card'"
-    class="flex flex-col h-full rounded-2xl border
+    class="relative isolate overflow-hidden flex flex-col h-full rounded-2xl border
            border-teal-500/20 dark:border-teal-500/20
            bg-teal-50/60 dark:bg-teal-500/5 p-5 sm:p-6"
   >
+    <HeroBackdrop lazy :src="ctaImage(destinationUrl)" side="full" />
     <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4
                 bg-teal-500/10 border border-teal-500/20">
       <Icon name="mdi:briefcase-outline" class="text-xl text-teal-500" />
@@ -43,10 +45,11 @@ withDefaults(defineProps<{
 
   <div
     v-else
-    class="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
+    class="relative isolate overflow-hidden flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border
            border-teal-500/20 dark:border-teal-500/20
            bg-teal-50/60 dark:bg-teal-500/5 p-5 sm:p-6"
   >
+    <HeroBackdrop lazy :src="ctaImage(destinationUrl)" />
     <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
                 bg-teal-500/10 border border-teal-500/20">
       <Icon name="mdi:briefcase-outline" class="text-xl text-teal-500" />

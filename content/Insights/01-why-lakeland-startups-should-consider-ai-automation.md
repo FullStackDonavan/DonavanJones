@@ -13,6 +13,7 @@ tags:
 draft: false
 slug: why-lakeland-startups-should-consider-ai-automation
 author: Donavan Jones
+excerptImage: /img/insights/01-why-lakeland-startups-should-consider-ai-automation.jpg
 ---
 
 # Why Lakeland Startups Should Consider AI Automation
@@ -62,7 +63,7 @@ Each of these is automatable with modern tools, produces measurable time savings
 
 AI automation does not require a six-month implementation project. A focused engagement — identifying the right process, building a targeted solution, and integrating it with your existing tools — can deliver working automation in weeks, not quarters.
 
-I have built production AI systems for real businesses operating in Florida, including a platform that handles AI-assisted workflows across tens of thousands of data points with full audit trails and role-based access. You can [see that work in detail here](/projects/bible-verse).
+I have built production AI systems for real businesses operating in Florida, including a platform that handles AI-assisted workflows across tens of thousands of data points with full audit trails and role-based access. You can [see that work in detail here](/projects/overview).
 
 If you are a Lakeland startup thinking about where AI automation fits in your operation, I am happy to talk through what is actually practical for your situation.
 

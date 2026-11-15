@@ -1,8 +1,8 @@
 ---
 title: "Citation Grounding"
-description: "Grounding AI responses with citations in theological retrieval."
+description: "Citation grounding for AI answers: eliciting citations, verifying each one against the retrieved evidence, presenting sources, and handling citation failures."
 date: 2026-05-27
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,17 +11,20 @@ tags:
 draft: false
 slug: citation-grounding
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/13-citation-grounding.jpg
 ---
 
 # Citation Grounding
 
+Citation grounding means every claim in an AI answer points to a specific retrieved source, and every citation is checked: the cited passage must actually be in the retrieved evidence, and it must support the claim. On VerseHub, citation verification compares the references in each answer against the evidence retrieval returned before the answer is trusted.
+
 An AI response about scripture that does not cite the actual text it is drawing from is asking the user to trust the model's approximation of what the Bible says. For casual conversation, that trust might be reasonable. For a platform built specifically to help people understand scripture accurately, it is not — the text is authoritative, and any claim about what the text says should be traceable directly to the text.
 
-Citation grounding is the practice of ensuring AI responses include verifiable references to the sources they draw from — and that those references are real, accurate, and consistent with what the response actually claims. It is different from simply having the model mention verse references. A model can confidently cite Romans 8:28 in a response about anxiety and be making a superficially plausible but contextually inappropriate connection. Grounded citations are verified: the cited passage actually appears in the retrieved context, the response's claims are supported by the cited text, and the user can check both.
+It is different from simply having the model mention verse references. A model can confidently cite Romans 8:28 in a response about anxiety and be making a superficially plausible but contextually inappropriate connection. Grounded citations are verified: the cited passage actually appears in the retrieved context, the response's claims are supported by the cited text, and the user can check both.
 
 This article covers how citation grounding is implemented — eliciting citations from the model, verifying them against retrieved sources, presenting them usefully to users, and handling the cases where citation breaks down.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -101,7 +104,7 @@ This distinction matters for how citations are presented to users. Direct suppor
 
 ## Verifying Citations Against Retrieved Content
 
-Once the model produces citations, each one is verified before the response reaches the user. Verification has two steps: presence checking and support checking.
+Once the model produces citations, each one is verified before the response reaches the user (the production version is described in [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs), and the general pattern in [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production)). Verification has two steps: presence checking and support checking.
 
 ### Presence Checking
 
@@ -374,6 +377,14 @@ links:
     description: "Research on atomic claim-level factuality evaluation — the methodology underlying citation verification in production AI systems."
 ---
 ::
+
+## Related reading
+
+- [Semantic Retrieval](/blog/ai-engineering/12-semantic-retrieval) — previous in the AI Engineering series
+- [Hallucination Reduction](/blog/ai-engineering/14-hallucination-reduction) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs) — the production verification pipeline
+- [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production) — verification agents as a general pattern
 
 ---
 

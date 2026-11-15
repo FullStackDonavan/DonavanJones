@@ -1,23 +1,24 @@
 ---
 title: "MinIO Storage Strategy"
-description: "How VerseHub uses MinIO for media assets and generated artifacts, and the lifecycle rules that keep storage costs bounded."
-date: 2026-08-12
-lastUpdated: "2026-08-12"
+description: "VerseHub's MinIO storage strategy: self-hosted S3-compatible buckets for raw uploads, transcoded media, and AI artifacts, with lifecycle rules to bound storage."
+date: 2026-10-13
+lastUpdated: "2026-11-14"
 category: "versehub-engineering"
 tags:
   - versehub-engineering
   - minio
   - storage
-draft: true
+draft: false
 slug: minio-storage-strategy
 author: Donavan Jones
+excerptImage: /img/blog/versehub-engineering/08-minio-storage-strategy.jpg
 ---
 
 # MinIO Storage Strategy
 
-VerseHub's media processing pipeline — user-uploaded audio and video study content, transcoded via FFmpeg and queued through BullMQ — needs somewhere durable to land, and MinIO's S3-compatible object storage is that destination, running as part of the same self-hosted infrastructure covered throughout the [AI Homelab Engineering series](/categories/ai-homelab-engineering).
+VerseHub stores media and generated artifacts in MinIO, a self-hosted, S3-compatible object store, using separate buckets for raw uploads, processed output, and AI artifacts, each with its own lifecycle rule. The media pipeline — user-uploaded audio and video, transcoded via FFmpeg and queued through BullMQ — needs somewhere durable to land, and MinIO runs in-cluster on the same self-hosted infrastructure covered throughout the [AI Homelab Engineering series](/systems/ai-homelab).
 
-*Part of the [VerseHub Engineering series](/categories/versehub-engineering).*
+*Part of the [VerseHub Engineering series](/categories/versehub-engineering). For the project overview, see the [VerseHub project page](/projects/versehub).*
 
 ::CtaCategoryPillar
 ---
@@ -34,6 +35,8 @@ destinationUrl: "/categories/versehub-engineering"
 **Transcoded outputs** — the FFmpeg-processed, web-deliverable versions of uploaded media, which are what the application actually serves to users.
 
 **AI-generated study artifacts** — any generated images, formatted study guides, or exportable content the AI study domain produces, referenced by the application but stored as objects rather than inline in the relational database.
+
+The same MinIO deployment serves the rest of the cluster too, including a bucket for training datasets used by the LoRA work on my RTX 3090 — see [MinIO and Distributed AI Storage](/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage) for that side.
 
 ## The Upload-to-Serve Pipeline
 
@@ -60,13 +63,13 @@ The 7-day window on raw uploads is a safety buffer — long enough to recover fr
 ---
 buttonText: "See The Full System"
 supportingCopy: "See how storage fits into VerseHub's full production architecture."
-destinationUrl: "/systems/versehub-engineering"
+destinationUrl: "/projects/versehub"
 ---
 ::
 
 ## Why Self-Hosted Object Storage Instead of a Cloud Provider
 
-Running MinIO on owned infrastructure rather than a cloud object storage service avoids per-request and egress pricing that scales with usage in a way that's hard to predict for a growing user base, and keeps user-uploaded media (which can include personal recordings and study content) on infrastructure under direct control rather than a third party's, which matters for the same reasons privacy matters throughout this site's homelab work.
+Running MinIO on owned infrastructure rather than a cloud object storage service avoids per-request and egress pricing that scales with usage in a way that's hard to predict for a growing user base, and keeps user-uploaded media (which can include personal recordings and study content) on infrastructure under direct control rather than a third party's, which matters for the same reasons privacy matters throughout this site's homelab work (see [Local AI Security](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private)). For how storage is laid out across the Pi cluster itself, see [Storage Strategy](/blog/infrastructureengineering/34-storage-strategy).
 
 ::CtaCardRow
   :::CtaTryApp
@@ -81,7 +84,7 @@ Running MinIO on owned infrastructure rather than a cloud object storage service
   ---
   buttonText: "Read: MinIO and Distributed AI Storage"
   supportingCopy: "The general MinIO architecture this strategy is built on."
-  destinationUrl: "/blog/ai-homelab-engineering/minio-and-distributed-ai-storage"
+  destinationUrl: "/blog/ai-homelab-engineering/07-minio-and-distributed-ai-storage"
   ---
   :::
 
@@ -109,6 +112,13 @@ links:
     description: "Documentation for the media transcoding tool used in the upload-to-serve pipeline."
 ---
 ::
+
+## Related reading
+
+- [Temporal Workflows in Production](/blog/versehub-engineering/07-temporal-workflows-in-production) — previous in the series: durable AI workflows.
+- [Scaling VerseHub with Local AI Infrastructure](/blog/versehub-engineering/09-scaling-versehub-with-local-ai-infrastructure) — next: how the platform scales on owned hardware.
+- [VerseHub project page](/projects/versehub) — overview and architecture diagram.
+- [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes) — the Kubernetes storage layer underneath MinIO.
 
 ---
 

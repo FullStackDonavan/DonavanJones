@@ -1,8 +1,8 @@
 ---
 title: "Recovering a K3s Cluster After a Control Plane IP Change"
-description: "What breaks when your K3s control plane gets a new IP address — and the exact steps to reconnect worker nodes, fix pending pods, and restore persistent storage services."
-date: 2026-07-14
-lastUpdated: "2026-07-14"
+description: "What broke when my K3s control plane got a new IP, and the exact steps to reconnect worker nodes, clear stuck pods, and restore persistent storage services."
+date: 2026-08-11
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
@@ -11,10 +11,11 @@ tags:
   - arm64
   - troubleshooting
   - networking
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: recovering-after-control-plane-ip-change
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change.jpg
 ---
 
 IP addresses change. DHCP leases expire, routers get rebooted, reservations get lost. When that happens to your K3s control plane, the cluster keeps running — but worker nodes can no longer register heartbeats, pods stuck on dead nodes stay stuck, and PVCs bound to local storage on unreachable nodes leave deployments Pending indefinitely. This article documents exactly what broke when my control plane IP changed from `192.168.1.229` to `192.168.1.219`, and how each piece was recovered.
@@ -23,7 +24,7 @@ IP addresses change. DHCP leases expire, routers get rebooted, reservations get 
 
 A practical recovery guide for when your K3s control plane gets a new IP — node reconnection, pending pod resolution, and PVC recovery.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -37,7 +38,7 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 ## The Cluster Before
 
-Five nodes across three roles:
+Five nodes across three roles at the time (the cluster has since grown to seven nodes — four Raspberry Pis and three Jetson Orin Nano Super GPU workers — and `pi-node-redis` was renamed `pi-worker-2`; the current layout is in [Node Roles](/blog/infrastructureengineering/27-node-roles)):
 
 | Node | Role | IP | Status at time of incident |
 |---|---|---|---|
@@ -256,7 +257,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-A control plane IP change is a low-drama event if you know where to look. The k3s agent URL lives in a systemd environment file, updating it takes one `sed` and a service restart, and nodes rejoin within a minute. The harder part is the downstream cascade: stuck pods, orphaned PVCs, and hardcoded node selectors that were fine until the cluster had fewer healthy nodes. Fixing those is mostly manifest hygiene — and the incident is a useful prompt to audit which deployments have single-node dependencies you haven't thought about.
+A control plane IP change is a low-drama event if you know where to look. The k3s agent URL lives in a systemd environment file, updating it takes one `sed` and a service restart, and nodes rejoin within a minute. The harder part is the downstream cascade: stuck pods, orphaned PVCs, and hardcoded node selectors that were fine until the cluster had fewer healthy nodes. Fixing those is mostly manifest hygiene — and the incident is a useful prompt to audit which deployments have single-node dependencies you haven't thought about. The best prevention is upstream: reserve the control plane's address as described in [Static IPs and Networking](/blog/infrastructureengineering/04-static-ips-and-networking). Stale IPs also hide in runbooks and `.env` files — that bit me again later in [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -309,6 +310,16 @@ links:
     description: "Overview of ARM processor architecture — the hardware platform used by the Raspberry Pi nodes in this cluster, which determines image compatibility and nodeSelector strategy for workloads."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Loki and Promtail on a Pi K3s Cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) — previous in the series.
+- [Deploying an App on the Rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Networking Issues](/blog/infrastructureengineering/25-networking-issues) — the broader set of homelab network failures.
+- [The Biggest Mistakes I Made Building My AI Homelab](/blog/ai-homelab-engineering/15-biggest-mistakes-building-ai-homelab) — more lessons from the same cluster.
 
 ---
 

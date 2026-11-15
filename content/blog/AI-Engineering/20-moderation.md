@@ -1,8 +1,8 @@
 ---
 title: "Moderation"
-description: "Moderation strategies for AI-generated theological content."
+description: "Moderation for AI-generated theological content: a harm taxonomy, input and output checks, pastoral and manipulation detection, and avoiding over-moderation."
 date: 2026-07-02
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "ai-engineering"
 tags:
   - ai-engineering
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: moderation
 author: Donavan Jones
+excerptImage: /img/blog/ai-engineering/20-moderation.jpg
 ---
 
 # Moderation
@@ -19,7 +20,7 @@ Moderation for a theological AI platform is not primarily about filtering offens
 
 This article covers how moderation is structured on the platform — what categories of harm exist in theological AI specifically, where moderation checks are placed in the pipeline, how they are implemented, and what the system does when intervention is warranted.
 
-*Part of the [AI Engineering series](/categories/ai-engineering).*
+*Part of the [AI Engineering series](/categories/ai-engineering). For how these pieces run together in production, see the [AI Systems hub](/systems/ai).*
 
 ::CtaCategoryPillar
 ---
@@ -47,7 +48,7 @@ Each category requires different moderation logic. Content filters that work for
 
 ## Pipeline Placement
 
-Moderation runs at three points in the request pipeline:
+Moderation runs at three points in the [request pipeline](/blog/ai-engineering/15-ai-pipelines-for-bible-study):
 
 ```
 User input → [INPUT MODERATION] → Retrieval → Assembly → 
@@ -201,7 +202,7 @@ destinationUrl: "/systems/ai"
 
 ### Doctrinal Accuracy Checking
 
-Output moderation catches responses that make specific, checkable theological claims that are wrong or misleading. This overlaps with hallucination reduction (article 14) but covers a different failure mode — not misquoted verses or fabricated citations, but claims about what traditions hold or what scholarly consensus says.
+Output moderation catches responses that make specific, checkable theological claims that are wrong or misleading. This overlaps with hallucination reduction ([article 14](/blog/ai-engineering/14-hallucination-reduction)) but covers a different failure mode — not misquoted verses or fabricated citations, but claims about what traditions hold or what scholarly consensus says.
 
 ```typescript
 const DOCTRINAL_CLAIM_PATTERNS = [
@@ -403,6 +404,14 @@ links:
     description: "Definition of pastoral care — the human support practice the moderation system must recognize and redirect to, rather than simulate."
 ---
 ::
+
+## Related reading
+
+- [Memory Systems](/blog/ai-engineering/19-memory-systems) — previous in the AI Engineering series
+- [Debate Agents](/blog/ai-engineering/21-debate-agents) — next in the AI Engineering series
+- [AI Systems hub](/systems/ai) — how memory, retrieval, agents and verification fit together in production
+- [Local AI Security: Keeping Your Code and Data Private](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private) — keeping user data private on local infrastructure
+- [Verification Agents in Production](/blog/agentic-ai-systems/11-verification-agents-in-production) — verification agents that check outputs
 
 ---
 

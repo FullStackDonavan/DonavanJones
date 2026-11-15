@@ -1,5 +1,8 @@
 <script setup lang="ts">
+const _abs = useAbsoluteUrl()
 useSeoMeta({
+  ogImage: _abs('/img/heroes/newsletter.jpg'),
+  twitterImage: _abs('/img/heroes/newsletter.jpg'),
   title: 'Newsletter — Donavan Jones',
   description: 'Short, practical posts on building software, SaaS, and tools for the web — delivered straight to your inbox.',
   ogTitle: 'Newsletter — Donavan Jones',

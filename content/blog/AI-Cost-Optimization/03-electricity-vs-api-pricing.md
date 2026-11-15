@@ -1,22 +1,23 @@
 ---
 title: "Electricity vs API Pricing"
-description: "A direct comparison methodology between per-token API pricing and the per-request electricity cost of running an equivalent model locally."
-date: 2026-05-20
-lastUpdated: "2026-06-09"
+description: "Electricity vs API pricing: how to convert local GPU power draw into cost per request and compare it with per-token API fees, with a worked RTX 3090 example."
+date: 2026-08-01
+lastUpdated: "2026-11-14"
 category: "ai-cost-optimization"
 tags:
   - ai-cost-optimization
   - electricity
-draft: true
+draft: false
 slug: electricity-vs-api-pricing
 author: Donavan Jones
+excerptImage: /img/blog/ai-cost-optimization/03-electricity-vs-api-pricing.jpg
 ---
 
 # Electricity vs API Pricing
 
-Comparing a per-token API price against local electricity cost requires converting both to the same unit — cost per request — which is a less obvious calculation than it sounds, because electricity cost doesn't scale with tokens the way API pricing does; it scales with GPU time.
+Once you already own the hardware, the electricity for a local request costs a small fraction of the same request through an API — about $0.0003 versus $0.015 in the worked example below. Getting there means converting both to cost per request, because electricity scales with GPU time, not with tokens the way API pricing does.
 
-*Part of the [AI Cost Optimization series](/categories/ai-cost-optimization).*
+*Part of the [AI Cost Optimization series](/categories/ai-cost-optimization). For the hardware these numbers are based on, see the [AI homelab systems hub](/systems/ai-homelab).*
 
 ::CtaCategoryPillar
 ---
@@ -32,39 +33,39 @@ destinationUrl: "/categories/ai-cost-optimization"
 Cost per request = (GPU power draw during generation × generation time in hours) / 1000 × $/kWh
 ```
 
-Where GPU power draw during active generation is meaningfully higher than idle draw (covered in the [monthly power bill breakdown](/blog/ai-homelab-engineering/monthly-power-bill-ai-cluster) elsewhere on this site), and generation time depends on model size, quantization, and output length.
+Where GPU power draw during active generation is meaningfully higher than idle draw (covered in the [monthly power bill breakdown](/blog/ai-homelab-engineering/14-monthly-power-bill-ai-cluster) elsewhere on this site), and generation time depends on model size, quantization, and output length (the levers covered in [RTX 3090 Optimization for LLMs](/blog/ai-homelab-engineering/10-rtx-3090-optimization-for-llms)).
 
 ## A Worked Comparison
 
-For a typical coding-assistant request generating roughly 1,500 output tokens, taking about 15 seconds on a local 34B model under active GPU load (~350W):
+Take a typical coding-assistant request that generates about 1,500 output tokens. On my RTX 3090, Ornith-1.0-35B generates at about 64 tok/s, so that's roughly 23 seconds of generation. Assume the card draws close to its 350 W limit while generating and an electricity rate of $0.14/kWh:
 
 ```
-(350W × 15s / 3600s) / 1000 × $0.14/kWh ≈ $0.0002 per request
+(350W × 23s / 3600s) / 1000 × $0.14/kWh ≈ $0.0003 per request
 ```
 
-Against a hosted API's output pricing at, illustratively, $15 per million tokens:
+Against a hosted API's output pricing at $10 per million tokens (the current mid-tier [Claude rate](/blog/ai-cost-optimization/01-claude-api-cost-breakdown)):
 
 ```
-1,500 tokens × $15/1,000,000 = $0.0225 per request
+1,500 tokens × $10/1,000,000 = $0.015 per request
 ```
 
-At this illustrative comparison, the electricity cost of the same request run locally is roughly two orders of magnitude cheaper than the hosted API cost — which is the core reason the economics favor local hardware so strongly once it's already been purchased and utilization is high enough to justify the upfront cost.
+In this comparison, the electricity for the same request run locally is roughly 50x cheaper than the hosted API cost — which is the core reason the economics favor local hardware so strongly once it's already been purchased and utilization is high enough to justify the upfront cost.
 
 ## Why This Comparison Is Easy to Overstate
 
-This math only reflects the marginal cost of an additional request once hardware is already owned and running. It deliberately excludes hardware amortization (the actual purchase price, spread over its useful life) — which is why this comparison is not the same as "local AI is 100x cheaper than API access" in absolute terms. It's specifically the marginal cost comparison, which matters once you're deciding whether to run one more request locally versus through an API, given hardware you already have.
+This math only reflects the marginal cost of an additional request once hardware is already owned and running. It deliberately excludes hardware amortization (the actual purchase price, spread over its useful life) — which is why this comparison is not the same as "local AI is 50x cheaper than API access" in absolute terms. It's specifically the marginal cost comparison, which matters once you're deciding whether to run one more request locally versus through an API, given hardware you already have.
 
 ::CtaSystemArchitecture
 ---
 buttonText: "See The Full System"
 supportingCopy: "See the full hardware and electricity model behind these numbers."
-destinationUrl: "/systems/ai-cost-optimization"
+destinationUrl: "/systems/ai-homelab"
 ---
 ::
 
 ## Where Amortization Enters the Full Picture
 
-The complete cost comparison — including hardware amortization, not just marginal electricity — is covered in the [Hardware ROI](/blog/ai-cost-optimization/hardware-roi-for-ai-development) article in this series. This article's narrower point stands on its own regardless: once hardware is already owned, the marginal cost of local inference is close enough to free that maximizing local usage (for tasks a local model can actually handle well) is close to a strictly dominant choice on cost alone.
+The complete cost comparison — including hardware amortization, not just marginal electricity — is covered in the [Hardware ROI](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development) article in this series. This article's narrower point stands on its own regardless: once hardware is already owned, the marginal cost of local inference is close enough to free that maximizing local usage (for tasks a local model can actually handle well) is close to a strictly dominant choice on cost alone.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -79,7 +80,7 @@ The complete cost comparison — including hardware amortization, not just margi
   ---
   buttonText: "Read: Hardware ROI for AI Development"
   supportingCopy: "The full cost picture, including hardware amortization."
-  destinationUrl: "/blog/ai-cost-optimization/hardware-roi-for-ai-development"
+  destinationUrl: "/blog/ai-cost-optimization/04-hardware-roi-for-ai-development"
   ---
   :::
 
@@ -107,6 +108,13 @@ links:
     description: "The economic concept underlying why this comparison excludes hardware amortization by design."
 ---
 ::
+
+## Related reading
+
+- [OpenAI API Cost vs Local AI](/blog/ai-cost-optimization/02-openai-api-cost-vs-local-ai) — previous: the general hosted-vs-local cost formula
+- [Hardware ROI for AI Development](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development) — next: adding hardware amortization to the picture
+- [AI Homelab systems hub](/systems/ai-homelab) — the cluster these power numbers come from
+- [Power Consumption Tradeoffs](/blog/infrastructureengineering/30-power-consumption-tradeoffs) — power tradeoffs across the whole rack
 
 ---
 

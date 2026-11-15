@@ -1,8 +1,8 @@
 ---
 title: "Networking (Skill)"
-description: "Networking skills I built through running a homelab — subnetting, DNS, VLANs, ingress routing, and diagnosing production cluster network issues."
+description: "Networking skills I built running a 7-node K3s homelab: IP addressing, DNS and service discovery, routing, SSH access, and debugging cluster network failures."
 date: 2025-11-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - networking
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: networking-skill
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/26-networking-skill.jpg
 ---
 
 # Networking (Skill)
 
 ## Introduction
 
-Networking is one of the most important foundational skills in modern infrastructure and systems engineering. In my case, it wasn’t learned in isolation or just from theory—it was developed through building and maintaining a real homelab environment. Working with a Raspberry Pi-based K3s cluster, a custom rack setup, and multiple self-hosted services forced me to understand how data actually moves between systems, how services discover each other, and how failures propagate when networking is misconfigured.
+The networking skills that matter most for running Kubernetes are IP addressing, DNS and service discovery, routing/NAT, secure remote access, and layer-by-layer debugging — and I learned all of them by operating a real cluster, not from theory. My homelab is a 7-node K3s cluster (four Raspberry Pis plus three Jetson Orin Nano Super GPU workers) with an RTX 3090 workstation beside it, and keeping that running forced me to understand how data actually moves between systems, how services discover each other, and how failures propagate when networking is misconfigured.
 
 Instead of simply studying concepts like DNS, subnets, routing, or NAT, I learned them through real-world debugging: pods not communicating across nodes, services failing due to incorrect cluster networking, and SSH access issues across machines in my rack. This hands-on environment made networking feel less like an abstract subject and more like the backbone of everything I build.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -73,8 +74,9 @@ Some common issues I’ve worked through include:
 
 - Pods unable to reach each other due to misconfigured cluster networking
 - DNS resolution failures inside Kubernetes services
-- Port conflicts between local services running on the rack
+- Port conflicts between local services running on the rack (a port 8080 clash plus one ServiceLB node label once took down my LoadBalancer services — written up in [how one node label broke every LoadBalancer service](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers))
 - Latency and routing issues between nodes
+- Recovering the whole cluster after the control-plane node changed IP ([the recovery walkthrough](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change))
 - Authentication failures due to incorrect SSH or firewall rules
 
 Each issue required breaking the system down layer by layer—starting from the application, down through containers, services, network interfaces, and finally physical connectivity.
@@ -97,7 +99,7 @@ destinationUrl: "/systems/infrastructure"
 
 Networking is also tightly connected to my CI/CD workflows.
 
-Using Gitea and self-hosted runners in my cluster, I’ve built pipelines that:
+Using Gitea and self-hosted [Gitea Actions runners](/blog/infrastructureengineering/21-gitea-runners-pipeline) in my cluster, I’ve built pipelines that:
 
 - Deploy applications directly into the K3s environment
 - Trigger container builds and updates across nodes
@@ -174,6 +176,15 @@ links:
     description: "Overview of Kubernetes networking — the virtual network layer that application networking skill must understand to configure services, ingress, and CNI correctly across a multi-node cluster."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Networking Issues](/blog/infrastructureengineering/25-networking-issues) — previous in the series: the concrete failures and debug order.
+- [Node Roles](/blog/infrastructureengineering/27-node-roles) — next in the series: what each of the 7 nodes is responsible for.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Networking for AI Clusters](/blog/ai-homelab-engineering/06-networking-for-ai-clusters) — how the network serves the Jetson and 3090 AI workloads.
 
 ---
 

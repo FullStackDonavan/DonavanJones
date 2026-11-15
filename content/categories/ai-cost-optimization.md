@@ -7,13 +7,13 @@ description:
   - "This series breaks down real API costs (Claude, OpenAI), the actual cost of running local infrastructure (hardware amortization plus electricity), and the decision framework for choosing between them based on usage volume rather than ideology."
   - "Every number in this series is grounded in a real, worked calculation — not a vendor's marketing math or a hobbyist's back-of-napkin guess."
 featuredArticles:
-  - path: "/blog/ai-cost-optimization/hardware-roi-for-ai-development"
+  - path: "/blog/ai-cost-optimization/04-hardware-roi-for-ai-development"
     label: "Start Here"
     reason: "The core ROI framework every other article in this series applies"
-  - path: "/blog/ai-cost-optimization/local-ai-stack-vs-year-of-claude-max"
+  - path: "/blog/ai-cost-optimization/07-local-ai-stack-vs-year-of-claude-max"
     label: "Worked Example"
     reason: "A complete, real cost comparison over a full year"
-  - path: "/blog/ai-cost-optimization/claude-api-cost-breakdown"
+  - path: "/blog/ai-cost-optimization/01-claude-api-cost-breakdown"
     label: "Reference"
     reason: "Understand exactly what you're paying for with a hosted API"
 learningPath:

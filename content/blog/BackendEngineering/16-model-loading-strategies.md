@@ -1,8 +1,8 @@
 ---
 title: "Model Loading Strategies"
-description: "Approaches to model loading in AI backend systems."
+description: "Model loading strategies for self-hosted AI: startup vs on-demand loading, warm-up, pinning models in memory, swapping on 8 GB Jetsons, and safe updates."
 date: 2026-04-09
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - models
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: model-loading-strategies
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/16-model-loading-strategies.jpg
 ---
 
 # Model Loading Strategies
 
-Every locally-hosted model has to get from disk into memory before it can process a single request. For most software, loading a configuration file or a small dataset is fast enough to be irrelevant. For neural network models, loading is a significant operation — seconds to minutes depending on model size, storage speed, and destination (RAM vs VRAM). Handled carelessly, model loading becomes the dominant source of latency in an otherwise fast system.
+Load request-path models at startup, warm them up, keep them resident, and only mark the service ready once they are — on-demand loading puts seconds of latency in front of a real user. Every locally-hosted model has to get from disk into memory before it can process a single request. For most software, loading a configuration file or a small dataset is fast enough to be irrelevant. For neural network models, loading is a significant operation — seconds to minutes depending on model size, storage speed, and destination (RAM vs VRAM). Handled carelessly, model loading becomes the dominant source of latency in an otherwise fast system.
 
-This platform runs several local models: the fine-tuned Tesseract model for historical OCR, the sentence-transformers embedding model for the embedding fallback path, and the cross-encoder reranker. None of these are large by modern standards — tens to hundreds of megabytes rather than tens of gigabytes. But the loading strategies still matter, because loading happens at service startup, at deployment, and in some configurations on demand, and each of those contexts has different constraints.
+My platform runs models across a wide size range. The small ones — the all-MiniLM-L6-v2 embedder on my RTX 3090, a cross-encoder reranker, OCR models — are tens to hundreds of megabytes. The LLMs are not: llama3.2:3b stays pinned on a Jetson Orin Nano for VerseHub's fast drafts, other small models rotate through a second Jetson, and Ornith-1.0-35B takes about 21 GB of VRAM on the 3090. Loading strategy matters at every size, because loading happens at service startup, at deployment, and in some configurations on demand, and each of those contexts has different constraints.
 
 This article covers how models are loaded in each context, how loading interacts with service availability, and the strategies I use to make loading transparent to users.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -81,13 +82,13 @@ async function startService() {
 }
 ```
 
-The three models load in parallel — they have no dependency on each other, and parallel loading cuts total startup time from ~10 seconds sequential to ~4 seconds. Warm-up runs after all models are loaded, also in parallel.
+The three models load in parallel — they have no dependency on each other, so total startup time approaches the slowest single load instead of the sum. Warm-up runs after all models are loaded, also in parallel.
 
 `registerHealthy()` is the gate. The load balancer health check endpoint returns 503 until this call completes. No user request reaches the service until the models are loaded and warmed.
 
 ## Keeping Models in Memory
 
-Once loaded, models should stay in memory for the life of the service process. Unloading and reloading models on a per-request or per-session basis would be catastrophic for latency. The model is the most expensive object in the process — treat it as a singleton initialized once at startup.
+Once loaded, models should stay in memory for the life of the service process. Unloading and reloading models on a per-request or per-session basis would be catastrophic for latency. In Ollama this is an explicit setting: VerseHub's llama3.2:3b is pinned with no idle timeout, because its measured 5.1-second load would otherwise land on whichever user asked first after an unload. The model is the most expensive object in the process — treat it as a singleton initialized once at startup.
 
 This is obvious for a single-model service. It becomes less obvious when the service needs to handle multiple model versions simultaneously — for example, during a model upgrade where old and new versions must coexist.
 
@@ -259,13 +260,15 @@ destinationUrl: "/hire-me"
 
 ## What Changes When Models Get Bigger
 
-Everything in this article is tuned for models under 1GB. The strategies scale, but the tradeoffs shift as model size grows:
+The code in this article is written for models under 1GB. The strategies scale, but the trade-offs shift as model size grows:
 
 At 1–10GB, startup loading time becomes significant enough to require longer health check grace periods and blue-green becomes more attractive. VRAM sizing requires more careful planning. Model caching on disk becomes essential to avoid repeated large downloads.
 
+This is the range where my Jetsons live, and memory, not load time, is the real constraint. Each board has 8 GB of unified memory (about 7.4 GiB usable) shared by CPU and GPU, so only one ~4–5 GB model fits at a time, and swapping is a sequence, not a call: stop the old model, flush the page cache (`sync; echo 3 > /proc/sys/vm/drop_caches`, because the Jetson's CUDA allocator cannot reclaim it), then load the new one. Skip the flush and the load fails with out-of-memory even though `free -h` reports memory "available." I automated that sequence behind the Devices page in [Kingdom Tools](/projects/kingdom-tools), which loads, unloads, and benchmarks models per board.
+
 At 10–100GB, loading a model once and sharing it across multiple request handlers (rather than one model per process) becomes necessary. A single 70B model instance can serve multiple concurrent requests through batching. The process model shifts from "one model per service instance" to "one model instance serving many request handlers."
 
-At 100GB+, model sharding across multiple GPUs is required — the model does not fit on a single device. This is infrastructure I do not currently run; the platform uses managed APIs for workloads that need models of this size.
+At 100GB+, model sharding across multiple GPUs is required — the model does not fit on a single device. This is infrastructure I do not run; my largest local model is Ornith-1.0-35B, a mixture-of-experts model that fits on one RTX 3090 at Q4_K_M quantization, and I use hosted APIs for anything bigger.
 
 The strategies in this article are appropriate for the model sizes I actually deploy locally. They are the right starting point for any system running small-to-medium local models, and the right mental model for reasoning about what changes as those models grow.
 
@@ -320,6 +323,22 @@ links:
     description: "Overview of the singleton pattern — the design principle behind treating loaded models as process-level singletons initialized once at startup rather than per-request."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: tok_s
+blurb: "Load time and generation speed matter as much as size. Here is how models compare on one 8 GB Jetson."
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Latency Optimization](/blog/backendengineering/15-latency-optimization) — previous in the series: why cold starts matter
+- [Installing AGE](/blog/backendengineering/17-installing-age) — next in the series: graph queries in Postgres
+- [Running Multiple Local Models Without Melting Your GPU](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu) — model swapping across real hardware
+- [Running Ornith-1.0-35B Locally with Ollama](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama) — loading a 35B model on a single 3090
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

@@ -7,13 +7,13 @@ description:
   - "This series documents the engineering behind VerseHub specifically: how agentic AI was added to an existing SaaS application, the AI pipeline design, the memory layer, the verification pipeline for AI outputs, and how the platform scales on local AI infrastructure."
   - "Where the other series on this site cover general patterns, this one is the proof — a real, running platform, engineered with the same patterns discussed elsewhere, deployed to real users."
 featuredArticles:
-  - path: "/blog/versehub-engineering/versehub-architecture"
+  - path: "/blog/versehub-engineering/01-versehub-architecture"
     label: "Start Here"
     reason: "The full system architecture VerseHub runs on"
-  - path: "/blog/versehub-engineering/how-i-added-agentic-ai-to-versehub"
+  - path: "/blog/versehub-engineering/02-how-i-added-agentic-ai-to-versehub"
     label: "The Core Story"
     reason: "How an existing SaaS application gained a real agentic AI layer"
-  - path: "/blog/versehub-engineering/how-i-built-a-production-ai-bible-platform"
+  - path: "/blog/versehub-engineering/03-how-i-built-a-production-ai-bible-platform"
     label: "The Full Build"
     reason: "The complete story of building VerseHub end to end"
 learningPath:

@@ -29,6 +29,10 @@
 
         <div class="absolute left-0 top-full mt-4 w-64 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-50">
           <div class="p-2 flex flex-col">
+            <NuxtLink to="/services/local-ai-infrastructure" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <div class="font-medium text-gray-900 dark:text-gray-100">Local AI Infrastructure</div>
+              <div class="text-sm text-gray-500 dark:text-gray-400">For AI hardware &amp; agent-runtime teams</div>
+            </NuxtLink>
             <NuxtLink to="/services/ai-automation" class="px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <div class="font-medium text-gray-900 dark:text-gray-100">AI Automation</div>
               <div class="text-sm text-gray-500 dark:text-gray-400">Lead capture, agents, workflow automation</div>
@@ -122,6 +126,13 @@
         </span>
       </NuxtLink>
 
+      <!-- Tools (LLM hardware calculators) -->
+      <NuxtLink to="/tools" class="relative group">
+        <span :class="navClass(isToolsActive)">
+          Tools
+        </span>
+      </NuxtLink>
+
       <!-- Products -->
       <NuxtLink to="/products/overview" class="relative group">
         <span :class="navClass(isProductsActive)">
@@ -198,6 +209,9 @@ const isSystemsActive = computed(() => {
 const isProjectsActive = computed(() => {
   return route.path.startsWith('/projects')
 })
+
+// Tools
+const isToolsActive = computed(() => route.path.startsWith('/tools'))
 
 // Products
 const isProductsActive = computed(() => {

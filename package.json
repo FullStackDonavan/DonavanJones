@@ -10,7 +10,9 @@
     "test": "yarn docker:up && yarn prisma migrate deploy && vitest",
     "ci:test": "yarn prisma migrate deploy && vitest",
     "prisma:generate": "dotenv -e .env -- npx prisma generate",
-    "prisma:migrate": "dotenv -e .env -- npx prisma migrate deploy --name prod"
+    "prisma:migrate": "dotenv -e .env -- npx prisma migrate deploy --name prod",
+    "projects:sync": "node scripts/sync-local-projects.mjs",
+    "test:unit": "vitest run tests/unit"
   },
   "devDependencies": {
     "@nuxt/content": "^2.2.1",

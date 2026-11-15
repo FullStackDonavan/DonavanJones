@@ -13,6 +13,7 @@ tags:
 draft: false
 slug: building-custom-business-software-in-central-florida
 author: Donavan Jones
+excerptImage: /img/insights/03-building-custom-business-software-in-central-florida.jpg
 ---
 
 # Building Custom Business Software in Central Florida
@@ -55,7 +56,7 @@ Custom software costs vary significantly based on scope, complexity, and the dev
 
 A focused, single-purpose business tool — an intake form with a backend workflow, a document generation pipeline, a reporting dashboard — can be built by an experienced independent developer for a fraction of what an agency would charge, often in the range of weeks rather than months.
 
-A multi-role SaaS platform — with authentication, role-specific dashboards, integrations with external systems, and ongoing feature development — is a larger engagement. [The insurance enrollment platform I built for a Lakeland business](/projects/business-benefit-alliance) is an example of this: three distinct user roles, a multi-step workflow with digital signatures and PDF generation, AWS S3 storage, and a full audit trail. That kind of scope takes months and should be priced accordingly.
+A multi-role SaaS platform — with authentication, role-specific dashboards, integrations with external systems, and ongoing feature development — is a larger engagement. [The insurance enrollment platform I built for a Lakeland business](/projects/business-benefit-alliance) is an example of this: six user roles, 686 API endpoints, card and ACH billing that has processed $10.8M, digital signatures and PDF generation, carrier data feeds, and a full audit trail. That kind of scope takes months and should be priced accordingly.
 
 The most expensive outcome is building the wrong thing. Investing in proper discovery and a clearly scoped engagement costs more upfront and saves significantly more on the back end.
 

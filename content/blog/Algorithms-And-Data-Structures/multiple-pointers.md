@@ -2,7 +2,7 @@
 title: "Multiple Pointers"
 description: "Understanding the Multiple Pointers pattern in JavaScript — how two-pointer techniques reduce O(n squared) to O(n) with practical sorted array examples."
 date: 2025-07-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "algorithms"
 tags:
   - javascript
@@ -11,6 +11,7 @@ tags:
 draft: false
 slug: multiple-pointers
 author: Donavan Jones
+excerptImage: /img/blog/algorithms-and-data-structures/multiple-pointers.jpg
 ---
 
 # Multiple Pointers
@@ -19,7 +20,7 @@ The Multiple Pointers pattern is a common problem-solving technique used in Java
 
 This approach can significantly improve time complexity, often reducing an O(n²) solution down to O(n).
 
-*Part of the [Algorithms & Data Structures series](/categories/algorithms).*
+*Part of the [Algorithms & Data Structures series](/categories/algorithms). For where these patterns show up in production systems, see the [backend systems hub](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -132,6 +133,8 @@ console.log(countUniqueValues([1, 1, 1, 2, 3, 4, 4, 5]));
 * Common in technical interviews
 * Useful for array and string manipulation
 
+Outside of interviews, the two-pointer walk is how you merge two sorted result lists in one pass — the same shape of work as combining keyword and semantic results in [hybrid vector search](/blog/backendengineering/05-vector-search).
+
 ## Conclusion
 
 The Multiple Pointers pattern is an essential algorithmic technique for improving efficiency in JavaScript applications. By using pointers that move through data intelligently, you can solve problems faster and with cleaner logic.
@@ -190,6 +193,14 @@ links:
     description: "Foundational overview of algorithms — the broader context for understanding the multiple pointers pattern as a general-purpose optimization strategy."
 ---
 ::
+
+## Related reading
+
+- [Understanding the Frequency Counter Pattern in JavaScript](/blog/algorithms-and-data-structures/frequency-counter) — previous in the series
+- [Linear Search](/blog/algorithms-and-data-structures/linear-search) — next in the series
+- [Sliding Window](/blog/algorithms-and-data-structures/sliding-window) — a close cousin of the two-pointer technique
+- [Vector Search](/blog/backendengineering/05-vector-search) — merging ranked result lists in production search
+- [Backend systems hub](/systems/backend) — where these fundamentals meet real services
 
 ---
 

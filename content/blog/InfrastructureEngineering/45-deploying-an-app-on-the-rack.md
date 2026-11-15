@@ -1,8 +1,8 @@
 ---
 title: "Deploying an App on the Rack"
-description: "How I deploy a full-stack Node.js application to a bare-metal ARM64 machine using Gitea Actions, SSH, and systemd — without Docker, without Kubernetes, and without pm2."
-date: 2026-07-18
-lastUpdated: "2026-06-19"
+description: "How I deploy a Nuxt/Node.js app to a bare-metal ARM64 machine with Gitea Actions, SSH, and systemd: no Docker, no Kubernetes, and no pm2."
+date: 2026-08-23
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - gitea
@@ -12,10 +12,11 @@ tags:
   - deployment
   - nodejs
   - ssh
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: deploying-an-app-on-the-rack
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/45-deploying-an-app-on-the-rack.jpg
 ---
 
 Not every workload belongs in Kubernetes. Sometimes you have a Node.js app, a bare-metal machine on your rack, and you just need the thing to run and stay running. This article documents the full deployment pipeline I use to ship a Nuxt 3 app to a bare ARM64 machine — covering secrets management, SSH-based build and migrate, systemd process management, and the specific failure modes that only appear when you're actually doing this on real hardware (including a glibc malloc corruption bug on ARM64 that took several hours to diagnose).
@@ -24,7 +25,7 @@ Not every workload belongs in Kubernetes. Sometimes you have a Node.js app, a ba
 
 A practical guide to CI/CD deployment over SSH to a bare-metal ARM64 machine using Gitea Actions.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -50,6 +51,8 @@ The rack machine in question is an ARM64 node that sits outside the K3s cluster.
 ---
 
 ## Pre-Deploy: Provisioning with Kingdom Tools
+
+*More on the platform itself on the [Kingdom Tools project page](/projects/kingdom-tools).*
 
 Before the pipeline touches the rack, the app needs its own isolated data resources — a dedicated PostgreSQL database, a MinIO bucket for file storage, and optionally a Redis database slot, a Weaviate collection for vector search, and a MongoDB database for document storage. Rather than SSH-ing into the cluster and running `CREATE DATABASE` and `mc mb` by hand, I use Kingdom Tools — an internal developer platform that runs inside the K3s cluster at `http://192.168.1.219:30800`.
 
@@ -471,7 +474,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Deploying a Node.js app to a bare-metal ARM64 machine over SSH is achievable with nothing but standard shell tools — no Docker, no Kubernetes, no external CI services. The main challenges are shell quoting across SSH boundaries, Prisma's ARM64 engine quirks, and the glibc compatibility issues that surface when running prebuilt native binaries on newer Debian releases. systemd handles process supervision cleanly, and the jemalloc + `MALLOC_CHECK_=0` workaround keeps the app stable until the underlying binary compatibility is resolved upstream. Once those are understood, the pipeline is simple, fast, and fully observable from Gitea's built-in CI log view.
+For the Gitea side of this setup, see [Installing Gitea in Kubernetes](/blog/infrastructureengineering/23-installing-gitea-in-kubernetes) and [Gitea Runners Pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline). Deploying a Node.js app to a bare-metal ARM64 machine over SSH is achievable with nothing but standard shell tools — no Docker, no Kubernetes, no external CI services. The main challenges are shell quoting across SSH boundaries, Prisma's ARM64 engine quirks, and the glibc compatibility issues that surface when running prebuilt native binaries on newer Debian releases. systemd handles process supervision cleanly, and the jemalloc + `MALLOC_CHECK_=0` workaround keeps the app stable until the underlying binary compatibility is resolved upstream. Once those are understood, the pipeline is simple, fast, and fully observable from Gitea's built-in CI log view.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -524,6 +527,15 @@ links:
     description: "Overview of CI/CD automation — the workflow pattern behind the Gitea Actions pipeline described in this article."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Recovering a K3s Cluster After a Control Plane IP Change](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change) — previous in the series.
+- [How One Node Label Broke Every LoadBalancer Service in My K3s Cluster](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [VerseHub Architecture](/blog/versehub-engineering/01-versehub-architecture) — the Nuxt app this pipeline was built to ship.
 
 ---
 

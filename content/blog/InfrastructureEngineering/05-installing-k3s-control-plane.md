@@ -2,7 +2,7 @@
 title: "Installing K3s Control Plane"
 description: "Step-by-step guide to installing the K3s control plane on a Raspberry Pi, including kubeconfig setup and validating the cluster is healthy."
 date: 2025-09-30
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
@@ -10,15 +10,18 @@ tags:
 draft: false
 slug: installing-k3s-control-plane
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/05-installing-k3s-control-plane.jpg
 ---
 
 # Installing K3s Control Plane
+
+To install the K3s control plane, run `curl -sfL https://get.k3s.io | sh -` on the Pi that will be the server, check that the `k3s` service is running, and copy `/etc/rancher/k3s/k3s.yaml` to `~/.kube/config` so `kubectl` works without sudo. Once `kubectl get nodes` shows the node as Ready, you can join workers. In my rack that server is a single Raspberry Pi, pi-node1, running K3s v1.34.x.
 
 ## Introduction
 
 A small Kubernetes cluster is a strong fit for a homelab, especially when it is built from low-power hardware like Raspberry Pis in a rack. K3s keeps the control plane lightweight while still giving you the core Kubernetes features needed to manage workloads, services, secrets, storage, and deployments. In this guide, we will set up the K3s control plane in a way that is practical for a home rack environment, with an eye toward stability, simplicity, and easy expansion later.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -34,7 +37,7 @@ Before you begin, make sure you have:
 
 * A Raspberry Pi cluster ready to use in your rack
 * A fresh Raspberry Pi OS or other Linux installation on the control plane node
-* Static or reserved IP addressing for the node
+* Static or reserved IP addressing for the node (see [static IPs and networking](/blog/infrastructureengineering/04-static-ips-and-networking) — changing the server's IP later is painful)
 * `sudo` access on the machine
 * Network access between all nodes in the cluster
 
@@ -82,6 +85,8 @@ kubectl get nodes -o wide
 ```
 
 You should see the control plane node listed and the system pods moving into a ready state.
+
+In my cluster, pi-node1 isn't only the control plane. It also hosts the monitoring stack and Gitea, exposed through NodePorts: Prometheus on 30909, Grafana on 30300, and Gitea on 32080. That works on a small cluster, but it means you should think about [control plane taints and what's allowed to schedule there](/blog/infrastructureengineering/16-control-plane-taints). Setting up the [Prometheus side of that monitoring stack](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) is its own post.
 
 ::CtaSystemArchitecture
 ---
@@ -166,5 +171,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Static IPs and Networking](/blog/infrastructureengineering/04-static-ips-and-networking) — previous in the series
+- [Joining Worker Nodes](/blog/infrastructureengineering/06-joining-worker-nodes) — next in the series
+- [Node Roles](/blog/infrastructureengineering/27-node-roles) — what each Pi and Jetson node does once workers join
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
+- [Kubernetes for AI Developers: Deploying Local Models with k3s](/blog/ai-homelab-engineering/04-kubernetes-for-ai-developers-k3s) — running model services on the cluster you just installed
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

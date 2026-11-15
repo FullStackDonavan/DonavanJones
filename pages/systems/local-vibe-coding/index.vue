@@ -3,49 +3,70 @@ const _seoConfig = useRuntimeConfig()
 const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
 useSeoMeta({
   title: 'Local Vibe Coding — Donavan Jones',
-  description: 'A local AI coding environment built on a draft/verify Ornith model pair, Ollama, and a custom agent (OpenClaw) — running on a hybrid Jetson Orin / RTX 3090 cluster instead of a hosted subscription.',
+  description: 'Local vibe coding: a local AI coding environment built on Ornith-1.0-35B in Ollama on one RTX 3090, a draft/verify agent loop (OpenClaw), and small models on Jetson Orin Nano Supers — alongside hosted tools.',
   ogTitle: 'Local Vibe Coding — Donavan Jones',
-  ogDescription: 'Local AI coding patterns — Ornith-9B drafting and Ornith-1.0-35B verifying on Ollama, a custom agent loop, and hybrid GPU routing across a home AI cluster.',
+  ogDescription: 'Local AI coding patterns — Ornith-1.0-35B on an RTX 3090 (~64 tok/s), a draft/verify agent loop, and what did and did not fit on 8GB Jetsons.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/systems-local-vibe-coding.jpg`,
   ogUrl: `${_SITE}/systems/local-vibe-coding`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'Local Vibe Coding — Donavan Jones',
-  twitterDescription: 'Local AI coding — Ornith-9B/Ornith-1.0-35B, Ollama, a custom agent, and hybrid GPU routing.',
+  twitterDescription: 'Local AI coding — Ornith-1.0-35B on one RTX 3090, Ollama, a custom agent loop, and Jetson small models.',
   canonical: `${_SITE}/systems/local-vibe-coding`,
 })
+
+// Curated entry points into this topic cluster (all URLs verified against published posts)
+const startHere = [
+  { to: '/blog/local-vibe-coding/01-vibe-coding-locally-2026-setup', title: 'Vibe coding locally: my 2026 setup', desc: 'Jetson Orin and an RTX 3090 as a local coding stack.' },
+  { to: '/blog/local-vibe-coding/02-running-ornith-locally-with-ollama', title: 'Running Ornith-1.0-35B locally with Ollama', desc: 'Install, quantization, and VRAM on a single 3090.' },
+  { to: '/blog/local-vibe-coding/03-best-local-models-for-coding', title: 'Best local models for coding', desc: 'Which models are worth running for code.' },
+  { to: '/blog/local-vibe-coding/06-first-offline-ai-coding-agent', title: 'Building an offline AI coding agent', desc: 'A coding agent that runs with no internet connection.' },
+  { to: '/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase', title: 'Connecting Ornith to your own codebase', desc: 'Giving a local model real project context.' },
+  { to: '/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days', title: 'Local AI vs Claude Code after 30 days', desc: 'Cost, speed, and privacy compared.' },
+  { to: '/blog/local-vibe-coding/11-ornith-vs-claude-code', title: 'Ornith-1.0-35B vs Claude Code', desc: 'Where the local model holds up and where it does not.' },
+  { to: '/blog/local-vibe-coding/13-when-to-buy-a-gpu-vs-api-fees', title: 'When to buy a GPU vs pay API fees', desc: 'The break-even math for local coding hardware.' },
+]
+
+const relatedLinks = [
+  { to: '/systems/ai-homelab', label: 'AI Homelab Engineering' },
+  { to: '/systems/ai', label: 'AI Systems Engineering' },
+  { to: '/systems/agentic-ai', label: 'Agentic AI Systems' },
+  { to: '/jetson-leaderboard', label: 'Jetson Orin Nano LLM leaderboard' },
+  { to: '/categories/ai-cost-optimization', label: 'AI cost optimization articles' },
+  { to: '/projects/kingdom-tools', label: 'Kingdom Tools platform' },
+]
 
 const principles = [
   { icon: 'mdi:layers-triple',    color: 'emerald', text: 'Route by task type — pattern-following work stays local, hard reasoning goes hosted' },
   { icon: 'mdi:shield-check',     color: 'sky',     text: 'Confirmation-gate any destructive or hard-to-reverse tool call before it executes' },
-  { icon: 'mdi:chip',             color: 'amber',   text: 'Match hardware tier to role — fast drafting on the always-on Jetson tier, heavier verification on the GPU with headroom' },
+  { icon: 'mdi:chip',             color: 'amber',   text: 'Match hardware tier to role — small models on 8GB Jetsons, the 35B model on the 24GB RTX 3090, and measure before assuming a model fits' },
   { icon: 'mdi:lock',             color: 'purple',  text: 'Nothing leaves the network — privacy is a property of the whole stack, not just the model' },
 ]
 
 const areas = [
   {
     icon: 'mdi:brain', color: 'purple',
-    title: 'Models',
-    desc: 'Ornith-9B drafts, Ornith-1.0-35B verifies — both quantized and served locally via Ollama.',
+    title: 'Models', image: '/img/cards/lvc-models.jpg',
+    desc: 'Ornith-1.0-35B (MoE, Q4_K_M) verifies on the RTX 3090 via Ollama. An Ornith-9B drafter on a Jetson barely fit (~3 tok/s, 4K context) and was retired.',
     tags: ['Ornith-9B', 'Ornith-1.0-35B', 'Ollama'],
   },
   {
     icon: 'mdi:robot', color: 'sky',
-    title: 'Agent Loop',
+    title: 'Agent Loop', image: '/img/cards/lvc-agent-loop.jpg',
     desc: 'OpenClaw — a from-scratch coding agent with tool calling and a confirmation-gated permission model.',
     tags: ['OpenClaw', 'Tool Use', 'Permissions'],
   },
   {
     icon: 'mdi:database-search', color: 'emerald',
-    title: 'Retrieval',
+    title: 'Retrieval', image: '/img/cards/lvc-retrieval.jpg',
     desc: 'Function/class-level codebase indexing so the agent has real project context, not just a training-time prior.',
     tags: ['AST Chunking', 'Embeddings', 'Search'],
   },
   {
     icon: 'mdi:expansion-card', color: 'amber',
-    title: 'Hardware',
-    desc: 'A hybrid RTX 3090 / Jetson Orin cluster, routed by workload latency and concurrency needs.',
-    tags: ['RTX 3090', 'Jetson Orin', 'k3s'],
+    title: 'Hardware', image: '/img/cards/lvc-hardware.jpg',
+    desc: 'One RTX 3090 (24GB) for the 35B model, plus Jetson Orin Nano Supers in the k3s cluster for small always-on models.',
+    tags: ['RTX 3090', 'Jetson Orin', 'Ollama'],
   },
 ]
 
@@ -57,10 +78,10 @@ const failures = [
 ]
 
 const usageMetrics = [
-  { value: '~80%',  label: 'Coding requests handled locally' },
-  { value: '24GB',  label: 'VRAM on the verification GPU' },
-  { value: '9B/35B', label: 'Draft / verify model tiers' },
-  { value: '3',     label: 'Jetson nodes in the always-on tier' },
+  { value: '~64',   label: 'tok/s Ornith-1.0-35B on one RTX 3090' },
+  { value: '21.2GB', label: 'VRAM used by the 35B Q4_K_M model' },
+  { value: '~3',    label: 'tok/s Ornith-9B on a Jetson (retired)' },
+  { value: '~42',   label: 'Small models sweep-tested on the Jetsons' },
 ]
 
 const stack = [
@@ -75,7 +96,7 @@ const faqs = [
   },
   {
     question: 'What hardware does this run on?',
-    answer: 'A hybrid tier: a cluster of Jetson Orin Nano Super boards runs Ornith-9B for fast first-pass drafting plus retrieval and embeddings, while an RTX 3090 (24GB VRAM) runs Ornith-1.0-35B to verify each draft before it reaches a human.'
+    answer: 'Ornith-1.0-35B runs in Ollama on a single RTX 3090 (24GB VRAM, ~21 GB used, ~64 tok/s). I tried drafting with Ornith-9B on a Jetson Orin Nano Super, but it barely fit in 8GB at ~3 tok/s, so I retired it; the Jetsons now run smaller models.'
   },
   {
     question: 'Is this actually cheaper than a subscription?',
@@ -129,8 +150,8 @@ useHead({
           A Local AI Coding Environment
         </h1>
         <p class="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-          Ornith-9B drafting and Ornith-1.0-35B verifying on Ollama, a custom agent loop, and a hybrid Jetson/RTX 3090 cluster —
-          replacing most day-to-day hosted AI coding usage with infrastructure I own.
+          Ornith-1.0-35B on Ollama on one RTX 3090, a custom draft/verify agent loop, and small models on Jetson Orin Nano Supers —
+          moving a share of day-to-day AI coding onto infrastructure I own, with hosted tools still in the mix.
         </p>
       </div>
 
@@ -210,35 +231,42 @@ useHead({
       </div>
 
       <!-- ARCHITECTURE AREAS -->
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/lvc-areas.jpg" side="full" />
         <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-5">System Architecture Areas</h2>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             v-for="area in areas"
             :key="area.title"
-            class="rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
+            class="group overflow-hidden rounded-2xl p-5 border border-slate-200 dark:border-slate-700/50
                    bg-white dark:bg-slate-900/60 flex flex-col gap-3
                    hover:border-emerald-500/40 transition-all duration-200"
           >
-            <div
-              class="w-10 h-10 rounded-lg flex items-center justify-center border"
-              :class="{
-                'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
-                'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
-                'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
-                'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
-              }"
-            >
-              <Icon :name="area.icon" class="text-xl"
-                :class="{
-                  'text-purple-400': area.color === 'purple',
-                  'text-sky-400':    area.color === 'sky',
-                  'text-emerald-400':area.color === 'emerald',
-                  'text-amber-400':  area.color === 'amber',
-                }"
-              />
-            </div>
+              <div class="relative -mx-5 -mt-5 mb-1 aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+                <img :src="area.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-lg bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                  <div
+                    class="w-10 h-10 rounded-lg flex items-center justify-center border"
+                    :class="{
+                      'bg-purple-500/10 border-purple-500/20': area.color === 'purple',
+                      'bg-sky-500/10 border-sky-500/20':       area.color === 'sky',
+                      'bg-emerald-500/10 border-emerald-500/20': area.color === 'emerald',
+                      'bg-amber-500/10 border-amber-500/20':   area.color === 'amber',
+                    }"
+                  >
+                    <Icon :name="area.icon" class="text-xl"
+                      :class="{
+                        'text-purple-400': area.color === 'purple',
+                        'text-sky-400':    area.color === 'sky',
+                        'text-emerald-400':area.color === 'emerald',
+                        'text-amber-400':  area.color === 'amber',
+                      }"
+                    />
+                  </div>
+                </div>
+              </div>
             <div>
               <h3 class="text-sm font-semibold text-slate-900 dark:text-white">{{ area.title }}</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ area.desc }}</p>
@@ -257,7 +285,8 @@ useHead({
       </section>
 
       <!-- USAGE METRICS -->
-      <section class="mb-10">
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/lvc-metrics.jpg" side="full" />
         <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-6">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-9 h-9 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
@@ -265,7 +294,7 @@ useHead({
             </div>
             <div>
               <h2 class="text-base font-semibold text-slate-900 dark:text-white">Running Daily</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">A hybrid RTX 3090 / Jetson Orin tier handling the bulk of daily coding requests</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">One RTX 3090 for the big model, Jetsons for small always-on models</p>
             </div>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -279,7 +308,8 @@ useHead({
             </div>
           </div>
           <p class="mt-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Most day-to-day coding volume runs locally through the Ornith-9B/Ornith-1.0-35B draft-verify pair and OpenClaw. A hosted
+            Routine coding work can run locally through Ornith-1.0-35B and OpenClaw. Ollama does not report native tool
+            capability for Ornith, so tool use goes through a JSON-in-content protocol. A hosted
             frontier model is kept on hand for the hardest reasoning tasks — this is a hybrid
             setup, not a full replacement, and the split is deliberate.
           </p>
@@ -309,15 +339,58 @@ useHead({
         </div>
       </section>
 
+      <!-- START HERE -->
+      <section class="mb-10">
+        <JetsonLeaderboardCard metric="code" blurb="Which small coding models actually pass tests on an 8 GB Jetson, and how fast they run. Measured on my own boards." />
+      </section>
+
+      <section class="relative isolate overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 mb-10">
+        <HeroBackdrop lazy src="/img/sections/lvc-start.jpg" side="full" />
+        <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">Start Here: Key Local Vibe Coding Articles</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 max-w-3xl leading-relaxed">Setting up local coding models, wiring them into an agent loop, and an honest comparison with Claude Code on cost, speed, and privacy.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <NuxtLink
+            v-for="post in startHere" :key="post.to" :to="post.to"
+            class="group flex items-start gap-3 rounded-xl p-3 border border-slate-200 dark:border-slate-700/50
+                   bg-white dark:bg-slate-900/60 hover:border-sky-500/40 transition-all duration-200"
+          >
+            <div class="w-24 shrink-0 aspect-[3/2] overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
+              <img :src="`/img${post.to}.jpg`" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">{{ post.title }}</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ post.desc }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <!-- RELATED SYSTEMS & PROJECTS -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-slate-900 dark:text-white mb-4">Related Systems &amp; Projects</h2>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink
+            v-for="r in relatedLinks" :key="r.to" :to="r.to"
+            class="px-3 py-1.5 rounded-lg text-sm border
+                   bg-slate-100 dark:bg-slate-800
+                   text-slate-600 dark:text-slate-300
+                   border-slate-200 dark:border-slate-700/50
+                   hover:border-sky-500/40 hover:text-sky-500 transition-colors"
+          >{{ r.label }}</NuxtLink>
+        </div>
+      </section>
+
       <!-- CATEGORY LINK -->
       <section class="mb-10">
         <NuxtLink
           to="/categories/local-vibe-coding"
-          class="flex items-center justify-between gap-6 rounded-2xl p-6
+          class="relative isolate overflow-hidden flex items-center justify-between gap-6 rounded-2xl p-6
                  border border-emerald-500/20 bg-emerald-500/5
                  hover:border-emerald-500/40 hover:bg-emerald-500/10
                  transition-all duration-200 group"
         >
+          <HeroBackdrop lazy src="/img/categories/local-vibe-coding.jpg" />
           <div>
             <p class="text-xs font-medium text-emerald-500 uppercase tracking-wider mb-1">Knowledge Base</p>
             <h2 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-400 transition-colors">

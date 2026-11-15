@@ -1,23 +1,24 @@
 ---
 title: "Event-Driven AI Agents Using Kafka"
-description: "Using Kafka as a durable, replayable event backbone for AI agents that react to events rather than following a fixed workflow."
-date: 2026-06-01
-lastUpdated: "2026-06-09"
+description: "Event-driven AI agents using Kafka: when to trigger agents from events instead of requests, and how replay, consumer groups, and dead-letter topics help."
+date: 2026-10-10
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - kafka
   - event-driven
-draft: true
+draft: false
 slug: event-driven-ai-agents-using-kafka
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/08-event-driven-ai-agents-using-kafka.jpg
 ---
 
 # Event-Driven AI Agents Using Kafka
 
 Not every agent should be triggered by a direct request. Some are better modeled as reacting to a continuous stream of events — a new file uploaded, a support ticket created, a deployment completed — rather than being called synchronously and expected to respond immediately. Kafka is the backbone that makes this reliable at scale.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -77,6 +78,10 @@ destinationUrl: "/systems/agentic-ai"
 
 An agent that fails partway through processing an event shouldn't silently drop it. Committing the consumer offset only after successful processing (rather than immediately on receipt) means a crashed agent picks the event back up on restart. For events that repeatedly fail, a dead-letter topic keeps them from blocking the main stream while preserving them for investigation.
 
+## Where Kafka Fits in My Own Stack (It Doesn't, Yet)
+
+To be clear about my own setup: I don't run Kafka in my homelab. VerseHub's agent steps are orchestrated with [Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal), and streamed answers go over Redis pub/sub. That's exactly where I learned why replay semantics matter — a pub/sub replay bug once interleaved streamed text every 18 characters. Kafka's retained, offset-tracked log is what I'd reach for once event volume and replay needs justify running it; until then, simpler [async workers](/blog/backendengineering/12-async-workers) cover most background agent work.
+
 ::CtaCardRow
   :::CtaDownloadGuide
   ---
@@ -90,7 +95,7 @@ An agent that fails partway through processing an event shouldn't silently drop 
   ---
   buttonText: "Read: Long-Running Agent Workflows"
   supportingCopy: "Combining event-driven triggers with durable long-running execution."
-  destinationUrl: "/blog/agentic-ai-systems/long-running-agent-workflows"
+  destinationUrl: "/blog/agentic-ai-systems/09-long-running-agent-workflows"
   ---
   :::
 
@@ -118,6 +123,13 @@ links:
     description: "Background on the event-driven architectural style applied here to agent triggering."
 ---
 ::
+
+## Related reading
+
+- [Building Multi-Agent Workflows with Temporal](/blog/agentic-ai-systems/07-building-multi-agent-workflows-with-temporal) — previous: durable, workflow-driven agent coordination
+- [Long-Running Agent Workflows](/blog/agentic-ai-systems/09-long-running-agent-workflows) — next: designing agent workflows that run for hours or days
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [Streaming](/blog/backendengineering/06-streaming) — streaming LLM output, where the pub/sub lesson came from
 
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: "Node Roles"
-description: "How node roles work in a Kubernetes cluster — control plane responsibilities, worker scheduling rules, taints, tolerations, and node label strategies."
+description: "Kubernetes node roles in my 7-node K3s homelab: a Pi control plane, three Pi workers, and three Jetson GPU workers split into image-gen, speech, and LLM roles."
 date: 2025-12-02
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - kubernetes
@@ -10,17 +10,27 @@ tags:
 draft: false
 slug: node-roles
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/27-node-roles.jpg
 ---
 
 # Node Roles
 
 ## Introduction
 
-In a Kubernetes cluster, node roles define how compute resources are organized, scheduled, and managed across the system. In my homelab environment—built on a Raspberry Pi-based K3s cluster inside a compact rack—this separation of roles is what keeps the system stable, scalable, and easy to reason about. Instead of treating every machine the same, each node is intentionally assigned responsibilities such as control plane duties, workload execution, or supporting services like storage and observability.
+Node roles decide which machines run the Kubernetes control plane, which run general workloads, and which are reserved for specialized jobs like GPU inference. In my 7-node K3s homelab, one Raspberry Pi (pi-node1) is the control plane, three Pis are general workers, and three Jetson Orin Nano Super boards are GPU workers with one fixed role each. That separation is what keeps the cluster stable and easy to reason about.
+
+| Node | Hardware | Role |
+| --- | --- | --- |
+| pi-node1 | Raspberry Pi | K3s server (control plane); hosts Prometheus, Grafana, Gitea |
+| pi-worker-1, pi-worker-3 | Raspberry Pi | General workers |
+| pi-worker-2 | Raspberry Pi | General worker; also runs Redis |
+| gpu-worker-1 | Jetson Orin Nano Super 8GB | `image-gen`: Stable Diffusion service + a shelf of small Ollama models |
+| gpu-worker-2 | Jetson Orin Nano Super 8GB | `speech`: Kokoro TTS + whisper.cpp STT |
+| gpu-worker-3 (hostname `charlie-desktop`, headless) | Jetson Orin Nano Super 8GB | `llm`: llama3.2:3b pinned in memory |
 
 This structure becomes especially important in a homelab setting where hardware is limited and efficiency matters. By clearly defining node roles, I can ensure that critical services like the Kubernetes API server remain stable on dedicated nodes, while worker nodes handle more dynamic workloads such as my Bible app services, CI/CD pipelines from Gitea, and supporting microservices running across the cluster.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -42,7 +52,7 @@ Key responsibilities include:
 - Maintaining cluster state via etcd (or K3s embedded datastore)
 - Handling cluster-level decisions and orchestration
 
-In a small Raspberry Pi rack like mine, control plane stability is critical. I typically isolate these nodes from heavy workloads to prevent resource contention. This ensures that even when CI/CD pipelines or AI services spike CPU usage elsewhere in the cluster, the control plane remains responsive.
+In a small Raspberry Pi rack like mine, control plane stability is critical. I run a single server node, pi-node1, and keep heavy workloads off it (the mechanics are in [control plane taints](/blog/infrastructureengineering/16-control-plane-taints)) to prevent resource contention. This ensures that even when CI/CD pipelines or AI services spike CPU usage elsewhere in the cluster, the control plane remains responsive.
 
 ---
 
@@ -55,9 +65,9 @@ In my homelab rack, worker nodes handle:
 - AI microservices and inference workloads
 - Gitea runners for CI/CD builds
 - API services and backend microservices
-- Game and media services hosted from S3-integrated pipelines
+- Batch jobs like the [corpus crawler](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack), which runs as a Kubernetes Job
 
-Because my setup is ARM64-based across Raspberry Pi devices, workload efficiency is important. I often tune resource limits and requests carefully so multiple services can coexist without starving the node.
+Because every node is ARM64 (Pis and Jetsons alike), images are built for `linux/arm64` and workload efficiency is important. I often tune resource limits and requests carefully so multiple services can coexist without starving the node.
 
 Worker nodes are also the most scalable part of the system—adding a new Raspberry Pi to the rack immediately increases compute capacity without changing cluster architecture.
 
@@ -83,7 +93,7 @@ These can include:
 - **Storage-focused nodes** for persistent volumes and database workloads
 - **CI/CD runner nodes** dedicated to builds and deployments via Gitea
 - **Observability nodes** running logging, metrics, and monitoring stacks
-- **AI service nodes** handling local model inference in Docker containers
+- **AI service nodes** — in my cluster, the three Jetsons. Each has 8 GB of unified memory, so only one ~4–5 GB model fits per board; giving each Jetson a single role (image-gen, speech, or LLM) avoids out-of-memory thrash. More on that in [using three Jetson Orin Nano Supers as an AI cluster](/blog/ai-homelab-engineering/02-three-jetson-orin-nano-supers-as-ai-cluster).
 
 This separation helps prevent “noisy neighbor” problems where one workload could impact everything else in the cluster. It also makes debugging and scaling much more predictable.
 
@@ -97,6 +107,7 @@ Inside my Raspberry Pi rack, node roles are physically and logically distributed
 - Worker nodes scale horizontally as I add or repurpose Pis
 - CI/CD and service nodes integrate directly with my Gitea-based deployment pipeline
 - Storage and stateful workloads are isolated to reduce risk
+- GPU workers carry role labels, so inference pods only land on the Jetson with the matching role
 
 This design is what allows my homelab to support a mix of infrastructure, AI engineering, and application development without collapsing under complexity.
 
@@ -167,6 +178,15 @@ links:
     description: "Overview of container orchestration architecture — the scheduling and health management system that uses node roles (control plane vs. worker) to distribute Kubernetes components and workloads correctly."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Networking (Skill)](/blog/infrastructureengineering/26-networking-skill) — previous in the series.
+- [Physical Organization](/blog/infrastructureengineering/28-physical-organization) — next in the series: where these nodes physically sit.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [RTX 3090 + Jetson Orin: A Hybrid AI Architecture](/blog/ai-homelab-engineering/03-rtx-3090-jetson-orin-hybrid-architecture) — how the GPU workers and the 3090 split AI work.
 
 ---
 

@@ -1,23 +1,24 @@
 ---
 title: "Connecting Ornith to Your Own Codebase"
-description: "How to give a local model real awareness of an existing codebase — indexing, retrieval, and context assembly for large repositories."
-date: 2026-02-23
-lastUpdated: "2026-07-12"
+description: "Connecting Ornith-1.0-35B to your codebase: AST chunking, code embeddings in Weaviate, task-time retrieval, and a fresh index for a local coding agent."
+date: 2026-09-21
+lastUpdated: "2026-11-14"
 category: "local-vibe-coding"
 tags:
   - local-vibe-coding
   - ornith
   - retrieval
-draft: true
+draft: false
 slug: connecting-ornith-to-your-codebase
 author: Donavan Jones
+excerptImage: /img/blog/local-vibe-coding/07-connecting-ornith-to-your-codebase.jpg
 ---
 
 # Connecting Ornith to Your Own Codebase
 
-A model with no knowledge of your codebase's structure, conventions, and existing utilities will confidently reinvent things that already exist. Giving Ornith real awareness of a large repository — beyond whatever fits in a single context window — requires the same retrieval patterns used for RAG, applied to code instead of documents. In OpenClaw this lives as its own skill, `repository-memory` — rather than being inlined into the coding agent itself, it's a dedicated step the `coding-agent` skill calls into before Ornith-1.0-35B writes or reviews a single line, so the model that ends up planning and editing already has the codebase's conventions in front of it instead of guessing at them. The work splits across two machines: Jetson #1 does the parsing and embedding, and the resulting vectors get stored in Weaviate on a separate Raspberry Pi with an NVMe drive, not on the Jetson board itself.
+To connect a local model like Ornith to your own codebase, chunk the code by function and class, embed those chunks into a vector database, and retrieve only the relevant pieces (plus any files the task names) for each request. Without that, a model with no knowledge of your codebase's conventions will confidently reinvent utilities that already exist. It's the same retrieval pattern used for RAG, applied to code instead of documents. In OpenClaw this lives as its own skill, `repository-memory` — rather than being inlined into the coding agent itself, it's a dedicated step the `coding-agent` skill calls into before Ornith-1.0-35B writes or reviews a single line, so the model that ends up planning and editing already has the codebase's conventions in front of it instead of guessing at them. A background indexing job does the parsing and embedding, and the vectors live in Weaviate running in-cluster, off the inference hardware.
 
-*Part of the [Local Vibe Coding series](/categories/local-vibe-coding).*
+*Part of the [Local Vibe Coding series](/categories/local-vibe-coding). See the [Local Vibe Coding hub](/systems/local-vibe-coding) for the full system.*
 
 ::CtaCategoryPillar
 ---
@@ -53,7 +54,7 @@ def extract_chunks(filepath):
     return chunks
 ```
 
-Each chunk gets embedded on Jetson #1 (using the fast nomic-embed-text model, rather than burning Ornith-1.0-35B's cycles on it) and written to Weaviate on the storage Pi, stored with its file path and containing class/module for retrieval-time context.
+Each chunk gets embedded with a small dedicated embedding model (nomic-embed-text, rather than burning Ornith-1.0-35B's cycles on it) and written to Weaviate, stored with its file path and containing class/module for retrieval-time context. [Embedding Strategies](/blog/ai-engineering/11-embedding-strategies) covers how to choose that model.
 
 ## Retrieval at Task Time
 
@@ -66,6 +67,8 @@ Each chunk gets embedded on Jetson #1 (using the fast nomic-embed-text model, ra
 ```
 
 Step 3 matters as much as step 2 — semantic search finds *related* code, but if the user explicitly names a file, that file needs to be included in full regardless of what the embedding search ranks it.
+
+One lesson I carried over from VerseHub: make retrieval failures loud. There, a retrieval call that silently failed returned an empty list, and the model went on to produce confident answers with no evidence behind them. It now raises instead, and the same rule applies here — if the vector search errors, the coding agent should stop, not improvise. The full story is in [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs).
 
 ## Keeping the Index Fresh
 
@@ -96,7 +99,7 @@ Codebase-aware retrieval meaningfully reduces the "reinvented a utility that alr
   ---
   buttonText: "Read: Building Your Own Coding Assistant"
   supportingCopy: "See the full assistant this retrieval layer supports."
-  destinationUrl: "/blog/local-vibe-coding/building-your-own-coding-assistant"
+  destinationUrl: "/blog/local-vibe-coding/08-building-your-own-coding-assistant"
   ---
   :::
 
@@ -124,6 +127,13 @@ links:
     description: "The general retrieval pattern applied here to source code instead of documents."
 ---
 ::
+
+## Related reading
+
+- [Building Your First AI Coding Agent That Runs Completely Offline](/blog/local-vibe-coding/06-first-offline-ai-coding-agent) — previous in the series: the minimal agent loop.
+- [Building Your Own Coding Assistant](/blog/local-vibe-coding/08-building-your-own-coding-assistant) — next: the full assistant this retrieval layer supports.
+- [Local Vibe Coding hub](/systems/local-vibe-coding) — the whole system on one page.
+- [Building an AI Copilot That Understands Your Entire Codebase](/blog/agentic-ai-systems/06-building-an-ai-copilot-that-understands-your-codebase) — the same problem from the agent-systems side.
 
 ---
 

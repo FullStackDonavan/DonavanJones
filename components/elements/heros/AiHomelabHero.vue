@@ -5,6 +5,7 @@
              border border-slate-200 dark:border-amber-500/20
              bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm"
     >
+      <HeroBackdrop src="/img/heroes/systems-ai-homelab.jpg" />
       <div
         class="absolute inset-0
                bg-gradient-to-r from-amber-200/20 via-emerald-200/10 to-sky-200/10

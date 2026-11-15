@@ -1,8 +1,8 @@
 ---
 title: "Latency Optimization"
-description: "Optimizing latency in backend and AI microservices."
+description: "Latency optimization for AI backends: tracing first, latency budgets, caching, parallelism, pooling, and cutting LLM time-to-first-token on local hardware."
 date: 2026-04-06
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - latency
@@ -11,17 +11,18 @@ draft: false
 cluster: "backend-engineering"
 slug: latency-optimization
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/15-latency-optimization.jpg
 ---
 
 # Latency Optimization
 
-Latency is the user experience metric that everything else is in service of. A platform with perfect accuracy, comprehensive content, and flawless reliability feels broken if responses take ten seconds. Users do not wait — they leave, or worse, they stay but trust the platform less every time they notice the delay.
+Optimizing latency in an AI backend starts with tracing where time actually goes, then caching the most expensive calls, parallelizing independent work, and — for LLM responses — cutting time-to-first-token by shrinking the prompt and streaming. Latency is the user experience metric that everything else is in service of. A platform with perfect accuracy, comprehensive content, and flawless reliability feels broken if responses take ten seconds. Users do not wait — they leave, or worse, they stay but trust the platform less every time they notice the delay.
 
 This platform has two distinct latency profiles that need different approaches. Interactive requests — a user asking a question about a passage, searching for related verses, loading their study notes — have hard latency budgets in the hundreds of milliseconds. AI-mediated requests — streaming a study guide answer, generating a multi-section commentary — have softer budgets measured in seconds, where time-to-first-token matters more than time-to-last.
 
 This article covers the specific techniques I use across the stack to hit those budgets: where time actually goes in a request, the high-leverage optimizations I reached for first, and the lower-leverage work I did once the easy wins were exhausted.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -35,15 +36,15 @@ destinationUrl: "/categories/backend-engineering"
 
 The first rule of latency optimization is measure before you change anything. Intuitions about where time is spent are wrong more often than right. The database query you were sure was the bottleneck turns out to take 4ms. The SDK initialization you never thought about takes 40ms on every cold request.
 
-I instrument every request with distributed tracing. Each service adds spans with start and end timestamps for discrete operations. A complete trace for a semantic search request looks like:
+I instrument every request with distributed tracing. Each service adds spans with start and end timestamps for discrete operations. A representative trace for a semantic search request (illustrative numbers, but the shape is typical) looks like:
 
 ```
 Total: 187ms
 ├── Auth middleware          6ms
 ├── Rate limit check         3ms
-├── Query embedding         52ms   ← embedding API call
+├── Query embedding         52ms   ← embedding call
 │   ├── Cache check          1ms   (miss)
-│   └── API call            51ms
+│   └── Model call          51ms
 ├── Vector search           38ms
 │   ├── ANN query           31ms
 │   └── Payload fetch        7ms
@@ -53,7 +54,7 @@ Total: 187ms
 └── Network (est.)          56ms
 ```
 
-This trace shows exactly where the 187ms goes. Without it, I would have guessed "the database" or "the vector search" and been wrong. The actual bottleneck is the embedding API call at 52ms — and that is a cache miss. The same request on a cache hit takes 1ms instead of 51ms, dropping total latency to 137ms.
+This trace shows exactly where the 187ms goes. Without it, I would have guessed "the database" or "the vector search" and been wrong. The actual bottleneck is the embedding call at 52ms — and that is a cache miss. The same request on a cache hit takes 1ms instead of 51ms, dropping total latency to 137ms.
 
 Distributed tracing at this granularity is the prerequisite for everything that follows. Optimizing without it is guessing.
 
@@ -78,7 +79,7 @@ These budgets inform prioritization. If search query p95 is 450ms, closing that 
 
 ### Caching at Every Layer
 
-Caching is the highest-leverage latency optimization available and the one that compounds most dramatically across a request. The search trace above shows a 51ms embedding API call on a cache miss. With a cache hit, that becomes 1ms. That single change cuts the p50 from 187ms to 137ms — a 27% reduction from one fix.
+Caching is the highest-leverage latency optimization available and the one that compounds most dramatically across a request. The search trace above shows a 51ms embedding call on a cache miss. With a cache hit, that becomes 1ms. That single change cuts the p50 from 187ms to 137ms — a 27% reduction from one fix.
 
 I cache at four layers:
 
@@ -140,7 +141,7 @@ I use PgBouncer as a connection pooler in front of Postgres in transaction pooli
 
 Without pooling, a burst of 100 concurrent requests each waiting for a DB connection creates 100 connection establishment attempts — latency spikes, Postgres runs out of connections, requests queue. With pooling, those 100 requests share 50 connections; the average wait for a connection is negligible.
 
-The same principle applies to connections to Redis, Qdrant, and internal services. Persistent connection pools everywhere.
+The same principle applies to connections to Redis, the vector database, and internal services. Persistent connection pools everywhere.
 
 ## Medium-Leverage Optimizations
 
@@ -176,9 +177,9 @@ This means the optimization goal for LLM requests is not "reduce total generatio
 
 - **Model selection**: smaller models have lower time-to-first-token at the cost of output quality
 - **Prompt length**: longer prompts take longer to process before generation starts; trimming the prompt prefix reduces TTFT
-- **Infrastructure**: geographic proximity to the model provider's inference infrastructure reduces network latency on the API call
+- **Infrastructure**: for hosted models, proximity to the provider's region; for local models, the prompt-processing speed of the hardware
 
-For my platform, the dominant TTFT driver is prompt length — specifically, the length of the retrieved context prepended before the user's question. A full context window of retrieved passages can add 500–800ms to TTFT compared to a minimal prompt. I cap retrieved context aggressively for real-time queries and allow larger context for async jobs where TTFT does not matter.
+For my platform, the dominant TTFT driver is prompt length — specifically, the length of the retrieved context prepended before the user's question. On local hardware this is stark. VerseHub's fast draft runs llama3.2:3b on a Jetson Orin Nano, where I measured roughly 480 tok/s of prompt processing and about 21 tok/s of generation. At that prefill rate, every 1,000 tokens of retrieved context adds around two seconds before the first token appears. So I cap retrieved context aggressively for the real-time draft and allow larger context for the [Temporal refine pass](/blog/versehub-engineering/07-temporal-workflows-in-production), where TTFT does not matter. The model also stays pinned in memory, because a 5-second cold load would dwarf everything else in this article (see [model loading strategies](/blog/backendengineering/16-model-loading-strategies)).
 
 ::CtaSystemArchitecture
 ---
@@ -242,7 +243,7 @@ If I were starting fresh and needed to get to good latency quickly:
 6. Enable streaming for any response over ~1 second
 7. Audit response payloads for unused data
 
-Steps 1–4 together typically move p50 by 30–50% in a system that has not been latency-optimized before. Steps 5–7 get the remaining gains. Everything after that is long-tail work that delivers diminishing returns.
+Steps 1–4 together usually deliver most of the available improvement in a system that has not been latency-optimized before. Steps 5–7 get the remaining gains. Everything after that is long-tail work that delivers diminishing returns.
 
 Latency optimization is never done — the system grows, new bottlenecks emerge, and user expectations rise. But hitting the initial targets with a disciplined approach leaves a system that is fast enough that the work after this is maintenance, not crisis.
 
@@ -297,6 +298,21 @@ links:
     description: "Overview of distributed tracing — the observability technique recommended as the first step before any latency optimization, to identify actual bottlenecks rather than guessing."
 ---
 ::
+
+::JetsonLeaderboardCard
+---
+metric: tok_s
+---
+::
+
+## Related reading
+
+- [Jetson Orin Nano LLM leaderboard](/jetson-leaderboard) — measured speed, accuracy, tool calling and coding for every model I run on the Jetsons
+- [Batching](/blog/backendengineering/14-batching) — previous in the series: the throughput side of the trade-off
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — next in the series: removing cold starts
+- [Streaming](/blog/backendengineering/06-streaming) — why time-to-first-token is what users feel
+- [Jetson leaderboard](/jetson-leaderboard) — measured speeds for small models on a Jetson Orin Nano
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

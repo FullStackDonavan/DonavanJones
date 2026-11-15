@@ -110,7 +110,7 @@ const palette = {
 // ── Views ──────────────────────────────────────────────────────────────────
 const views = [
   { id: 'system-overview',   label: 'System Overview'   },
-  { id: 'invite-flow',       label: 'Invite Flow'       },
+  { id: 'billing-flow',      label: 'Billing Flow'      },
   { id: 'document-pipeline', label: 'Document Pipeline' },
 ]
 
@@ -118,59 +118,66 @@ const views = [
 const allNodes = {
 
   'system-overview': [
-    { id: 'owner',    type: 'arch', position: { x: 0,   y: 100 },
-      data: { label: 'Owner Dashboard',    icon: 'mdi:briefcase-account', color: 'sky',
-              lines: ['Company overview', 'Employee list + soft delete', 'Enrollment progress'] } },
-    { id: 'employee', type: 'arch', position: { x: 0,   y: 290 },
-      data: { label: 'Employee Dashboard', icon: 'mdi:account-multiple',  color: 'purple',
-              lines: ['Application step tracker', 'Plan selection + opt-ins', 'Insurance card download'] } },
-    { id: 'admin',    type: 'arch', position: { x: 0,   y: 475 },
-      data: { label: 'Admin Dashboard',    icon: 'mdi:shield-check',      color: 'amber',
-              lines: ['All company enrollments', 'Fulfill enrollment', 'Upload insurance cards'] } },
-    { id: 'nitro',    type: 'arch', position: { x: 280, y: 290 },
-      data: { label: 'Nitro API',          icon: 'logos:nodejs-icon',     color: 'green',
-              lines: ['Enrollment state machine', 'Role-scoped data access', 'Business code validation'] } },
-    { id: 'postgres', type: 'arch', position: { x: 560, y: 60  },
-      data: { label: 'PostgreSQL',         icon: 'logos:postgresql',      color: 'emerald',
-              lines: ['Company + employee records', 'Application data', 'Audit log (append-only)'] } },
-    { id: 'email',    type: 'arch', position: { x: 560, y: 290 },
-      data: { label: 'Nodemailer',         icon: 'mdi:email-fast',        color: 'cyan',
-              lines: ['Invite dispatch', 'Business code embedded', 'Employee sign-up link'] } },
-    { id: 'pdf',      type: 'arch', position: { x: 560, y: 475 },
-      data: { label: 'PDF Generator',      icon: 'mdi:file-pdf-box',      color: 'violet',
-              lines: ['Server-side render', 'Signature composited', 'Application + payment auth'] } },
-    { id: 's3',       type: 'arch', position: { x: 840, y: 290 },
-      data: { label: 'AWS S3',             icon: 'mdi:cloud-upload',      color: 'orange',
-              lines: ['Signed PDFs + audit exports', 'Insurance card storage', 'Pre-signed URL delivery'] } },
+    { id: 'agents',   type: 'arch', position: { x: 0,   y: 40  },
+      data: { label: 'Agent Portals',         icon: 'mdi:account-tie',       color: 'sky',
+              lines: ['1,859 agents + agent admins', 'Enroll clients, track sales', 'Commissions + leaderboards'] } },
+    { id: 'business', type: 'arch', position: { x: 0,   y: 230 },
+      data: { label: 'Company + Employee',    icon: 'mdi:briefcase-account', color: 'purple',
+              lines: ['Company-code invites', 'Multi-step applications', 'Group quote census'] } },
+    { id: 'ops',      type: 'arch', position: { x: 0,   y: 420 },
+      data: { label: 'Admin + VA Dashboards', icon: 'mdi:shield-check',      color: 'amber',
+              lines: ['Payments + reconciliation', 'Support desk (2,659 tickets)', 'Audited impersonation'] } },
+    { id: 'nitro',    type: 'arch', position: { x: 280, y: 230 },
+      data: { label: 'Nitro API on Vercel',   icon: 'logos:nodejs-icon',     color: 'green',
+              lines: ['686 endpoints, Zod-validated', 'Role-scoped in every handler', 'State machines + audit log'] } },
+    { id: 'cron',     type: 'arch', position: { x: 280, y: 450 },
+      data: { label: 'Vercel Cron (8 jobs)',  icon: 'mdi:clock-outline',     color: 'slate',
+              lines: ['Recurring charges + ACH', 'Marpai 834 · IHQ every 15m', 'Agent comp defaults'] } },
+    { id: 'postgres', type: 'arch', position: { x: 560, y: 0   },
+      data: { label: 'PostgreSQL + Prisma',   icon: 'logos:postgresql',      color: 'emerald',
+              lines: ['93 models · 245 migrations', 'Encrypted SSN + bank fields', '47,800 audit entries'] } },
+    { id: 's3',       type: 'arch', position: { x: 560, y: 170 },
+      data: { label: 'AWS S3',                icon: 'mdi:cloud-upload',      color: 'orange',
+              lines: ['15,706 signed PDFs', 'Signed-URL access only', 'Contracting + census files'] } },
+    { id: 'epay',     type: 'arch', position: { x: 560, y: 340 },
+      data: { label: 'ePayPolicy',            icon: 'mdi:credit-card-sync',  color: 'blue',
+              lines: ['Card + ACH capture', '$10.8M processed', 'Recurring billing'] } },
+    { id: 'notify',   type: 'arch', position: { x: 560, y: 510 },
+      data: { label: 'Resend + Twilio',       icon: 'mdi:email-fast',        color: 'cyan',
+              lines: ['Invites + enrollment links', 'Transactional email', 'SMS notifications'] } },
+    { id: 'carriers', type: 'arch', position: { x: 840, y: 150 },
+      data: { label: 'Carrier + TPA Feeds',   icon: 'mdi:swap-horizontal',   color: 'violet',
+              lines: ['834 EDI over SFTP', 'IHQ deliveries', 'Excel / Google Sheets'] } },
+    { id: 'crm',      type: 'arch', position: { x: 840, y: 400 },
+      data: { label: 'CRM + Partner Sync',    icon: 'mdi:sync',              color: 'slate',
+              lines: ['GoHighLevel · AgencyBloc', 'Dropbox underwriting', 'Discord ops alerts'] } },
   ],
 
-  // ── Invite flow ────────────────────────────────────────────────────────
+  // ── Billing flow ───────────────────────────────────────────────────────
   //
-  //  Row 1 (invite dispatch):
-  //    owner(0,180) → dispatch(260,180) → email(520,60) → employee(780,180)
+  //  signed(0,120) ─┐                  ┌→ epay(540,80) ─┐
+  //                 ├→ charge(270,220) ┤                ├→ outcome(810,220)
+  //  cron(0,330)   ─┘                  └→ pg(540,360)  ─┘
   //
-  //  Row 2 (sign-up validation):
-  //    employee ↘ validate(260,370) → postgres(520,370)
-  //
-  'invite-flow': [
-    { id: 'owner',    type: 'arch', position: { x: 0,   y: 180 },
-      data: { label: 'Owner',       icon: 'mdi:briefcase-account', color: 'sky',
-              lines: ['Sends invite from dashboard', 'Enters employee email', 'Business code auto-attached'] } },
-    { id: 'dispatch', type: 'arch', position: { x: 260, y: 180 },
-      data: { label: 'Nitro API',   icon: 'logos:nodejs-icon',     color: 'green',
-              lines: ['Processes invite request', 'Generates unique business code', 'Dispatches Nodemailer job'] } },
-    { id: 'email',    type: 'arch', position: { x: 520, y: 60  },
-      data: { label: 'Nodemailer',  icon: 'mdi:email-fast',        color: 'cyan',
-              lines: ['Dispatches invite email', 'Business code embedded in body', 'Sign-up link included'] } },
-    { id: 'employee', type: 'arch', position: { x: 780, y: 180 },
-      data: { label: 'Employee',    icon: 'mdi:account-multiple',  color: 'purple',
-              lines: ['Receives invite email', 'Clicks sign-up link', 'Submits business code on register'] } },
-    { id: 'validate', type: 'arch', position: { x: 260, y: 370 },
-      data: { label: 'Nitro API',   icon: 'logos:nodejs-icon',     color: 'green',
-              lines: ['Validates business code', 'Checks company match', 'Rejects expired or used codes'] } },
-    { id: 'postgres', type: 'arch', position: { x: 520, y: 370 },
-      data: { label: 'PostgreSQL',  icon: 'logos:postgresql',      color: 'emerald',
-              lines: ['Employee record created', 'Linked to company account', 'Business code marked used'] } },
+  'billing-flow': [
+    { id: 'signed',  type: 'arch', position: { x: 0,   y: 120 },
+      data: { label: 'Signed Application', icon: 'mdi:file-sign',        color: 'sky',
+              lines: ['First premium charge', 'Card or ACH entered', 'Recurring opt-in captured'] } },
+    { id: 'cron',    type: 'arch', position: { x: 0,   y: 330 },
+      data: { label: 'Vercel Cron',        icon: 'mdi:clock-outline',    color: 'slate',
+              lines: ['Recurring charges · daily', 'ePayPolicy poll · daily', 'ACH settlement · daily'] } },
+    { id: 'charge',  type: 'arch', position: { x: 270, y: 220 },
+      data: { label: 'Charge Service',     icon: 'logos:nodejs-icon',    color: 'green',
+              lines: ['Atomic charge lock', 'In-flight marker (no double charge)', 'Token reused only after success'] } },
+    { id: 'epay',    type: 'arch', position: { x: 540, y: 80  },
+      data: { label: 'ePayPolicy',         icon: 'mdi:credit-card-sync', color: 'blue',
+              lines: ['Card + ACH capture', 'Tokenized payment methods', 'Status polling'] } },
+    { id: 'pg',      type: 'arch', position: { x: 540, y: 360 },
+      data: { label: 'PostgreSQL',         icon: 'logos:postgresql',     color: 'emerald',
+              lines: ['9,632 successful charges', 'Refunds linked to original', 'Audit trail entry'] } },
+    { id: 'outcome', type: 'arch', position: { x: 810, y: 220 },
+      data: { label: 'Policy Status',      icon: 'mdi:state-machine',    color: 'amber',
+              lines: ['Paid → active coverage', 'ACH pending → recheck', 'Failure → cancel workflow'] } },
   ],
 
   // ── Document pipeline ──────────────────────────────────────────────────
@@ -181,70 +188,57 @@ const allNodes = {
   //
   'document-pipeline': [
     { id: 'form',     type: 'arch', position: { x: 0,   y: 200 },
-      data: { label: 'Application Form', icon: 'mdi:clipboard-text',  color: 'slate',
-              lines: ['Multi-step form submission', 'Family info + plan selection', 'Signature pad captured'] } },
+      data: { label: 'Application Form',  icon: 'mdi:clipboard-text', color: 'slate',
+              lines: ['Multi-step form submission', 'Dependents + plan selection', 'Signature pad captured'] } },
     { id: 'nitro',    type: 'arch', position: { x: 280, y: 200 },
-      data: { label: 'Nitro API',        icon: 'logos:nodejs-icon',   color: 'green',
-              lines: ['Zod schema validation', 'Enrollment step enforcement', 'Coordinates document pipeline'] } },
+      data: { label: 'Nitro API',         icon: 'logos:nodejs-icon',  color: 'green',
+              lines: ['Zod schema validation', 'SSN + bank fields encrypted', 'Coordinates document pipeline'] } },
     { id: 'pdf',      type: 'arch', position: { x: 560, y: 60  },
-      data: { label: 'PDF Generator',    icon: 'mdi:file-pdf-box',    color: 'violet',
-              lines: ['Template rendered server-side', 'Signature composited into doc', 'Full signed document output'] } },
+      data: { label: 'pdf-lib Generator', icon: 'mdi:file-pdf-box',   color: 'violet',
+              lines: ['Applications, agreements, statements', 'Signature composited into doc', 'Masked sensitive values'] } },
     { id: 's3',       type: 'arch', position: { x: 840, y: 60  },
-      data: { label: 'AWS S3',           icon: 'mdi:cloud-upload',    color: 'orange',
-              lines: ['PDF written to S3', 'Structured key path per company', 'Returns S3 object key'] } },
+      data: { label: 'AWS S3',            icon: 'mdi:cloud-upload',   color: 'orange',
+              lines: ['15,706 application PDFs', 'Structured key path per company', 'Short-lived signed URLs'] } },
     { id: 'postgres', type: 'arch', position: { x: 560, y: 380 },
-      data: { label: 'PostgreSQL',       icon: 'logos:postgresql',    color: 'emerald',
-              lines: ['S3 key stored in DB record', 'Audit log entry written', 'Enrollment step advanced'] } },
+      data: { label: 'PostgreSQL',        icon: 'logos:postgresql',   color: 'emerald',
+              lines: ['S3 key stored in DB record', 'Audit log entry written', 'Application status advanced'] } },
   ],
 }
 
 // ── Edges per view ─────────────────────────────────────────────────────────
+const E = (id, source, target, cls, color, animated = false) =>
+  ({ id, source, target, animated, type: 'smoothstep', class: cls, markerEnd: { type: 'arrowclosed', color } })
+
 const allEdges = {
 
   'system-overview': [
-    { id: 'e1', source: 'owner',    target: 'nitro',    animated: true, type: 'smoothstep', class: 'e-primary',
-      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-    { id: 'e2', source: 'employee', target: 'nitro',    animated: true, type: 'smoothstep', class: 'e-primary',
-      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-    { id: 'e3', source: 'admin',    target: 'nitro',    animated: true, type: 'smoothstep', class: 'e-queue',
-      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
-    { id: 'e4', source: 'nitro',    target: 'postgres',                 type: 'smoothstep', class: 'e-data',
-      markerEnd: { type: 'arrowclosed', color: '#10b981' } },
-    { id: 'e5', source: 'nitro',    target: 'email',                    type: 'smoothstep', class: 'e-queue',
-      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
-    { id: 'e6', source: 'nitro',    target: 'pdf',                      type: 'smoothstep', class: 'e-doc',
-      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
-    { id: 'e7', source: 'pdf',      target: 's3',                       type: 'smoothstep', class: 'e-storage',
-      markerEnd: { type: 'arrowclosed', color: '#3b82f6' } },
-    { id: 'e8', source: 'nitro',    target: 's3',                       type: 'smoothstep', class: 'e-storage',
-      markerStart: { type: 'arrowclosed', color: '#3b82f6' },
-      markerEnd:   { type: 'arrowclosed', color: '#3b82f6' } },
+    E('e1',  'agents',   'nitro',    'e-primary',  '#0ea5e9', true),
+    E('e2',  'business', 'nitro',    'e-primary',  '#0ea5e9', true),
+    E('e3',  'ops',      'nitro',    'e-primary',  '#0ea5e9', true),
+    E('e4',  'cron',     'nitro',    'e-queue',    '#f97316', true),
+    E('e5',  'nitro',    'postgres', 'e-data',     '#10b981'),
+    E('e6',  'nitro',    's3',       'e-storage',  '#3b82f6'),
+    E('e7',  'nitro',    'epay',     'e-doc',      '#a855f7'),
+    E('e8',  'nitro',    'notify',   'e-queue',    '#f97316'),
+    E('e9',  'cron',     'carriers', 'e-realtime', '#06b6d4'),
+    E('e10', 'nitro',    'crm',      'e-realtime', '#06b6d4'),
   ],
 
-  'invite-flow': [
-    { id: 'e1', source: 'owner',    target: 'dispatch', animated: true, type: 'smoothstep', class: 'e-primary',
-      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-    { id: 'e2', source: 'dispatch', target: 'email',    animated: true, type: 'smoothstep', class: 'e-queue',
-      markerEnd: { type: 'arrowclosed', color: '#f97316' } },
-    { id: 'e3', source: 'email',    target: 'employee', animated: true, type: 'smoothstep', class: 'e-realtime',
-      markerEnd: { type: 'arrowclosed', color: '#06b6d4' } },
-    { id: 'e4', source: 'employee', target: 'validate', animated: true, type: 'smoothstep', class: 'e-primary',
-      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-    { id: 'e5', source: 'validate', target: 'postgres',                 type: 'smoothstep', class: 'e-data',
-      markerEnd: { type: 'arrowclosed', color: '#10b981' } },
+  'billing-flow': [
+    E('e1', 'signed', 'charge',  'e-primary', '#0ea5e9', true),
+    E('e2', 'cron',   'charge',  'e-queue',   '#f97316', true),
+    E('e3', 'charge', 'epay',    'e-doc',     '#a855f7', true),
+    E('e4', 'charge', 'pg',      'e-data',    '#10b981'),
+    E('e5', 'epay',   'outcome', 'e-doc',     '#a855f7'),
+    E('e6', 'pg',     'outcome', 'e-data',    '#10b981'),
   ],
 
   'document-pipeline': [
-    { id: 'e1', source: 'form',     target: 'nitro',    animated: true, type: 'smoothstep', class: 'e-primary',
-      markerEnd: { type: 'arrowclosed', color: '#0ea5e9' } },
-    { id: 'e2', source: 'nitro',    target: 'pdf',      animated: true, type: 'smoothstep', class: 'e-doc',
-      markerEnd: { type: 'arrowclosed', color: '#a855f7' } },
-    { id: 'e3', source: 'pdf',      target: 's3',       animated: true, type: 'smoothstep', class: 'e-storage',
-      markerEnd: { type: 'arrowclosed', color: '#3b82f6' } },
-    { id: 'e4', source: 's3',       target: 'postgres',                 type: 'smoothstep', class: 'e-data',
-      markerEnd: { type: 'arrowclosed', color: '#10b981' } },
-    { id: 'e5', source: 'nitro',    target: 'postgres',                 type: 'smoothstep', class: 'e-data',
-      markerEnd: { type: 'arrowclosed', color: '#10b981' } },
+    E('e1', 'form',  'nitro',    'e-primary', '#0ea5e9', true),
+    E('e2', 'nitro', 'pdf',      'e-doc',     '#a855f7', true),
+    E('e3', 'pdf',   's3',       'e-storage', '#3b82f6', true),
+    E('e4', 's3',    'postgres', 'e-data',    '#10b981'),
+    E('e5', 'nitro', 'postgres', 'e-data',    '#10b981'),
   ],
 }
 
@@ -252,16 +246,17 @@ const allEdges = {
 const legends = {
   'system-overview': [
     { color: '#0ea5e9', label: 'Client request' },
+    { color: '#f97316', label: 'Scheduled / notifications' },
     { color: '#10b981', label: 'Data ops' },
-    { color: '#f97316', label: 'Queue / email' },
-    { color: '#a855f7', label: 'Document pipeline' },
+    { color: '#a855f7', label: 'Payments' },
     { color: '#3b82f6', label: 'Storage' },
+    { color: '#06b6d4', label: 'External feeds' },
   ],
-  'invite-flow': [
-    { color: '#0ea5e9', label: 'Client request' },
-    { color: '#f97316', label: 'Email dispatch' },
-    { color: '#06b6d4', label: 'Email delivery' },
-    { color: '#10b981', label: 'Data ops' },
+  'billing-flow': [
+    { color: '#0ea5e9', label: 'Customer-initiated' },
+    { color: '#f97316', label: 'Cron-initiated' },
+    { color: '#a855f7', label: 'Processor' },
+    { color: '#10b981', label: 'Ledger + audit' },
   ],
   'document-pipeline': [
     { color: '#0ea5e9', label: 'Form submission' },

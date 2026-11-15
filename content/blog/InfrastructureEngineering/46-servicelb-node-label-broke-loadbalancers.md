@@ -1,8 +1,8 @@
 ---
 title: "How One Node Label Broke Every LoadBalancer Service in My K3s Cluster"
-description: "A single node label, meant to exclude one desktop from load-balancer duty, flipped K3s's ServiceLB selector cluster-wide — silently killing the external IP for every LoadBalancer service and taking down audio and image generation on the live site."
-date: 2026-07-28
-lastUpdated: "2026-07-28"
+description: "One node label meant to exclude a single node from K3s ServiceLB flipped its selector cluster-wide, killing the external IP for every LoadBalancer service."
+date: 2026-09-04
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
@@ -12,19 +12,20 @@ tags:
   - troubleshooting
   - raspberry-pi
   - arm64
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: servicelb-node-label-broke-loadbalancers
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers.jpg
 ---
 
-A cluster can look completely healthy — every pod Running, zero restarts, CPU and memory nominal — and still be unreachable from the outside world. This article documents an incident where exactly that happened: a routine attempt to keep one desktop node out of load-balancer rotation quietly reconfigured K3s's ServiceLB controller for the *entire* cluster, deleting every `svclb-*` pod and taking the external IP out from under nine LoadBalancer services at once.
+A cluster can look completely healthy — every pod Running, zero restarts, CPU and memory nominal — and still be unreachable from the outside world. This article documents an incident where exactly that happened: a routine attempt to keep one node out of load-balancer rotation quietly reconfigured K3s's ServiceLB controller for the *entire* cluster, deleting every `svclb-*` pod and taking the external IP out from under nine LoadBalancer services at once.
 
 # How One Node Label Broke Every LoadBalancer Service in My K3s Cluster
 
 A diagnosis of K3s's ServiceLB (klipper-lb) selector behavior, and why an "exclude this node" label can become an "include only this node" requirement.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -138,7 +139,7 @@ svclb-watchman-9d8f531a             0         0         0       svccontroller.k3
 
 ## The Root Cause
 
-A few days earlier, during an unrelated cleanup, one desktop machine (`charlie-desktop`) had been excluded from load-balancer duty with:
+A few days earlier, during an unrelated cleanup, one node (`charlie-desktop` — despite the name, a headless Jetson Orin Nano Super GPU worker) had been excluded from load-balancer duty with:
 
 ```bash
 kubectl label node charlie-desktop svccontroller.k3s.cattle.io/enablelb=false
@@ -239,7 +240,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-The cluster never stopped being "healthy" by the metrics that usually matter — pods Running, restarts at zero, CPU and memory nominal. The failure lived one layer further out, in a controller-managed DaemonSet selector that a single, well-intentioned node label had quietly rewritten for every LoadBalancer service in the cluster. The lesson isn't to avoid `enablelb=false` — it's to remember that in K3s, opting one node *out* of ServiceLB means everything else now needs to be opted *in* explicitly, and to check the DaemonSets, not just the pods, when a Service that used to work suddenly doesn't.
+The cluster never stopped being "healthy" by the metrics that usually matter — pods Running, restarts at zero, CPU and memory nominal. The failure lived one layer further out, in a controller-managed DaemonSet selector that a single, well-intentioned node label had quietly rewritten for every LoadBalancer service in the cluster. The lesson isn't to avoid `enablelb=false` — it's to remember that in K3s, opting one node *out* of ServiceLB means everything else now needs to be opted *in* explicitly, and to check the DaemonSets, not just the pods, when a Service that used to work suddenly doesn't. If you're fighting other external-access problems, [Networking Issues](/blog/infrastructureengineering/25-networking-issues) covers the rest of the checklist, and [Why Lightweight Kubernetes Matters](/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters) covers the K3s defaults (like ServiceLB) that make this kind of surprise possible.
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -292,6 +293,15 @@ links:
     description: "Overview of the ARM64 hardware platform running this cluster, relevant to the imagePullPolicy: Never constraint mentioned as background context for the proxy redeploy that surfaced this incident."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Deploying an App on the Rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack) — previous in the series.
+- [Running the Corpus Crawler on the Pi Rack](/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Local Image Generation, Speech, and LLMs in One Stack](/blog/ai-homelab-engineering/11-local-image-speech-llms-one-stack) — the audio and image services this outage took down.
 
 ---
 

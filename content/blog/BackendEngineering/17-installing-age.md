@@ -1,8 +1,8 @@
 ---
 title: "Installing AGE"
-description: "Guide to installing Apache AGE for PostgreSQL."
+description: "How to install Apache AGE on PostgreSQL 16: building the extension, loading it, creating a graph, verifying Cypher works, and running it in Docker Compose."
 date: 2026-04-11
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - postgres
@@ -10,11 +10,12 @@ tags:
 draft: false
 slug: installing-age
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/17-installing-age.jpg
 ---
 
 # Installing AGE
 
-The relational data model handles most of what this platform needs — users, notes, reading plans, sessions. But Biblical data has a dimension that relational tables express awkwardly: relationships between entities that form dense, navigable networks.
+Apache AGE is a PostgreSQL extension that adds graph storage and Cypher queries to an existing Postgres database; installing it means building or pulling the extension, loading it per session, and creating a graph. The relational data model handles most of what this platform needs — users, notes, reading plans, sessions. But Biblical data has a dimension that relational tables express awkwardly: relationships between entities that form dense, navigable networks.
 
 A passage references another passage. A person appears in multiple books. A theological theme connects dozens of unrelated verses. A word in Greek shares its root with a cluster of other words. These relationships are not just attributes — they are the structure. The interesting queries are about traversal: "what passages is this person connected to, two hops out?" or "which themes are shared between these two books?"
 
@@ -22,7 +23,7 @@ Relational joins can express some of this, but recursive CTEs and multi-hop join
 
 This article covers installing AGE, configuring it, and verifying it works. Articles 18 and 19 cover using it.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -41,7 +42,7 @@ AGE is a Postgres extension that adds:
 - **ACID compliance**: graph operations participate in standard Postgres transactions
 - **SQL interoperability**: graph query results can be joined with regular table data in the same query
 
-It runs inside your existing Postgres instance. No separate graph database process, no separate connection, no data synchronization between systems. The graph data lives in the same database as everything else.
+It runs inside your existing Postgres instance. No separate graph database process, no separate connection, no data synchronization between systems. The graph data lives in the same database as everything else — which matters on a small self-hosted cluster like mine, where Postgres already runs in-cluster next to Redis, MinIO, and Weaviate, and every extra stateful service is one more thing to back up (see [storage strategy](/blog/infrastructureengineering/34-storage-strategy)).
 
 The tradeoff: AGE is a younger, less battle-tested extension than Postgres itself. It works well for the query patterns that fit graph traversal. For very large graphs (hundreds of millions of edges), purpose-built graph databases like Neo4j will outperform it. For the scale of Biblical relationship data on this platform — millions of edges at most — AGE is the right tool.
 
@@ -436,6 +437,14 @@ links:
     description: "Overview of Cypher — the declarative graph query language that AGE implements inside Postgres, used for creating and traversing the Biblical entity graph described in subsequent articles."
 ---
 ::
+
+## Related reading
+
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — previous in the series
+- [Cypher Queries in Postgres](/blog/backendengineering/18-cypher-queries-in-postgres) — next in the series: using the graph you just created
+- [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes) — keeping a Postgres data directory safe on K3s
+- [Kingdom Tools](/projects/kingdom-tools) — the internal platform that provisions Postgres per service on my cluster
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

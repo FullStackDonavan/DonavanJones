@@ -1,8 +1,8 @@
 ---
 title: "Grafana on a Pi K3s Cluster"
-description: "Deploying Grafana as a Kubernetes pod on an ARM64 Raspberry Pi k3s cluster with auto-provisioned Prometheus and Loki datasources."
-date: 2026-06-29
-lastUpdated: "2026-06-29"
+description: "How I deploy Grafana as a pod on an ARM64 Raspberry Pi K3s cluster with Prometheus and Loki datasources provisioned automatically on first boot."
+date: 2026-07-13
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - grafana
@@ -12,10 +12,11 @@ tags:
   - arm64
   - raspberry-pi
   - k3s
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: grafana-on-pi-cluster
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/42-grafana-on-pi-cluster.jpg
 ---
 
 Grafana sits at the front of the observability stack — it connects to Prometheus for metrics and Loki for logs, giving a single UI to query and visualize everything happening across the cluster. This article covers deploying it as a Kubernetes pod on the Pi cluster with datasources provisioned automatically on first boot.
@@ -24,7 +25,7 @@ Grafana sits at the front of the observability stack — it connects to Promethe
 
 Unified metrics and log dashboards for the Pi K3s cluster, deployed as a native Kubernetes workload on ARM64.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -38,8 +39,8 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 ## Prerequisites
 
-- Prometheus running in the `prometheus` namespace (see [Prometheus on a Pi K3s Cluster](/blog/infrastructure-engineering/prometheus-on-pi-cluster))
-- Loki running in the `loki` namespace (optional but recommended — see [Loki on a Pi K3s Cluster](/blog/infrastructure-engineering/loki-on-pi-cluster))
+- Prometheus running in the `prometheus` namespace (see [Prometheus on a Pi K3s Cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster))
+- Loki running in the `loki` namespace (optional but recommended — see [Loki and Promtail on a Pi K3s Cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster))
 - `local-path` storage provisioner available
 
 ---
@@ -274,7 +275,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Grafana on K3s with provisioned datasources means the full observability UI is ready the moment the pod starts — no clicking through setup wizards. Combined with Prometheus for metrics and Loki for logs, it gives a complete picture of cluster health from a single browser tab.
+Grafana on K3s with provisioned datasources means the full observability UI is ready the moment the pod starts — no clicking through setup wizards. Combined with Prometheus for metrics and Loki for logs, it gives a complete picture of cluster health from a single browser tab. In my cluster Grafana runs on the pi-node1 control plane at NodePort 30300, and the same dashboards cover the Jetson GPU workers through their custom `/metrics` agent — useful when deciding which model each board should run (see [Running Multiple Local Models Without Melting Your GPU](/blog/ai-homelab-engineering/09-running-multiple-local-models-without-melting-gpu)).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -323,6 +324,15 @@ links:
     description: "Overview of Kubernetes as a container orchestration system — the platform on which Grafana is deployed and from which it surfaces metrics and logs through its datasource integrations."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Prometheus on a Pi K3s Cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster) — previous in the series: the metrics source.
+- [Loki and Promtail on a Pi K3s Cluster](/blog/infrastructureengineering/43-loki-promtail-on-pi-cluster) — next in the series: the log source.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Kubernetes for AI Workloads](/blog/ai-homelab-engineering/05-kubernetes-for-ai-workloads) — what the AI side of these dashboards is watching.
 
 ---
 

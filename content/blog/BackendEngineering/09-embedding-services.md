@@ -1,8 +1,8 @@
 ---
 title: "Embedding Services"
-description: "Building and scaling embedding services in backend systems."
+description: "Running an embedding service in production: managed API vs self-hosted models, adaptive batching, index consistency, model migration, and evaluation."
 date: 2026-03-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - embeddings
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: embedding-services
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/09-embedding-services.jpg
 ---
 
 # Embedding Services
 
-An earlier article in this series introduced the embedding service: what embeddings are, the basic API design, batching, caching, and what content gets embedded. That article answered "what does the service do." This one answers "what does it take to run it reliably at scale."
+Running an embedding service reliably comes down to four things: choosing where the model runs, batching requests efficiently, keeping the vector index in sync with the source data, and migrating models without downtime. The [earlier embeddings article](/blog/backendengineering/04-embeddings) answered "what does the service do." This one answers "what does it take to run it reliably at scale."
 
 Running an embedding service in production is different from building one. The design that works for 10,000 vectors during development starts showing cracks at 500,000. Reindexing runs that took minutes start taking hours. Model upgrades that seemed straightforward become coordinated migrations. Subtle inconsistencies accumulate between what is indexed and what is actually in the database.
 
 This article covers the operational and engineering concerns that only surface once the service is carrying real load.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -38,26 +39,24 @@ The first decision when building an embedding service is where the model runs. T
 
 **Self-hosted** (sentence-transformers, custom fine-tuned models) — you run the model yourself on CPU or GPU hardware. You pay for compute, not per token. Latency is local. Model weights are yours.
 
-I use a managed API (OpenAI's `text-embedding-3` family) and have no plans to self-host. The reasoning:
+For VerseHub I self-host: all-MiniLM-L6-v2 runs in a Docker container on the RTX 3090 in my workstation, and the vectors go to Weaviate on the [home lab cluster](/blog/ai-homelab-engineering/01-my-homelab-architecture-for-agentic-ai). The model is small (384 dimensions), the GPU was already there, and it keeps scripture queries and user notes off third-party APIs. The trade-offs:
 
 | Factor | Managed API | Self-Hosted |
 |---|---|---|
 | Operational cost | Per-token pricing | Fixed compute cost |
-| Break-even volume | ~50M tokens/month | — |
-| Latency | 50–150ms network | 5–30ms local |
-| Model quality | State-of-the-art, updated | Depends on maintenance |
+| Latency | Network round trip | Local |
+| Model quality | Large, regularly updated models | Whatever you choose and maintain |
 | Availability | Provider SLA | Your infrastructure SLA |
-| Customization | None (fine-tuning limited) | Full control |
+| Customization | Limited | Full control, including fine-tuning |
+| Data privacy | Text leaves your network | Text stays local |
 
-At my current volume, the managed API is significantly cheaper than the GPU instance that would be needed to run a comparable model. Self-hosting becomes economically interesting above roughly 50 million tokens per month — which is the point where fixed compute costs become less than per-token API spend at current pricing.
+If you do not already own a GPU, a managed API is usually cheaper at low volume, because per-token pricing beats paying for idle hardware. The break-even depends on your volume and hardware; I walk through that math in [when to buy a GPU instead of paying API fees](/blog/ai-cost-optimization/05-when-to-buy-a-gpu-instead-of-api-fees).
 
-The one scenario where I would self-host earlier is if the domain required a fine-tuned model that the managed APIs cannot provide. Biblical Hebrew, Koine Greek, and theological Latin are underrepresented in general-purpose embedding models. If retrieval quality on ancient language content degrades noticeably, a domain-fine-tuned self-hosted model becomes worth the operational cost.
+Another reason to self-host early is if the domain required a fine-tuned model that the managed APIs cannot provide. Biblical Hebrew, Koine Greek, and theological Latin are underrepresented in general-purpose embedding models. If retrieval quality on ancient language content degrades noticeably, a domain-fine-tuned self-hosted model becomes worth the operational cost — and a local model is the only kind you can fine-tune freely.
 
 ## Throughput Architecture
 
-The embedding service is not CPU-bound or memory-bound — it is I/O-bound. Most of each request's time is spent waiting for the upstream API response. This means the service can handle high concurrency on modest hardware, but the concurrency model needs to be designed carefully.
-
-The service runs as a Node.js process, which handles I/O concurrency natively through the event loop. Multiple embedding requests can be in-flight simultaneously without blocking each other. The practical limit is the upstream API's rate limit, not the service's hardware capacity.
+Where the bottleneck lives depends on where the model runs. In front of a managed API, the service is I/O-bound: most of each request's time is spent waiting for the upstream response, so an event-loop runtime like Node.js can keep many requests in flight and the practical limit is the provider's rate limit. In front of a local GPU, the service is compute-bound: the GPU processes one batch at a time, so how you group requests into batches matters far more than concurrency.
 
 ### Adaptive Batching
 
@@ -102,7 +101,7 @@ This turns individually-submitted requests into efficient batches automatically.
 
 ### Rate Limit Management
 
-The upstream API has a rate limit expressed in tokens per minute and requests per minute. Exceeding it produces 429 errors. Retrying naively after a 429 can cause cascading retries that keep the service over the rate limit.
+If you use a managed API, the upstream has a rate limit expressed in tokens per minute and requests per minute. Exceeding it produces 429 errors. Retrying naively after a 429 can cause cascading retries that keep the service over the rate limit.
 
 I track consumed tokens in a sliding window and pre-emptively throttle before hitting the limit rather than reacting after:
 
@@ -175,11 +174,11 @@ async function saveNote(userId: string, noteContent: string) {
 
 Both operations run in parallel. If the vector store write fails, the note write is still committed (the note is not lost) and the failure is queued for retry. A background consistency job runs hourly and finds notes without a corresponding vector, reembedding any that are missing.
 
-This is not a two-phase commit — I do not want strong transactional guarantees between Postgres and Qdrant. I want eventual consistency with a short convergence window and an observable gap metric.
+This is not a two-phase commit — I do not want strong transactional guarantees between Postgres and the vector store. I want eventual consistency with a short convergence window and an observable gap metric.
 
 ### Consistency Auditing
 
-A weekly consistency audit compares the set of content IDs in the primary database against the set of IDs in the vector store. Any ID present in one but not the other is a consistency violation. The audit produces a report with:
+A periodic consistency audit compares the set of content IDs in the primary database against the set of IDs in the vector store. Any ID present in one but not the other is a consistency violation. The audit produces a report with:
 
 - Count of missing vectors (content without an embedding)
 - Count of orphaned vectors (embedding without corresponding content — typically from deleted records)
@@ -195,7 +194,7 @@ My migration process:
 
 **Phase 1 — Shadow index.** Start writing to both the old and new index simultaneously. New and updated content gets embedded with both models. The old index remains the source of truth for reads.
 
-**Phase 2 — Bulk backfill.** The async pipeline reembeds all existing content with the new model into the new index. This runs at off-peak hours to avoid competing with real-time traffic for rate limit capacity.
+**Phase 2 — Bulk backfill.** The async pipeline reembeds all existing content with the new model into the new index. This runs at off-peak hours to avoid competing with real-time traffic for rate limit capacity or GPU time.
 
 **Phase 3 — Validation.** Run the evaluation suite (covered below) against both indexes. Confirm the new index meets or exceeds the old index's recall and precision scores.
 
@@ -205,13 +204,13 @@ My migration process:
 
 The shadow write in Phase 1 ensures that by the time the bulk backfill finishes, the new index is nearly complete — only the oldest content needs to be reembedded. The gap between shadow start and backfill completion is small.
 
-Version naming is critical throughout. Collections in Qdrant are named `{content_type}_{model_version}` — `bible_verses_te3s` for `text-embedding-3-small`, `bible_verses_te3l` for `text-embedding-3-large`. The search service reads its target collection name from config, not from code, so the cutover is a config update with no deploy.
+Version naming is critical throughout. Name collections `{content_type}_{model_version}` — for example `bible_verses_minilm` for all-MiniLM-L6-v2 and `bible_verses_te3s` if you moved to `text-embedding-3-small`. The search service reads its target collection name from config, not from code, so the cutover is a config update with no deploy.
 
 ## Evaluating Embedding Quality
 
 You cannot tell whether your embeddings are good by looking at them. You need an evaluation set.
 
-I maintain a ground-truth evaluation set of 300 query/result pairs curated from actual user searches and annotated manually:
+Build a ground-truth evaluation set of query/result pairs curated from real searches and annotated by hand:
 
 ```json
 {
@@ -221,23 +220,23 @@ I maintain a ground-truth evaluation set of 300 query/result pairs curated from 
 }
 ```
 
-Against this set, I measure:
+Against this set, measure:
 
-**Recall@5** — what fraction of ground-truth relevant passages appear in the top 5 results. My target is ≥ 85%.
+**Recall@5** — what fraction of ground-truth relevant passages appear in the top 5 results.
 
 **MRR (Mean Reciprocal Rank)** — the average reciprocal rank of the first relevant result. Measures whether the best result is at position 1 or buried at position 4.
 
 **Precision@5** — what fraction of the top 5 results are actually relevant. Complements recall by penalizing result sets that are broad but imprecise.
 
-This evaluation runs automatically after every model migration and weekly in production. A score drop of more than 3 points on any metric triggers a review before any further changes are made to the indexing pipeline.
+Run this evaluation after every model migration and on a regular schedule in production, and treat a meaningful score drop as a stop sign for further indexing changes.
 
-Building the ground-truth set is the part that takes real time — it required manually reviewing several hundred search results over a few sessions. But it is the only reliable signal you have for whether the embedding pipeline is working. Every other metric tells you the service is running; only the evaluation set tells you the service is working.
+Building the ground-truth set is the part that takes real time. But it is the only reliable signal you have for whether the embedding pipeline is working. Every other metric tells you the service is running; only the evaluation set tells you the service is working. I learned that the hard way when VerseHub's scripture search silently stopped sending the query vector to Weaviate and returned verses in insertion order — every health check was green.
 
 ## Cost Attribution
 
-Embedding costs are real and unevenly distributed. The bulk of spending comes from two activities: the initial indexing of the full Bible corpus and study notes, and real-time query embedding.
+Embedding costs are real — API fees on a managed service, GPU time on a self-hosted one — and unevenly distributed. The bulk of spending comes from two activities: the initial indexing of the full Bible corpus and study notes, and real-time query embedding.
 
-I tag every embedding API call with a cost center:
+Tag every embedding call with a cost center:
 
 ```typescript
 await embeddingService.embed(text, {
@@ -320,6 +319,14 @@ links:
     description: "According to this overview, rate limiting controls throughput to prevent exceeding API quotas — the proactive throttling strategy used to avoid 429 errors from the embedding API."
 ---
 ::
+
+## Related reading
+
+- [Inference Services](/blog/backendengineering/08-inference-services) — previous in the series
+- [OCR Pipelines](/blog/backendengineering/10-ocr-pipelines) — next in the series: feeding scanned text into this service
+- [Model Loading Strategies](/blog/backendengineering/16-model-loading-strategies) — related: keeping a self-hosted embedder warm
+- [Embedding Strategies](/blog/ai-engineering/11-embedding-strategies) — choosing models and chunking for retrieval quality
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

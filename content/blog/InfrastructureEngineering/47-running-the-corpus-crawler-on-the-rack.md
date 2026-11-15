@@ -1,8 +1,8 @@
 ---
 title: "Running the Corpus Crawler on the Pi Rack: Jobs, Folder Flags, and Finding the Output"
-description: "How a one-shot Kubernetes Job crawls reference URLs out of a text corpus on ARM64 hardware — the folder-flag system, the problems that come from treating a Job like a Deployment, and how to actually get the output files back."
-date: 2026-08-11
-lastUpdated: "2026-08-11"
+description: "Running a one-shot corpus crawler as a Kubernetes Job on my Pi K3s rack: folder flags, Job vs Deployment pitfalls, and getting output files off the PVC."
+date: 2026-09-19
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - k3s
@@ -12,10 +12,11 @@ tags:
   - arm64
   - python
   - troubleshooting
-draft: true
+draft: false
 cluster: "infrastructure-engineering"
 slug: running-the-corpus-crawler-on-the-rack
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/47-running-the-corpus-crawler-on-the-rack.jpg
 ---
 
 Not every workload on the rack is a long-running service. The corpus crawler is the opposite: a script that runs once, walks a directory tree of reference text files, follows every URL it finds out to two link-hops deep, writes what it learns to a JSONL file, and exits. This article covers how that crawler is packaged as a Kubernetes Job, the folder-flag system that controls what it crawls, the problems that come from treating a Job like a long-running Deployment, and the two ways to actually get the output back off the cluster.
@@ -24,7 +25,7 @@ Not every workload on the rack is a long-running service. The corpus crawler is 
 
 A practical guide to the corpus-crawl Kubernetes Job — folder selection, monitoring a one-shot batch task, and retrieving output from a PVC.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -170,7 +171,7 @@ The lesson: for a Job with a TTL, "not found" is ambiguous between "never ran," 
 
 ### A stale IP from an earlier incident, baked into copy-paste commands
 
-The runbook's `scp`/`ssh` examples pointed at `192.168.1.229` — the control plane's old IP from before [a prior IP change incident](/blog/recovering-after-control-plane-ip-change). The crawler's own `.env.example` had the same stale address in `REDIS_URL`. Both were silent failures waiting to happen: copy-pasting the documented command would simply hang or refuse a connection, with no indication that the fix was "the IP in the doc is wrong," because nothing about the symptom points at documentation.
+The runbook's `scp`/`ssh` examples pointed at `192.168.1.229` — the control plane's old IP from before [a prior IP change incident](/blog/infrastructureengineering/44-recovering-after-control-plane-ip-change). The crawler's own `.env.example` had the same stale address in `REDIS_URL`. Both were silent failures waiting to happen: copy-pasting the documented command would simply hang or refuse a connection, with no indication that the fix was "the IP in the doc is wrong," because nothing about the symptom points at documentation.
 
 Both were corrected to `192.168.1.219`. The broader takeaway: any runbook with a hardcoded node IP needs to be on the list of files to check whenever that IP changes — it won't surface itself as a cluster error, it'll surface as a confused human three weeks later wondering why `scp` won't connect.
 
@@ -295,6 +296,8 @@ destinationUrl: "/hire-me"
 
 A Kubernetes Job is the right shape for a script with a beginning and an end, but it behaves differently enough from a Deployment that the usual mental model — "if `kubectl get` doesn't find it, something's wrong" — actively misleads. The TTL that cleans up a finished Job is a feature, not a bug, but it means the output PVC, not the Job object, is the durable source of truth about whether a crawl happened and what it found. Combined with an immutable pod template that demands a delete-before-reapply dance for every folder change, the crawler is simple to run and easy to misread the status of — which is exactly why the output, not the Job, is what to check first.
 
+The crawl output feeds the reference corpus behind [VerseHub](/projects/versehub)'s retrieval layer; how that corpus is chunked and searched is covered in [Retrieval Systems for Theology](/blog/ai-engineering/09-retrieval-systems-for-theology). For other run-to-completion workloads, see [Autonomous Background Jobs](/blog/agentic-ai-systems/10-autonomous-background-jobs).
+
 ::CtaCardRow
   :::CtaDownloadGuide
   ---
@@ -346,6 +349,15 @@ links:
     description: "Overview of JSON Lines (JSONL) streaming formats, the line-delimited output format the crawler writes one record per visited page to."
 ---
 ::
+
+---
+
+## Related reading
+
+- [How One Node Label Broke Every LoadBalancer Service in My K3s Cluster](/blog/infrastructureengineering/46-servicelb-node-label-broke-loadbalancers) — previous in the series.
+- [K3s on Raspberry Pis](/blog/infrastructureengineering/01-k3s-on-raspberry-pis) — back to the start of the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Persistent Volumes](/blog/infrastructureengineering/09-persistent-volumes) — how the PVC holding the crawl output works.
 
 ---
 

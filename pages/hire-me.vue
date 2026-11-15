@@ -1,10 +1,17 @@
 <script setup lang="ts">
+const _seoConfig = useRuntimeConfig()
+const _SITE = (_seoConfig.public.appDomain as string) || 'https://donavanjones.com'
+const _abs = useAbsoluteUrl()
 useSeoMeta({
+  ogImage: _abs('/img/heroes/hire-me.jpg'),
+  twitterImage: _abs('/img/heroes/hire-me.jpg'),
   title: 'Hire Me — Donavan Jones | AI Systems Engineer',
-  description: 'AI Systems Engineer open to senior IC and staff roles in AI engineering, platform engineering, and full-stack development. Also available for contract projects.',
+  description: 'Hire an AI systems engineer who runs his own 7-node K3s + Jetson Orin inference cluster. Open to senior IC and staff roles in AI and platform engineering, plus contract projects.',
   ogTitle: 'Hire Me — Donavan Jones | AI Systems Engineer',
   ogDescription: 'AI Systems Engineer open to senior roles in AI engineering and platform development. Also available for contract projects and freelance builds.',
   ogType: 'website',
+  ogUrl: `${_SITE}/hire-me`,
+  canonical: `${_SITE}/hire-me`,
 })
 
 const form = reactive({
@@ -38,6 +45,7 @@ const services = [
     icon: 'mdi:phone-missed',
     color: 'sky',
     title: 'AI Lead Capture & After-Hours Agent',
+    image: '/img/cards/lead-capture.jpg',
     description: 'Stop losing leads when you\'re unavailable. AI answers missed calls, collects the caller\'s name, number, and what they need — then books the appointment and texts you a summary automatically.',
     examples: ['Missed call AI response', 'Automated appointment booking', 'Lead info collection', 'SMS summary to owner'],
   },
@@ -45,6 +53,7 @@ const services = [
     icon: 'mdi:chat-processing-outline',
     color: 'emerald',
     title: 'AI Website Chat That Converts',
+    image: '/img/cards/website-chat.jpg',
     description: 'Replace your dead contact form with a 24/7 AI sales assistant. It answers pricing questions, qualifies leads, and pushes visitors toward booking — integrated with your email, calendar, or CRM.',
     examples: ['Pricing & FAQ answers', 'Lead qualification', 'Booking & scheduling', 'Email / CRM integration'],
   },
@@ -52,6 +61,7 @@ const services = [
     icon: 'mdi:cog-sync-outline',
     color: 'violet',
     title: 'Admin & Workflow Automation',
+    image: '/img/cards/workflow-automation.jpg',
     description: 'Automate the back-office tasks eating your team\'s time — quote generation, intake form processing, follow-up emails, review requests — all running without manual input.',
     examples: ['Quote & invoice generation', 'Intake form → CRM pipeline', 'Automated follow-up emails', 'Google review requests'],
   },
@@ -157,8 +167,16 @@ const faqs = [
           <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
             I work best when I'm brought in early — before the architecture is decided. I'll gather requirements,
             make opinionated technical recommendations, build it, deploy it, and own it in production.
-            I've done this end-to-end at Amerus Financial Group (92 businesses, automated enrollment workflows
-            from hours to minutes) and I'm applying the same ownership model to my own AI platform.
+            I've done this end-to-end for Business Benefit Alliance (8,490 enrollment applications, $10.8M in
+            premium payments processed, 1,859 agents on the platform) and I'm applying the same ownership model to my own AI platform.
+          </p>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">
+            That platform is real hardware I operate: a 7-node K3s cluster (4 Raspberry Pis + 3 NVIDIA Jetson Orin Nano Super 8GB)
+            plus an RTX 3090 workstation, with model scheduling under 8GB of unified memory, Temporal-orchestrated RAG with
+            citation verification for <NuxtLink to="/projects/versehub" class="text-sky-500 hover:text-sky-400 font-medium">VerseHub</NuxtLink>,
+            my own internal platform <NuxtLink to="/projects/kingdom-tools" class="text-sky-500 hover:text-sky-400 font-medium">Kingdom Tools</NuxtLink>,
+            and Prometheus, Grafana, and Loki for observability. Building AI hardware, an agent OS, or an inference runtime?
+            See <NuxtLink to="/services/local-ai-infrastructure" class="text-sky-500 hover:text-sky-400 font-medium">local AI infrastructure research, advisory, and contract work</NuxtLink>.
           </p>
 
           <!-- Role types -->
@@ -324,7 +342,8 @@ const faqs = [
       </div>
 
       <!-- ── SERVICES ────────────────────────────────────────────── -->
-      <div class="mb-20">
+      <div class="relative isolate overflow-hidden mb-20 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-10">
+        <HeroBackdrop lazy src="/img/heroes/services-local-business-ai.jpg" side="full" />
         <div class="text-center mb-10">
           <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">AI Services for Local Businesses</h2>
           <p class="text-slate-500 dark:text-slate-400">Outcome-focused systems. Built once, connected to your business, handed over to you.</p>
@@ -349,22 +368,29 @@ const faqs = [
               </span>
             </div>
 
-            <div class="p-5">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                :class="{
-                  'bg-sky-500/10 border border-sky-500/20': service.color === 'sky',
-                  'bg-emerald-500/10 border border-emerald-500/20': service.color === 'emerald',
-                  'bg-violet-500/10 border border-violet-500/20': service.color === 'violet',
-                }"
-              >
-                <Icon :name="service.icon" class="text-xl"
+            <div class="relative aspect-[2/1] overflow-hidden border-b border-slate-200 dark:border-slate-800">
+              <img :src="service.image" alt="" width="600" height="315" loading="lazy" decoding="async"
+                   class="h-full w-full object-cover" />
+              <div data-icon-overlay class="absolute top-3 left-3 z-10 rounded-xl bg-white/90 dark:bg-slate-950/75 backdrop-blur-sm shadow-sm">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center"
                   :class="{
-                    'text-sky-400': service.color === 'sky',
-                    'text-emerald-400': service.color === 'emerald',
-                    'text-violet-400': service.color === 'violet',
+                    'bg-sky-500/10 border border-sky-500/20': service.color === 'sky',
+                    'bg-emerald-500/10 border border-emerald-500/20': service.color === 'emerald',
+                    'bg-violet-500/10 border border-violet-500/20': service.color === 'violet',
                   }"
-                />
+                >
+                  <Icon :name="service.icon" class="text-xl"
+                    :class="{
+                      'text-sky-400': service.color === 'sky',
+                      'text-emerald-400': service.color === 'emerald',
+                      'text-violet-400': service.color === 'violet',
+                    }"
+                  />
+                </div>
               </div>
+            </div>
+
+            <div class="p-5">
 
               <h3 class="font-bold text-slate-900 dark:text-white mb-2">{{ service.title }}</h3>
               <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{{ service.description }}</p>

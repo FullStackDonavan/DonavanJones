@@ -1,8 +1,8 @@
 ---
 title: "Authentication"
-description: "Authentication service design in backend engineering."
+description: "Designing a dedicated authentication service for microservices: JWT claims, refresh token rotation, Redis revocation, bcrypt, OAuth PKCE, and rate limiting."
 date: 2026-03-01
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - authentication
@@ -11,15 +11,16 @@ draft: false
 cluster: "backend-engineering"
 slug: authentication
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/03-authentication.jpg
 ---
 
 # Authentication
 
-Authentication is the first service every request touches and the last one you want to get wrong. A failure here does not just break a feature — it compromises user data, exposes AI spend to abuse, and can destroy trust in the platform overnight.
+A dedicated auth service issues short-lived signed JWTs plus rotating refresh tokens, so every other microservice can verify identity locally without a network call. Authentication is the first service every request touches and the last one you want to get wrong: a failure here compromises user data, exposes AI compute to abuse, and can destroy trust in the platform overnight.
 
 I built a dedicated authentication service for my Bible study platform early on. This article covers the design decisions behind it: why JWTs, how sessions are managed, how the service integrates with the rest of the backend, and where I hardened security over time.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -61,7 +62,7 @@ A few design choices worth explaining:
 
 **`tier` and `roles` are in the token.** Every service needs to know whether a user has access to premium AI features without another network call. Including tier and role claims in the token makes this a local check. The tradeoff is that if a user's tier changes (e.g., they cancel their subscription), their existing token continues to report the old tier until it expires. I accept this with a short access token TTL of 1 hour.
 
-**`jti` is a unique token ID.** This enables server-side revocation when needed. On logout or suspicious activity, the JTI is added to a Redis blocklist. Services check the blocklist as part of token validation. It adds a Redis read to every request but makes revocation possible without waiting for token expiry.
+**`jti` is a unique token ID.** This enables server-side revocation when needed. On logout or suspicious activity, the JTI is added to a Redis blocklist (the same in-cluster Redis I use for [memory and caching](/blog/versehub-engineering/05-redis-memory-layer-design)). Services check the blocklist as part of token validation. It adds a Redis read to every request but makes revocation possible without waiting for token expiry.
 
 **`platform`** distinguishes web sessions from mobile sessions. Mobile tokens get a longer refresh token TTL (90 days) since mobile users expect to stay logged in. Web sessions are shorter (7 days).
 
@@ -142,7 +143,7 @@ The public key is distributed to services at startup via an environment variable
 
 ## Rate Limiting on Auth Endpoints
 
-The login and token refresh endpoints are high-value targets for credential stuffing and brute force. I apply layered rate limiting:
+The login and token refresh endpoints are high-value targets for credential stuffing and brute force — and on an AI platform, a stolen session means someone else burning your inference capacity (see [local AI security](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private) for the self-hosted side of that). I apply layered rate limiting:
 
 - **IP-based**: 10 login attempts per IP per minute, 50 per hour
 - **Account-based**: 5 failed attempts per account per 15 minutes before a temporary lockout
@@ -227,6 +228,13 @@ links:
     description: "Definition of XSS — the attack vector that motivated moving refresh tokens from localStorage to HttpOnly cookies."
 ---
 ::
+
+## Related reading
+
+- [AI Services](/blog/backendengineering/02-ai-services) — previous in the series: the services that rely on these tokens
+- [Embeddings](/blog/backendengineering/04-embeddings) — next in the series
+- [Local AI Security: Keeping Your Code and Data Private](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private) — security on the self-hosted infrastructure side
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

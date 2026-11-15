@@ -1,22 +1,23 @@
 ---
 title: "Verification Agents in Production"
-description: "Using a separate verification agent to check output quality before treating an agent's work as final — the pattern that makes autonomy safe."
-date: 2026-06-22
-lastUpdated: "2026-06-22"
+description: "Verification agents in production: why self-review fails, how to build a rubric-driven verifier, and how bounded revise loops make agent autonomy safe."
+date: 2026-10-30
+lastUpdated: "2026-11-14"
 category: "agentic-ai-systems"
 tags:
   - agentic-ai-systems
   - verification
-draft: true
+draft: false
 slug: verification-agents-in-production
 author: Donavan Jones
+excerptImage: /img/blog/agentic-ai-systems/11-verification-agents-in-production.jpg
 ---
 
 # Verification Agents in Production
 
 A single agent judging its own work is a weak check — the same reasoning that produced a mistake is often the reasoning that fails to catch it. A verification agent is a separate process, ideally with a narrower and more skeptical mandate, that reviews output against explicit criteria before it's treated as final.
 
-*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems).*
+*Part of the [Agentic AI Systems series](/categories/agentic-ai-systems). For how these patterns fit together in a running system, see the [agentic AI systems hub](/systems/agentic-ai).*
 
 ::CtaCategoryPillar
 ---
@@ -28,7 +29,7 @@ destinationUrl: "/categories/agentic-ai-systems"
 
 ## Why Self-Review Isn't Enough
 
-When the same context and reasoning that produced an output is asked to check it, it tends to confirm its own assumptions rather than challenge them. A verification step that's meaningfully independent — a fresh context window, an explicit rubric, sometimes a different and more conservative model — catches a different class of error than asking the original agent "are you sure?"
+When the same context and reasoning that produced an output is asked to check it, it tends to confirm its own assumptions rather than challenge them. A verification step that's meaningfully independent — a fresh context window, an explicit rubric, sometimes a different and more conservative model — catches a different class of error than asking the original agent "are you sure?" In my local coding setup I used [Ornith-1.0-35B on the RTX 3090](/blog/local-vibe-coding/02-running-ornith-locally-with-ollama) as the verifier for drafts from a smaller model — a different model with a fresh context, not the drafter grading itself.
 
 ## Structuring a Verification Pass
 
@@ -54,6 +55,8 @@ The instruction to "actively look for ways it could be wrong" is doing real work
 ## What Belongs in the Rubric
 
 Concrete, checkable criteria beat vague quality judgments. "Does the code handle the empty-list case" is checkable. "Is the code good" is not. A rubric built from specific failure modes observed in past runs — the actual mistakes the agent has made before — is more effective than a generic checklist written in the abstract.
+
+My most useful rubric item came from a real VerseHub bug: when retrieval silently failed and returned an empty list, the model still produced confident answers with no evidence behind them. Now an empty retrieval raises an error instead, and the verify step checks every cited reference against the retrieved evidence — the approach described in [Verification Pipeline for AI Outputs](/blog/versehub-engineering/06-verification-pipeline-for-ai-outputs) and [Citation Grounding](/blog/ai-engineering/13-citation-grounding).
 
 ## Where Verification Agents Fit in the Pipeline
 
@@ -96,7 +99,7 @@ A verification agent catches errors that are checkable against a defined rubric.
   ---
   buttonText: "Read: Single Agent vs Multi-Agent Systems"
   supportingCopy: "Back to where this series started — the foundational architecture decision."
-  destinationUrl: "/blog/agentic-ai-systems/single-agent-vs-multi-agent-systems"
+  destinationUrl: "/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems"
   ---
   :::
 
@@ -124,6 +127,13 @@ links:
     description: "The layered-safeguards concept applied here to verification, confirmation gates, and human review together."
 ---
 ::
+
+## Related reading
+
+- [Autonomous Background Jobs](/blog/agentic-ai-systems/10-autonomous-background-jobs) — previous: when unattended agents need a verification gate
+- [Single Agent vs Multi-Agent Systems](/blog/agentic-ai-systems/01-single-agent-vs-multi-agent-systems) — back to the start of the series
+- [Agentic AI Systems hub](/systems/agentic-ai) — the hub for the agentic AI series
+- [Hallucination Reduction](/blog/ai-engineering/14-hallucination-reduction) — reducing the errors a verifier has to catch
 
 ---
 

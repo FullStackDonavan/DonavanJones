@@ -1,8 +1,8 @@
 ---
 title: "Power Consumption Tradeoffs"
-description: "How I balance power consumption and performance in my homelab Kubernetes cluster — per-node wattage, idle vs load draw, and total monthly cost."
+description: "Power tradeoffs in my K3s homelab: always-on Raspberry Pis and Jetson Orin Nanos versus a bursty RTX 3090, and how scheduling keeps power draw in check."
 date: 2025-12-18
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - power
@@ -11,17 +11,18 @@ draft: false
 cluster: "infrastructure-engineering"
 slug: power-consumption-tradeoffs
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/30-power-consumption-tradeoffs.jpg
 ---
 
 # Power Consumption Tradeoffs
 
 ## Introduction
 
-In any homelab environment, especially a growing cluster like a Raspberry Pi–based K3s rack setup, power consumption becomes one of the most important constraints alongside performance and reliability. Unlike cloud environments where compute scales without direct energy concern, a personal rack has a fixed electrical budget, physical cooling limits, and often real-world cost implications that show up in the monthly power bill.
+The core power tradeoff in my homelab is simple: keep the always-on work on low-power ARM boards (four Raspberry Pis and three Jetson Orin Nano Supers) and treat the RTX 3090 workstation as burst compute, because a single 3090 under load can out-draw the entire rest of the cluster. Deciding what must run 24/7 and what can run on demand matters more than any single tuning knob. Unlike cloud environments where compute scales without direct energy concern, a personal rack has a fixed electrical budget, physical cooling limits, and often real-world cost implications that show up in the monthly power bill.
 
-In your setup specifically—where you’re running a multi-node Raspberry Pi cluster for Kubernetes workloads alongside a separate RTX 3090-based machine handling local model inference in Docker—you’re effectively balancing two very different power profiles. One side is ultra-efficient, low-wattage ARM nodes optimized for orchestration and lightweight services. The other is a high-performance GPU system that can spike power usage significantly under load. Understanding how these components interact is key to building a stable, cost-aware infrastructure.
+In my setup—a 7-node K3s cluster of Raspberry Pis and Jetsons alongside a separate RTX 3090 machine that handles embeddings, LoRA training, and large-model inference—I am balancing two very different power profiles. One side is low-wattage ARM nodes handling orchestration, services, and small-model inference. The other is a high-performance GPU system that can spike power usage significantly under load. Understanding how these components interact is key to building a stable, cost-aware infrastructure.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -38,22 +39,25 @@ destinationUrl: "/categories/infrastructure-engineering"
 Every homelab system sits on a spectrum between efficiency and raw compute power:
 
 - **Raspberry Pi K3s Nodes**  
-  These typically consume very little power per node (often 3–7 watts depending on load). In your rack, they form the backbone of orchestration, CI/CD runners, and service hosting. Their strength is not performance per node, but density and efficiency.
+  These typically consume very little power per node (often 3–7 watts depending on load). In my rack, they form the backbone of orchestration, CI/CD runners, and service hosting. Their strength is not performance per node, but density and efficiency.
+
+- **Jetson Orin Nano Super GPU Workers**  
+  My three Jetsons sit in between: real CUDA GPUs with 8 GB of unified memory each, running headless in MAXN_SUPER power mode. They let me keep a small LLM (llama3.2:3b), speech (Kokoro + Whisper), and image generation always on without waking the big GPU. I compare the economics in [Electricity vs API Pricing](/blog/ai-cost-optimization/03-electricity-vs-api-pricing).
 
 - **GPU Workstation (RTX 3090)**  
-  Your development machine running containerized AI models is on the opposite end of the spectrum. A 3090 alone can draw 250–350 watts under load, not including CPU, storage, and cooling overhead. This makes it extremely powerful but also the dominant factor in your energy consumption.
+  My development machine with a single RTX 3090 is on the opposite end of the spectrum. A 3090 alone can draw 250–350 watts under load, not including CPU, storage, and cooling overhead. This makes it extremely powerful but also the dominant factor in energy consumption.
 
 - **Networking and Supporting Hardware**  
   Switches, SSDs, and power delivery systems add a constant baseline draw that is often overlooked but becomes meaningful at scale.
 
 ---
 
-## Key Tradeoffs You’re Managing
+## Key Power Tradeoffs in a Hybrid Homelab
 
 ### 1. Efficiency vs Latency
 Running services on Pi nodes reduces power consumption but may introduce latency or compute limitations. Offloading everything to the GPU machine improves performance but significantly increases power usage.
 
-In your architecture, K3s acts as the “always-on low-power layer,” while the RTX machine becomes a “burst compute layer” for AI workloads.
+In my architecture, the K3s cluster (Pis + Jetsons) acts as the “always-on low-power layer,” while the RTX machine becomes a “burst compute layer” for heavy AI workloads.
 
 ---
 
@@ -70,16 +74,17 @@ A major optimization in homelabs is deciding what must run 24/7.
   - Training jobs
   - Heavy batch processing
 
-This separation is especially important in your setup since your GPU machine should not behave like a traditional server unless necessary.
+This separation is especially important in my setup since the 3090 machine should not behave like a traditional server unless necessary — the always-on inference lives on the Jetsons instead.
 
 ---
 
 ### 3. Centralized vs Distributed Workloads
 A distributed Pi cluster spreads power draw evenly and avoids single points of failure. However, centralized GPU compute simplifies architecture but increases localized heat and energy spikes.
 
-Your current hybrid model is effectively the optimal compromise:
-- Pi cluster = distributed control plane + microservices
-- GPU machine = centralized compute accelerator
+My hybrid model is the compromise I landed on:
+- Pi nodes = control plane + microservices
+- Jetson GPU workers = always-on small-model inference, speech, and image generation
+- 3090 machine = centralized burst compute accelerator
 
 ::CtaSystemArchitecture
 ---
@@ -98,7 +103,7 @@ destinationUrl: "/systems/infrastructure"
 ## Power Optimization Strategies
 
 ### 1. Workload Scheduling
-Use Kubernetes scheduling rules (node affinity, taints, and tolerations) to ensure heavy workloads only land where they should. For example, AI inference jobs should be explicitly scheduled to your GPU host rather than accidentally landing on ARM nodes.
+Use Kubernetes scheduling rules (node affinity, taints, and tolerations) to ensure heavy workloads only land where they should. For example, AI inference pods should be explicitly scheduled to a Jetson GPU worker by node label rather than accidentally landing on a Pi. How I split those roles is in [Node Roles](/blog/infrastructureengineering/27-node-roles).
 
 ---
 
@@ -108,7 +113,7 @@ Even in a homelab, autoscaling concepts matter. You can reduce idle Pi workloads
 ---
 
 ### 3. Power Awareness in CI/CD
-Since you’re already using Gitea and runners in your cluster, you can design pipelines that:
+Since I already use Gitea and [self-hosted runners](/blog/infrastructureengineering/21-gitea-runners-pipeline) in the cluster, pipelines can be designed to:
 - Avoid triggering GPU builds unless needed
 - Prefer lightweight test containers on Pi nodes
 - Batch heavy jobs instead of running them continuously
@@ -124,7 +129,7 @@ Since you’re already using Gitea and runners in your cluster, you can design p
 
 ## Observability: You Can’t Optimize What You Don’t Measure
 
-A key upgrade for your rack is power monitoring. Without visibility, tradeoffs become guesswork.
+A key upgrade for any rack is power monitoring. Without visibility, tradeoffs become guesswork.
 
 Consider tracking:
 - Per-node power consumption (Pi cluster)
@@ -132,7 +137,7 @@ Consider tracking:
 - Idle vs active system draw
 - Monthly total energy cost
 
-Even simple tools like smart plugs or inline power meters can give you enough data to make meaningful optimization decisions.
+Even simple tools like smart plugs or inline power meters can give you enough data to make meaningful optimization decisions. On the utilization side, I already scrape Jetson GPU load into Prometheus through a small custom `/metrics` agent — see [Prometheus on a Pi K3s cluster](/blog/infrastructureengineering/41-prometheus-on-pi-cluster).
 
 ::CtaContactWork
 ---
@@ -146,9 +151,9 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Power consumption in a homelab is not just a cost issue—it’s an architectural constraint that shapes how your entire system evolves. In your case, the hybrid design of a low-power K3s Raspberry Pi cluster combined with a high-performance RTX 3090 compute node already reflects a strong understanding of this balance.
+Power consumption in a homelab is not just a cost issue—it’s an architectural constraint that shapes how the entire system evolves. In my case, the hybrid design of a low-power K3s cluster (Pis + Jetsons) combined with a single high-performance RTX 3090 node is built around that balance.
 
-The real optimization comes from refinement: deciding what truly needs to be always-on, what can be scheduled, and what should only exist on demand. As your infrastructure grows—especially with CI/CD pipelines, AI workloads, and service orchestration—your ability to consciously allocate power will directly determine both performance efficiency and long-term scalability.
+The real optimization comes from refinement: deciding what truly needs to be always-on, what can be scheduled, and what should only exist on demand. As the infrastructure grows—especially with CI/CD pipelines, AI workloads, and service orchestration—the ability to consciously allocate power will directly determine both performance efficiency and long-term scalability.
 
 A well-designed homelab isn’t just powerful. It’s intentionally powered.
 
@@ -203,6 +208,15 @@ links:
     description: "Overview of energy efficiency in computing — the dimension that motivates the hybrid homelab architecture: lightweight Pi nodes for continuous services and GPU compute only when inference or training requires it."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Pod Layouts](/blog/infrastructureengineering/29-pod-layouts) — previous in the series: where workloads are placed.
+- [Rack Overview](/blog/infrastructureengineering/31-rack-overview) — next in the series: the whole rack at a glance.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [My Monthly Power Bill Running an Always-On AI Cluster](/blog/ai-homelab-engineering/14-monthly-power-bill-ai-cluster) — the cost side of the same question.
 
 ---
 

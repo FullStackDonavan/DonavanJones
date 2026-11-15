@@ -1,8 +1,8 @@
 ---
 title: "Installing Gitea in Kubernetes"
-description: "Step-by-step guide to installing Gitea in a Kubernetes cluster — Helm chart configuration, persistent storage, ingress setup, and CI/CD integration."
+description: "Step-by-step guide to installing Gitea in Kubernetes with plain manifests — namespace, persistent storage, Deployment, Service, ingress, and CI/CD hookup."
 date: 2025-11-20
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - gitea
@@ -11,9 +11,12 @@ tags:
 draft: false
 slug: installing-gitea-in-kubernetes
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/23-installing-gitea-in-kubernetes.jpg
 ---
 
 # Installing Gitea in Kubernetes
+
+To install Gitea in Kubernetes, create a `gitea` namespace, a PersistentVolumeClaim for `/data`, a Deployment running the `gitea/gitea` image, and a Service on port 3000. Then expose it with an Ingress or a NodePort and finish setup in the web UI. The official image is multi-arch, so it runs on ARM64 Raspberry Pis without changes. In my cluster, Gitea runs on the Pi control plane and is reachable on NodePort 32080.
 
 ## Introduction
 
@@ -21,7 +24,7 @@ Gitea is a lightweight, self-hosted Git service that fits well in a Kubernetes-b
 
 This guide walks through installing Gitea in Kubernetes with a clean, repeatable setup. It also calls out a common formatting issue that can break setup docs and copied commands: unfinished code fences. A missing closing triple backtick can cause bash blocks to swallow YAML, break rendering, or make a copied command fail in ways that are easy to miss.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For how every node and service fits together, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -51,7 +54,7 @@ kubectl create namespace gitea
 
 ## Example persistent storage
 
-Gitea needs persistent storage for repositories, attachments, and configuration. In a homelab rack, this is usually backed by local storage, SSD-backed volumes, or a networked storage solution depending on how the cluster is designed.
+Gitea needs persistent storage for repositories, attachments, and configuration. In a homelab rack, this is usually backed by local storage, SSD-backed volumes, or a networked storage solution depending on how the cluster is designed. On K3s, leaving out `storageClassName` uses the built-in local-path provisioner (more in [persistent volumes on K3s](/blog/infrastructureengineering/09-persistent-volumes)).
 
 ```yaml
 apiVersion: v1
@@ -120,9 +123,11 @@ spec:
       targetPort: 3000
 ```
 
+If you'd rather skip ingress for a LAN-only tool, make this a `NodePort` Service instead. That's what I do: Gitea is reachable on port 32080, next to Grafana and Prometheus.
+
 ## Example ingress
 
-If you use ingress, point a hostname at Gitea so it is easy to reach from your network.
+If you use ingress, point a hostname at Gitea so it is easy to reach from your network. K3s's bundled Traefik will pick this up (see [ingress setup on K3s](/blog/infrastructureengineering/08-ingress-setup)).
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -181,13 +186,13 @@ kubectl get ingress -n gitea
 
 ## Avoiding broken code fences
 
-One of the easiest ways for a Markdown article to break is a missing closing code fence. For example, this is invalid because the block never closes properly:
+One of the easiest ways for a Markdown article to break is a missing closing code fence. Every block needs both an opening and a closing triple backtick, like this:
 
 ```bash
 kubectl create namespace gitea
 ```
 
-Always make sure every code block starts and ends cleanly, especially when mixing Bash, YAML, and long rendered articles. This matters even more when copy/pasting into editors or when a UI splits the response across sections.
+If the closing fence is missing, everything after it — YAML, prose, the next command — gets swallowed into the code block. Always make sure every code block starts and ends cleanly, especially when mixing Bash, YAML, and long rendered articles. This matters even more when copy/pasting into editors or when a UI splits the response across sections.
 
 ::CtaContactWork
 ---
@@ -200,6 +205,8 @@ destinationUrl: "/hire-me"
 ## Conclusion
 
 Installing Gitea in Kubernetes is a solid fit for a homelab rack because it keeps source control, automation, and deployment workflows close together. With a namespace, persistent storage, a deployment, a service, and optional ingress, you can stand up a reliable self-hosted Git platform that supports your CI/CD pipeline and grows with the rest of your cluster. The key is keeping the Markdown clean, the YAML valid, and every code fence properly closed so the document renders correctly from start to finish.
+
+Once Gitea is up, the next step is runners. I use Gitea Actions so a push to `main` builds and deploys automatically, as described in the [Gitea runners pipeline](/blog/infrastructureengineering/21-gitea-runners-pipeline).
 
 ::CtaCardRow
   :::CtaDownloadGuide
@@ -254,5 +261,13 @@ links:
 ::
 
 ---
+
+## Related reading
+
+- [Infrastructure Design](/blog/infrastructureengineering/22-infrastructure-design) — previous in the series
+- [Network Topology](/blog/infrastructureengineering/24-network-topology) — next in the series
+- [Deploying an App on the Rack](/blog/infrastructureengineering/45-deploying-an-app-on-the-rack) — a full deploy through Gitea once it's installed
+- [Why Self-Hosted Git](/blog/infrastructureengineering/40-why-self-hosted-git) — why self-host Git at all
+- [Infrastructure systems overview](/systems/infrastructure) — the hub page for the whole rack: nodes, services, and how they connect
 
 *[← Back to Infrastructure Engineering series](/categories/infrastructure-engineering)*

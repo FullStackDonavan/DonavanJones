@@ -52,12 +52,13 @@
 
             <!-- Title -->
             <h1
-              class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl
-                     font-bold leading-tight
+              class="text-3xl sm:text-4xl lg:text-5xl
+                     font-bold tracking-tight leading-tight
                      text-slate-900 dark:text-slate-100"
             >
               {{ title }}
-              <span v-if="highlight" class="block text-sky-400 mt-1">
+              <!-- Highlight reads as a subtitle, not a second giant headline -->
+              <span v-if="highlight" class="block mt-3 text-base sm:text-lg font-medium tracking-normal leading-snug text-sky-600 dark:text-sky-400">
                 {{ highlight }}
               </span>
             </h1>

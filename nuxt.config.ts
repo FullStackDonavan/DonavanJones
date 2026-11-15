@@ -1,3 +1,7 @@
+// Canonical site origin with no trailing slash (APP_DOMAIN may be set with one,
+// which produced "https://site//path" canonicals and og:urls).
+const SITE_URL = (process.env.APP_DOMAIN || 'https://donavanjones.com').replace(/\/+$/, '')
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-06-07',
   app: {
@@ -5,14 +9,15 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      titleTemplate: '%s — Donavan Jones',
+      // titleTemplate is set in app.vue (a function, so titles that already
+      // end in "Donavan Jones" are not suffixed twice).
       htmlAttrs: { lang: 'en' },
       meta: [
         { name: 'author', content: 'Donavan Jones' },
         { name: 'robots', content: 'index, follow' },
         { property: 'og:site_name', content: 'Donavan Jones' },
         { property: 'og:locale', content: 'en_US' },
-        { property: 'og:image', content: `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/img/logo.png` },
+        { property: 'og:image', content: `${SITE_URL}/img/logo.png` },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:creator', content: '@donavanjones' },
       ],
@@ -31,24 +36,32 @@ export default defineNuxtConfig({
             '@graph': [
               {
                 '@type': 'Person',
-                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#person`,
+                '@id': `${SITE_URL}/#person`,
                 name: 'Donavan Jones',
-                jobTitle: 'Full-Stack Engineer',
-                url: process.env.APP_DOMAIN || 'https://donavanjones.com',
+                jobTitle: 'AI Systems Engineer & Platform Builder',
+                description: 'Full-stack and AI systems engineer who builds and operates a self-hosted local AI cluster (K3s on Raspberry Pi and NVIDIA Jetson Orin Nano Super, plus an RTX 3090) running RAG, voice and agent workloads.',
+                url: SITE_URL,
                 email: 'donavanjones79@gmail.com',
+                address: { '@type': 'PostalAddress', addressLocality: 'Lakeland', addressRegion: 'FL', addressCountry: 'US' },
                 knowsAbout: [
-                  'Vue.js', 'Nuxt.js', 'Node.js', 'TypeScript',
-                  'AI Systems', 'RAG Pipelines', 'Kubernetes', 'PostgreSQL', 'Redis',
+                  'Local LLM inference', 'Edge AI', 'NVIDIA Jetson Orin', 'Ollama',
+                  'AI agent orchestration', 'Temporal', 'Retrieval-augmented generation',
+                  'LLM output verification', 'Kubernetes', 'K3s', 'Prometheus', 'Grafana', 'Loki',
+                  'Nuxt 3', 'Vue 3', 'TypeScript', 'Node.js', 'Python', 'FastAPI',
+                  'PostgreSQL', 'Redis', 'Weaviate', 'MinIO',
                 ],
-                sameAs: [],
+                sameAs: [
+                  'https://github.com/FullStackDonavan',
+                  'https://linkedin.com/in/donavanjones',
+                ],
               },
               {
                 '@type': 'WebSite',
-                '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#website`,
+                '@id': `${SITE_URL}/#website`,
                 name: 'Donavan Jones',
-                url: process.env.APP_DOMAIN || 'https://donavanjones.com',
-                description: 'Full-stack engineer specializing in Nuxt 3, Vue 3, Node.js, AI systems, RAG pipelines, and self-hosted Kubernetes infrastructure.',
-                author: { '@id': `${process.env.APP_DOMAIN || 'https://donavanjones.com'}/#person` },
+                url: SITE_URL,
+                description: 'Donavan Jones writes about running local AI in production: Jetson and RTX 3090 inference, K3s homelab infrastructure, agent orchestration, RAG, and full-stack engineering.',
+                author: { '@id': `${SITE_URL}/#person` },
               },
             ],
           }),
@@ -112,7 +125,7 @@ export default defineNuxtConfig({
     },
     public: {
       GHL_API_KEY: process.env.GHL_API_KEY,
-      appDomain: process.env.APP_DOMAIN,
+      appDomain: SITE_URL,
       gitHash: process.env.GITHUB_SHA,
       releaseVersion: process.env.RELEASE_VERSION,
     },

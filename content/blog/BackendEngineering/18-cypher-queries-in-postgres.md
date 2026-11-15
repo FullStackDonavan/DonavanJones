@@ -1,8 +1,8 @@
 ---
 title: "Cypher Queries in Postgres"
-description: "Using Cypher queries with PostgreSQL and Apache AGE."
+description: "Writing Cypher queries in PostgreSQL with Apache AGE: the SQL wrapper, modeling biblical people, places and passages as a graph, traversals, and common gotchas."
 date: 2026-04-15
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "backend-engineering"
 tags:
   - postgres
@@ -10,15 +10,16 @@ tags:
 draft: false
 slug: cypher-queries-in-postgres
 author: Donavan Jones
+excerptImage: /img/blog/backendengineering/18-cypher-queries-in-postgres.jpg
 ---
 
 # Cypher Queries in Postgres
 
-The previous article covered installing Apache AGE and creating a graph. This article covers actually using it: the Cypher query language, how it runs inside Postgres through AGE's SQL wrapper, the data model for Biblical entities on this platform, and the practical differences between writing Cypher in a standalone graph database versus through AGE.
+With Apache AGE, you run Cypher inside Postgres by wrapping it in `SELECT * FROM cypher('graph', $$ ... $$) AS (col agtype)`; the pattern-matching syntax is standard openCypher, but results come back as `agtype` columns you can use in SQL. The [previous article](/blog/backendengineering/17-installing-age) covered installing Apache AGE and creating a graph. This article covers actually using it: the Cypher query language, how it runs inside Postgres through AGE's SQL wrapper, the data model for Biblical entities on this platform, and the practical differences between writing Cypher in a standalone graph database versus through AGE.
 
 Cypher is a declarative pattern-matching language. You describe the shape of the graph you want to find — nodes connected by edges in a certain pattern — and the engine finds it. Once you internalize the pattern-matching model, it reads almost like a diagram of the query you are thinking about.
 
-*Part of the [Backend Engineering series](/categories/backend-engineering).*
+*Part of the [Backend Engineering series](/categories/backend-engineering). For how these pieces fit together, see the [backend systems overview](/systems/backend).*
 
 ::CtaCategoryPillar
 ---
@@ -86,7 +87,7 @@ The relationship types I model as edges:
 (:Book)-[:CONTAINS]->(:Passage)
 ```
 
-This is a deliberate subset of everything that could be modeled. I started with the relationships that power actual queries the platform uses — cross-reference traversal, person-to-passage lookup, theme clustering — and added others only when a real use case required them.
+This is a deliberate subset of everything that could be modeled. I started with the relationships that power actual queries the platform uses — cross-reference traversal, person-to-passage lookup, theme clustering — and added others only when a real use case required them. Cross-references in particular complement the semantic side of [retrieval for theology](/blog/ai-engineering/09-retrieval-systems-for-theology): vectors find passages that sound alike, the graph finds passages the tradition already connects.
 
 ## Creating Vertices
 
@@ -388,6 +389,13 @@ links:
     description: "Overview of Apache AGE — the PostgreSQL extension that executes these Cypher queries, adding graph traversal capability to the same Postgres instance that holds relational study data."
 ---
 ::
+
+## Related reading
+
+- [Installing AGE](/blog/backendengineering/17-installing-age) — previous in the series: getting AGE running
+- [Graph + SQL Hybrid Querying](/blog/backendengineering/19-graph-sql-hybrid-querying) — next in the series: joining graph results with relational data
+- [Retrieval Systems for Theology](/blog/ai-engineering/09-retrieval-systems-for-theology) — where graph traversal fits in retrieval
+- [Backend systems overview](/systems/backend) — the hub for this series
 
 ---
 

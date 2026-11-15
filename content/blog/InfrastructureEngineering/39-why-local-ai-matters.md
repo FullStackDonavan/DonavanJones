@@ -1,8 +1,8 @@
 ---
 title: "Why Local AI Matters"
-description: "Why running AI workloads locally matters — privacy, latency, cost control, and the engineering value of owning your inference stack end to end."
+description: "Why local AI matters: privacy, no per-token costs, control over models and latency, and the infrastructure skills you build owning your inference stack."
 date: 2026-02-13
-lastUpdated: "2026-06-09"
+lastUpdated: "2026-11-14"
 category: "infrastructure-engineering"
 tags:
   - ai
@@ -10,17 +10,18 @@ tags:
 draft: false
 slug: why-local-ai-matters
 author: Donavan Jones
+excerptImage: /img/blog/infrastructureengineering/39-why-local-ai-matters.jpg
 ---
 
 # Why Local AI Matters
 
 ## Introduction
 
-Running AI locally isn’t just a hobbyist preference anymore—it’s becoming a practical architecture choice for builders who want control, privacy, and performance tuning. In my own setup, I run a hybrid homelab that includes a Raspberry Pi-based K3s cluster in a rack and a separate development machine with an RTX 3090 handling heavier model workloads in Docker containers. This combination gives me a real-world environment where I can experiment with distributed systems, inference pipelines, and AI agents without depending entirely on cloud APIs.
+Local AI matters because it keeps your data on your own hardware, removes per-token costs and rate limits, and gives you control over which models run, how fast, and when they change. It’s no longer just a hobbyist preference—it’s a practical architecture choice. In my own setup, I run a hybrid homelab: a 7-node K3s cluster of Raspberry Pis and three Jetson Orin Nano Super GPU workers, plus a separate development machine with a single RTX 3090 for heavier models. This combination gives me a real-world environment where I can experiment with distributed systems, inference pipelines, and AI agents without depending entirely on cloud APIs.
 
 Local AI changes the way you think about systems design. Instead of treating AI as a remote service, it becomes part of your infrastructure—something you deploy, monitor, scale, and optimize just like any other service in your stack.
 
-*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering).*
+*Part of the [Infrastructure Engineering series](/categories/infrastructure-engineering). For the full architecture, start with the [infrastructure systems overview](/systems/infrastructure).*
 
 ::CtaCategoryPillar
 ---
@@ -36,7 +37,7 @@ destinationUrl: "/categories/infrastructure-engineering"
 
 One of the biggest advantages of running AI locally is control. Cloud APIs abstract everything away, which is convenient, but it also means you don’t control latency, model versioning, or cost behavior.
 
-In a homelab environment like my K3s cluster, I can decide exactly how workloads are scheduled across nodes. Lightweight services can run on Raspberry Pi worker nodes, while GPU-heavy inference runs on my RTX 3090 machine. This separation lets me design systems the way large-scale production platforms do—just at a smaller, more experimental scale.
+In a homelab environment like my K3s cluster, I can decide exactly how workloads are scheduled across nodes. Lightweight services run on Raspberry Pi worker nodes, small always-on models run on the Jetsons (llama3.2:3b is pinned on one of them at about 21 tok/s), and the heaviest inference runs on my RTX 3090 machine. This separation lets me design systems the way large-scale production platforms do—just at a smaller, more experimental scale.
 
 I can also version my models, test different quantizations, and deploy updates through CI/CD using Gitea runners directly into the cluster. That level of control is something you don’t really get when calling third-party APIs.
 
@@ -54,16 +55,16 @@ This is especially important as AI becomes more integrated into personal and spi
 
 ## Performance and Experimentation
 
-With a local RTX 3090 machine, I can experiment freely with model sizes, quantization strategies, and inference optimizations. There’s no per-token cost, no rate limits, and no waiting on external services.
+With a local RTX 3090 machine, I can experiment freely with model sizes, quantization strategies, and inference optimizations — for example, Ornith-1.0-35B at Q4_K_M runs there in about 21 GB of VRAM at roughly 64 tok/s. There’s no per-token cost, no rate limits, and no waiting on external services.
 
 This makes it possible to iterate quickly on things like:
 
-- Retrieval-augmented generation pipelines for theological search
+- Retrieval-augmented generation pipelines for theological search (see [Retrieval Augmented Generation](/blog/ai-engineering/17-retrieval-augmented-generation))
 - Local embeddings for semantic Bible/Quran comparison tools
 - AI agents that run continuously inside my cluster
 - Game logic or narrative systems that use offline inference
 
-My Raspberry Pi K3s cluster handles orchestration, while the GPU box handles compute-heavy tasks. That separation mirrors real production architectures, but in a fully controllable lab environment.
+My Raspberry Pi nodes handle orchestration, the Jetsons handle always-on speech and small-model inference, and the GPU box handles compute-heavy tasks. That separation mirrors real production architectures, but in a fully controllable lab environment.
 
 ::CtaSystemArchitecture
 ---
@@ -95,7 +96,7 @@ In my setup, pushing code to a repository can trigger builds that deploy AI serv
 
 ## Cost Efficiency at Scale
 
-Even though a homelab has upfront hardware costs, local AI becomes extremely cost-efficient over time. Instead of paying per API call, you’re paying once for hardware that you fully control and can upgrade incrementally.
+Even though a homelab has upfront hardware costs, local AI becomes extremely cost-efficient over time (I break down the math in [Hardware ROI for AI Development](/blog/ai-cost-optimization/04-hardware-roi-for-ai-development)). Instead of paying per API call, you’re paying once for hardware that you fully control and can upgrade incrementally.
 
 For systems that run continuously—like background agents, indexing pipelines, or content generation tools—this model becomes especially powerful. You can run workloads 24/7 without worrying about billing spikes.
 
@@ -108,10 +109,10 @@ Local AI isn’t perfect. You sacrifice convenience, and you take on operational
 - Model updates
 - Hardware failures
 - Performance tuning
-- Memory constraints
+- Memory constraints (a Jetson has 8 GB of unified memory, so only one ~4–5 GB model fits per board)
 - Deployment complexity
 
-But in exchange, you gain ownership and flexibility. For me, that tradeoff is worth it because I’m not just using AI—I’m building systems around it.
+Local isn't always the winner, either: I tried running Ornith-1.0-9B as a drafter on a Jetson and it barely fit, managed about 3 tok/s end to end, and I retired it. I still use Claude and cloud APIs where they make more sense. But in exchange for the operational work, you gain ownership and flexibility. For me, that tradeoff is worth it because I’m not just using AI—I’m building systems around it.
 
 ::CtaContactWork
 ---
@@ -125,7 +126,7 @@ destinationUrl: "/hire-me"
 
 ## Conclusion
 
-Local AI shifts your mindset from “using AI tools” to “building AI infrastructure.” In my homelab, the combination of a Raspberry Pi K3s cluster and a GPU-powered development machine creates a full ecosystem where I can design, deploy, and iterate on AI systems end-to-end.
+Local AI shifts your mindset from “using AI tools” to “building AI infrastructure.” In my homelab, the combination of a K3s cluster of Raspberry Pis and Jetsons and a GPU-powered development machine creates a full ecosystem where I can design, deploy, and iterate on AI systems end-to-end.
 
 It’s not just about independence from cloud providers—it’s about learning how these systems actually work under the hood. And once you start thinking in terms of infrastructure instead of APIs, you stop being just a user of AI and start becoming an architect of it.
 
@@ -180,6 +181,16 @@ links:
     description: "Overview of Docker containerization — the deployment model used to isolate AI model services on the GPU development machine, enabling rapid iteration on inference pipelines without affecting cluster stability."
 ---
 ::
+
+---
+
+## Related reading
+
+- [Why Lightweight Kubernetes Matters](/blog/infrastructureengineering/38-why-lightweight-kubernetes-matters) — previous in the series.
+- [Why Self-Hosted Git](/blog/infrastructureengineering/40-why-self-hosted-git) — next in the series.
+- [Infrastructure systems overview](/systems/infrastructure) — the hub for the full cluster architecture.
+- [Local AI Security: Keeping Your Code and Data Private](/blog/ai-homelab-engineering/13-local-ai-security-keeping-data-private) — the privacy argument in more depth.
+- [Local AI vs Claude Code: Cost, Speed, and Privacy After 30 Days](/blog/local-vibe-coding/10-local-ai-vs-claude-code-30-days) — a direct local-vs-cloud comparison.
 
 ---
 

@@ -11,7 +11,7 @@ useSeoMeta({
   ogTitle: 'The Blog — Donavan Jones',
   ogDescription: 'Deep-dive engineering articles on production systems — Nuxt 3, AI pipelines, Kubernetes infrastructure, and real-world architecture decisions from the field.',
   ogType: 'website',
-  ogImage: `${_SITE}/img/logo.png`,
+  ogImage: `${_SITE}/img/heroes/blog.jpg`,
   ogUrl: `${_SITE}/blog/overview`,
   twitterCard: 'summary_large_image',
   twitterTitle: 'The Blog — Donavan Jones',
@@ -81,7 +81,8 @@ function formatDate(dateStr: string): string {
     <div class="w-full">
 
       <!-- ── HERO ───────────────────────────────────────────────────── -->
-      <div class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+      <div class="relative isolate overflow-hidden bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <HeroBackdrop src="/img/heroes/blog.jpg" side="full" />
         <div class="max-w-4xl mx-auto px-6 py-20 sm:py-28 text-center">
           <!-- Label -->
           <div
